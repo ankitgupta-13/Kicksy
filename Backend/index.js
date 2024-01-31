@@ -11,7 +11,8 @@ mongoose.connect(process.env.DB).then(() => {
 })
 
 const app = express();
-app.use(cors);
+app.use(cors());
+app.use(express.json());
 app.use(authRoute);
 
 app.use("/", (req, res) => {
