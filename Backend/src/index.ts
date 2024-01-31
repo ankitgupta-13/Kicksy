@@ -13,5 +13,5 @@ app.use("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server is running on Port : 8000");
+  console.log(`Server is running on Port : ${PORT}`);
 });
