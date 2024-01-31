@@ -20,10 +20,15 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    verified:{
+        type:Boolean,
+        default:false
     }
 }, {
     timestamps: true,
 });
+
 
 userSchema.pre('save' , async (next)=>{
     if(this.isModified("password")){
@@ -35,4 +40,18 @@ userSchema.pre('save' , async (next)=>{
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = {User}
+// ---------------------> User_Verification_Model <------------------------- 
+
+const UserOtpVerificationSchema = new mongoose.Schema({
+    userId: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:User
+    },
+    otp: String,
+    createdAt: Date,
+    expiresAt: Date,
+});
+
+const User_Verification_Model = mongoose.model('user_verification_model' , UserOtpVerificationSchema)
+
+module.exports = {User , User_Verification_Model};

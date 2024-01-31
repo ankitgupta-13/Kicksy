@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
-const userRoute  = require("./src/routes/userRoutes.js");
+const authRoute  = require("./src/routes/authRoutes.js");
 const PORT = process.env.PORT;
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB).then(() => {
@@ -12,7 +12,7 @@ mongoose.connect(process.env.DB).then(() => {
 
 const app = express();
 app.use(cors);
-app.use(userRoute);
+app.use(authRoute);
 
 app.use("/", (req, res) => {
   res.send("Hello World!!");
