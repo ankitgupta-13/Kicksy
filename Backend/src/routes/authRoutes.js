@@ -71,7 +71,7 @@ authRoute
                     password,
                     username,
                     mobile
-                })
+                });
                 const data = await user.save();
                 sendOtpVerificationEmail({ email, data }, res);
             }
@@ -81,5 +81,12 @@ authRoute
         }
 
     })
+
+
+
+
+    
+
+    
 
 module.exports = authRoute;
