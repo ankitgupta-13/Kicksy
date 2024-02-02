@@ -31,7 +31,7 @@ const addProduct = async (req, res) => {
         .status(200)
         .json(new ApiResponse(200, newProduct, "Product Added Successfully!"));
   } catch (error) {
-    throw new ApiError(409, "Product addition failed!");
+    throw new ApiError(409, error);
   }
 };
 
@@ -59,4 +59,18 @@ const updateProduct = async (req, res) => {
   }
 };
 
-export { addProduct, updateProduct };
+const deleteProduct = async (req, res) => {
+  try {
+    const { productID } = req.body;
+    const deleted_product = await Product.findByIdAndDelete({ _id:productID });
+    if (!deleted_product) {
+      throw new ApiError("invalid product id");
+    }
+    return res.json(new ApiResponse(200 , {deleted_product} , "Product Deleted Successfully"))
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+export { addProduct, updateProduct ,deleteProduct};
