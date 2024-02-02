@@ -8,4 +8,5 @@ const router = Router();
 
 router.route("/add-product").post(addProduct);
 router.route("/update-product").post(updateProduct);
+// router.route("/update-product").post(updateProduct);
 export default router;
