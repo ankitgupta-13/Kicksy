@@ -1,10 +1,10 @@
-const express = require("express");
-const { User, User_Verification_Model } = require("../models/user.models");
-const nodemailer = require("nodemailer");
-const { transporter } = require("./transporter");
-const authRoute = express.Router();
-const bcrypt = require('bcrypt');
+import express from 'express';
+import { User, UserVerificationModel } from '../models/user.models.js'; // Adjust the paths based on your project structure
+import { transporter } from './transporter.js';
+import bcrypt from 'bcrypt';
 
+
+const authRoute = express.Router();
 const sendOtpVerificationEmail = async (data, res) => {
     try {
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require("bcrypt");
-const { addressSchema } = require('./address.models');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import { addressSchema } from './address.models.js';
 
 const cart_item_schema = new mongoose.Schema({
     product:mongoose.Schema.Types.ObjectId,
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
         }
     ],
     address:[addressSchema],
-    cart:[cart_item_schema] 
+    cart:[cart_item_schema]
 }, {
     timestamps: true,
 });
@@ -114,4 +114,4 @@ const UserOtpVerificationSchema = new mongoose.Schema({
 
 const User_Verification_Model = mongoose.model('user_verification_model' , UserOtpVerificationSchema)
 
-module.exports = {User , User_Verification_Model};
+export {User , User_Verification_Model};

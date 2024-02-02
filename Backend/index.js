@@ -1,11 +1,13 @@
-require('dotenv').config();
-const express = require("express");
-const cors = require("cors");
-const authRoute  = require("./src/routes/authRoutes.js");
-const PORT = process.env.PORT;
-const mongoose = require('mongoose');
-const userRoute = require('./src/routes/userRoute.js');
-const adminRoute = require('./src/routes/adminRoutes.js');
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import authRoute from './src/routes/authRoutes.js';
+import mongoose from 'mongoose';
+import userRoute from './src/routes/userRoute.js';
+import adminRoute from './src/routes/adminRoutes.js';
+
+dotenv.config();
+
 mongoose.connect(process.env.DB).then(() => {
   console.log("Database connected!")
 }).catch((err) => {

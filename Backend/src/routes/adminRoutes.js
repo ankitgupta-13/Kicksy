@@ -1,7 +1,7 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const Product = require("../models/product.models");
-const adminRoute = express.Router()
+import express from 'express';
+import mongoose from 'mongoose';
+import Product from '../models/product.models.js';
+const adminRoute = express.Router();
 
 adminRoute
     .post("/product-add" , async(req,res)=>{
@@ -57,4 +57,4 @@ adminRoute
 
     
 
-module.exports = adminRoute;
+export default adminRoute;
