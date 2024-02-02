@@ -13,19 +13,37 @@ const cart_item_schema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     username: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     mobile: {
-        type: String, //stroring mobile number as String since there could be leading zeroes
-        required: true,
-        unique: true,
+      type: String, //storing mobile number as String since there could be leading zeroes
+      required: true,
+    },
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    refreshToken: {
+      type: String,
     },
     password:{
         type:String,
