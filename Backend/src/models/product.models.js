@@ -26,14 +26,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    size: {
+    size: [{
       type: Number,
-      required: true,
-    },
-    color: {
+      required: true
+    }],
+    color: [{
       type: String,
       required: true,
-    },
+    }],
     gender: {
       type: String,
       enum: ["M", "F", "O"],
