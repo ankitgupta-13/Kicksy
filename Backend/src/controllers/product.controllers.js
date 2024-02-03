@@ -1,6 +1,17 @@
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { uploadOnAws } from "../utils/aws.js";
+import fs from "fs";
+
+const addProductImage = async (req, res) => {
+  const productImageUrl = await uploadOnAws(req.file.path);
+  if (!productImageUrl) {
+    return res.send(new ApiError(500, "Upload Failed"));
+  }
+  fs.unlinkSync(req.file.path);
+  return res.json(new ApiResponse(200, productImageUrl, "Upload Success"));
+};
 
 const addProduct = async (req, res) => {
   const { productID } = req.body;
@@ -8,30 +19,17 @@ const addProduct = async (req, res) => {
   try {
     const product = await Product.findOne({ productID });
     if (product) {
-      const updatedProduct = await Product.findOneAndUpdate(
-        product.productID,
-        {
-          $inc: { quantity: 1, "product.quantity": 1 },
-        },
-        { new: true }
-      );
-      return res
-        .status(201)
-        .json(
-          new ApiResponse(
-            200,
-            updatedProduct,
-            "Product Quantity Updated Successfully!"
-          )
-        );
+      return res.status(409).send("Product already exist!");
     }
     const newProduct = await Product.create(req.body);
-    if (!newProduct)
-      throw new ApiError(409, "Unable to Add Product")
-        .status(200)
-        .json(new ApiResponse(200, newProduct, "Product Added Successfully!"));
+    if (!newProduct) {
+      return res.status(409).json(new ApiError(409, "Unable to Add Product"));
+    }
+    return res
+      .status(200)
+      .json(new ApiResponse(200, newProduct, "Product Added Successfully!"));
   } catch (error) {
-    throw new ApiError(409, "Product addition failed!");
+    throw new ApiError(409, error);
   }
 };
 
@@ -59,4 +57,4 @@ const updateProduct = async (req, res) => {
   }
 };
 
-export { addProduct, updateProduct };
+export { addProductImage, addProduct, updateProduct };
