@@ -72,4 +72,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-export { addProduct, updateProduct, deleteProduct };
+export { addProduct, updateProduct, deleteProduct, addProductImage };
