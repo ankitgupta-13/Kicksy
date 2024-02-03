@@ -39,14 +39,10 @@ const productSchema = new mongoose.Schema(
       enum: ["M", "F", "O"],
       required: true,
     },
-    quantity: {
+    stock: {
       type: Number,
       required: true,
       default: 1,
-    },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
     },
     reviews: [
       {
