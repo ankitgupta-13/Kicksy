@@ -12,7 +12,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     await user.save({ validateBeforeSave: false });
     return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(500, "Can't generate token");
+    throw new ApiError(500, "Can't generate token", error);
   }
 };
 
@@ -36,6 +36,7 @@ const registerUser = async (req, res) => {
     .status(201)
     .json(new ApiResponse(201, createdUser, "User succesfully created!"));
 };
+
 
 //login user
 
@@ -72,7 +73,81 @@ const loginUser = async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, {loggedInUser}, "User logged in successfully"));
+    .json(new ApiResponse(200, { loggedInUser }, "User logged in successfully"));
 };
 
-export { registerUser, loginUser };
+const addToCart = async (req, res) => {
+  try {
+    const { userID, productID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(400, "invalid user id");
+    }
+    const updatedCart = await user.addToCart(productID);
+    res.json(new ApiResponse(200, updatedCart, "cart updated"));
+  }
+  catch (err) {
+    console.log(err);
+    res.json(new ApiError(400, "Error adding to cart ", err));
+  }
+}
+
+const deleteFromCart = async (req, res) => {
+  try {
+    const { userID, productID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(400, "invalid user id");
+    }
+    const updatedCart = await User.findByIdAndUpdate(
+      { _id: userID },
+      {
+        $pull: {
+          cart: productID
+        }
+      });
+    await user.save()
+    res.json(new ApiResponse(200, updatedCart, "cart updated"));
+  }
+  catch (err) {
+    console.error(err);
+    res.json(new ApiError(400, "Error deleting from cart ", err));
+  }
+}
+
+const addListName = async (req, res) => {
+  try {
+    const { userID, listName } = req.body;
+    const updatedUser = await User.findByIdAndUpdate({ _id: userID }, { $push: { wishlist: { listName } } });
+    res.json(new ApiResponse(200, updatedUser, "wishlist name added"));
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+const addToList = async (req, res) => {
+  try {
+    const { userID, productID, listID } = req.body;
+    const user = await User.findOne({ _id: userID })
+    if (!user) {
+      throw new ApiError(400, "invalid user id");
+    }
+    // const updatedList = await User.findByIdAndUpdate({ _id: userID, 'wishlist._id': listID }, { $push: { "wishlist.$.listItems": productID } }, { new: true });
+    const updatedList = await user.addToList(listID , productID);
+    res.json(new ApiResponse(200, updatedList, "item added to list"))
+  }
+  catch (error) {
+    throw new ApiError(400, "error while adding to wishlist", error);
+  }
+}
+
+
+export {
+  registerUser,
+  loginUser,
+  addToCart,
+  deleteFromCart,
+  addListName,
+  addToList
+};

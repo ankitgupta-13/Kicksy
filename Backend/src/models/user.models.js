@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { ApiError } from "../utils/ApiError.js";
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -16,6 +17,7 @@ const userSchema = new mongoose.Schema(
     mobile: {
       type: String, //storing mobile number as String since there could be leading zeroes
       required: true,
+      unique: true
     },
     orders: [
       {
@@ -23,11 +25,23 @@ const userSchema = new mongoose.Schema(
         ref: "Order",
       },
     ],
+    cart: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product"
+    }],
     wishlist: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-      },
+        listName: {
+          type: String,
+          required: true,
+          unique: true
+        },
+        listItems: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          timestamps: true
+        }]
+      }
     ],
     password: {
       type: String,
@@ -80,5 +94,59 @@ userSchema.methods.generateRefreshToken = function () {
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
+userSchema.methods.addToCart = async function (productId) {
+  try {
+    if (!productId) {
+      throw new Error("ProductId Required.");
+    }
+
+    const index = this.cart.findIndex((item) => {
+      return item["_id"].equals(productId);
+    });
+    if (index === -1) {
+      this.cart = this.cart.concat(productId);
+      await this.save();
+      return this.cart;
+    }
+    else {
+      throw new Error("Item already present in cart.");
+    }
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+userSchema.methods.addToList = async function (listID, productID) {
+  try {
+    const index = this.wishlist.findIndex((item) => {
+      return item['_id'].equals(listID);
+    })
+    console.log(index);
+    if (index === -1) {
+      throw new ApiError(404, "list not found");
+    }
+    else {
+
+      const itemIndex = this.wishlist[index]['listItems'].findIndex((item) => {
+        return item.equals(productID);
+      })
+      if (itemIndex !== -1) {
+        throw new ApiError(422, "Product already present");
+      }
+      else {
+        this.wishlist[index]['listItems'] = this.wishlist[index]['listItems'].concat(productID);
+        await this.save();
+        return this.wishlist[index];
+      }
+    }
+  }
+  catch (err) {
+    throw new ApiError(400, "error adding to list", err);
+  }
+}
+
+
 
 export const User = mongoose.model("User", userSchema);
