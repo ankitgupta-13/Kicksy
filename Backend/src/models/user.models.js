@@ -1,6 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { ApiError } from "../utils/ApiError.js";
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -30,9 +31,17 @@ const userSchema = new mongoose.Schema(
     }],
     wishlist: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-      },
+        listName: {
+          type: String,
+          required: true,
+          unique: true
+        },
+        listItems: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          timestamps: true
+        }]
+      }
     ],
     password: {
       type: String,
@@ -86,47 +95,58 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.addToCart = async function(productId){
-  try{
-    if(!productId){
+userSchema.methods.addToCart = async function (productId) {
+  try {
+    if (!productId) {
       throw new Error("ProductId Required.");
     }
-    
-    const index = this.cart.findIndex((item)=>{
+
+    const index = this.cart.findIndex((item) => {
       return item["_id"].equals(productId);
     });
-    if(index === -1){
+    if (index === -1) {
       this.cart = this.cart.concat(productId);
       await this.save();
       return this.cart;
     }
-    else{
+    else {
       throw new Error("Item already present in cart.");
     }
   }
-  catch(err){
+  catch (err) {
     console.error(err);
   }
 }
 
-userSchema.methods.deleteFromCart = async function(productId){
-  try{
-    const productID = new mongoose.Types.ObjectId(productId);
-    const index = this.cart.findIndex((item)=>{
-      return item["_id"].equals(productID);
+userSchema.methods.addToList = async function (listID, productID) {
+  try {
+    const index = this.wishlist.findIndex((item) => {
+      return item['_id'].equals(listID);
     })
-    this.cart = this.cart.filter((item)=>{
-      console.log(item["_id"] , productID)
+    console.log(index);
+    if (index === -1) {
+      throw new ApiError(404, "list not found");
+    }
+    else {
 
-      return item[index] !== productID
-    });
-
-    await this.save()
-    return this.cart;
+      const itemIndex = this.wishlist[index]['listItems'].findIndex((item) => {
+        return item.equals(productID);
+      })
+      if (itemIndex !== -1) {
+        throw new ApiError(422, "Product already present");
+      }
+      else {
+        this.wishlist[index]['listItems'] = this.wishlist[index]['listItems'].concat(productID);
+        await this.save();
+        return this.wishlist[index];
+      }
+    }
   }
-  catch(err){
-    console.error(err);
+  catch (err) {
+    throw new ApiError(400, "error adding to list", err);
   }
 }
+
+
 
 export const User = mongoose.model("User", userSchema);
