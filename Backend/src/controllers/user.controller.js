@@ -72,7 +72,39 @@ const loginUser = async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, {loggedInUser}, "User logged in successfully"));
+    .json(new ApiResponse(200, { loggedInUser }, "User logged in successfully"));
 };
 
-export { registerUser, loginUser };
+const addToCart = async (req, res) => {
+  try {
+    const { userID, productID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(400, "invalid user id");
+    }
+    const updatedCart = await user.addToCart(productID);
+    res.json(new ApiResponse(200, updatedCart, "cart updated"));
+  }
+  catch (err) {
+    console.log(err);
+    res.json(new ApiError(400, "Error adding to cart ", err));
+  }
+}
+
+const deleteFromCart = async (req, res) => {
+  try {
+    const { userID, productID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(400, "invalid user id");
+    }
+    const updatedCart = await User.findByIdAndUpdate({ _id: userID }, { $pull: { cart: productID } });
+    await user.save()
+    res.json(new ApiResponse(200, updatedCart, "cart updated"));
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+export { registerUser, loginUser, addToCart, deleteFromCart };

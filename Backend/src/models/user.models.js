@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const userSchema = new mongoose.Schema(
@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
     mobile: {
       type: String, //storing mobile number as String since there could be leading zeroes
       required: true,
+      unique: true
     },
     orders: [
       {
@@ -23,6 +24,10 @@ const userSchema = new mongoose.Schema(
         ref: "Order",
       },
     ],
+    cart: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product"
+    }],
     wishlist: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -80,5 +85,48 @@ userSchema.methods.generateRefreshToken = function () {
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
+userSchema.methods.addToCart = async function(productId){
+  try{
+    if(!productId){
+      throw new Error("ProductId Required.");
+    }
+    
+    const index = this.cart.findIndex((item)=>{
+      return item["_id"].equals(productId);
+    });
+    if(index === -1){
+      this.cart = this.cart.concat(productId);
+      await this.save();
+      return this.cart;
+    }
+    else{
+      throw new Error("Item already present in cart.");
+    }
+  }
+  catch(err){
+    console.error(err);
+  }
+}
+
+userSchema.methods.deleteFromCart = async function(productId){
+  try{
+    const productID = new mongoose.Types.ObjectId(productId);
+    const index = this.cart.findIndex((item)=>{
+      return item["_id"].equals(productID);
+    })
+    this.cart = this.cart.filter((item)=>{
+      console.log(item["_id"] , productID)
+
+      return item[index] !== productID
+    });
+
+    await this.save()
+    return this.cart;
+  }
+  catch(err){
+    console.error(err);
+  }
+}
 
 export const User = mongoose.model("User", userSchema);
