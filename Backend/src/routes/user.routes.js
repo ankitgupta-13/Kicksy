@@ -7,7 +7,8 @@ import {
     loginUser,
     registerUser,
     removeFromList,
-    removeList
+    removeList,
+    sendMail
 } from "../controllers/user.controllers.js";
 
 const router = Router();
@@ -20,5 +21,6 @@ router.route("/add-list-name").post(addListName);
 router.route("/add-to-list").post(addToList);
 router.route("/remove-list").post(removeList);
 router.route("/remove-product-from-list").post(removeFromList);
+router.route("/send-mail").post(sendMail);
 
 export default router;

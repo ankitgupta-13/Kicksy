@@ -1,6 +1,65 @@
 import { User } from "../models/user.models.js";
+import { UserVerificationModel } from "../models/user.verification.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+// import { transporter } from "../utils/transporter.js";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+
+const sendOtpVerificationEmail = async (data, res) => {
+  try {
+    console.log("15: " + data.data._id);
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const mailOptions = {
+      from: {
+        name: "TrophyBook App",
+        address: process.env.AUTH_EMAIL,
+      },
+      to: "the.munekha@gmail.com",
+      subject: "Verify your Email",
+      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+    };
+
+    const hashedOtp = await bcrypt.hash(otp, 12);
+    const new_otp_verification = new UserVerificationModel({
+      userId: data.data._id,
+      otp: hashedOtp,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 3600000,
+    });
+
+    const user_otp = await new_otp_verification.save();
+
+    console.log(user_otp);
+
+    transporter.sendMail(mailOptions);
+    res.json({
+      status: "pending",
+      message: "Verification OTP sent.",
+      data: {
+        userId: data.data._id,
+      },
+    });
+    console.log("email sent!!");
+  } catch (err) {
+    res.json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.AUTH_EMAIL,
+    pass: process.env.AUTH_PASS,
+  }
+});
+
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -31,12 +90,13 @@ const registerUser = async (req, res) => {
     password,
   });
   const createdUser = await User.findById(user._id).select("-password");
-
-  return res
-    .status(201)
-    .json(new ApiResponse(201, createdUser, "User succesfully created!"));
+  sendOtpVerificationEmail({data:user , email:user.email} , res)
+  // return res
+  //   .status(201)
+  //   .json(new ApiResponse(201, createdUser, "User succesfully created!"));
 };
 
+// verify otp
 
 //login user
 
@@ -172,6 +232,24 @@ const removeFromList = async (req, res) => {
   }
 }
 
+const sendMail = async(req,res)=>{
+  const mailOptions = {
+    from: {
+      name: "JORDAAR",
+      address: process.env.AUTH_EMAIL,
+    },
+    to: "the.munekha@gmail.com",
+    subject: "Verify your Email",
+    html: `<p>Enter <b>1122</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+  };
+
+  transporter.sendMail(mailOptions).then(()=>{
+    console.log("mail sent")
+  }).catch((err)=>{
+    console.log(err)
+    // console.log(process.env.AUTH_PASS)
+  });
+}
 
 
 
@@ -183,5 +261,6 @@ export {
   addListName,
   addToList,
   removeList,
-  removeFromList
+  removeFromList,
+  sendMail
 };

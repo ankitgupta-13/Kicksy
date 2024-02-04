@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    verified:{
+      type:Boolean,
+      default:false
+    },
     mobile: {
       type: String, //storing mobile number as String since there could be leading zeroes
       required: true,
@@ -33,8 +37,7 @@ const userSchema = new mongoose.Schema(
       {
         listName: {
           type: String,
-          required: true,
-          unique: true
+          required: true
         },
         listItems: [{
           type: mongoose.Schema.Types.ObjectId,
