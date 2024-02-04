@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
     orders: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Order",
+        ref: "Order"
       },
     ],
     cart: [{
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
     ],
     password: {
       type: String,
-      required: [true, "Password is required" , ],
+      required: [true, "Password is required"],
     },
     refreshToken: {
       type: String,

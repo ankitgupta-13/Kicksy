@@ -8,12 +8,13 @@ import {
     registerUser,
     removeFromList,
     removeList,
-    sendMail
+    verifyOtp,
 } from "../controllers/user.controllers.js";
 
 const router = Router();
 
 router.route("/register").post(registerUser);
+router.route("/verify-otp").post(verifyOtp);
 router.route("/login").post(loginUser);
 router.route("/add-to-cart").post(addToCart);
 router.route("/delete-from-cart").post(deleteFromCart);
@@ -21,6 +22,5 @@ router.route("/add-list-name").post(addListName);
 router.route("/add-to-list").post(addToList);
 router.route("/remove-list").post(removeList);
 router.route("/remove-product-from-list").post(removeFromList);
-router.route("/send-mail").post(sendMail);
 
 export default router;

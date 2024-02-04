@@ -2,9 +2,12 @@ import { User } from "../models/user.models.js";
 import { UserVerificationModel } from "../models/user.verification.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-// import { transporter } from "../utils/transporter.js";
+import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+
 
 const sendOtpVerificationEmail = async (data, res) => {
   try {
@@ -15,7 +18,7 @@ const sendOtpVerificationEmail = async (data, res) => {
         name: "TrophyBook App",
         address: process.env.AUTH_EMAIL,
       },
-      to: "the.munekha@gmail.com",
+      to: data.email,
       subject: "Verify your Email",
       html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
     };
@@ -49,17 +52,6 @@ const sendOtpVerificationEmail = async (data, res) => {
   }
 };
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.AUTH_EMAIL,
-    pass: process.env.AUTH_PASS,
-  }
-});
-
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -80,21 +72,85 @@ const generateAccessAndRefreshToken = async (userId) => {
 const registerUser = async (req, res) => {
   const { username, email, mobile, password } = req.body;
   const userexist = await User.findOne({ email });
-  if (userexist) {
+  if (userexist && userexist.verified === true) {
     throw new ApiError(409, "User with same email aleady exists!");
   }
-  const user = await User.create({
-    username,
-    email,
-    mobile,
-    password,
-  });
-  const createdUser = await User.findById(user._id).select("-password");
-  sendOtpVerificationEmail({data:user , email:user.email} , res)
-  // return res
-  //   .status(201)
-  //   .json(new ApiResponse(201, createdUser, "User succesfully created!"));
+  else if (userexist && userexist.verified === false) {
+    userexist.username = username;
+    userexist.mobile = mobile;
+    userexist.password = password;
+    await userexist.save();
+    sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res)
+  }
+  else{
+    const user = await User.create({
+      username,
+      email,
+      mobile,
+      password,
+    });
+    sendOtpVerificationEmail({ data: user, email: user.email }, res)  
+  }
 };
+
+
+// verify otp
+
+const verifyOtp = async (req,res)=>{
+  
+    try {
+      const { userId, otp } = req.body;
+  
+      if (!otp) {
+        throw Error(`Fill the otp first`);
+      } else if (!userId) {
+        throw Error("userId not specified");
+      } else {
+        const main_user = await User.findOne({ _id: userId });
+        console.log(main_user)
+        if (main_user.verified == true) {
+          throw new Error("User Already verified.");
+        }
+        const user = await UserVerificationModel.find({ userId });
+        if (user.length <= 0) {
+          throw new Error("Account record doesn't exist , Sign up first.");
+        } else {
+          let verify = false;
+          for (let i = 0; i < user.length; i++) {
+            const hashedOtp = user[i].otp;
+            const { expiresAt } = user[i];
+            if (expiresAt < Date.now()) {
+              await UserVerificationModel.deleteMany({ userId });
+              throw new Error("Otp has expired , please request again");
+            }
+            else {
+              verify = await bcrypt.compare(otp, hashedOtp);
+              if (verify == true) {
+                await User.updateOne({ _id: userId }, { verified: true });
+                await UserVerificationModel.deleteMany({ userId });
+                res.status(201).json({
+                  status: "verified",
+                  message: "Email verified successfully"
+                });
+                break;
+              }
+            }
+          }
+  
+  
+  
+          if (!verify) {
+            throw new Error("The otp entered is wrong. Please try again.");
+          }
+        }
+  
+      }
+    }
+    catch (err) {
+      throw new ApiError(400 , "verification failed" , err.message);
+    }
+  }
+
 
 
 //login user
@@ -231,24 +287,6 @@ const removeFromList = async (req, res) => {
   }
 }
 
-const sendMail = async(req,res)=>{
-  const mailOptions = {
-    from: {
-      name: "JORDAAR",
-      address: process.env.AUTH_EMAIL,
-    },
-    to: "the.munekha@gmail.com",
-    subject: "Verify your Email",
-    html: `<p>Enter <b>1122</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
-  };
-
-  transporter.sendMail(mailOptions).then(()=>{
-    console.log("mail sent")
-  }).catch((err)=>{
-    console.log(err)
-    // console.log(process.env.AUTH_PASS)
-  });
-}
 
 
 
@@ -261,5 +299,5 @@ export {
   addToList,
   removeList,
   removeFromList,
-  sendMail
+  verifyOtp
 };
