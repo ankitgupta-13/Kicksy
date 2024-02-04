@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema(
     ],
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, "Password is required" , ],
     },
     refreshToken: {
       type: String,
@@ -145,6 +145,56 @@ userSchema.methods.addToList = async function (listID, productID) {
   catch (err) {
     throw new ApiError(400, "error adding to list", err);
   }
+}
+
+userSchema.methods.removeList = async function(listID){
+  try{
+    const index = this.wishlist.findIndex((item)=>{
+      return item["_id"].equals(listID);
+    })
+    if(index===-1){
+      throw new ApiError(400 , "invalid list id");
+    }
+    else{
+      this.wishlist = this.wishlist.filter((item)=>{
+        return item["_id"] !== this.wishlist[index]["_id"];
+      })
+      await this.save()
+      return this.wishlist;
+    }
+  }
+  catch(err){
+    throw new ApiError(400 , "error deleting the list" , err);
+  }
+}
+
+userSchema.methods.removeProductFromList = async function(listID , productID){
+   try{
+    const listIndex = this.wishlist.findIndex((item)=>{
+      return item['_id'].equals(listID)
+    })
+
+    console.log(listIndex)
+    const productIndex = this.wishlist[listIndex]['listItems'].findIndex((item)=>{
+      return item['_id'].equals(productID);
+    });
+
+    if(listIndex!==-1){
+      if(productIndex!==-1){
+        this.wishlist[listIndex]['listItems'] = this.wishlist[listIndex]['listItems'].filter((item)=>{
+          console.log(item['_id'] , productID)
+          return item['_id'] !== this.wishlist[listIndex]['listItems'][productIndex] ;
+        })
+      }
+      console.log("hello world")
+      await this.save();
+      return this.wishlist[listIndex];
+    }
+
+  }
+   catch(err){
+    throw new ApiError(400 , "error removing the product from the list" , err);
+   }
 }
 
 
