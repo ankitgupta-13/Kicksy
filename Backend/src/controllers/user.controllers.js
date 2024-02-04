@@ -133,14 +133,46 @@ const addToList = async (req, res) => {
     if (!user) {
       throw new ApiError(400, "invalid user id");
     }
-    // const updatedList = await User.findByIdAndUpdate({ _id: userID, 'wishlist._id': listID }, { $push: { "wishlist.$.listItems": productID } }, { new: true });
-    const updatedList = await user.addToList(listID , productID);
+    const updatedList = await user.addToList(listID, productID);
     res.json(new ApiResponse(200, updatedList, "item added to list"))
   }
   catch (error) {
     throw new ApiError(400, "error while adding to wishlist", error);
   }
 }
+
+const removeList = async (req, res) => {
+  try {
+    const { userID, listID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(404, "Invalid userID");
+    }
+    const updatedWishlist = await user.removeList(listID);
+    res.json(new ApiResponse(200, updatedWishlist));
+  }
+  catch (error) {
+    throw new ApiError(400, "unable to remove list", error);
+  }
+}
+
+const removeFromList = async (req, res) => {
+  try {
+    const { userID, listID, productID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) {
+      throw new ApiError(404, "Invalid user id, user not found!");
+    }
+    const updatedList = await user.removeProductFromList(listID, productID);
+    res.json(new ApiResponse(200, updatedList));
+
+  }
+  catch (err) {
+    throw new ApiError(400, "Error while removing the product from the list.", err);
+  }
+}
+
+
 
 
 export {
@@ -149,5 +181,7 @@ export {
   addToCart,
   deleteFromCart,
   addListName,
-  addToList
+  addToList,
+  removeList,
+  removeFromList
 };
