@@ -37,7 +37,6 @@ const registerUser = async (req, res) => {
     .json(new ApiResponse(201, createdUser, "User succesfully created!"));
 };
 
-
 //login user
 
 const loginUser = async (req, res) => {
