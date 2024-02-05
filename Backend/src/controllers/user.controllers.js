@@ -4,10 +4,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
-
 
 const sendOtpVerificationEmail = async (data, res) => {
   try {
@@ -52,7 +50,6 @@ const sendOtpVerificationEmail = async (data, res) => {
   }
 };
 
-
 const generateAccessAndRefreshToken = async (userId) => {
   try {
     const user = await User.findOne(userId);
@@ -62,57 +59,48 @@ const generateAccessAndRefreshToken = async (userId) => {
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
     return { accessToken, refreshToken };
-  } catch (error) {
-    throw new ApiError(500, "Can't generate token", error);
+  } catch (err) {
+    console.log(err);
+    res.json(new ApiError(400, "Error generating token! ", err));
   }
 };
-
-//signup user
 
 const registerUser = async (req, res) => {
   const { username, email, mobile, password } = req.body;
   const userexist = await User.findOne({ email });
   if (userexist && userexist.verified === true) {
     throw new ApiError(409, "User with same email aleady exists!");
-  }
-  else if (userexist && userexist.verified === false) {
+  } else if (userexist && userexist.verified === false) {
     userexist.username = username;
     userexist.mobile = mobile;
     userexist.password = password;
     await userexist.save();
-    sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res)
-  }
-  else {
+    sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res);
+  } else {
     const user = await User.create({
       username,
       email,
       mobile,
       password,
     });
-    sendOtpVerificationEmail({ data: user, email: user.email }, res)
+    sendOtpVerificationEmail({ data: user, email: user.email }, res);
   }
 };
-
 
 
 // verify otp
 
 const verifyOtp = async (req, res) => {
-
   try {
     const { userId, otp } = req.body;
 
     if (!otp) {
       throw Error(`Fill the otp first`);
-    }
-
-    else if (!userId) {
+    } else if (!userId) {
       throw Error("userId not specified");
-    }
-
-    else {
+    } else {
       const main_user = await User.findOne({ _id: userId });
-      console.log(main_user)
+      console.log(main_user);
 
       if (main_user.verified == true) {
         throw new Error("User Already verified.");
@@ -121,18 +109,16 @@ const verifyOtp = async (req, res) => {
 
       if (user.length <= 0) {
         throw new Error("Account record doesn't exist , Sign up first.");
-      }
-      else {
+      } else {
         let verify = false;
         for (let i = 0; i < user.length; i++) {
           const hashedOtp = user[i].otp;
           const { expiresAt } = user[i];
-          
+
           if (expiresAt < Date.now()) {
             await UserVerificationModel.deleteMany({ userId });
             throw new Error("Otp has expired , please request again");
-          }
-          else {
+          } else {
             verify = await bcrypt.compare(otp, hashedOtp);
 
             if (verify == true) {
@@ -140,7 +126,7 @@ const verifyOtp = async (req, res) => {
               await UserVerificationModel.deleteMany({ userId });
               res.status(201).json({
                 status: "verified",
-                message: "Email verified successfully"
+                message: "Email verified successfully",
               });
               break;
             }
@@ -152,54 +138,89 @@ const verifyOtp = async (req, res) => {
         }
       }
     }
-  }
-  catch (err) {
+  } catch (err) {
     throw new ApiError(400, "verification failed", err.message);
   }
-}
-
-
-
-//login user
+};
 
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email && !password) {
-    throw new ApiError(410, "All fields are required!");
+  try {
+    const { email, password } = req.body;
+    if (!email && !password) {
+      throw new ApiError(410, "All fields are required!");
+    }
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.json(new ApiError(404, "User does not exist!"));
+    }
+    if (!user.verified) {
+      return res.json(new ApiError(401, "Please verify your Email!"));
+    }
+
+    const isPasswordValid = await user.isPasswordCorrect(password);
+
+    if (!isPasswordValid) {
+      return res.json(new ApiError(401, "Password incorrect!"));
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
+    );
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    const loggedInUser = await User.findById(user._id).select(
+      "-password -refreshToken"
+    );
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(new ApiResponse(200, loggedInUser, "User logged in successfully"));
+  } catch (err) {
+    console.log(err);
+    res.json(new ApiError(400, "Error logging in user ", err));
   }
-  const user = await User.findOne({ email });
-
-  if (!user || user.verified === false) {
-    throw new ApiError(404, "User does not exist!");
-  }
-
-  const isPasswordValid = await user.isPasswordCorrect(password);
-
-  if (!isPasswordValid) {
-    throw new ApiError(401, "Password incorrect!");
-  }
-
-  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
-
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
-
-  const loggedInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, { loggedInUser }, "User logged in successfully"));
 };
 
-
-export {
-  registerUser,
-  loginUser,
-  verifyOtp
+const getCurrentUser = async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, req.user, "User found successfully!"));
+  } catch (err) {
+    res.json(new ApiError(400, "Error getting user "));
+  }
 };
 
+const logoutUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        $unset: { refreshToken: "" },
+      },
+      {
+        new: true,
+      }
+    );
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json(new ApiResponse(200, "You have been logged out successfully"));
+  } catch (error) {
+    res.json(new ApiError(400, "An error occured during logout"));
+  }
+};
+
+export { registerUser, loginUser, getCurrentUser, logoutUser, verifyOtp };

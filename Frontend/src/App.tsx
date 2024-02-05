@@ -1,27 +1,44 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Cart from "./pages/Cart/Cart";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "./api/user.api";
+import { login, logout } from "./redux/reducers/authSlice";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Header, Footer } from "./components/index.js";
 
-function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={<Cart />} />
-      </>
-    )
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const email = useSelector((state) => state.auth?.userData?.email);
+
+  useEffect(() => {
+    getCurrentUser()
+      .then((userData) => {
+        console.log(userData.data);
+        if (userData) {
+          dispatch(login({ userData: userData.data }));
+        } else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [dispatch]);
+
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <div>
+      <Header />
+      <p>{email} ankit</p>
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
-  return <RouterProvider router={router} />;
-}
+};
 
 export default App;
