@@ -1,15 +1,19 @@
 import { Router } from "express";
+
+import {
+    loginUser,
+    registerUser,
+    verifyOtp,
+} from "../controllers/user.controllers.js";
+
 import {
     addListName,
     addToCart,
     addToList,
     deleteFromCart,
-    loginUser,
-    registerUser,
     removeFromList,
-    removeList,
-    verifyOtp,
-} from "../controllers/user.controllers.js";
+    removeList
+} from "../controllers/cart.controller.js";
 
 const router = Router();
 

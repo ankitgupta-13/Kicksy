@@ -82,74 +82,80 @@ const registerUser = async (req, res) => {
     await userexist.save();
     sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res)
   }
-  else{
+  else {
     const user = await User.create({
       username,
       email,
       mobile,
       password,
     });
-    sendOtpVerificationEmail({ data: user, email: user.email }, res)  
+    sendOtpVerificationEmail({ data: user, email: user.email }, res)
   }
 };
 
 
 // verify otp
 
-const verifyOtp = async (req,res)=>{
-  
-    try {
-      const { userId, otp } = req.body;
-  
-      if (!otp) {
-        throw Error(`Fill the otp first`);
-      } else if (!userId) {
-        throw Error("userId not specified");
-      } else {
-        const main_user = await User.findOne({ _id: userId });
-        console.log(main_user)
-        if (main_user.verified == true) {
-          throw new Error("User Already verified.");
-        }
-        const user = await UserVerificationModel.find({ userId });
-        if (user.length <= 0) {
-          throw new Error("Account record doesn't exist , Sign up first.");
-        } else {
-          let verify = false;
-          for (let i = 0; i < user.length; i++) {
-            const hashedOtp = user[i].otp;
-            const { expiresAt } = user[i];
-            if (expiresAt < Date.now()) {
+const verifyOtp = async (req, res) => {
+
+  try {
+    const { userId, otp } = req.body;
+
+    if (!otp) {
+      throw Error(`Fill the otp first`);
+    }
+
+    else if (!userId) {
+      throw Error("userId not specified");
+    }
+
+    else {
+      const main_user = await User.findOne({ _id: userId });
+      console.log(main_user)
+
+      if (main_user.verified == true) {
+        throw new Error("User Already verified.");
+      }
+      const user = await UserVerificationModel.find({ userId });
+
+      if (user.length <= 0) {
+        throw new Error("Account record doesn't exist , Sign up first.");
+      }
+      else {
+        let verify = false;
+        for (let i = 0; i < user.length; i++) {
+          const hashedOtp = user[i].otp;
+          const { expiresAt } = user[i];
+          
+          if (expiresAt < Date.now()) {
+            await UserVerificationModel.deleteMany({ userId });
+            throw new Error("Otp has expired , please request again");
+          }
+          else {
+            verify = await bcrypt.compare(otp, hashedOtp);
+
+            if (verify == true) {
+              await User.updateOne({ _id: userId }, { verified: true });
               await UserVerificationModel.deleteMany({ userId });
-              throw new Error("Otp has expired , please request again");
+              res.status(201).json({
+                status: "verified",
+                message: "Email verified successfully"
+              });
+              break;
             }
-            else {
-              verify = await bcrypt.compare(otp, hashedOtp);
-              if (verify == true) {
-                await User.updateOne({ _id: userId }, { verified: true });
-                await UserVerificationModel.deleteMany({ userId });
-                res.status(201).json({
-                  status: "verified",
-                  message: "Email verified successfully"
-                });
-                break;
-              }
-            }
-          }
-  
-  
-  
-          if (!verify) {
-            throw new Error("The otp entered is wrong. Please try again.");
           }
         }
-  
+
+        if (!verify) {
+          throw new Error("The otp entered is wrong. Please try again.");
+        }
       }
     }
-    catch (err) {
-      throw new ApiError(400 , "verification failed" , err.message);
-    }
   }
+  catch (err) {
+    throw new ApiError(400, "verification failed", err.message);
+  }
+}
 
 
 
@@ -162,7 +168,7 @@ const loginUser = async (req, res) => {
   }
   const user = await User.findOne({ email });
 
-  if (!user) {
+  if (!user || user.verified === false) {
     throw new ApiError(404, "User does not exist!");
   }
 
@@ -172,9 +178,7 @@ const loginUser = async (req, res) => {
     throw new ApiError(401, "Password incorrect!");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
-    user._id
-  );
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 
   const options = {
     httpOnly: true,
@@ -191,113 +195,10 @@ const loginUser = async (req, res) => {
     .json(new ApiResponse(200, { loggedInUser }, "User logged in successfully"));
 };
 
-const addToCart = async (req, res) => {
-  try {
-    const { userID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedCart = await user.addToCart(productID);
-    res.json(new ApiResponse(200, updatedCart, "cart updated"));
-  }
-  catch (err) {
-    console.log(err);
-    res.json(new ApiError(400, "Error adding to cart ", err));
-  }
-}
-
-const deleteFromCart = async (req, res) => {
-  try {
-    const { userID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedCart = await User.findByIdAndUpdate(
-      { _id: userID },
-      {
-        $pull: {
-          cart: productID
-        }
-      });
-    await user.save()
-    res.json(new ApiResponse(200, updatedCart, "cart updated"));
-  }
-  catch (err) {
-    console.error(err);
-    res.json(new ApiError(400, "Error deleting from cart ", err));
-  }
-}
-
-const addListName = async (req, res) => {
-  try {
-    const { userID, listName } = req.body;
-    const updatedUser = await User.findByIdAndUpdate({ _id: userID }, { $push: { wishlist: { listName } } });
-    res.json(new ApiResponse(200, updatedUser, "wishlist name added"));
-  }
-  catch (error) {
-    console.log(error);
-  }
-}
-
-const addToList = async (req, res) => {
-  try {
-    const { userID, productID, listID } = req.body;
-    const user = await User.findOne({ _id: userID })
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedList = await user.addToList(listID, productID);
-    res.json(new ApiResponse(200, updatedList, "item added to list"))
-  }
-  catch (error) {
-    throw new ApiError(400, "error while adding to wishlist", error);
-  }
-}
-
-const removeList = async (req, res) => {
-  try {
-    const { userID, listID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(404, "Invalid userID");
-    }
-    const updatedWishlist = await user.removeList(listID);
-    res.json(new ApiResponse(200, updatedWishlist));
-  }
-  catch (error) {
-    throw new ApiError(400, "unable to remove list", error);
-  }
-}
-
-const removeFromList = async (req, res) => {
-  try {
-    const { userID, listID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(404, "Invalid user id, user not found!");
-    }
-    const updatedList = await user.removeProductFromList(listID, productID);
-    res.json(new ApiResponse(200, updatedList));
-
-  }
-  catch (err) {
-    throw new ApiError(400, "Error while removing the product from the list.", err);
-  }
-}
-
-
-
 
 export {
   registerUser,
   loginUser,
-  addToCart,
-  deleteFromCart,
-  addListName,
-  addToList,
-  removeList,
-  removeFromList,
   verifyOtp
 };
+

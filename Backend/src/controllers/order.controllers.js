@@ -13,9 +13,13 @@ const addToOrderHistory = async (req, res) => {
         const user = await User.findOne({ _id: userID });
         const order = await Order.findOne({ _id: orderID });
         const isEmpty = await Order.find({});
+       
         if(isEmpty.length <=0) throw new ApiError(422, "no orders in the DB.")
+       
         if (!order) throw new ApiError(422, "invalid orderID");
+       
         if (!user) throw new ApiError(422, "invalid userID");
+       
         const updated = await User.findByIdAndUpdate({_id:userID} , {$push:{orders:orderID}});
         res.json(new ApiResponse(200 , updated , "updated successfully"));
     }
