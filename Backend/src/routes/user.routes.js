@@ -1,21 +1,24 @@
 import { Router } from "express";
+
+import {
+  loginUser,
+  registerUser,
+  verifyOtp,
+} from "../controllers/user.controllers.js";
+
 import {
   addListName,
   addToCart,
   addToList,
   deleteFromCart,
-  getCurrentUser,
-  loginUser,
-  logoutUser,
-  registerUser,
   removeFromList,
   removeList,
-} from "../controllers/user.controllers.js";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+} from "../controllers/cart.controller.js";
 
 const router = Router();
 
 router.route("/register").post(registerUser);
+router.route("/verify-otp").post(verifyOtp);
 router.route("/login").post(loginUser);
 router.route("/add-to-cart").post(addToCart);
 router.route("/delete-from-cart").post(deleteFromCart);

@@ -1,6 +1,55 @@
 import { User } from "../models/user.models.js";
+import { UserVerificationModel } from "../models/user.verification.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { transporter } from "../utils/transporter.js";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+
+const sendOtpVerificationEmail = async (data, res) => {
+  try {
+    console.log("15: " + data.data._id);
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const mailOptions = {
+      from: {
+        name: "TrophyBook App",
+        address: process.env.AUTH_EMAIL,
+      },
+      to: data.email,
+      subject: "Verify your Email",
+      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+    };
+
+    const hashedOtp = await bcrypt.hash(otp, 12);
+    const new_otp_verification = new UserVerificationModel({
+      userId: data.data._id,
+      otp: hashedOtp,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 3600000,
+    });
+
+    const user_otp = await new_otp_verification.save();
+
+    console.log(user_otp);
+
+    transporter.sendMail(mailOptions);
+    res.json({
+      status: "pending",
+      message: "Verification OTP sent.",
+      data: {
+        userId: data.data._id,
+      },
+    });
+    console.log("email sent!!");
+  } catch (err) {
+    res.json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -18,26 +67,77 @@ const generateAccessAndRefreshToken = async (userId) => {
 };
 
 const registerUser = async (req, res) => {
-  try {
-    const { username, email, mobile, password } = req.body;
-    const userexist = await User.findOne({ email });
-    if (userexist) {
-      throw new ApiError(409, "User with same email aleady exists!");
-    }
+  const { username, email, mobile, password } = req.body;
+  const userexist = await User.findOne({ email });
+  if (userexist && userexist.verified === true) {
+    throw new ApiError(409, "User with same email aleady exists!");
+  } else if (userexist && userexist.verified === false) {
+    userexist.username = username;
+    userexist.mobile = mobile;
+    userexist.password = password;
+    await userexist.save();
+    sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res);
+  } else {
     const user = await User.create({
       username,
       email,
       mobile,
       password,
     });
-    const createdUser = await User.findById(user._id).select("-password");
+    sendOtpVerificationEmail({ data: user, email: user.email }, res);
+  }
+};
 
-    return res
-      .status(201)
-      .json(new ApiResponse(201, createdUser, "User succesfully created!"));
+const verifyOtp = async (req, res) => {
+  try {
+    const { userId, otp } = req.body;
+
+    if (!otp) {
+      throw Error(`Fill the otp first`);
+    } else if (!userId) {
+      throw Error("userId not specified");
+    } else {
+      const main_user = await User.findOne({ _id: userId });
+      console.log(main_user);
+
+      if (main_user.verified == true) {
+        throw new Error("User Already verified.");
+      }
+      const user = await UserVerificationModel.find({ userId });
+
+      if (user.length <= 0) {
+        throw new Error("Account record doesn't exist , Sign up first.");
+      } else {
+        let verify = false;
+        for (let i = 0; i < user.length; i++) {
+          const hashedOtp = user[i].otp;
+          const { expiresAt } = user[i];
+
+          if (expiresAt < Date.now()) {
+            await UserVerificationModel.deleteMany({ userId });
+            throw new Error("Otp has expired , please request again");
+          } else {
+            verify = await bcrypt.compare(otp, hashedOtp);
+
+            if (verify == true) {
+              await User.updateOne({ _id: userId }, { verified: true });
+              await UserVerificationModel.deleteMany({ userId });
+              res.status(201).json({
+                status: "verified",
+                message: "Email verified successfully",
+              });
+              break;
+            }
+          }
+        }
+
+        if (!verify) {
+          throw new Error("The otp entered is wrong. Please try again.");
+        }
+      }
+    }
   } catch (err) {
-    console.log(err);
-    res.json(new ApiError(400, "Error registering user ", err));
+    throw new ApiError(400, "verification failed", err.message);
   }
 };
 
@@ -51,6 +151,9 @@ const loginUser = async (req, res) => {
 
     if (!user) {
       return res.json(new ApiError(404, "User does not exist!"));
+    }
+    if (!user.verified) {
+      return res.json(new ApiError(401, "Please verify your Email!"));
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
@@ -118,112 +221,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-const addToCart = async (req, res) => {
-  try {
-    const { userID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedCart = await user.addToCart(productID);
-    res.json(new ApiResponse(200, updatedCart, "cart updated"));
-  } catch (err) {
-    console.log(err);
-    res.json(new ApiError(400, "Error adding to cart ", err));
-  }
-};
-
-const deleteFromCart = async (req, res) => {
-  try {
-    const { userID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedCart = await User.findByIdAndUpdate(
-      { _id: userID },
-      {
-        $pull: {
-          cart: productID,
-        },
-      }
-    );
-    await user.save();
-    res.json(new ApiResponse(200, updatedCart, "cart updated"));
-  } catch (err) {
-    console.error(err);
-    res.json(new ApiError(400, "Error deleting from cart ", err));
-  }
-};
-
-const addListName = async (req, res) => {
-  try {
-    const { userID, listName } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      { _id: userID },
-      { $push: { wishlist: { listName } } }
-    );
-    res.json(new ApiResponse(200, updatedUser, "wishlist name added"));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const addToList = async (req, res) => {
-  try {
-    const { userID, productID, listID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(400, "invalid user id");
-    }
-    const updatedList = await user.addToList(listID, productID);
-    res.json(new ApiResponse(200, updatedList, "item added to list"));
-  } catch (error) {
-    throw new ApiError(400, "error while adding to wishlist", error);
-  }
-};
-
-const removeList = async (req, res) => {
-  try {
-    const { userID, listID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(404, "Invalid userID");
-    }
-    const updatedWishlist = await user.removeList(listID);
-    res.json(new ApiResponse(200, updatedWishlist));
-  } catch (error) {
-    throw new ApiError(400, "unable to remove list", error);
-  }
-};
-
-const removeFromList = async (req, res) => {
-  try {
-    const { userID, listID, productID } = req.body;
-    const user = await User.findOne({ _id: userID });
-    if (!user) {
-      throw new ApiError(404, "Invalid user id, user not found!");
-    }
-    const updatedList = await user.removeProductFromList(listID, productID);
-    res.json(new ApiResponse(200, updatedList));
-  } catch (err) {
-    throw new ApiError(
-      400,
-      "Error while removing the product from the list.",
-      err
-    );
-  }
-};
-
-export {
-  registerUser,
-  loginUser,
-  getCurrentUser,
-  logoutUser,
-  addToCart,
-  deleteFromCart,
-  addListName,
-  addToList,
-  removeList,
-  removeFromList,
-};
+export { registerUser, loginUser, getCurrentUser, logoutUser, verifyOtp };
