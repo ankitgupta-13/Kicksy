@@ -4,7 +4,6 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 
