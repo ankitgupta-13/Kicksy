@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:3000/api";
+export const baseURL = "http://localhost:3000/api/";
 
 const api = axios.create({
   baseURL: baseURL,
   timeout: 1000,
   headers: {
-    authorization: `Bearer ${localStorage.getItem("doc-token")}`,
+    authorization: `Bearer ${document.cookie.split(";")}`,
     Accept: "application/json",
     "Content-Type": "application/json",
   },
@@ -14,7 +14,7 @@ const api = axios.create({
 
 export const authLogin = async (payload) => {
   try {
-    const response = await api.post("/auth/login", payload);
+    const response = await api.post("/user/login", payload);
     return response;
   } catch (error) {
     if (error.response) return error.response;
@@ -24,7 +24,17 @@ export const authLogin = async (payload) => {
 
 export const authRegister = async (payload) => {
   try {
-    const response = await api.post("/auth/register", payload);
+    const response = await api.post("/user/register", payload);
+    return response;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const authLogout = async () => {
+  try {
+    const response = await api.post("/user/logout");
     return response;
   } catch (error) {
     if (error.response) return error.response;
