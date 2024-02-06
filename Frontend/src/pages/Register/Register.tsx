@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { authRegister } from "../../api/auth.api";
+import {authRegister } from "../../api/auth.api";
 import { login } from "../../redux/reducers/authSlice.ts";
 import { Input, Logo, Button } from "../../components/index.js";
 import { useForm } from "react-hook-form";
@@ -10,15 +10,20 @@ const Login = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const handleLogin = async (data) => {
+ 
+  const handleRegister = async (data: any) => {
     setError("");
     try {
-      const response = await authLogin(data);
-      const userData = response.data.data.email;
-      console.log(userData);
-      dispatch(login(userData));
-      navigate("/");
-    } catch (error) {
+      const response = await authRegister(data);
+      if (response.status === 200) {
+        const userData = response.data.data;
+        console.log(userData);
+        dispatch(login(userData));
+        navigate("/");
+      } else {
+        setError(response.message);
+      }
+    } catch (error: any) {
       setError(error.message);
     }
   };
@@ -32,7 +37,7 @@ const Login = () => {
       Don't have any account?
       <Link to="/register">Sign up</Link>
       {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit(handleLogin)}>
+      <form onSubmit={handleSubmit(handleRegister)}>
         <Input
           label="Email"
           type="email"
