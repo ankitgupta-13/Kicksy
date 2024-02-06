@@ -17,8 +17,8 @@ const Login = () => {
       const userData = response.data.data;
       if (userData) {
         dispatch(login({ userData }));
+        navigate("/");
       }
-      // navigate("/");
     } catch (error) {
       setError(error.message);
     }

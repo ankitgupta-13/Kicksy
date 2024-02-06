@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:3000/api/";
+export const baseURL = "http://localhost:3000/api";
 
-const api = axios.create({
+export const api = axios.create({
+  withCredentials: true,
   baseURL: baseURL,
   timeout: 1000,
   headers: {
@@ -24,7 +25,9 @@ export const authLogin = async (payload) => {
 
 export const authRegister = async (payload) => {
   try {
+    console.log("Something went wrong in authRegister");
     const response = await api.post("/user/register", payload);
+    console.log(response);
     return response;
   } catch (error) {
     if (error.response) return error.response;
