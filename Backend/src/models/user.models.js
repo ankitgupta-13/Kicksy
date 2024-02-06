@@ -15,8 +15,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     verified:{
-      type:Boolean,
-      default:false
+      email:{
+        type:Boolean,
+        required:true,
+        default:false
+      },
+      mobile:{
+        type:Boolean,
+        required:true,
+        default:false
+      }
     },
     mobile: {
       type: String, //storing mobile number as String since there could be leading zeroes
