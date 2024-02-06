@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { authLogin } from "../../api/auth.api";
-import { login, logout } from "../../redux/reducers/authSlice.ts";
+import { login } from "../../redux/reducers/authSlice.ts";
 import { Input, Logo, Button } from "../../components/index.js";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,11 +21,7 @@ const Login = () => {
         dispatch(login({ userData }));
         navigate("/");
       }
-<<<<<<< HEAD
-    } catch (error) {
-=======
     } catch (error: any) {
->>>>>>> 07973c574e55c6f98242dedf76eda402556b7959
       setError(error.message);
     }
   };
