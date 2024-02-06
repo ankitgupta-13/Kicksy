@@ -69,7 +69,7 @@ const registerUser = async (req, res) => {
   const { username, email, mobile, password } = req.body;
   const userexist = await User.findOne({ email });
   if (userexist && userexist.verified === true) {
-    throw new ApiError(409, "User with same email aleady exists!");
+    return res.json(new ApiError(409, "User with same email aleady exists!"));
   } else if (userexist && userexist.verified === false) {
     userexist.username = username;
     userexist.mobile = mobile;
@@ -178,8 +178,8 @@ const loginUser = async (req, res) => {
     );
     return res
       .status(200)
-      .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
+      .cookie("accessToken", accessToken, options)
       .json(new ApiResponse(200, loggedInUser, "User logged in successfully"));
   } catch (err) {
     console.log(err);

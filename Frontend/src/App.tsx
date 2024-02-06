@@ -16,7 +16,7 @@ const App = () => {
     getCurrentUser()
       .then((userData) => {
         console.log(userData.data);
-        if (userData) {
+        if (userData.data.statusCode === 200) {
           dispatch(login({ userData: userData.data }));
         } else {
           dispatch(logout());
@@ -25,7 +25,7 @@ const App = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [dispatch]);
+  }, []);
 
   return loading ? (
     <div>Loading...</div>

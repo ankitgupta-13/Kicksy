@@ -7,18 +7,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const handleLogin = async (data) => {
+
+  const handleRegister = async (data: any) => {
     setError("");
     try {
-      const response = await authLogin(data);
-      const userData = response.data.data.email;
-      console.log(userData);
-      dispatch(login(userData));
-      navigate("/");
-    } catch (error) {
+      const response = await authRegister(data);
+      if (response.status === 200) {
+        const userData = response.data.data;
+        console.log(userData);
+        dispatch(login(userData));
+        navigate("/");
+      } else {
+        setError(response.message);
+      }
+    } catch (error: any) {
       setError(error.message);
     }
   };
@@ -28,11 +32,11 @@ const Login = () => {
       <div>
         <Logo />
       </div>
-      <h2>Sign in to your account</h2>
-      Don't have any account?
-      <Link to="/register">Sign up</Link>
+      <h2>Sign up</h2>
+      Already have an account?
+      <Link to="/login">Sign up</Link>
       {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit(handleLogin)}>
+      <form onSubmit={handleSubmit(handleRegister)}>
         <Input
           label="Email"
           type="email"
@@ -64,7 +68,7 @@ const Login = () => {
           placeholder="Enter confirmation password"
           {...register("password", { required: true })}
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Register</Button>
       </form>
     </div>
   );
