@@ -9,13 +9,20 @@ const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const handleRegister = async (data) => {
+
+  const handleRegister = async (data: any) => {
     setError("");
     try {
       const response = await authRegister(data);
-      console.log(response);
-      navigate("/login");
-    } catch (error) {
+      if (response.status === 200) {
+        const userData = response.data.data;
+        console.log(userData);
+        dispatch(login(userData));
+        navigate("/");
+      } else {
+        setError(response.message);
+      }
+    } catch (error: any) {
       setError(error.message);
     }
   };

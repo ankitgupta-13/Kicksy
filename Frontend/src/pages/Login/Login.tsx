@@ -10,16 +10,22 @@ const Login = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const handleLogin = async (data) => {
+  const handleLogin = async (data: any) => {
     setError("");
     try {
+      console.log(data);
       const response = await authLogin(data);
+      console.log(response.data.data);
       const userData = response.data.data;
       if (userData) {
         dispatch(login({ userData }));
         navigate("/");
       }
+<<<<<<< HEAD
     } catch (error) {
+=======
+    } catch (error: any) {
+>>>>>>> 07973c574e55c6f98242dedf76eda402556b7959
       setError(error.message);
     }
   };

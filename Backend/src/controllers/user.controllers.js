@@ -87,6 +87,9 @@ const registerUser = async (req, res) => {
   }
 };
 
+
+// verify otp
+
 const verifyOtp = async (req, res) => {
   try {
     const { userId, otp } = req.body;

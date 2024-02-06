@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addOrder = async(req,res)=>{
+    const {userID , qty , productID , paymentMethod } = req.body;
     
 }
 

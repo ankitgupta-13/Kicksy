@@ -53,6 +53,15 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    referralCode:{
+      code:String,
+      users:[
+        {
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"User"
+        }
+      ]
+    }
   },
   {
     timestamps: true,
