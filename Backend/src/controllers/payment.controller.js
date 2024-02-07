@@ -22,7 +22,7 @@ const makePayment = async (req, res) => {
         const order = await rpayInstance.orders.create(options);
         console.log(order);
 
-        res.json(ApiResponse(200, order.id, "Payment Successfull"))
+        res.json(new ApiResponse(200, order.id, "Payment Successfull"))
     }
     catch (err) {
         throw new ApiError(400, "unable to make payment");
@@ -43,8 +43,8 @@ const verifyPayment = async (req, res) => {
                 rpay_payment_id,
                 rpay_signature
             })
-            res.redirect(process.env.FRONTEND+`/paymentsuccess?reference=${rpay_payment_id}`);
-            // res.json(new ApiResponse(200, { success: true }, "Payment Successfull"));
+            // res.redirect(process.env.FRONTEND+`/paymentsuccess?reference=${rpay_payment_id}`);
+            res.json(new ApiResponse(200, { success: true }, "Payment Successfull"));
         }
         else {
             throw new ApiError(400, "Payment unsucessfull!");
