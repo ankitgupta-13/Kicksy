@@ -13,7 +13,6 @@ dotenv.config();
 // middlewares
 app.use(
   cors({
-    origin: [process.env.FRONTEND],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     exposedHeaders: ["set-cookie"],

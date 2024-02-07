@@ -9,6 +9,6 @@ const router = Router();
 
 router.route("/make-payment").post(makePayment);
 router.route("/verify-payment").post(verifyPayment);
-router.route("/get-key").post(getKey);
+router.route("/get-key").get(getKey);
 
 export default router;

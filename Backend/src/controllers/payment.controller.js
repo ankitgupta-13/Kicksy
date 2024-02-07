@@ -13,6 +13,7 @@ const rpayInstance = new Razorpay({
 
 const makePayment = async (req, res) => {
     const { amount } = req.body;
+    console.log(amount);
     try {
         const options = {
             amount,

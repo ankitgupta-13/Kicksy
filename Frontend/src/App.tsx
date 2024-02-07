@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Header, Footer } from "./components/index.js";
-import {Rpay_buy_btn} from "./components/index.js";
+import { Header, Footer,PaymentButton } from "./components/index.js";
+
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -33,12 +33,11 @@ const App = () => {
   ) : (
     <div>
       <Header />
-      <p>{email} ankit</p>
       <main>
         <Outlet />
       </main>
       <Footer />
-      <Rpay_buy_btn />
+      <PaymentButton amount={2000} />
     </div>
   );
 };

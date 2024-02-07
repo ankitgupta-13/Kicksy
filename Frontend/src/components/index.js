@@ -6,6 +6,6 @@ import Container from "../components/Container/Container";
 import Button from "./Button/Button";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
-import Rpay_buy_btn from "./Button/payment.btn";
+import PaymentButton from "./Button/PaymentButton";
 
-export { Header, Footer, LogoutBtn, Logo, Container, Button,Rpay_buy_btn ,Input, Select };
+export { Header, Footer, LogoutBtn, Logo, Container, Button,Input, Select , PaymentButton};
