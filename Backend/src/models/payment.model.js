@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const paymentSchema = new mongoose.Schema({
-    rpay_order_id:{
+    razorpay_order_id:{
         type:String,
         required:true
     },
-    rpay_payment_id:{
+    razorpay_payment_id:{
         type:String,
         required:true
     },
-    rpay_signature:{
+    razorpay_signature:{
         type:String,
         required:true
     }

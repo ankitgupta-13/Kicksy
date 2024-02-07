@@ -3,14 +3,14 @@ import React from "react";
 const PaymentButton = (props)=>{
     const {amount} = props;
     const checkOutHandler = async()=>{
-        const rpay_key = await fetch("https://fantastic-umbrella-xxv4xq9x994c977v-8005.app.github.dev/api/user/payments/get-key" , {
+        const rpay_key = await fetch("http://localhost:8005/api/user/payments/get-key" , {
             method:"get",
             headers:{
                 "content-type":'application/json'
             }
         })
         const key = await rpay_key.json();
-        const data = await fetch("https://fantastic-umbrella-xxv4xq9x994c977v-8005.app.github.dev/api/user/payments/make-payment" , {
+        const data = await fetch("http://localhost:8005/api/user/payments/make-payment" , {
           method:"post",
           headers:{
             "content-type":"application/json"
@@ -28,22 +28,34 @@ const PaymentButton = (props)=>{
           description:"Razorpay tutorial",
           image:"",
           order_id:payment.data,
-          callback_url:"https://fantastic-umbrella-xxv4xq9x994c977v-8005.app.github.dev/api/user/payments/verify-payment",
+          callback_url:"http://localhost:8005/api/user/payments/verify-payment",
+          // handler:function(response){
+          //   console.log(response)
+          // },
           prefill:{
             name:"Tanish Rastogi",
             email:"charliefernandis28@gmail.com",
-            contact:"1234567890",
+            contact:"7705037757",
+            
           },
           notes:{
             "address":"abcdefghijkl"
           },
           theme:{
-            "color":"#3399cc"
+            "color":"#000000"
           }
 
         }
+        console.log(options)
 
-        const razor = new window.Razorpay(options);
+        const razor = new window.Razorpay(options , function(err , option){
+          if(err){
+            console.log("line53 "+err)
+          }
+          else{
+            console.log(option)
+          }
+        });
 
         razor.open();
 

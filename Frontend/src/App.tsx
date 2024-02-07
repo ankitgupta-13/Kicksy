@@ -37,7 +37,7 @@ const App = () => {
         <Outlet />
       </main>
       <Footer />
-      <PaymentButton amount={2000} />
+      <PaymentButton amount={200000} />
     </div>
   );
 };
