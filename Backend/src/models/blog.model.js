@@ -5,6 +5,9 @@ const blogSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Product"
     },
+    blogTitle:{
+        type:String
+    },
     imageurl:[
         {
             url:String,
@@ -18,6 +21,8 @@ const blogSchema = new mongoose.Schema({
     content:{
         type:String
     }
+} , {
+    timestamps:true
 });
 
 const Blog = new mongoose.model("blog" , blogSchema);

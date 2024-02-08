@@ -6,10 +6,12 @@ import adminRouter from "./routes/admin.routes.js";
 import orderRouter from "./routes/order.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
 import dotenv from "dotenv"
+import { getObjectUrl } from "./utils/aws.functions.js";
 
 const app = express();
 dotenv.config();
 
+// console.log(await getObjectUrl("Picture2.png"))
 // middlewares
 app.use(
   cors({

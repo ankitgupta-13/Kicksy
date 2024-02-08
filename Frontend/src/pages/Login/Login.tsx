@@ -37,6 +37,7 @@ const Login = () => {
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit(handleLogin)}>
         <Input
+        
           label="Email"
           type="email"
           placeholder="Enter your email"

@@ -28,14 +28,24 @@ const uploadOnAws = async (req, res) => {
         }
       });
     });
+    
   } catch (error) {
     fs.unlinkSync(req);
     console.log(error);
   }
 };
 
-const deleteFromAws = async (req, res) => {
-  
-}
+// const deleteFromAws = async (imageName) => {
+//   try{
+//     const s3 = new aws.S3({
+//       accessKeyId:process.env.AWS_ACCESS_KEY_ID,
+//       secretAccessKey:process.env.AWS_ACCESS_KEY_SECRET
+//     })
+
+//   }
+//   catch(err){
+
+//   }
+// }
 
 export { uploadOnAws };

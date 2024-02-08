@@ -8,6 +8,8 @@
     "dev": "nodemon ./src./index.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.509.0",
+    "@aws-sdk/s3-request-presigner": "^3.509.0",
     "@supercharge/fs": "^3.4.0",
     "aws-sdk": "^2.1549.0",
     "bcrypt": "^5.1.1",
