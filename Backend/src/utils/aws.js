@@ -34,4 +34,8 @@ const uploadOnAws = async (req, res) => {
   }
 };
 
+const deleteFromAws = async (req, res) => {
+  
+}
+
 export { uploadOnAws };

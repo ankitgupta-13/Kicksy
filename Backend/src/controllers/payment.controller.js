@@ -45,9 +45,9 @@ const verifyPayment = async (req, res) => {
                 razorpay_payment_id,
                 razorpay_signature
             })
-            
 
-            res.redirect(process.env.FRONTEND+`/paymentsuccess?reference=${razorpay_payment_id}`);
+
+            res.redirect(process.env.FRONTEND + `/paymentsuccess?reference=${razorpay_payment_id}`);
             // res.json(new ApiResponse(200, { success: true }, "Payment Successfull"));
         }
         else {
@@ -59,33 +59,69 @@ const verifyPayment = async (req, res) => {
     }
 }
 
-const getKey = async(req,res)=>{
-    return res.status(200).json({key:process.env.RPAY_KEY_ID});
+const getKey = async (req, res) => {
+    return res.status(200).json({ key: process.env.RPAY_KEY_ID });
 }
 
-const fetchall = async(req,res)=>{
-    const payments = await fetch('https://api.razorpay.com/v1/payments/' , {
-        headers:{
-            'Authorization':`Basic ${Buffer.from(process.env.RPAY_KEY_ID+":"+process.env.RPAY_KEY_SECRET).toString('base64')}`,
+const fetchall = async (req, res) => {
+    const payments = await fetch('https://api.razorpay.com/v1/payments/', {
+        headers: {
+            'Authorization': `Basic ${Buffer.from(process.env.RPAY_KEY_ID + ":" + process.env.RPAY_KEY_SECRET).toString('base64')}`,
             'Content-Type': 'application/json'
         }
     });
     const response = await payments.json()
     console.log(response);
     const data = {
-        totalPayments:response.count,
-        payments:response.items
+        totalPayments: response.count,
+        payments: response.items
     }
-    res.json(new ApiResponse(200 , data));
+    res.json(new ApiResponse(200, data));
 }
 
-const fetchPayment = async(req,res)=>{
-
+const fetchPayment = async (req, res) => {
+    const { paymentId } = req.body;
+    try {
+        const payment = rpayInstance.payments.fetch(paymentId);
+        if (payment) {
+            res.json(new ApiResponse(payment))
+        }
+        else{
+            throw new ApiError(404 , "Payment not found!");
+        }
+    }
+    catch (err){
+        throw new ApiError(400 , "Error while fetching payment through payment id" , err)
+    };
 }
+
+const fetchPaymentByTime = async(req,res)=>{
+    // time should be in yyyy-mm-dd format
+    const {start , end} = req.body;
+    try{
+        const payments = await rpayInstance.payments.all({
+            from:start,
+            to:end
+        }).then((response)=>{
+            console.log("payments fetched successfully!");
+        }).catch((err)=>{
+            console.log(err.message);
+        })
+
+        if(payments){
+            res.json(new ApiResponse(200 , payments))
+        }
+    }
+    catch(err){
+        throw new ApiError(400 , "Error while fetching payments using time." , err)
+    }
+}
+
 
 export {
     makePayment,
     verifyPayment,
     getKey,
-    fetchall
+    fetchall,
+    fetchPayment
 }

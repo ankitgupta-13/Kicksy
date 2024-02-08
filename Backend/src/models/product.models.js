@@ -54,6 +54,12 @@ const productSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    blogs:[
+      {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Blog"
+      }
+    ]
   },
   {
     timestamps: true,
