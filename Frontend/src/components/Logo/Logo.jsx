@@ -1,9 +1,10 @@
 import React from "react";
 import logoImg from "../../assets/Krisksy.svg";
+import style from "./Logo.module.css"
 const Logo = () => {
   return (
     <div>
-      <img src={logoImg} alt="" />
+      <img className={style.Logo} src={logoImg} alt="" />
     </div>
   );
 };

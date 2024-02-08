@@ -5,6 +5,8 @@ import { Input, Logo, Button } from "../../components/index.js";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import style from "./Login.module.css"
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,17 +29,17 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={style.Body}>
+      <div className={style.CenterBody}>
+      <div className={style.logo}>
         <Logo />
       </div>
-      <h2>Sign in to your account</h2>
-      Don't have any account?
+      <h2 className={style.content}>Sign in to your account</h2>
+      <p>Don't have any account?
       <Link to="/register">Sign up</Link>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit(handleLogin)}>
         <Input
-        
           label="Email"
           type="email"
           placeholder="Enter your email"
@@ -51,6 +53,7 @@ const Login = () => {
           })}
         />
         <Input
+        className={style.input}
           label="Password"
           type="password"
           placeholder="Enter your password"
@@ -58,6 +61,7 @@ const Login = () => {
         />
         <Button type="submit">Login</Button>
       </form>
+      </div>
     </div>
   );
 };
