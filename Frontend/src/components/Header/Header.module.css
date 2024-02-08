@@ -1,0 +1,42 @@
+.header {
+    margin: 20px;
+    padding: 5px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navList {
+    display: flex;
+}
+
+.navListItem {
+    margin: 0 35px;
+}
+
+.navListItemButton{
+    border: none;
+    background-color: white;
+    letter-spacing: 1.5px;
+    color: #727373;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.navListItemButton:hover {
+    color: #000;
+    font-weight: bold;
+  }
+
+.iconList {
+    display: flex;
+}
+
+.iconListItems {
+    margin: 0 12px;
+    cursor: pointer;
+}
