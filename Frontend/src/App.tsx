@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Header, Footer,PaymentButton } from "./components/index.js";
+import { Header, Footer,PaymentButton , BlogUploadButton} from "./components/index.js";
 
 
 const App = () => {

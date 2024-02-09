@@ -7,6 +7,6 @@ import Button from "./Button/Button";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
 import PaymentButton from "./Button/PaymentButton";
-import UploadButton from "./Button/uploadButton";
+import BlogUploadButton from "./Button/uploadButton";
 
-export { Header, Footer, LogoutBtn, Logo, Container, Button,Input, Select , PaymentButton , UploadButton};
+export { Header, Footer, LogoutBtn, Logo, Container, Button,Input, Select , PaymentButton , BlogUploadButton};

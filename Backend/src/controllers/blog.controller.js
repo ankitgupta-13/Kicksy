@@ -76,7 +76,7 @@ const addBlog = async (req, res) => {
 
         //   }
 
-        const { url, key } = await uploadObject(`image-blog-${Date.now()}`, 'Blogs', 'image/png');
+        const { url, key } = await uploadObject(`blog-image-${Date.now()}`, 'Blogs', 'image/png');
         if (!url) {
             throw new ApiError(400, `Error uploading to Blogs folder`);
         }
@@ -93,7 +93,7 @@ const addBlog = async (req, res) => {
             await blog.save();
         }
         else {
-            console.warn("Location not specified , image will be aligned to left by default!");
+            // console.warn("Location not specified , image will be aligned to left by default!");
             const blog = new Blog({
                 blogTitle,
                 imageurl: {

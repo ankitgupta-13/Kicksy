@@ -24,12 +24,31 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 * https://us-east-1.console.aws.amazon.com/iam/home?region=ap-south-1#/users/details/<IAM USER-NAME THAT U HAVE CREATED>/create-access-key 
 * 
 * GRANT THE IAM USER , ACCESS FOR USING S3 
-* https://us-east-1.console.aws.amazon.com/iam/home?region=eu-north-1#/users/details/<user-name>/add-permissions
+* https://us-east-1.console.aws.amazon.com/iam/home?region=eu-north-1#/users/details/<USERNAME>/add-permissions
 * Select "attach policies directly" and then search for policy name AmazonS3FullAccess
 *
 * REPLACE THE USERNAME WITH THE NAME OF YOUR IAM USER
 *
+* THEN WE NEED TO SET THE CORS POLICY OF BUCKET BY GOING TO THE GIVEN LINK:
+* https://console.aws.amazon.com/s3/bucket/<YOUR-BUCKET-NAME>/property/cors/edit?region=ap-south-1&bucketType=general
 *
+* CLICK ON THE EDIT BUTTON AND PASTE THE FOLLOWING CONFIGURATION IN TEXT FIELD
+* [
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "http://localhost:5173"
+        ],
+        "ExposeHeaders": []
+    }
+]
 * --------------> STEPS <------------------
 */
 
