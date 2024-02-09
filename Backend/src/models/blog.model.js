@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
-    productID:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Product"
-    },
     blogTitle:{
         type:String
     },

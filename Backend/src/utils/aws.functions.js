@@ -14,20 +14,28 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 * 1. CREATE A IAM USER
 * 2. GENERATE ACCESS KEYS BY GOING INTO security credentials > create access keys
 * 3. CREATE A S3 CLIENT
-*/
 
-/*
+
+
 * LINK FOR CREATING IAM USER
 * https://us-east-1.console.aws.amazon.com/iam/home?region=ap-south-1#/users
 *
 * LINK FOR CREATING ACCESS KEYS OF AN IAM USER
 * https://us-east-1.console.aws.amazon.com/iam/home?region=ap-south-1#/users/details/<IAM USER-NAME THAT U HAVE CREATED>/create-access-key 
 * 
+* GRANT THE IAM USER , ACCESS FOR USING S3 
+* https://us-east-1.console.aws.amazon.com/iam/home?region=eu-north-1#/users/details/<user-name>/add-permissions
+* Select "attach policies directly" and then search for policy name AmazonS3FullAccess
+*
 * REPLACE THE USERNAME WITH THE NAME OF YOUR IAM USER
 *
 *
 * --------------> STEPS <------------------
 */
+
+
+// access_key_id = AKIAU6GDZ6JZJHXL5WGR
+// access_key_secret = 4jHc0A77sCAh2DTDU2P9LNULQ0XKNQo5fDMjo0q/
 
 const Bucket = process.env.AWS_BUCKET_NAME
 
@@ -49,20 +57,30 @@ async function getObjectUrl(key) {
     return url;
 }
 
-async function uploadObject(fileName, ContentType) {
-    const key = `uploads/admin/${fileName}-${Date.now()}`
-    const command = new PutObjectCommand({
-        Bucket,
-        Key: key,
-        ContentType: ContentType
-    })
+async function uploadObject(fileName, folder, ContentType) {
+    try {
+        const key = `uploads/${folder}/${fileName}`;
+        const folderNames = ['Blogs', 'ProfileImages', 'ProductImages', 'AnimeImages'];
+        if (!folderNames.includes(folder)) {
+            throw new Error("Invalid folder name!");
+        }
+        const command = new PutObjectCommand({
+            Bucket,
+            Key: `uploads/${folder}/${fileName}`,
+            ContentType: ContentType
+        })
 
-    const url = await getSignedUrl(s3Client, command, { expiresIn: 300 })
-    return {
-        url,
-        key
-    };
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 300 })
+        return {
+            url,
+            key
+        };
+    }
+    catch (err) {
+        throw new Error(`Error while uploading the image to ${folder}`)
+    }
 }
+
 
 async function deleteObject(key) {
     const command = new DeleteObjectCommand({
