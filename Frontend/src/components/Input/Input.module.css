@@ -1,0 +1,25 @@
+input {
+    display: flex;
+    height: 56px;
+    width: 100%;
+    padding: 10px 20px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border: 1px solid var(--Border-2, #CCC);
+    margin-top: 5px;
+}
+
+.inputDiv{
+    margin-top: 20px;
+}
+
+label {
+    color: #000;
+    font-family: "Noir Pro";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.56px;
+}

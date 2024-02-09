@@ -35,9 +35,9 @@ const Login = () => {
         <Logo />
       </div>
       <h2 className={style.content}>Sign in to your account</h2>
-      <p>Don't have any account?
+      <p className={style.content2}>Don't have any account?
       <Link to="/register">Sign up</Link>
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>}</p>
       <form onSubmit={handleSubmit(handleLogin)}>
         <Input
           label="Email"
@@ -53,13 +53,12 @@ const Login = () => {
           })}
         />
         <Input
-        className={style.input}
           label="Password"
           type="password"
           placeholder="Enter your password"
           {...register("password", { required: true })}
         />
-        <Button type="submit">Login</Button>
+        <Button className={style.button} style={{ backgroundColor: "#131313", color: "white" }} type="submit">Login</Button>
       </form>
       </div>
     </div>
