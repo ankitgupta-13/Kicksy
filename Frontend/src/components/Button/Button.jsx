@@ -10,7 +10,7 @@ const Button = ({
   ...props
 }) => {
   return (
-    <button onClick={onClick} style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }}>
+    <button onClick={onClick} className={`button ${className}`} style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }} {...props}>
       {children}
     </button>
   );
