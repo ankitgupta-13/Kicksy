@@ -5,11 +5,14 @@ import { Input, Logo, Button } from "../../components/index.js";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import style from "./Login.module.css";
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
+
   const handleLogin = async (data: any) => {
     setError("");
     try {
@@ -27,13 +30,11 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={style.container}>
+      {/* <div>
         <Logo />
-      </div>
-      <h2>Sign in to your account</h2>
-      Don't have any account?
-      <Link to="/register">Sign up</Link>
+      </div> */}
+      <h2>LOG IN</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit(handleLogin)}>
         <Input
@@ -55,8 +56,12 @@ const Login = () => {
           placeholder="Enter your password"
           {...register("password", { required: true })}
         />
-        <Button type="submit">Login</Button>
+        <Button bgColor="#000000" textColor="#ffffff" type="submit">
+          Login
+        </Button>
       </form>
+      Don't have any account?
+      <Link to="/register">Sign up</Link>
     </div>
   );
 };

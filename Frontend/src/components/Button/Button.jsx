@@ -1,15 +1,19 @@
 import React from "react";
+import style from "./Button.module.css";
 
 const Button = ({
   children,
   type = "button",
-  bgColor = "#e2e2e2",
-  textColor = "#000000",
+  bgColor = "#000000",
+  textColor = "#ffffff",
   className = "",
   ...props
 }) => {
   return (
-    <button style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }}>
+    <button
+      className={style.btn}
+      style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }}
+    >
       {children}
     </button>
   );

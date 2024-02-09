@@ -9,7 +9,6 @@ dotenv.config({ path: ".env" });
 
 const sendOtpVerificationEmail = async (data, res) => {
   try {
-    console.log("15: " + data.data._id);
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
       from: {
@@ -67,14 +66,11 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 const registerUser = async (req, res) => {
   const { username, email, mobile, password } = req.body;
-  const userexist = await User.findOne({ email });
-  if (userexist && userexist.verified === true) {
+  const user = await User.findOne({ email });
+  if (user && user.verified === true) {
     return res.json(new ApiError(409, "User with same email aleady exists!"));
   } else if (userexist && userexist.verified === false) {
-    userexist.username = username;
-    userexist.mobile = mobile;
-    userexist.password = password;
-    await userexist.save();
+    res.status(400).json(new ApiResponse(401, "Please verify user"));
     sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res);
   } else {
     const user = await User.create({
@@ -86,7 +82,6 @@ const registerUser = async (req, res) => {
     sendOtpVerificationEmail({ data: user, email: user.email }, res);
   }
 };
-
 
 // verify otp
 
@@ -189,9 +184,13 @@ const loginUser = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
   try {
-    return res
-      .status(200)
-      .json(new ApiResponse(200, req.user, "User found successfully!"));
+    if (req.user) {
+      return res
+        .status(200)
+        .json(new ApiResponse(200, req.user, "User found successfully!"));
+    } else {
+      return res.status(401).json(new ApiError(401, "User Not Found"));
+    }
   } catch (err) {
     res.json(new ApiError(400, "Error getting user "));
   }

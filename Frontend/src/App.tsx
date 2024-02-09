@@ -3,19 +3,17 @@ import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Header, Footer } from "./components/index.js";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const email = useSelector((state) => state.auth?.userData?.email);
 
   useEffect(() => {
     getCurrentUser()
       .then((userData) => {
-        console.log(userData.data);
         if (userData.data.statusCode === 200) {
           dispatch(login({ userData: userData.data }));
         } else {
