@@ -13,24 +13,23 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      lowercase: true,
+    },
+    verified: {
+      email: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      mobile: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
     },
     mobile: {
       type: String, //storing mobile number as String since there could be leading zeroes
       required: true,
       unique: true,
-    },
-    verifiedEmail: {
-      type: Boolean,
-      default: false,
-    },
-    verifiedMobile: {
-      type: Boolean,
-      default: false,
-    },
-    verified: {
-      type: Boolean,
-      default: false,
     },
     orders: [
       {

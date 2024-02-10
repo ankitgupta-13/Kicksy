@@ -8,6 +8,7 @@
     "dev": "nodemon ./src./index.js"
   },
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.509.0",
     "@supercharge/fs": "^3.4.0",
     "aws-sdk": "^2.1549.0",
     "bcrypt": "^5.1.1",
@@ -18,7 +19,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.9"
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.9",
+    "razorpay": "^2.9.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",

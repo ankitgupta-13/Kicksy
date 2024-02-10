@@ -1,3 +1,4 @@
+import { Blog } from "../models/blog.model.js";
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -72,4 +73,68 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-export { addProduct, updateProduct, deleteProduct, addProductImage };
+const addBlog = async (req, res) => {
+  const { productID, location, content } = req.body;
+  console.log(req.file.path);
+  try {
+    const blogImageUrl = await uploadOnAws(req.file.path);
+    if (!blogImageUrl) {
+      fs.unlinkSync(req.file.path);
+      throw new ApiError(400, "unable to upload image.")
+    }
+    fs.unlinkSync(req.file.path);
+    const product = await Product.findOne({ _id: productID });
+
+    if (!product) throw new ApiError(404, "product not found.");
+    
+    if (!location) {
+      console.warn("Location not specified , image will be aligned to left by default!");
+      const blog = new Blog({
+        productID,
+        imageurl: {
+          url: blogImageUrl
+        },
+        content
+      })
+    
+      await blog.save();
+      product.blogs.push(blog._id);
+      await product.save();
+    
+    }
+    else {
+      const blog = new Blog({
+        productID,
+        imageurl: {
+          url: blogImageUrl,
+          location
+        },
+        content
+      })
+    
+      await blog.save();
+      product.blogs.push(blog._id);
+      await product.save()
+    
+    }
+  }
+  catch (err) {
+    throw new ApiError(400, "Error adding blog", err.message);
+  }
+}
+
+const editBlog = async (req, res) => {
+  const {blodID , imageID} = req.body;
+  
+}
+
+
+
+export {
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  addProductImage,
+  addBlog,
+  editBlog
+};

@@ -1,8 +1,8 @@
-import {Router} from "express";
-import { addToOrderHistory } from "../controllers/order.controllers.js";
+import { Router } from "express";
+import { addOrder } from "../controllers/order.controllers.js";
 
 const router = Router();
 
-router.route("/add").post(addToOrderHistory);
+router.route("/add-order").post(addOrder);
 
 export default router; 
