@@ -1,5 +1,6 @@
 import React from "react";
 import { getKey, makePayment } from "../../api/payment.api";
+import { baseURL } from "../../api/auth.api";
 
 const PaymentButton = (props) => {
   const amount = props.amount * 100;
@@ -15,7 +16,7 @@ const PaymentButton = (props) => {
       description: "Razorpay tutorial",
       image: "",
       order_id: order.id,
-      callback_url: "http://localhost:3000/api/user/payments/verify-payment",
+      callback_url: `${baseURL}/user/payments/verify-payment`,
       prefill: {
         name: "Ankit Gupta",
         email: "guptankit0522@gmail.com",

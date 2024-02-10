@@ -4,10 +4,16 @@ import {
   addProductImage,
   updateProduct,
   deleteProduct,
-  addBlog,
-  editBlog,
 } from "../controllers/product.controllers.js";
+
 import { upload } from "../middlewares/multer.middleware.js";
+
+import {
+  addBlog,
+  deleteBlog,
+  editBlog,
+  fetchBlog,
+} from "../controllers/blog.controller.js";
 
 const router = Router();
 
@@ -19,9 +25,11 @@ router.route("/add-product").post(addProduct);
 router.route("/update-product").post(updateProduct);
 router.route("/delete-product").post(deleteProduct);
 
-router.route("/add-blog").post(upload.single("blogImage"), addBlog);
+router.route("/add-blog").post(addBlog);
 
-router.route("/edit-blog").post(upload.single("editedBlogImage"), editBlog);
+router.route("/edit-blog").post(editBlog);
 
-// router.route("/update-product").post(updateProduct);
+router.route("/delete-blog").post(deleteBlog);
+router.route("/fetch-blog").post(fetchBlog);
+
 export default router;

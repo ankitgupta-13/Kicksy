@@ -28,41 +28,44 @@ const Login = () => {
   };
 
   return (
-    <div className={style.Body}>
-      <div className={style.CenterBody}>
-        <div className={style.logo}>
-          <Logo />
-        </div>
-        <h2 className={style.content}>Sign in to your account</h2>
-        <p>Don't have any account?</p>
+    <div>
+      <div>
+        <Logo />
+      </div>
+      <h2 className={style.content}>Sign in to your account</h2>
+      <p className={style.content2}>
+        Don't have any account?
         <Link to="/register">Sign up</Link>
         {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit(handleLogin)}>
-          <Input
-            label="Email"
-            type="email"
-            placeholder="Enter your email"
-            {...register("email", {
-              required: true,
-              validate: {
-                matchPattern: (value) =>
-                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                  "Please enter a valid email address",
-              },
-            })}
-          />
-          <Input
-            className={style.input}
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            {...register("password", { required: true })}
-          />
-          <Button bgColor="#000000" textColor="#ffffff" type="submit">
-            Login
-          </Button>
-        </form>
-      </div>
+      </p>
+      <form onSubmit={handleSubmit(handleLogin)}>
+        <Input
+          label="Email"
+          type="email"
+          placeholder="Enter your email"
+          {...register("email", {
+            required: true,
+            validate: {
+              matchPattern: (value) =>
+                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                "Please enter a valid email address",
+            },
+          })}
+        />
+        <Input
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+          {...register("password", { required: true })}
+        />
+        <Button
+          className={style.button}
+          style={{ backgroundColor: "#131313", color: "white" }}
+          type="submit"
+        >
+          Login
+        </Button>
+      </form>
     </div>
   );
 };
