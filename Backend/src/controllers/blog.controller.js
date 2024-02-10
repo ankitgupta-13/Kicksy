@@ -3,6 +3,7 @@ import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import {
+    deleteObject,
     getObjectUrl,
     uploadObject
 } from "../utils/aws.functions.js";
@@ -17,13 +18,9 @@ const fetchBlog = async (req, res) => {
             throw new ApiError(404, "Blog not found");
         }
 
-        const urlArray = [];
+        const url = await getObjectUrl(blog.imageurl.url);
 
-        blog.imageurl.forEach((item) => {
-            urlArray.push(item['url']);
-        });
-
-        res.json(new ApiResponse(200, { blog, images: urlArray }), "Blog fetched successfully");
+        res.json(new ApiResponse(200, { blog , url }, "Blog fetched successfully"));
 
     }
     catch (err) {
@@ -115,7 +112,31 @@ const editBlog = async (req, res) => {
 
 }
 
+const deleteBlog = async (req, res) => {
+    const {blogID} = req.body;
+    const blog = await Blog.findOne({_id:blogID});
+    try{
+        if(!blog){
+            throw new ApiError(404 , "blog not found");
+        }
+        
+        const img_deleted = await deleteObject(blog['imageurl']['url']);
+        if(!img_deleted){
+            console.log("image not found , deleting the blog!");
+        }
+
+        const deleted = await Blog.findByIdAndDelete({_id:blogID});
+        res.json(new ApiResponse(200 , deleted , "blog deleted successfully"));
+    }
+    catch(err){
+        throw new ApiError(400 , "Error deleting the blog" , err.message);
+    }
+}
+
+
 export {
     addBlog,
-    editBlog
+    editBlog,
+    deleteBlog,
+    fetchBlog
 }

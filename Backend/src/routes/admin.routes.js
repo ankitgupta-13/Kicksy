@@ -10,7 +10,9 @@ import { upload } from "../middlewares/multer.middleware.js";
 
 import {
   addBlog,
-  editBlog
+  deleteBlog,
+  editBlog,
+  fetchBlog
 } from "../controllers/blog.controller.js";
 
 const router = Router();
@@ -31,6 +33,9 @@ router
 router
   .route("/edit-blog")
   .post(editBlog);
+
+router.route("/delete-blog").post(deleteBlog);
+router.route("/fetch-blog").post(fetchBlog);
 
 // router.route("/update-product").post(updateProduct);
 export default router;

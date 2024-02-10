@@ -31,13 +31,8 @@ const Login = () => {
       <div>
         <Logo />
       </div>
-<<<<<<< HEAD
-      <h2>Sign in to your account</h2>
-      Don't have any account?
-=======
       <h2 className={style.content}>Sign in to your account</h2>
       <p className={style.content2}>Don't have any account?
->>>>>>> e5be5a5951538902bb26a57a7aac3b3ea8a22912
       <Link to="/register">Sign up</Link>
       {error && <p>{error}</p>}</p>
       <form onSubmit={handleSubmit(handleLogin)}>

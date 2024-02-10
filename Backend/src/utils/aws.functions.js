@@ -72,7 +72,8 @@ async function getObjectUrl(key) {
         Key: key
     })
 
-    const url = getSignedUrl(s3Client, command);
+    const url = await getSignedUrl(s3Client, command );
+    console.log(url)
     return url;
 }
 
@@ -111,8 +112,6 @@ async function deleteObject(key) {
 }
 
 // console.log(await uploadObject("Picture2.png", "image/png"))
-
-
 
 export {
     getObjectUrl,

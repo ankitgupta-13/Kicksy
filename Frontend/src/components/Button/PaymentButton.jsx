@@ -3,14 +3,14 @@ import React from "react";
 const PaymentButton = (props)=>{
     const {amount} = props;
     const checkOutHandler = async()=>{
-        const rpay_key = await fetch("http://localhost:8005/api/user/payments/get-key" , {
+        const rpay_key = await fetch("http://localhost:3000/api/user/payments/get-key" , {
             method:"get",
             headers:{
                 "content-type":'application/json'
             }
         })
         const key = await rpay_key.json();
-        const data = await fetch("http://localhost:8005/api/user/payments/make-payment" , {
+        const data = await fetch("http://localhost:3000/api/user/payments/make-payment" , {
           method:"post",
           headers:{
             "content-type":"application/json"
@@ -28,7 +28,7 @@ const PaymentButton = (props)=>{
           description:"Razorpay tutorial",
           image:"",
           order_id:payment.data,
-          callback_url:"http://localhost:8005/api/user/payments/verify-payment",
+          callback_url:"http://localhost:3000/api/user/payments/verify-payment",
           // handler:function(response){
           //   console.log(response)
           // },
