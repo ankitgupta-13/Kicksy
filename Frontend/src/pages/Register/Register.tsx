@@ -5,6 +5,8 @@ import { Input, Logo, Button } from "../../components/index.js";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import style from "./Register.module.css"
+
 const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
@@ -28,14 +30,12 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={style.Body}>
+    <div className={style.CenterBody}>
+      <div className={style.logo}>
         <Logo />
       </div>
-      <h2>Sign up</h2>
-      Already have an account?
-      <Link to="/login">Sign up</Link>
-      {error && <p>{error}</p>}
+      <h2 className={style.heading}>Register</h2>
       <form onSubmit={handleSubmit(handleRegister)}>
         <Input
           label="Email"
@@ -68,8 +68,10 @@ const Login = () => {
           placeholder="Enter confirmation password"
           {...register("password", { required: true })}
         />
-        <Button type="submit">Register</Button>
+        <Button className={style.button}
+          style={{ backgroundColor: "#131313", color: "white" }}  type="submit">Register</Button>
       </form>
+    </div>
     </div>
   );
 };
