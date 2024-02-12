@@ -28,8 +28,9 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={style.Body}>
+    <div className={style.CenterBody}>
+      <div className={style.logo}>
         <Logo />
       </div>
       <h2 className={style.content}>Sign in to your account</h2>
@@ -66,6 +67,7 @@ const Login = () => {
           Login
         </Button>
       </form>
+    </div>
     </div>
   );
 };
