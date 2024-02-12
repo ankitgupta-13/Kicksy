@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import Button from "./Button";
-import { uploadBlogToAws , fetchBlog } from "./aws-button-functions/uploadBlog.js";
-
+import { useState } from "react";
+import Button from "./Button.js";
+import {
+  uploadBlogToAws,
+  fetchBlog,
+} from "./aws-button-functions/uploadBlog.js";
 
 const BlogUploadButton = (props) => {
   const [image, setImage] = useState("");
-  const [url , setUrl] = useState("");
+  const [url, setUrl] = useState("");
 
   // useEffect(()=>{
   //   const fetchImage = async()=>{
   //     const img  = await fetchBlog("65c76d69f2365cc1cd1fee3d");
-  //     setUrl(img.data.data.url); 
+  //     setUrl(img.data.data.url);
   //   };
   //   fetchImage();
   // } , [])
@@ -25,7 +27,7 @@ const BlogUploadButton = (props) => {
         }}
       />
       <Button
-        onClick={async() => {
+        onClick={async () => {
           console.log("123");
           // uploadBlogToAws({blogTitle:"blog-testing" , content:" blog test content "} , image);
           // setUrl(url.data.data.url);

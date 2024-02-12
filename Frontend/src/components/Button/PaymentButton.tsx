@@ -1,4 +1,3 @@
-import React from "react";
 import { getKey, makePayment } from "../../api/payment.api";
 import { baseURL } from "../../api/auth.api";
 

@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Container, Logo, LogoutBtn } from "../index.js";
-import style from "./Header.module.css"
-
+import { Container, Logo, LogoutBtn } from "../index";
+import style from "./Header.module.css";
 
 //Images and Icons
-import searchIcon from "../../assets/search.png"
-import shoppingBagIcon from "../../assets/local_mall.png"
+import searchIcon from "../../assets/search.png";
+import shoppingBagIcon from "../../assets/local_mall.png";
 import profileIcon from "../../assets/person_4.png";
 import favouriteIcon from "../../assets/favorite.png";
 
@@ -32,7 +31,10 @@ const Header = () => {
             {navItems.map((item) =>
               item.isActive ? (
                 <li className={style.navListItem} key={item.name}>
-                  <button className={style.navListItemButton} onClick={() => navigate(item.slug)}>
+                  <button
+                    className={style.navListItemButton}
+                    onClick={() => navigate(item.slug)}
+                  >
                     {item.name}
                   </button>
                 </li>

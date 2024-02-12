@@ -1,53 +1,10 @@
 import { User } from "../models/user.models.js";
-import { UserVerificationModel } from "../models/user.verification.model.js";
+import { Otp } from "../models/otp.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-dotenv.config({ path: ".env" });
-
-const sendOtpVerificationEmail = async (data, res) => {
-  try {
-    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-    const mailOptions = {
-      from: {
-        name: "TrophyBook App",
-        address: process.env.AUTH_EMAIL,
-      },
-      to: data.email,
-      subject: "Verify your Email",
-      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
-    };
-
-    const hashedOtp = await bcrypt.hash(otp, 12);
-    const new_otp_verification = new UserVerificationModel({
-      userId: data.data._id,
-      otp: hashedOtp,
-      createdAt: Date.now(),
-      expiresAt: Date.now() + 3600000,
-    });
-
-    const user_otp = await new_otp_verification.save();
-
-    console.log(user_otp);
-
-    transporter.sendMail(mailOptions);
-    res.json({
-      status: "pending",
-      message: "Verification OTP sent.",
-      data: {
-        userId: data.data._id,
-      },
-    });
-    console.log("email sent!!");
-  } catch (err) {
-    res.json({
-      status: "failed",
-      message: err.message,
-    });
-  }
-};
+import { client, TWILIO_SERVICE_SID } from "../utils/twilio.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -64,28 +21,36 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 
-const registerUser = async (req, res) => {
-  const { username, email, mobile, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user && user.verified === true) {
-    return res.json(new ApiError(409, "User with same email aleady exists!"));
-  } else if (userexist && userexist.verified === false) {
-    res.status(400).json(new ApiResponse(401, "Please verify user"));
-    sendOtpVerificationEmail({ data: userexist, email: userexist.email }, res);
-  } else {
-    const user = await User.create({
-      username,
-      email,
-      mobile,
-      password,
+const sendEmailOtp = async (data) => {
+  try {
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const mailOptions = {
+      from: {
+        name: "TrophyBook App",
+        address: process.env.AUTH_EMAIL,
+      },
+      to: data.email,
+      subject: "Verify your Email",
+      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+    };
+
+    const hashedOtp = await bcrypt.hash(otp, 12);
+    const newOtp = new Otp({
+      userId: data.data._id,
+      otp: hashedOtp,
+    }).save();
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      }
     });
-    sendOtpVerificationEmail({ data: user, email: user.email }, res);
+  } catch (err) {
+    console.log(err);
   }
 };
 
-// verify otp
-
-const verifyOtp = async (req, res) => {
+const verifyEmailOtp = async (req, res) => {
   try {
     const { userId, otp } = req.body;
 
@@ -95,12 +60,11 @@ const verifyOtp = async (req, res) => {
       throw Error("userId not specified");
     } else {
       const main_user = await User.findOne({ _id: userId });
-      console.log(main_user);
 
       if (main_user.verified == true) {
         throw new Error("User Already verified.");
       }
-      const user = await UserVerificationModel.find({ userId });
+      const user = await Otp.find({ userId });
 
       if (user.length <= 0) {
         throw new Error("Account record doesn't exist , Sign up first.");
@@ -111,7 +75,7 @@ const verifyOtp = async (req, res) => {
           const { expiresAt } = user[i];
 
           if (expiresAt < Date.now()) {
-            await UserVerificationModel.deleteMany({ userId });
+            await Otp.deleteMany({ userId });
             throw new Error("Otp has expired , please request again");
           } else {
             verify = await bcrypt.compare(otp, hashedOtp);
@@ -135,6 +99,94 @@ const verifyOtp = async (req, res) => {
     }
   } catch (err) {
     throw new ApiError(400, "verification failed", err.message);
+  }
+};
+
+const sendMobileOtp = async (payload) => {
+  const { countryCode, mobile } = payload;
+  try {
+    const otpResponse = await client.verify.v2
+      .services(TWILIO_SERVICE_SID)
+      .verifications.create({
+        to: `${countryCode}${mobile}`,
+        channel: "sms",
+      });
+    return otpResponse;
+  } catch (error) {
+    console.log(error);
+    throw new ApiError(400, "Error sending mobile otp ", error);
+  }
+};
+
+const verifyMobileOtp = async (req, res) => {
+  const { countryCode, mobile, otp } = req.body;
+  try {
+    console.log(TWILIO_SERVICE_SID);
+    const verifiedResponse = await client.verify.v2
+      .services(TWILIO_SERVICE_SID)
+      .verificationChecks.create({
+        to: `${countryCode}${mobile}`,
+        code: otp,
+      });
+    console.log(verifiedResponse);
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, verifiedResponse, "Mobile verified successfully")
+      );
+  } catch (error) {
+    res.json(new ApiError(400, "Error verifying mobile ", error));
+  }
+};
+
+const registerUser = async (req, res) => {
+  try {
+    const { username, email, mobile, password, countryCode } = req.body;
+    if (!username || !email || !mobile || !password || !countryCode) {
+      return res.json(new ApiError(410, "All fields are required!"));
+    }
+    const user = await User.findOne({ email });
+    if (user && user.isEmailVerified === true) {
+      return res.json(new ApiResponse(409, "User already exists!"));
+    } else if (user && (!user.isEmailVerified || !user.mobile.isVerified)) {
+      await sendEmailOtp({ data: user, email: user.email });
+      await sendMobileOtp({
+        countryCode: user.mobile.countryCode,
+        mobile: user.mobile.number,
+      });
+      return res.json(
+        new ApiResponse(
+          400,
+          user,
+          "User already exists! Please verify your email."
+        )
+      );
+    }
+    const newUser = await User.create({
+      username,
+      email,
+      mobile: {
+        countryCode,
+        number: mobile,
+      },
+      password,
+    });
+    await sendEmailOtp({ data: newUser, email: newUser.email });
+    await sendMobileOtp({
+      countryCode,
+      mobile,
+    });
+    return res.json(
+      new ApiResponse(
+        201,
+        newUser,
+        "User registered successfully! Please verify your email."
+      )
+    );
+  } catch (error) {
+    res.json(
+      new ApiError(400, error?.message || "Error registering user ", error)
+    );
   }
 };
 
@@ -222,4 +274,12 @@ const logoutUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, getCurrentUser, logoutUser, verifyOtp };
+export {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  logoutUser,
+  verifyEmailOtp,
+  sendMobileOtp,
+  verifyMobileOtp,
+};

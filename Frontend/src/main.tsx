@@ -10,8 +10,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import Verification from "./pages/Verification/Verification.tsx";
+import Login from "./pages/Login/Login.tsx";
 import Cart from "./pages/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 
@@ -19,8 +20,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/verify" element={<Verification />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/paymentsuccess" element={<PaymentSuccess />} />
     </>

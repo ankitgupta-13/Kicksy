@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { authRegister } from "../../api/auth.api";
-import { login } from "../../redux/reducers/authSlice.ts";
-import { Input, Logo, Button } from "../../components/index.js";
+import { Input, Logo, Button, Select } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-const Login = () => {
+import style from "./Register.module.css";
+
+const Register = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-
-  const handleRegister = async (data: any) => {
+  const handleRegister = async (data) => {
     setError("");
     try {
       const response = await authRegister(data);
-      if (response.status === 200) {
-        const userData = response.data.data;
-        console.log(userData);
-        dispatch(login(userData));
-        navigate("/");
+      console.log(response);
+      if (response.statusCode === 201 || response.statusCode === 400) {
+        navigate("/verify");
+      } else if (response.statusCode === 409) {
+        setError(response.message);
+        navigate("/login");
       } else {
         setError(response.message);
       }
-    } catch (error: any) {
+    } catch (error) {
       setError(error.message);
     }
   };
@@ -38,6 +38,12 @@ const Login = () => {
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit(handleRegister)}>
         <Input
+          label="Full Name"
+          type="text"
+          placeholder="Enter your Full Name"
+          {...register("username", { required: true })}
+        />
+        <Input
           label="Email"
           type="email"
           placeholder="Enter your email"
@@ -50,28 +56,34 @@ const Login = () => {
             },
           })}
         />
-        <Input
-          label="Mobile Number"
-          type="number"
-          placeholder="Enter your phone number"
-          {...(register("mobile"), { required: true })}
-        />
+        <div className={style.mobile}>
+          <Select
+            options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
+            {...register("countryCode", { required: true })}
+          />
+          <Input
+            label="Mobile Number"
+            type="text"
+            placeholder="Enter your phone number"
+            {...register("mobile", { required: true })}
+          ></Input>
+        </div>
         <Input
           label="Password"
           type="password"
           placeholder="Enter your password"
           {...register("password", { required: true })}
         />
-        <Input
+        {/* <Input
           label="Confirm Password"
           type="password"
           placeholder="Enter confirmation password"
           {...register("password", { required: true })}
-        />
+        /> */}
         <Button type="submit">Register</Button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

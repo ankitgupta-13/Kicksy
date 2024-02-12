@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { authLogin } from "../../api/auth.api";
 import { login } from "../../redux/reducers/authSlice.ts";
-import { Input, Logo, Button } from "../../components/index.js";
+import { Input, Logo, Button } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

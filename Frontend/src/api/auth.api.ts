@@ -4,7 +4,7 @@ export const baseURL = "http://localhost:3000/api";
 
 export const api = axios.create({
   baseURL: baseURL,
-  timeout: 1000,
+  timeout: 1000 * 5,
   withCredentials: true,
   headers: {
     authorization: `Bearer ${document.cookie.split(";")}`,
@@ -13,7 +13,7 @@ export const api = axios.create({
   },
 });
 
-export const authLogin = async (payload: any) => {
+export const authLogin = async (payload: object) => {
   try {
     const response = await api.post("/user/login", payload);
     return response;
@@ -23,13 +23,12 @@ export const authLogin = async (payload: any) => {
   }
 };
 
-export const authRegister = async (payload: any) => {
+export const authRegister = async (payload) => {
   try {
-    console.log("Something went wrong in authRegister");
-    const response = await api.post("/user/register", payload);
-    console.log(response);
-    return response;
+    const { data } = await api.post("/user/register", payload);
+    return data;
   } catch (error: any) {
+    console.log(error);
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -38,6 +37,16 @@ export const authRegister = async (payload: any) => {
 export const authLogout = async () => {
   try {
     const response = await api.post("/user/logout");
+    return response;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const authVerifyEmail = async (payload) => {
+  try {
+    const response = await api.post("/user/verify-email", payload);
     return response;
   } catch (error: any) {
     if (error.response) return error.response;

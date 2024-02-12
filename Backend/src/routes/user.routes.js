@@ -3,9 +3,11 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   loginUser,
   registerUser,
-  verifyOtp,
   getCurrentUser,
   logoutUser,
+  verifyEmailOtp,
+  sendMobileOtp,
+  verifyMobileOtp,
 } from "../controllers/user.controllers.js";
 
 import {
@@ -20,7 +22,9 @@ import {
 const router = Router();
 
 router.route("/register").post(registerUser);
-router.route("/verify-otp").post(verifyOtp);
+router.route("/verify-email-otp").post(verifyEmailOtp);
+router.route("/send-mobile-otp").post(sendMobileOtp);
+router.route("/verify-mobile-otp").post(verifyMobileOtp);
 router.route("/login").post(loginUser);
 router.route("/add-to-cart").post(addToCart);
 router.route("/delete-from-cart").post(deleteFromCart);

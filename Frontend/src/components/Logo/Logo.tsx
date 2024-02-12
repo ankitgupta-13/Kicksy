@@ -1,6 +1,6 @@
-import React from "react";
 import logoImg from "../../assets/Krisksy.svg";
-import style from "./Logo.module.css"
+import style from "./Logo.module.css";
+
 const Logo = () => {
   return (
     <div>

@@ -1,7 +1,25 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/ApiError.js";
+
+const mobileSchema = new mongoose.Schema({
+  number: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  countryCode: {
+    type: String,
+    required: true,
+  },
+  isVerified: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -14,22 +32,14 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    verified: {
-      email: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
-      mobile: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
-    },
     mobile: {
-      type: String, //storing mobile number as String since there could be leading zeroes
+      type: mobileSchema,
       required: true,
-      unique: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     orders: [
       {
