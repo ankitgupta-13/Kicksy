@@ -46,10 +46,20 @@ export const authLogout = async () => {
 
 export const authVerifyEmail = async (payload) => {
   try {
-    const response = await api.post("/user/verify-email", payload);
+    const response = await api.post("/user/verify-email-otp", payload);
     return response;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const authVerifyMobile = async (payload) => {
+  try {
+    const response = await api.post("/user/verify-mobile-otp", payload);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
   }
 };
