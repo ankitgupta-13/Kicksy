@@ -17,10 +17,12 @@ const Login = () => {
     setError("");
     try {
       const response = await authLogin(data);
+      console.log(response.data);
       const userData = response.data.data;
       if (userData) {
         dispatch(login({ userData }));
         navigate("/");
+        console.log(document.cookie);
       }
     } catch (error: any) {
       setError(error.message);

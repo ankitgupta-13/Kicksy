@@ -36,7 +36,14 @@ const MainContent = ({ selectedAction }) => {
     // Render default content
   }
 
-  return <div className="main-content">{content}</div>;
+  return (
+    <>
+    <h1>Dashboard</h1>  
+      <div className="main-content">
+      {content}
+      </div>
+    </>
+  );
 };
 
 export default MainContent;

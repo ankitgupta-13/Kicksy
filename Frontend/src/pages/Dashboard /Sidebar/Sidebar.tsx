@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSection } from "../../../redux/reducers/dashboardSlice";
+import logo from "../../../assets/Krisksy.svg";
+import style from "./Sidebar.module.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -16,23 +18,27 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div>
-      <h1>Sidebar</h1>
+    <div className={style.sidebarcontainer}>
+      <img className={style.Logo} src={logo} alt="" />
       {sections.map((section, index) => {
         const sectionName = Object.keys(section)[0];
         return (
-          <div key={index}>
-            <button onClick={() => dispatch(toggleSection(sectionName))}>
-              {sectionName}
-            </button>
-            {sectionsState[sectionName] && (
-              <ul>
-                {Object.values(section)[0].map((action, index) => {
-                  return <li key={index}>{action}</li>;
-                })}
-              </ul>
-            )}
-          </div>
+          <div key={index} className={style.sidebarSection}>
+          <button
+            onClick={() => dispatch(toggleSection(sectionName))}
+            className={style.fullWidthButton}
+          >
+            {sectionName}
+          </button>
+
+          {sectionsState[sectionName] && (
+            <ul>
+              {Object.values(section)[0].map((action, index) => (
+                <li key={index}>{action}</li>
+              ))}
+            </ul>
+          )}
+        </div>
         );
       })}
     </div>
