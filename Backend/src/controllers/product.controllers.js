@@ -78,7 +78,7 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const getProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
     if (!products || products.length === 0) {
@@ -95,5 +95,5 @@ export {
   updateProduct,
   deleteProduct,
   addProductImage,
-  getProducts,
+  getAllProducts,
 };
