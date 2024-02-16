@@ -1,0 +1,4 @@
+.productImage {
+  width: 10rem;
+  object-fit: cover;
+}

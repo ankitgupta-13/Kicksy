@@ -9,3 +9,13 @@ export const getCurrentUser = async () => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getAllProducts = async () => {
+  try {
+    const { data } = await api.get("/user/get-all-products");
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

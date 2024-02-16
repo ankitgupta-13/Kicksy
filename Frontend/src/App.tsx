@@ -5,6 +5,7 @@ import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet } from "react-router-dom";
 import { Header, Footer, PaymentButton } from "./components/index";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -30,11 +31,12 @@ const App = () => {
   ) : (
     <div>
       <Header />
+      <Home />
       <main>
         <Outlet />
       </main>
-      <Footer />
-      <PaymentButton amount={2} />
+      {/* <Footer />
+      <PaymentButton amount={2} /> */}
     </div>
   );
 };
