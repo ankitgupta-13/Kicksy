@@ -18,6 +18,7 @@ import {
   removeFromList,
   removeList,
 } from "../controllers/cart.controller.js";
+import { getProducts } from "../controllers/product.controllers.js";
 
 const router = Router();
 
@@ -34,4 +35,5 @@ router.route("/remove-list").post(removeList);
 router.route("/remove-product-from-list").post(removeFromList);
 router.route("/get-current-user").get(verifyJWT, getCurrentUser);
 router.route("/logout").post(verifyJWT, logoutUser);
+router.route("/get-products").get(getProducts);
 export default router;

@@ -78,4 +78,22 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-export { addProduct, updateProduct, deleteProduct, addProductImage };
+const getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (!products || products.length === 0) {
+      return res.json(new ApiResponse(404, "No products found"));
+    }
+    return res.json(new ApiResponse(200, products, "Products found"));
+  } catch (error) {
+    throw new ApiError(404, "No products found");
+  }
+};
+
+export {
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  addProductImage,
+  getProducts,
+};

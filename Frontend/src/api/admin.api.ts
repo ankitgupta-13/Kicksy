@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const axiosImageApi = axios.create({
   baseURL: baseURL,
-  timeout: 1000 * 5,
+  timeout: 1000 * 10,
   withCredentials: true,
   headers: {
     authorization: `Bearer ${document.cookie.split(";")}`,
