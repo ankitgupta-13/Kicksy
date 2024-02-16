@@ -15,7 +15,7 @@ import Verification from "./pages/Verification/Verification.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Cart from "./pages/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
-import Dashboard from "./pages/Dashboard /Dashboard.tsx";
+import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

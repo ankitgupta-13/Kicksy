@@ -1,0 +1,9 @@
+.container {
+}
+.form{
+    display: flex;
+    justify-content: space-evenly;
+}
+.sub{
+    flex-basis: 40%;
+}

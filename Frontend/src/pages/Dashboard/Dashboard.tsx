@@ -9,7 +9,6 @@ const Dashboard = () => {
   );
   return (
     <div>
-      <h1>Dashboard</h1>
       <div className={style.container}>
         <Sidebar />
         <MainContent

@@ -23,8 +23,9 @@ const CreateProduct = () => {
   return (
     <div className={style.container}>
       <h1>Create a new product</h1>
-      <form onSubmit={handleSubmit(handleCreateProduct)}>
-        <h1>Details</h1>
+      <h1>Details</h1>
+      <form onSubmit={handleSubmit(handleCreateProduct)} className={style.form}>
+        <div className={style.sub}>
         <Input
           label="Product Name"
           type="text"
@@ -55,6 +56,8 @@ const CreateProduct = () => {
           placeholder="Quantity"
           {...register("stock", { required: true })}
         />
+        </div>
+        <div className={style.sub}>
         <Select
           label="Category"
           options={["Category 1", "Category 2"]}
@@ -107,6 +110,7 @@ const CreateProduct = () => {
           {...register("price", { required: true })}
         />
         <Button type="submit">Create Product</Button>
+        </div>
       </form>
     </div>
   );
