@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const productSchema = new mongoose.Schema(
   {
-    productID: {
+    productCode: {
       type: String,
       required: true,
       unique: true,
@@ -18,25 +18,29 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    productImage: {
-      type: String,
+    images: {
+      type: [String],
       required: true,
     },
     brand: {
       type: String,
       required: true,
     },
-    size: [{
-      type: Number,
-      required: true
-    }],
-    color: [{
-      type: String,
+    size: {
+      type: [String],
       required: true,
-    }],
+    },
+    category: {
+      type: [String],
+      required: true,
+    },
+    color: {
+      type: [String],
+      required: true,
+    },
     gender: {
       type: String,
-      enum: ["M", "F", "O"],
+      enum: ["M", "F", "K"],
       required: true,
     },
     stock: {
@@ -54,12 +58,12 @@ const productSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    blogs:[
+    blogs: [
       {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Blog"
-      }
-    ]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
   },
   {
     timestamps: true,

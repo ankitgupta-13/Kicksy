@@ -1,36 +1,46 @@
+import Analytics from "../Analytics/Analytics";
 import DetailOrder from "../Order/DetailOrder/DetailOrder";
 import ListOrder from "../Order/ListOrder/ListOrder";
 import CreateProduct from "../Product/CreateProduct/CreateProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
+import ListUser from "../User/ListUser/ListUser";
 
-const MainContent = ({ selectedAction }) => {
+const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
-
-  switch (selectedAction) {
+  switch (currentSection) {
     case "product":
-      switch (selectedAction) {
-        case "create":
+      switch (currentAction) {
+        case "addProduct":
           content = <CreateProduct />;
           break;
-        case "edit":
+        case "editProduct":
           content = <EditProduct />;
           break;
-        default:
+        case "listProduct":
           content = <ListProduct />;
+          break;
+        default:
+          content = <Analytics />;
       }
       break;
     case "order":
-      switch (selectedAction) {
-        case "list":
+      switch (currentAction) {
+        case "allOrder":
           content = <ListOrder />;
           break;
         default:
-          content = <DetailOrder />;
+          content = <Analytics />;
       }
       break;
-    case "customer":
-      // Render components for customer section
+    case "user":
+      switch (currentAction) {
+        case "allUser":
+          content = <ListUser />;
+          break;
+        default:
+          content = <Analytics />;
+      }
       break;
     default:
     // Render default content

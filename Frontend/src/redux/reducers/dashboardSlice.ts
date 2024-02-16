@@ -6,7 +6,8 @@ const initialState = {
     product: false,
     order: false,
   },
-  selectedAction: "create",
+  currentSection: null,
+  currentAction: null,
 };
 
 const dashboardSlice = createSlice({
@@ -14,11 +15,22 @@ const dashboardSlice = createSlice({
   initialState,
   reducers: {
     toggleSection: (state, action) => {
-      state.sectionsState[action.payload] =
-        !state.sectionsState[action.payload];
+      const sectionName = action.payload;
+      state.sectionsState[sectionName] = !state.sectionsState[sectionName];
+      state.currentSection = state.sectionsState[sectionName]
+        ? sectionName
+        : null;
     },
     selectAction: (state, action) => {
-      state.selectedAction = action.payload;
+      const { selectedSection, selectedAction } = action.payload;
+      state.currentSection = selectedSection;
+      state.currentAction = selectedAction;
+      console.log(selectedSection, selectAction);
+      Object.keys(state.sectionsState).forEach((key) => {
+        if (key !== selectedSection) {
+          state.sectionsState[key] = false;
+        }
+      });
     },
   },
 });

@@ -17,9 +17,7 @@ import {
 
 const router = Router();
 
-router
-  .route("/add-product-image")
-  .post(upload.single("productImage"), addProductImage);
+router.route("/add-product-image").post(upload.array("image"), addProductImage);
 
 router.route("/add-product").post(addProduct);
 router.route("/update-product").post(updateProduct);

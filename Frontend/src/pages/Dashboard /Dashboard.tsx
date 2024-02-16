@@ -1,15 +1,22 @@
 import Sidebar from "./Sidebar/Sidebar";
 import MainContent from "./MainContent/MainContent";
 import { useSelector } from "react-redux";
+import style from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const currentAction = useSelector((state) => state.dashboard.selectedAction);
-  console.log(currentAction);
+  const { currentSection, currentAction } = useSelector(
+    (state) => state.dashboard
+  );
   return (
     <div>
       <h1>Dashboard</h1>
-      <Sidebar />
-      <MainContent selectedAction={currentAction} />
+      <div className={style.container}>
+        <Sidebar />
+        <MainContent
+          currentSection={currentSection}
+          currentAction={currentAction}
+        />
+      </div>
     </div>
   );
 };

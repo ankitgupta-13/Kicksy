@@ -4,7 +4,7 @@ export const baseURL = "http://localhost:3000/api";
 
 export const api = axios.create({
   baseURL: baseURL,
-  timeout: 1000 * 5,
+  timeout: 1000 * 10,
   withCredentials: true,
   headers: {
     authorization: `Bearer ${document.cookie.split(";")}`,

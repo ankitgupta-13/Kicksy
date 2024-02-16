@@ -6,19 +6,22 @@ import { uploadOnAws } from "../utils/aws.js";
 import fs from "fs";
 
 const addProductImage = async (req, res) => {
-  const productImageUrl = await uploadOnAws(req.file.path);
+  const productImageUrl = await uploadOnAws(req.files[0].path);
   if (!productImageUrl) {
     return res.send(new ApiError(500, "Upload Failed"));
   }
-  fs.unlinkSync(req.file.path);
+  fs.unlinkSync(req.files[0].path);
   return res.json(new ApiResponse(200, productImageUrl, "Upload Success"));
 };
 
 const addProduct = async (req, res) => {
-  const { productID } = req.body;
-
+  const { productCode } = req.body;
+  const { images } = req.body;
+  if (!images || images.length === 0) {
+    return res.status(409).send("Please add images");
+  }
   try {
-    const product = await Product.findOne({ productID });
+    const product = await Product.findOne({ productCode });
     if (product) {
       return res.status(409).send("Product already exist!");
     }
@@ -26,18 +29,20 @@ const addProduct = async (req, res) => {
     if (!newProduct) {
       return res.status(409).json(new ApiError(409, "Unable to Add Product"));
     }
+
     return res
       .status(200)
       .json(new ApiResponse(200, newProduct, "Product Added Successfully!"));
   } catch (error) {
+    console.log(error);
     throw new ApiError(409, "Product addition failed!");
   }
 };
 
 const updateProduct = async (req, res) => {
   try {
-    const { productID } = req.body;
-    const product = await Product.findOne({ productID });
+    const { productCode } = req.body;
+    const product = await Product.findOne({ productCode });
     const updatedProduct = await Product.findByIdAndUpdate(
       product._id,
       {
@@ -73,12 +78,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-
-
-
-export {
-  addProduct,
-  updateProduct,
-  deleteProduct,
-  addProductImage,
-};
+export { addProduct, updateProduct, deleteProduct, addProductImage };
