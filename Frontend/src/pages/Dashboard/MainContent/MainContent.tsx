@@ -5,6 +5,7 @@ import CreateProduct from "../Product/CreateProduct/CreateProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
 import ListUser from "../User/ListUser/ListUser";
+import style from './MainContent.module.css'
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
@@ -43,16 +44,15 @@ const MainContent = ({ currentSection, currentAction }) => {
       }
       break;
     default:
-    // Render default content
   }
 
   return (
-    <>
-    <h1>Dashboard</h1>  
-      <div className="main-content">
+    <div className={style.main}>
+      <h1>Dashboard</h1>  
+    <div className={style.content}>
       {content}
-      </div>
-    </>
+    </div>
+    </div>
   );
 };
 

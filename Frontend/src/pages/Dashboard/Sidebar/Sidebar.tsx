@@ -38,7 +38,7 @@ const Sidebar = () => {
         const sectionName = Object.keys(section)[0];
         return (
           <div key={index}>
-            <button onClick={() => handleSectionClick(sectionName)}>
+            <button onClick={() => handleSectionClick(sectionName)} className={style.fullWidthButton}>
               {sectionName}
             </button>
             {sectionsState[sectionName] && (
@@ -47,7 +47,7 @@ const Sidebar = () => {
                   return (
                     <li key={index}>
                       <button
-                        onClick={() => handleActionClick(sectionName, action)}
+                        onClick={() => handleActionClick(sectionName, action)} className={style.subButton}
                       >
                         {action}
                       </button>
