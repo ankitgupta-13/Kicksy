@@ -23,7 +23,7 @@ export const authLogin = async (payload: object) => {
   }
 };
 
-export const authRegister = async (payload) => {
+export const authRegister = async (payload: object) => {
   try {
     const { data } = await api.post("/user/register", payload);
     return data;
@@ -44,7 +44,7 @@ export const authLogout = async () => {
   }
 };
 
-export const authVerifyEmail = async (payload) => {
+export const authVerifyEmail = async (payload: object) => {
   try {
     const response = await api.post("/user/verify-email-otp", payload);
     return response;
@@ -54,7 +54,7 @@ export const authVerifyEmail = async (payload) => {
   }
 };
 
-export const authVerifyMobile = async (payload) => {
+export const authVerifyMobile = async (payload: object) => {
   try {
     const response = await api.post("/user/verify-mobile-otp", payload);
     console.log(response);

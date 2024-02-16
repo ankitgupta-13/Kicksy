@@ -3,6 +3,8 @@ import {
   selectAction,
   toggleSection,
 } from "../../../redux/reducers/dashboardSlice";
+import logo from "../../../assets/Krisksy.svg";
+import style from "./Sidebar.module.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -30,8 +32,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
-      <h1>Sidebar</h1>
+    <div className={style.sidebarcontainer}>
+      <img className={style.Logo} src={logo} alt="" />
       {sections.map((section, index) => {
         const sectionName = Object.keys(section)[0];
         return (
