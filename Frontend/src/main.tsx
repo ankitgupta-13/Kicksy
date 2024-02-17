@@ -17,7 +17,7 @@ import Cart from "./pages/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Home from "./pages/Home/Home.tsx";
-
+import ProductDesc from "./pages/ProductDesc/ProductDesc.tsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -28,8 +28,9 @@ const router = createBrowserRouter(
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/productdesc" element={<ProductDesc/>} />
       </Route>
+      <Route path="/admin" element={<Dashboard />} />
     </>
   )
 );

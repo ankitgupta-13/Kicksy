@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
 const Cart = () => {
-  const items = useSelector((state) => state.cart.items);
+  const Cart = useSelector((state) => state.auth?.userData?.data.cart);
   return (
     <div>
       <h1>Cart</h1>
-      <h2>Quantity {items.length}</h2>
+      <h2>Quantity {Cart.length}</h2>
     </div>
   );
 };

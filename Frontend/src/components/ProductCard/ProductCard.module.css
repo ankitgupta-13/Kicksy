@@ -1,3 +1,11 @@
+.container {
+  width: fit-content;
+  border-style: inset;
+  border-width: 0.5px;
+  border-color: rgb(83, 83, 83);
+  padding: 10px;
+  margin: 10px;
+}
 .productImage {
   width: 10rem;
   object-fit: cover;

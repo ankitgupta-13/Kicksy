@@ -7,16 +7,16 @@ const Breadcrumb = () => {
   );
   return (
     <div className={style.container}>
-      <div>Dashboard</div>
+      <div className={style.heading}>Dashboard</div>
       {currentSection && (
         <div className={style.step}>
-          <div className={style.circle}></div>
-          <div>{currentSection}</div>
+          <div>></div>
+          <div> {currentSection}</div>
         </div>
       )}
       {currentAction && (
         <div className={style.step}>
-          <div className={style.circle}></div>
+          <div> > </div>
           <div>{currentAction}</div>
         </div>
       )}
