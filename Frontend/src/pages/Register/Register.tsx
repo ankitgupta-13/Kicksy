@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { authRegister } from "../../api/auth.api";
 import { Input, Logo, Button, Select } from "../../components/index.ts";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 
@@ -9,8 +9,21 @@ const Register = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm();
   const [error, setError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+    setIsEmailValid(isValidEmail); // Update email validation state
+  };
+  const handlePhoneChange = (e) => {
+    const phone = e.target.value;
+    const isValidPhone = phone.match(/^[0-9]{10}$/g);
+    setIsPhoneValid(isValidPhone); // Update phone validation state
+  };
+
   const handleRegister = async (data) => {
     setError("");
     try {
@@ -48,30 +61,45 @@ const Register = () => {
             placeholder="Enter your email"
             {...register("email", {
               required: true,
-              validate: {
-                matchPattern: (value) => {
-                  if (value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-                    return true;
-                  } else {
-                    setEmailError("Please enter a valid email address");
-                    return "Invalid Email";
-                  }
-                },
+              validate: (value) => {
+                const isValidEmail = value.match(
+                  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+                );
+                setIsEmailValid(isValidEmail);
+                return true; // Always return true to avoid validation error
               },
             })}
+            onChange={handleEmailChange} // Call handleEmailChange on input change
           />
-          {emailError && <p className={style.error}>{emailError}</p>}
+          {isEmailValid ? (
+            <button>Send OTP</button>
+          ) : (
+            <p className={style.error}>Please enter a valid email address</p>
+          )}
           <div className={style.mobile}>
             <Select
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
             <Input
-              label="Mobile Number"
+              label="Mobile"
               type="text"
-              placeholder="Enter your phone number"
-              {...register("mobile", { required: true })}
-            ></Input>
+              placeholder="Enter your mobile number"
+              {...register("phone", {
+                required: true,
+                validate: (value) => {
+                  const isValidPhone = value.match(/^[0-9]{10}$/g);
+                  setIsPhoneValid(isValidPhone);
+                  return true; // Always return true to avoid validation error
+                },
+              })}
+              onChange={handlePhoneChange} // Call handlePhoneChange on input change
+            />
+            {isPhoneValid ? (
+              <button>Send OTP</button>
+            ) : (
+              <p className={style.error}>Please enter a valid mobile number</p>
+            )}
           </div>
           <Input
             label="Password"

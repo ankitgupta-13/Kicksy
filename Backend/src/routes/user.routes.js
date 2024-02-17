@@ -8,6 +8,7 @@ import {
   verifyEmailOtp,
   sendMobileOtp,
   verifyMobileOtp,
+  sendEmailOtp,
 } from "../controllers/user.controllers.js";
 
 import {
@@ -24,6 +25,7 @@ import { getRecentProducts } from "../controllers/product.controllers.js";
 const router = Router();
 
 router.route("/register").post(registerUser);
+router.route("/send-email-otp").post(sendEmailOtp);
 router.route("/verify-email-otp").post(verifyEmailOtp);
 router.route("/send-mobile-otp").post(sendMobileOtp);
 router.route("/verify-mobile-otp").post(verifyMobileOtp);

@@ -44,6 +44,26 @@ export const authLogout = async () => {
   }
 };
 
+export const sendEmailOtp = async (payload: object) => {
+  try {
+    const response = await api.post("/user/send-email-otp", payload);
+    return response;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const sendMobileOtp = async (payload: object) => {
+  try {
+    const response = await api.post("/user/send-mobile-otp", payload);
+    return response;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const authVerifyEmail = async (payload: object) => {
   try {
     const response = await api.post("/user/verify-email-otp", payload);

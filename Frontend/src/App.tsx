@@ -30,13 +30,10 @@ const App = () => {
     <div>Loading...</div>
   ) : (
     <div>
-      <Header />
       <Home />
       <main>
         <Outlet />
       </main>
-      {/* <Footer />
-      <PaymentButton amount={2} /> */}
     </div>
   );
 };

@@ -21,15 +21,16 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 
-const sendEmailOtp = async (data) => {
+const sendEmailOtp = async (req, res) => {
   try {
+    const { email } = req.body;
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
       from: {
-        name: "TrophyBook App",
+        name: process.env.AUTH_EMAIL_NAME,
         address: process.env.AUTH_EMAIL,
       },
-      to: data.email,
+      to: email,
       subject: "Verify your Email",
       html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
     };
@@ -143,24 +144,11 @@ const registerUser = async (req, res) => {
   try {
     const { username, email, mobile, password, countryCode } = req.body;
     if (!username || !email || !mobile || !password || !countryCode) {
-      return res.json(new ApiError(410, "All fields are required!"));
+      return res.json(new ApiResponse(410, "All fields are required!"));
     }
-    const user = await User.findOne({ email });
-    if (user && user.isEmailVerified === true) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.json(new ApiResponse(409, "User already exists!"));
-    } else if (user && (!user.isEmailVerified || !user.mobile.isVerified)) {
-      await sendEmailOtp({ data: user, email: user.email });
-      await sendMobileOtp({
-        countryCode: user.mobile.countryCode,
-        mobile: user.mobile.number,
-      });
-      return res.json(
-        new ApiResponse(
-          400,
-          user,
-          "User already exists! Please verify your email."
-        )
-      );
     }
     const newUser = await User.create({
       username,
@@ -171,11 +159,12 @@ const registerUser = async (req, res) => {
       },
       password,
     });
-    await sendEmailOtp({ data: newUser, email: newUser.email });
+    await sendEmailOtp({ data: newUser, email });
     await sendMobileOtp({
       countryCode,
       mobile,
     });
+
     return res.json(
       new ApiResponse(
         201,
@@ -218,8 +207,8 @@ const loginUser = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
-      sameSite: 'None',
-      path: '/',
+      sameSite: "None",
+      path: "/",
     };
 
     const loggedInUser = await User.findById(user._id).select(
@@ -281,6 +270,7 @@ export {
   loginUser,
   getCurrentUser,
   logoutUser,
+  sendEmailOtp,
   verifyEmailOtp,
   sendMobileOtp,
   verifyMobileOtp,

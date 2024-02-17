@@ -16,17 +16,20 @@ import Login from "./pages/Login/Login.tsx";
 import Cart from "./pages/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import Layout from "./Layout.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/verify" element={<Verification />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-      <Route path="/admin" element={<Dashboard />} />
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<App />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/verify" element={<Verification />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+        <Route path="/admin" element={<Dashboard />} />
+      </Route>
     </>
   )
 );
