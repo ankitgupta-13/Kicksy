@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 1rem;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #131212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+}

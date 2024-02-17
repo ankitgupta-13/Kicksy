@@ -20,6 +20,7 @@ const dashboardSlice = createSlice({
       state.currentSection = state.sectionsState[sectionName]
         ? sectionName
         : null;
+      state.currentSection === null ? (state.currentAction = null) : null;
     },
     selectAction: (state, action) => {
       const { selectedSection, selectedAction } = action.payload;
