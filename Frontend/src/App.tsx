@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet } from "react-router-dom";
-import { Header, Footer, PaymentButton } from "./components/index";
-import Home from "./pages/Home/Home";
+import { Header, Footer } from "./components/index";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -30,10 +29,11 @@ const App = () => {
     <div>Loading...</div>
   ) : (
     <div>
-      <Home />
+      <Header />
       <main>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };
