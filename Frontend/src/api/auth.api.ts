@@ -54,20 +54,20 @@ export const sendEmailOtp = async (payload: object) => {
   }
 };
 
-export const sendMobileOtp = async (payload: object) => {
+export const verifyEmailOtp = async (payload: object) => {
   try {
-    const response = await api.post("/user/send-mobile-otp", payload);
-    return response;
+    const { data } = await api.post("/user/verify-email-otp", payload);
+    return data;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
 
-export const verifyEmailOtp = async (payload: object) => {
+export const sendMobileOtp = async (payload: object) => {
   try {
-    const response = await api.post("/user/verify-email-otp", payload);
-    return response;
+    const { data } = await api.post("/user/send-mobile-otp", payload);
+    return data;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
@@ -76,9 +76,8 @@ export const verifyEmailOtp = async (payload: object) => {
 
 export const verifyMobileOtp = async (payload: object) => {
   try {
-    const response = await api.post("/user/verify-mobile-otp", payload);
-    console.log(response);
-    return response;
+    const { data } = await api.post("/user/verify-mobile-otp", payload);
+    return data;
   } catch (error) {
     console.log(error);
   }

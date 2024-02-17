@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { authRegister, sendEmailOtp, verifyEmailOtp } from "../../api/auth.api";
+import {
+  authRegister,
+  sendEmailOtp,
+  sendMobileOtp,
+  verifyEmailOtp,
+  verifyMobileOtp,
+} from "../../api/auth.api";
 import {
   Input,
   Logo,
@@ -10,23 +16,29 @@ import {
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
+import { IoIosEyeOff } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
 
 const Register = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm();
   const [error, setError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [emailOtpSent, setEmailOtpSent] = useState(false);
   const [emailOtp, setEmailOtp] = useState("");
   const [emailOtpVerified, setEmailOtpVerified] = useState(false);
+  const [phoneOtpSent, setPhoneOtpSent] = useState(false);
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
     const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
     setIsEmailValid(isValidEmail);
   };
+
   const handlePhoneChange = (e) => {
     const phone = e.target.value;
     const isValidPhone = phone.match(/^[0-9]{10}$/g);
@@ -42,22 +54,41 @@ const Register = () => {
 
   const handleVerifyEmailOtp = async (email: String, otp: String) => {
     const response = await verifyEmailOtp({ email, otp });
-    console.log(response);
+    response.statusCode === 200
+      ? setEmailOtpVerified(true)
+      : setError(response.message);
   };
 
-  const handleSendPhoneOtp = async (phone) => {};
+  const handleSendPhoneOtp = async (mobile, countryCode) => {
+    const response = await sendMobileOtp({ mobile, countryCode });
+    console.log(response);
+    response.statusCode === 200
+      ? setPhoneOtpSent(true)
+      : setError(response.message);
+  };
+
+  const handleVerifyPhoneOtp = async (mobile, otp) => {
+    const response = await verifyMobileOtp({ mobile, otp });
+    response.statusCode === 200
+      ? setPhoneOtpVerified(true)
+      : setError(response.message);
+  };
 
   const handleRegister = async (data) => {
     setError("");
     try {
-      const response = await authRegister(data);
-      if (response.statusCode === 201 || response.statusCode === 400) {
-        navigate("/verify");
-      } else if (response.statusCode === 409) {
-        setError(response.message);
-        navigate("/login");
+      if (emailOtpVerified && phoneOtpVerified) {
+        const response = await authRegister(data);
+        if (response.statusCode === 201 || response.statusCode === 400) {
+          navigate("/verify");
+        } else if (response.statusCode === 409) {
+          setError(response.message);
+          navigate("/login");
+        } else {
+          setError(response.message);
+        }
       } else {
-        setError(response.message);
+        setError("Please verify email and phone");
       }
     } catch (error) {
       setError(error.message);
@@ -129,24 +160,45 @@ const Register = () => {
               {...register("phone", {
                 required: true,
                 validate: (value) => {
-                  const isValidPhone = value.match(/^[0-9]{10}$/g);
-                  setIsPhoneValid(isValidPhone);
+                  // const isValidPhone = value.match(/^[0-9]{10}$/g);
+                  // setIsPhoneValid(isValidPhone);
                   return true; // Always return true to avoid validation error
                 },
               })}
               onChange={handlePhoneChange} // Call handlePhoneChange on input change
             />
           </div>
-          {isPhoneValid ? (
-            <button onClick={handleSendPhoneOtp}>Send OTP</button>
+          {!phoneOtpSent ? (
+            <button
+              onClick={() =>
+                handleSendPhoneOtp(watch("phone"), watch("countryCode"))
+              }
+            >
+              Send OTP
+            </button>
           ) : (
-            <p className={style.error}>Please enter a valid mobile number</p>
+            <div>
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                onChange={(e) => setPhoneOtp(e.target.value)}
+              />
+              <button
+                onClick={() => handleVerifyPhoneOtp(watch("phone"), phoneOtp)}
+              >
+                Verify
+              </button>
+            </div>
           )}
           <Input
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             {...register("password", { required: true })}
+          />
+          <img
+            src={showPassword ? <IoMdEye /> : <IoIosEyeOff />}
+            onClick={() => setShowPassword(!showPassword)}
           />
           <Input
             label="Confirm Password"
