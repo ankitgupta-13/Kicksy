@@ -1,0 +1,43 @@
+.product {
+    display: flex;
+}
+.action {
+    padding: 30px;
+}
+.bestseller {
+    background-color: rgb(238, 238, 238);
+    padding: 5px;
+}
+.addtocart {
+    width : 200px;
+    height: 40px;
+}
+.size {
+    width : 200px;
+    height: 40px;
+}
+.imagebox {
+    width: 900px;
+    height: 600px;
+    border-style: inset;
+    border-color: gray;
+}
+.table {
+    width: 750px;
+    height: 200px;
+    display: flex;
+}
+.column {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+    border-style: inset;
+    border-color: rgb(174, 174, 174);
+    border-width: 0.5px;
+}
+
+.cards {
+    display: flex;
+}

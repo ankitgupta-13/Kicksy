@@ -12,7 +12,7 @@ export const getKey = async () => {
   }
 };
 
-export const makePayment = async (payload) => {
+export const makePayment = async (payload: { amount: number; }) => {
   try {
     const {
       data: { data },

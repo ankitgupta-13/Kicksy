@@ -1,13 +1,12 @@
 import style from "./Footer.module.css";
 
-//Importing Icons
-import customerSupportIcon from "../../assets/customerSupport-icon.png";
-import fbIcon from "../../assets/fb-icon.png";
-import igIcon from "../../assets/ig-icon.png";
-import ptIcon from "../../assets/pt-icon.png";
-import verifiedIcon from "../../assets/verified-icon.png";
-import replacementIcon from "../../assets/replacement-icon.png";
-import ytIcon from "../../assets/yt-icon.png";
+import customerSupportIcon from "../../assets/customerSupport-icon.png"
+import fbIcon from "../../assets/fb-icon.png"
+import igIcon from "../../assets/ig-icon.png"
+import ptIcon from "../../assets/pt-icon.png"
+import verifiedIcon from "../../assets/verified-icon.png"
+import replacementIcon from "../../assets/replacement-icon.png"
+import ytIcon from "../../assets/yt-icon.png"
 
 const Footer = () => {
   return (
