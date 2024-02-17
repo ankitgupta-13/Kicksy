@@ -1,4 +1,3 @@
-import { Blog } from "../models/blog.model.js";
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -78,9 +77,9 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const getAllProducts = async (req, res) => {
+const getRecentProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 }).limit(5);
     if (!products || products.length === 0) {
       return res.json(new ApiResponse(404, "No products found"));
     }
@@ -95,5 +94,5 @@ export {
   updateProduct,
   deleteProduct,
   addProductImage,
-  getAllProducts,
+  getRecentProducts,
 };

@@ -10,9 +10,9 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const getAllProducts = async () => {
+export const getRecentProducts = async () => {
   try {
-    const { data } = await api.get("/user/get-all-products");
+    const { data } = await api.get("/user/get-recent-products");
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
