@@ -46,8 +46,8 @@ export const authLogout = async () => {
 
 export const sendEmailOtp = async (payload: object) => {
   try {
-    const response = await api.post("/user/send-email-otp", payload);
-    return response;
+    const { data } = await api.post("/user/send-email-otp", payload);
+    return data;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
@@ -64,7 +64,7 @@ export const sendMobileOtp = async (payload: object) => {
   }
 };
 
-export const authVerifyEmail = async (payload: object) => {
+export const verifyEmailOtp = async (payload: object) => {
   try {
     const response = await api.post("/user/verify-email-otp", payload);
     return response;
@@ -74,7 +74,7 @@ export const authVerifyEmail = async (payload: object) => {
   }
 };
 
-export const authVerifyMobile = async (payload: object) => {
+export const verifyMobileOtp = async (payload: object) => {
   try {
     const response = await api.post("/user/verify-mobile-otp", payload);
     console.log(response);

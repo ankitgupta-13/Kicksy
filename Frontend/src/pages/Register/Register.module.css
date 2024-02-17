@@ -46,6 +46,19 @@
   letter-spacing: 0.8px;
 }
 
+.mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .error {
   color: red;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }

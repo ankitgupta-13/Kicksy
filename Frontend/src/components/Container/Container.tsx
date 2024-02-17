@@ -1,7 +1,13 @@
-import React from "react";
+const Container = ({ sx, children }) => {
+  const containerStyle = {
+    ...sx,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    width: "100%",
+  };
 
-const Container = ({ children }) => {
-  return <div style={{ width: "full" }}>{children}</div>;
+  return <div style={containerStyle}>{children}</div>;
 };
 
 export default Container;

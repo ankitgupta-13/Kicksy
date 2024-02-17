@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { authRegister } from "../../api/auth.api";
-import { Input, Logo, Button, Select } from "../../components/index.ts";
+import { authRegister, sendEmailOtp, verifyEmailOtp } from "../../api/auth.api";
+import {
+  Input,
+  Logo,
+  Button,
+  Select,
+  Container,
+} from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
@@ -12,17 +18,34 @@ const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [emailOtpSent, setEmailOtpSent] = useState(false);
+  const [emailOtp, setEmailOtp] = useState("");
+  const [emailOtpVerified, setEmailOtpVerified] = useState(false);
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
     const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
-    setIsEmailValid(isValidEmail); // Update email validation state
+    setIsEmailValid(isValidEmail);
   };
   const handlePhoneChange = (e) => {
     const phone = e.target.value;
     const isValidPhone = phone.match(/^[0-9]{10}$/g);
-    setIsPhoneValid(isValidPhone); // Update phone validation state
+    setIsPhoneValid(isValidPhone);
   };
+
+  const handleSendEmailOtp = async (email: String) => {
+    const response = await sendEmailOtp({ email });
+    response.statusCode === 200
+      ? setEmailOtpSent(true)
+      : setError(response.message);
+  };
+
+  const handleVerifyEmailOtp = async (email: String, otp: String) => {
+    const response = await verifyEmailOtp({ email, otp });
+    console.log(response);
+  };
+
+  const handleSendPhoneOtp = async (phone) => {};
 
   const handleRegister = async (data) => {
     setError("");
@@ -42,13 +65,18 @@ const Register = () => {
   };
 
   return (
-    <div className={style.Body}>
+    <Container
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <div className={style.CenterBody}>
         <div className={style.logo}>
           <Logo />
         </div>
         <h2 className={style.heading}>Register</h2>
-        <form onSubmit={handleSubmit(handleRegister)}>
+        <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
           <Input
             label="Full Name"
             type="text"
@@ -71,18 +99,31 @@ const Register = () => {
             })}
             onChange={handleEmailChange} // Call handleEmailChange on input change
           />
-          {isEmailValid ? (
-            <button>Send OTP</button>
+          {!emailOtpSent ? (
+            <button onClick={() => handleSendEmailOtp(watch("email"))}>
+              Send OTP
+            </button>
           ) : (
-            <p className={style.error}>Please enter a valid email address</p>
+            <div>
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                onChange={(e) => setEmailOtp(e.target.value)}
+              />
+              <button
+                onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}
+              >
+                Verify
+              </button>
+            </div>
           )}
           <div className={style.mobile}>
             <Select
+              height="55px"
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
             <Input
-              label="Mobile"
               type="text"
               placeholder="Enter your mobile number"
               {...register("phone", {
@@ -95,12 +136,12 @@ const Register = () => {
               })}
               onChange={handlePhoneChange} // Call handlePhoneChange on input change
             />
-            {isPhoneValid ? (
-              <button>Send OTP</button>
-            ) : (
-              <p className={style.error}>Please enter a valid mobile number</p>
-            )}
           </div>
+          {isPhoneValid ? (
+            <button onClick={handleSendPhoneOtp}>Send OTP</button>
+          ) : (
+            <p className={style.error}>Please enter a valid mobile number</p>
+          )}
           <Input
             label="Password"
             type="password"
@@ -132,7 +173,7 @@ const Register = () => {
           </Button>
         </form>
       </div>
-    </div>
+    </Container>
   );
 };
 

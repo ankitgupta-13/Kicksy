@@ -24,6 +24,10 @@ const generateAccessAndRefreshToken = async (userId) => {
 const sendEmailOtp = async (req, res) => {
   try {
     const { email } = req.body;
+    // Delete all previous otps for the user
+    await Otp.deleteMany({ email });
+
+    // Generate a new otp
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
       from: {
@@ -37,15 +41,11 @@ const sendEmailOtp = async (req, res) => {
 
     const hashedOtp = await bcrypt.hash(otp, 12);
     const newOtp = new Otp({
-      userId: data.data._id,
+      email,
       otp: hashedOtp,
     }).save();
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      }
-    });
+    transporter.sendMail(mailOptions);
+    res.status(200).json(new ApiResponse(200, "Otp sent successfully"));
   } catch (err) {
     console.log(err);
   }
@@ -53,19 +53,18 @@ const sendEmailOtp = async (req, res) => {
 
 const verifyEmailOtp = async (req, res) => {
   try {
-    const { userId, otp } = req.body;
+    const { email, otp } = req.body;
 
     if (!otp) {
       throw Error(`Fill the otp first`);
-    } else if (!userId) {
+    } else if (!email) {
       throw Error("userId not specified");
     } else {
-      const main_user = await User.findOne({ _id: userId });
+      const otp = await Otp.findOne({ email });
 
-      if (main_user.verified == true) {
-        throw new Error("User Already verified.");
+      if (!otp) {
+        return res.json(new ApiResponse(404, "Otp not found"));
       }
-      const user = await Otp.find({ userId });
 
       if (user.length <= 0) {
         throw new Error("Account record doesn't exist , Sign up first.");

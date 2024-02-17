@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 
-const Select = ({ options, label, className = "", ...props }, ref) => {
+const Select = ({ height, options, label, className = "", ...props }, ref) => {
   const id = useId();
   return (
     <div>
@@ -9,7 +9,13 @@ const Select = ({ options, label, className = "", ...props }, ref) => {
           {label}
         </label>
       )}
-      <select {...props} id={id} ref={ref} className="">
+      <select
+        {...props}
+        id={id}
+        ref={ref}
+        className=""
+        style={{ height: `${height}` }}
+      >
         {options?.map((option) => (
           <option key={option} value={option}>
             {option}

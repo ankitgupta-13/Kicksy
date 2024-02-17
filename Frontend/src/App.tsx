@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet } from "react-router-dom";
-import { Header, Footer } from "./components/index";
+import { Header, Footer, Container } from "./components/index";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const email = useSelector((state) => state.auth?.userData?.email);
 
   useEffect(() => {
     getCurrentUser()
@@ -28,13 +27,13 @@ const App = () => {
   return loading ? (
     <div>Loading...</div>
   ) : (
-    <div>
+    <Container sx={{ gap: "1rem" }}>
       <Header />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </Container>
   );
 };
 
