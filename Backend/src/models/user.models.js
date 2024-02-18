@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
@@ -49,8 +49,14 @@ const userSchema = new mongoose.Schema(
     ],
     cart: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        product: {
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"Product"
+        },
+        qty:{
+          type:Number,
+          default:1
+        }
       },
     ],
     wishlist: [
@@ -75,20 +81,17 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
-    referralCode: {
-      code: String,
-      users: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
-    },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
+    address:[
+      {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Address'
+      }
+    ]
   },
   {
     timestamps: true,
@@ -141,10 +144,10 @@ userSchema.methods.addToCart = async function (productId) {
     }
 
     const index = this.cart.findIndex((item) => {
-      return item["_id"].equals(productId);
+      return item['product']["_id"].equals(productId);
     });
     if (index === -1) {
-      this.cart = this.cart.concat(productId);
+      this.cart = this.cart.concat({product:productId});
       await this.save();
       return this.cart;
     } else {

@@ -1,6 +1,7 @@
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import mongoose from "mongoose";
 
 const addToCart = async (req, res) => {
   try {
@@ -16,6 +17,47 @@ const addToCart = async (req, res) => {
     res.json(new ApiError(400, "Error adding to cart ", err));
   }
 };
+
+const addSubtractCartQty = async (req, res) => {
+  const { userID, operator, cartID } = req.body;
+  const user = await User.findOne({ _id: userID });
+  try {
+    if (!user) return new ApiResponse(404, "user not found!");
+    const index = user.cart.findIndex((item) => {
+      return item['_id'].equals(cartID);
+    })
+
+    if (index === -1) {
+      return new ApiResponse(400, "Invalid cart id");
+    }
+    else {
+      if (operator === '+') {
+        user.cart[index].qty += 1
+        await user.save();
+        res.json(new ApiResponse(200, "qty increased"));
+      }
+      else if (operator === '-') {
+        if (user.cart[index].qty === 0) {
+          const id = new mongoose.Types.ObjectId(cartID);
+          user.cart.splice(index, 1);
+          await user.save();
+          return new ApiResponse(200, "Quantity already 0 , removing the item from cart!")
+        }
+        else {
+          user.cart[index].qty -= 1
+          await user.save()
+          res.json(new ApiResponse(200, "qty reduced by 1"));
+        }
+      }
+      else {
+        return new ApiResponse(422, "Invalid Operator")
+      }
+    }
+  }
+  catch (err) {
+    console.log(err.message)
+  }
+}
 
 const deleteFromCart = async (req, res) => {
   try {
@@ -101,6 +143,7 @@ const removeFromList = async (req, res) => {
 
 export {
   addToCart,
+  addSubtractCartQty,
   addListName,
   addToList,
   deleteFromCart,

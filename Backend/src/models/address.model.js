@@ -29,6 +29,8 @@ const addressSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    latitude:String,
+    longitude:String,
     phoneNumber: {
         type: String,
         required: true,

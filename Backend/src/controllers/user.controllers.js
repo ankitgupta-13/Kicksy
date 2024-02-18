@@ -37,7 +37,7 @@ const sendEmailOtp = async (req, res) => {
       },
       to: email,
       subject: "Verify your Email",
-      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 10 minutes.</p>`,
     };
 
     const hashedOtp = await bcrypt.hash(otp, 12);
@@ -55,6 +55,7 @@ const sendEmailOtp = async (req, res) => {
 const verifyEmailOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
+
     if (!email || !otp) {
       return res.json(new ApiResponse(410, "All fields are required!"));
     }
@@ -240,6 +241,17 @@ const logoutUser = async (req, res) => {
     res.json(new ApiError(400, "An error occured during logout"));
   }
 };
+
+const editUser = async(req,res)=>{
+  const {userID} = req.body;
+  try{
+    const user = await User.findOne({_id:userID});
+    
+  }
+  catch(err){
+
+  }
+}
 
 export {
   registerUser,
