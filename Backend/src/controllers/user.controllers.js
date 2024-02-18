@@ -55,28 +55,48 @@ const sendEmailOtp = async (req, res) => {
 const verifyEmailOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
-    if (!email || !otp) {
-      return res.json(new ApiResponse(410, "All fields are required!"));
-    }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.json(new ApiResponse(409, "User already exists!"));
-    }
-    const hashedOtp = await Otp.findOne({ email });
-    if (!hashedOtp) {
-      return res.json(new ApiResponse(404, "Otp not found"));
-    }
-    const { createdAt } = hashedOtp;
-    if (createdAt < Date.now() - 600000) {
-      return new ApiResponse("Otp has expired , please request again");
-    }
-    const verify = bcrypt.compareSync(otp, hashedOtp.otp);
 
-    if (verify) {
-      await Otp.deleteOne({ email });
-      return res.json(new ApiResponse(200, "Email verified successfully"));
+    if (!otp) {
+      throw Error(`Fill the otp first`);
+    } else if (!email) {
+      throw Error("email not specified");
     } else {
-      return res.json(new ApiResponse(400, "Otp entered is wrong"));
+      const otp = await Otp.findOne({ email });
+
+      if (!otp) {
+        return res.json(new ApiResponse(404, "Otp not found"));
+      }
+
+      if (user.length <= 0) {
+        throw new Error("Account record doesn't exist , Sign up first.");
+      } else {
+        let verify = false;
+        for (let i = 0; i < user.length; i++) {
+          const hashedOtp = user[i].otp;
+          const { expiresAt } = user[i];
+
+          if (expiresAt < Date.now()) {
+            await Otp.deleteMany({ userId });
+            throw new Error("Otp has expired , please request again");
+          } else {
+            verify = await bcrypt.compare(otp, hashedOtp);
+
+            if (verify == true) {
+              await User.updateOne({ _id: userId }, { verified: true });
+              await UserVerificationModel.deleteMany({ userId });
+              res.status(201).json({
+                status: "verified",
+                message: "Email verified successfully",
+              });
+              break;
+            }
+          }
+        }
+
+        if (!verify) {
+          throw new Error("The otp entered is wrong. Please try again.");
+        }
+      }
     }
   } catch (err) {
     console.log(err);

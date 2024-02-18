@@ -17,6 +17,45 @@ const addToCart = async (req, res) => {
   }
 };
 
+const addSubtractCartQty = async (req, res) => {
+  const { userId, operator, cartId } = req.body;
+  const user = await User.findOne({ _id: userId });
+  try {
+    if (!user) return new ApiResponse(404, "user not found!");
+    const index = user.cart.findIndex((item) => {
+      return item['_id'].equals(cartId);
+    })
+
+    if (index === -1) {
+      return new ApiResponse(400 , "Invalid cart id");
+    }
+    else {
+      if (operator === '+') {
+        user.cart[index].qty += 1
+        await user.save();
+      }
+      else if (operator === '-') {
+        if (user.cart[index].qty === 0) {
+          const id = new mongoose.Types.ObjectId(cartId);
+          user.cart.splice(index, 1);
+          await user.save();
+          return new ApiResponse(200, "Quantity already 0 , removing the item from cart!")
+        }
+        else {
+          user.cart[index].qty -= 1
+          await user.save()
+        }
+      }
+      else{
+        return new ApiResponse(422 , "Invalid Operator")
+      }
+    }
+  }
+  catch (err) {
+    console.log(err.message)
+  }
+}
+
 const deleteFromCart = async (req, res) => {
   try {
     const { userID, productID } = req.body;
