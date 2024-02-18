@@ -37,7 +37,7 @@ const sendEmailOtp = async (req, res) => {
       },
       to: email,
       subject: "Verify your Email",
-      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 1 hour.</p>`,
+      html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete your signup</p><p>This otp expires in 10 minutes.</p>`,
     };
 
     const hashedOtp = await bcrypt.hash(otp, 12);

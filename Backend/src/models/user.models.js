@@ -53,7 +53,10 @@ const userSchema = new mongoose.Schema(
           type:mongoose.Schema.Types.ObjectId,
           ref:"Product"
         },
-        qty:Number
+        qty:{
+          type:Number,
+          default:1
+        }
       },
     ],
     wishlist: [
@@ -144,10 +147,10 @@ userSchema.methods.addToCart = async function (productId) {
     }
 
     const index = this.cart.findIndex((item) => {
-      return item["_id"].equals(productId);
+      return item['product']["_id"].equals(productId);
     });
     if (index === -1) {
-      this.cart = this.cart.concat(productId);
+      this.cart = this.cart.concat({product:productId});
       await this.save();
       return this.cart;
     } else {
