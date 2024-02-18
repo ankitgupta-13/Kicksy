@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
@@ -81,20 +81,17 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
-    referralCode: {
-      code: String,
-      users: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
-    },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
+    address:[
+      {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Address'
+      }
+    ]
   },
   {
     timestamps: true,

@@ -6,14 +6,17 @@ const createAdmin = async (req, res) => {
   try {
     const { email } = req.body;
     const existingAdmin = await Admin.findOne({ email });
+
     if (existingAdmin) {
       return res.json(new ApiResponse(409, "Admin already exists!"));
     }
+    
     const newAdmin = await Admin.create({ email });
     return res.json(
       new ApiResponse(201, newAdmin, "Admin created successfully!")
     );
-  } catch (error) {
+  } 
+  catch (error) {
     throw new ApiError(400, "Error creating admin ", error);
   }
 };

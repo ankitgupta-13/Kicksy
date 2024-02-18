@@ -15,7 +15,7 @@ const addOrder = async (req, res) => {
     * productID will be an array of objects containing id and qty 
     * 
     * sample obj:
-    * const productID  = { productID:<id> , quantity:<Number> }
+    * const productID  = { productID:<id> , qty:<Number> }
     */
 
     try {
