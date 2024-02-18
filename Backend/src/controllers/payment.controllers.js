@@ -2,7 +2,7 @@ import Razorpay from "razorpay";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import crypto from "crypto";
-import { Payment } from "../models/payment.model.js";
+import { Payment } from "../models/payment.models.js";
 import fetch from "node-fetch";
 
 const rpayInstance = new Razorpay({

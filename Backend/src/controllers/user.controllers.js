@@ -1,10 +1,11 @@
 import { User } from "../models/user.models.js";
-import { Otp } from "../models/otp.model.js";
+import { Otp } from "../models/otp.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
 import { client, TWILIO_SERVICE_SID } from "../utils/twilio.js";
+import { Admin } from "../models/admin.models.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -138,6 +139,12 @@ const registerUser = async (req, res) => {
       },
       password,
     });
+
+    const admin = await Admin.findOne({ email });
+    if (admin) {
+      newUser.role = "admin";
+      await newUser.save();
+    }
     return res.json(
       new ApiResponse(201, newUser, "User registered successfully!")
     );

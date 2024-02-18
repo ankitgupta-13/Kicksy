@@ -4,7 +4,7 @@ import {
   verifyPayment,
   getKey,
   fetchall,
-} from "../controllers/payment.controller.js";
+} from "../controllers/payment.controllers.js";
 
 const router = Router();
 

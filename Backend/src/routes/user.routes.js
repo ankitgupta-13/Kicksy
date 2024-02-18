@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middlewares.js";
 import {
   loginUser,
   registerUser,
@@ -18,7 +18,7 @@ import {
   deleteFromCart,
   removeFromList,
   removeList,
-} from "../controllers/cart.controller.js";
+} from "../controllers/cart.controllers.js";
 
 import { getRecentProducts } from "../controllers/product.controllers.js";
 

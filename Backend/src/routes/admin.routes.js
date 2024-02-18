@@ -6,16 +6,21 @@ import {
   deleteProduct,
 } from "../controllers/product.controllers.js";
 
-import { upload } from "../middlewares/multer.middleware.js";
+import { upload } from "../middlewares/multer.middlewares.js";
 
 import {
   addBlog,
   deleteBlog,
   editBlog,
   fetchBlog,
-} from "../controllers/blog.controller.js";
+} from "../controllers/blog.controllers.js";
+
+import { checkAdmin, createAdmin } from "../controllers/admin.controllers.js";
 
 const router = Router();
+
+router.route("/create-admin").post(createAdmin);
+router.route("/check-admin").post(checkAdmin);
 
 router.route("/add-product-image").post(upload.array("image"), addProductImage);
 
