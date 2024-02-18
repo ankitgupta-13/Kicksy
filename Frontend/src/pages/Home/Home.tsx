@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getRecentProducts } from "../../api/user.api";
 import style from "./Home.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import BestSeller from "../../components/ProductCard/ProductCard";
 import { Container } from "../../components";
 
 const Home = () => {
@@ -28,6 +29,9 @@ const Home = () => {
             </div>
           );
         })}
+        </div>
+        <div className={style.cards}>
+                <BestSeller/>
         </div>
       </div>
     </Container>
