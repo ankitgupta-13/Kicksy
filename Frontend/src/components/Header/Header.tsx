@@ -16,7 +16,7 @@ const Header = () => {
     { name: "Home", slug: "/", isActive: true },
     { name: "Shop", slug: "/shop", isActive: true },
     { name: "Custom Anime", slug: "/anime", isActive: true },
-    { name: "Track Order", slug: "/order", isActive: true },
+    { name: "Track Order", slug: "/trackorder", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
   ];
@@ -50,7 +50,7 @@ const Header = () => {
             <li className={style.iconListItems}>
               <img src={searchIcon} alt="Search" />
             </li>
-            <li className={style.iconListItems}>
+            <li className={style.iconListItems} onClick={() => navigate("/cart")}>
               <img src={shoppingBagIcon} alt="ShoppingBag" />
             </li>
             <li className={style.iconListItems}>

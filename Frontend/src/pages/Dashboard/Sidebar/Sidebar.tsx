@@ -19,6 +19,9 @@ const Sidebar = () => {
     {
       order: ["allOrder", "editOrder", "deleteOrder"],
     },
+    {
+      blogs : ["addblog", 'listblogs'],
+    },
   ];
 
   const handleSectionClick = (sectionName) => {
