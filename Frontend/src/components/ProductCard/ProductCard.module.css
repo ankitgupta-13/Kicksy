@@ -13,11 +13,37 @@
   gap: 0.6rem;
 }
 .shoes {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 28rem;
   width: 28rem;
+}
+.shoes__bestseller {
+  position: relative;
+  z-index: 1;
+  top: 10%;
+  left: 75%;
+  display: flex;
+  text-align: end;
+}
+.shoes__bestseller_text {
+  position: relative;
+  font-weight: 700;
+  font-family: "Noir Pro", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+.shoes__bestseller_text::before {
+  content: "";
+  position: absolute;
+  inset: -0.75rem -2.5rem -0.75rem -2.5rem;
+  border: none;
+  outline: none;
+  border-radius: 24px;
+  background: #f6f6f6;
+  z-index: -1;
 }
 .shoes__color {
   display: flex;
@@ -37,7 +63,6 @@
   font-size: 0.6rem;
   font-weight: 400;
   font-family: "Noir Pro";
-  /* margin: 9px 0 9px 0; */
 }
 .shoes__tagline {
   color: #727373;
@@ -48,14 +73,18 @@
   font-family: "Noir Pro", Regular;
 }
 .container__header {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
+}
+.shoes__bestseller {
+  display: none;
 }
 .container__hotitem {
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
   height: 1.5rem;
   width: 1.5rem;
   border: 1px solid #000000;
@@ -80,7 +109,7 @@
   .container {
     height: 18rem;
     width: 11rem;
-    gap: 0.3rem;
+    gap: 0.5rem;
   }
   .shoes {
     height: 6.5rem;
@@ -101,9 +130,12 @@
   .shoes__info {
     gap: 0.2rem;
   }
+  .container__header {
+    display: flex;
+  }
   .mobile__shoes_price {
     display: block;
-    margin: 1.5rem 0 0 0;
+    margin: 1.25rem 0 -0.06rem 0;
     font-size: 0.75rem;
   }
   .mobile__expected_price {

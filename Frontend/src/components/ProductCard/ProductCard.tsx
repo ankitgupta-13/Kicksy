@@ -31,6 +31,9 @@ const BestSeller = (product: any) => {
         <div className={style.container__hotitem}><img src={Fire} alt='error'/></div>
         <img src={Add} className={style.container__addcard} alt='error'/>
      </div>
+        <div className={style.shoes__bestseller}>
+        <div className={style.shoes__bestseller_text}>BestSeller</div>
+        </div>
         <div className={style.shoes}>
         <img src={imagesrc} className={style.shoes__image}/>
         </div>

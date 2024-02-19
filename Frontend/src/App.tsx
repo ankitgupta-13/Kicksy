@@ -33,7 +33,6 @@ const App = () => {
         <Outlet />
       </main>
       <Footer />
-      <PaymentButton amount={100}/>
     </Container>
   );
 };
