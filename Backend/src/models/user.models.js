@@ -31,6 +31,18 @@ const userSchema = new mongoose.Schema(
       type: mobileSchema,
       required: true,
     },
+<<<<<<< Updated upstream
+=======
+    gender: {
+      type: String,
+      enum: ['M', 'F', 'O']
+    },
+    isEmailVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+>>>>>>> Stashed changes
     orders: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,12 +52,12 @@ const userSchema = new mongoose.Schema(
     cart: [
       {
         product: {
-          type:mongoose.Schema.Types.ObjectId,
-          ref:"Product"
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product"
         },
-        qty:{
-          type:Number,
-          default:1
+        qty: {
+          type: Number,
+          default: 1
         }
       },
     ],
@@ -76,10 +88,10 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    address:[
+    address: [
       {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Address'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
       }
     ]
   },
@@ -137,7 +149,7 @@ userSchema.methods.addToCart = async function (productId) {
       return item['product']["_id"].equals(productId);
     });
     if (index === -1) {
-      this.cart = this.cart.concat({product:productId});
+      this.cart = this.cart.concat({ product: productId });
       await this.save();
       return this.cart;
     } else {

@@ -236,17 +236,6 @@ const logoutUser = async (req, res) => {
   }
 };
 
-const editUser = async(req,res)=>{
-  const {userID} = req.body;
-  try{
-    const user = await User.findOne({_id:userID});
-    
-  }
-  catch(err){
-
-  }
-}
-
 export {
   registerUser,
   loginUser,

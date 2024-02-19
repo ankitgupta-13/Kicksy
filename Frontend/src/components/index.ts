@@ -6,7 +6,7 @@ import Container from "./Container/Container";
 import Button from "./Button/Button";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
-import PaymentButton from "./Button/PaymentButton";
+import PaymentButton from "./Button/PaymentButton.tsx";
 import BlogUploadButton from "./Button/uploadButton";
 
 export {

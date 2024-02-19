@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
 import { Outlet } from "react-router-dom";
-import { Header, Footer, Container } from "./components/index";
+import { Header, Footer, Container, PaymentButton } from "./components/index";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -33,6 +33,7 @@ const App = () => {
         <Outlet />
       </main>
       <Footer />
+      <PaymentButton amount={100}/>
     </Container>
   );
 };
