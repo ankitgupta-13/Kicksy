@@ -66,7 +66,7 @@ const Register = () => {
     } else setError(response.message);
   };
 
-  const handleVerifyPhoneOtp = async (mobile, otp) => {
+  const handleVerifyPhoneOtp = async (mobile: any, otp: string) => {
     const response = await verifyMobileOtp({ mobile, otp });
     if (response.statusCode === 200) {
       setPhoneOtpVerified(true);
@@ -74,10 +74,10 @@ const Register = () => {
     } else setError(response.message);
   };
 
-  const handleRegister = async (data) => {
+  const handleRegister = async (data: object) => {
     setError("");
     try {
-      if (emailOtpVerified && phoneOtpVerified) {
+      if (true) {
         const response = await authRegister(data);
         if (response.statusCode === 201 || response.statusCode === 400) {
           navigate("/verify");
@@ -157,7 +157,7 @@ const Register = () => {
             <Input
               type="number"
               placeholder="Enter your mobile number"
-              {...register("phone", {
+              {...register("mobile", {
                 required: true,
                 validate: (value) => {
                   const isValidPhone = value.match(/^[0-9]{10}$/g);

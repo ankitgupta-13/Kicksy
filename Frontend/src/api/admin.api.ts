@@ -12,7 +12,7 @@ export const axiosImageApi = axios.create({
   },
 });
 
-export const createAdmin = async (payload) => {
+export const createAdmin = async (payload: any) => {
   try {
     const { data } = await api.post("/admin/create-admin", payload);
     return data;
@@ -26,13 +26,13 @@ export const checkAdmin = async (payload: object) => {
   try {
     const { data } = await api.post("/admin/check-admin", payload);
     return data;
-  } catch (error) {
+  } catch (error : any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
 
-export const addProduct = async (payload) => {
+export const addProduct = async (payload: any) => {
   try {
     const { data } = await api.post("/admin/add-product", payload);
     return data;
@@ -42,7 +42,7 @@ export const addProduct = async (payload) => {
   }
 };
 
-export const uploadImage = async (payload) => {
+export const uploadImage = async (payload: FormData) => {
   try {
     const { data } = await axiosImageApi.post(
       "/admin/add-product-image",
