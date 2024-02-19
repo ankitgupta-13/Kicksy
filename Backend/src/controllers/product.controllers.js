@@ -116,7 +116,7 @@ const getProductById = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({})
+  const products = await Product.find({});
     res.json(new ApiResponse(200 , products , "products fetched successfully"));
   }
   catch (err) {

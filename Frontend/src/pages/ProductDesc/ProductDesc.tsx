@@ -5,23 +5,33 @@ import { getRecentProducts, addToCart } from "../../api/user.api"
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Button } from "../../components/index";
 import { useSelector} from "react-redux";
-import Cart from "../Cart/Cart";
+import { getProductById } from "../../api/user.api";
+import { RootState } from "@reduxjs/toolkit/query";
+
 
 const ProductDesc = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("product");
     const [products, setProducts] = useState([]);
+    const [curProduct, setCurProduct] = useState([]);
     const [size, setSize] = useState();
-    const user = useSelector((state) => state.auth?.userData?.data._id);
-    console.log(user);
+    const user = useSelector((state : any) => state.auth?.userData?.data._id);
 
     const getProducts = async () => {
       const response = await getRecentProducts();
       if (response.statusCode === 200) setProducts(response.data);
     };
+    const getCurrentProduct = async () => {
+      const payload = {
+        productID : id
+      }
+      const response = await getProductById(payload);
+      if (response.statusCode === 200) setCurProduct(response.data);
+    }
     useEffect(() => {
       getProducts();
+      getCurrentProduct();
     }, []);
 
     const sizes = [
@@ -52,12 +62,12 @@ const ProductDesc = () => {
   return (
     <div>
       <div className={style.product}>
-      <div className={style.imagebox}>Image Box</div>
+      <img src={curProduct.images} className={style.imagebox} alt="product-image"/>
       <div className={style.action}>
-          <h4>Brand</h4>
-          <h2>Product Name</h2>
+          <h4>{curProduct.brand}</h4>
+          <h2>{curProduct.title}</h2>
           <a className={style.bestseller}>BEST SELLER</a>
-          <h2>Rs. 24,500</h2>
+          <h2>Rs. {curProduct.price}</h2>
           <div >
           <select className={style.size} value={size} onChange={handleChange}>
          {sizes.map((size: any) => (
@@ -74,8 +84,7 @@ const ProductDesc = () => {
 
       </div>
       </div>
-      <h3>Product details</h3>
-      <p>{id}</p>
+      <h3>{curProduct.description}</h3>
       <a>Read More</a>
       <div className={style.table}>
         <div className={style.column}>

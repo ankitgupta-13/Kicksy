@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
+import { getAllProducts } from '../../api/user.api';
 import style from './Shop.module.css'
+import ProductCard from '../../components/ProductCard/ProductCard';
 
-interface Product {
-  id: string;
-  name: string;
-  bodyType: string;
-  productType: string;
-  brand: string;
-  size: string;
-  color: string;
-}
 
 const Shop: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -21,14 +14,13 @@ const Shop: React.FC = () => {
     color: '',
   });
 
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
-      const response = await fetch('/api/products');
-      const data = await response.json();
-      setAllProducts(data.products);
+      const data = await getAllProducts();
+      setAllProducts(data.data);
     };
 
     fetchAllProducts();
@@ -62,13 +54,14 @@ const Shop: React.FC = () => {
     <div className={style.shoppage}>
       <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
       <div className={style.productlist}>
-        <h2>Filtered Products</h2>
         <ul>
-          {filteredProducts.map((product) => (
-            <li key={product.id}>
-              <strong>{product.name}</strong> - {product.bodyType}, {product.productType}, {product.brand}, {product.size}, {product.color}
-            </li>
-          ))}
+          {filteredProducts.map((product: any, index: number) => {
+            return (
+              <div key={index}>
+                <ProductCard product={product} />
+              </div>
+            );
+          })}
         </ul>
       </div>
     </div>
