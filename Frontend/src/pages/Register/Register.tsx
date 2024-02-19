@@ -6,13 +6,7 @@ import {
   verifyEmailOtp,
   verifyMobileOtp,
 } from "../../api/auth.api";
-import {
-  Input,
-  Logo,
-  Button,
-  Select,
-  Container,
-} from "../../components/index.ts";
+import { Input, Button, Select, Container } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";

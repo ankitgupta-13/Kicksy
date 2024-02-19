@@ -14,6 +14,7 @@ import {
 import {
   addListName,
   addToCart,
+  addSubtractCartQty,
   addToList,
   deleteFromCart,
   removeFromList,
@@ -31,6 +32,7 @@ router.route("/send-mobile-otp").post(sendMobileOtp);
 router.route("/verify-mobile-otp").post(verifyMobileOtp);
 router.route("/login").post(loginUser);
 router.route("/add-to-cart").post(addToCart);
+router.route("/add-subtract-cart-qty").post(addSubtractCartQty);
 router.route("/delete-from-cart").post(deleteFromCart);
 router.route("/add-list-name").post(addListName);
 router.route("/add-to-list").post(addToList);

@@ -18,6 +18,9 @@ import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Home from "./pages/Home/Home.tsx";
 import ProductDesc from "./pages/ProductDesc/ProductDesc.tsx";
+import Shop from "./pages/Shop/Shop.tsx";
+import Anime from "./pages/Anime/Anime.tsx";
+import TrackOrder from "./pages/TrackOrder/TrackOrder.tsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -29,6 +32,9 @@ const router = createBrowserRouter(
         <Route path="/cart" element={<Cart />} />
         <Route path="/paymentsuccess" element={<PaymentSuccess />} />
         <Route path="/productdesc" element={<ProductDesc/>} />
+        <Route path="/shop" element={<Shop/>} />
+        <Route path="/anime" element={<Anime/>} />
+        <Route path="/trackorder" element={<TrackOrder/>} />
       </Route>
       <Route path="/admin" element={<Dashboard />} />
     </>
