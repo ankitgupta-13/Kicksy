@@ -26,6 +26,9 @@ const addProduct = async (req, res) => {
       return res.status(409).send("Product already exist!");
     }
     const newProduct = await Product.create(req.body);
+    if (!req.body.mrp) {
+      newProduct.mrp = newProduct.price;
+    }
     newProduct.tags.push(newProduct.title.toLowerCase())
     newProduct.tags.push(newProduct.brand.toLowerCase())
     newProduct.tags.push(newProduct.gender.toLowerCase())
@@ -94,11 +97,39 @@ const getRecentProducts = async (req, res) => {
   }
 };
 
-  
+const getProductById = async (req, res) => {
+  try {
+    const { productID } = req.body;
+    const product = await Product.findOne({ _id: productID });
+
+    if (!product) {
+      res.json(new ApiError(404, "Invalid product id , product not found"));
+    }
+
+    res.json(new ApiResponse(200, product, "product fetched successfully."));
+
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({})
+    res.json(new ApiResponse(200 , products , "products fetched successfully"));
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
 export {
   addProduct,
   updateProduct,
   deleteProduct,
   addProductImage,
   getRecentProducts,
+  getProductById,
+  getAllProducts
 };

@@ -10,13 +10,13 @@ const Breadcrumb = () => {
       <div className={style.heading}>Dashboard</div>
       {currentSection && (
         <div className={style.step}>
-          <div>1</div>
+          <div className={style.circle}></div>
           <div> {currentSection}</div>
         </div>
       )}
       {currentAction && (
         <div className={style.step}>
-          <div> 1 </div>
+          <div className={style.circle}></div>
           <div>{currentAction}</div>
         </div>
       )}

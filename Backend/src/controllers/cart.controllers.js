@@ -28,7 +28,7 @@ const addSubtractCartQty = async (req, res) => {
     })
 
     if (index === -1) {
-      return new ApiResponse(400, "Invalid cart id");
+      return new ApiError(400, "Invalid cart id");
     }
     else {
       if (operator === '+') {
@@ -50,7 +50,7 @@ const addSubtractCartQty = async (req, res) => {
         }
       }
       else {
-        return new ApiResponse(422, "Invalid Operator")
+        return new ApiError(422, "Invalid Operator")
       }
     }
   }

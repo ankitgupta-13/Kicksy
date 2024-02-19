@@ -17,8 +17,9 @@ const Login = () => {
     setError("");
     try {
       const response = await authLogin(data);
-      console.log(response.data.data);
-      const userData = response.data.data;
+      console.log(response);
+      if (response.statusCode === 401) return setError(response.data.message);
+      const userData = response.data;
       if (userData) {
         dispatch(login({ userData }));
         navigate("/");
@@ -30,45 +31,45 @@ const Login = () => {
 
   return (
     <div className={style.Body}>
-    <div className={style.CenterBody}>
-      <div className={style.logo}>
-        <Logo />
+      <div className={style.CenterBody}>
+        <div className={style.logo}>
+          <Logo />
+        </div>
+        <h2 className={style.content}>Sign in to your account</h2>
+        <p className={style.content2}>
+          Don't have any account?
+          <Link to="/register">Sign up</Link>
+          {error && <p>{error}</p>}
+        </p>
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+            {...register("email", {
+              required: true,
+              validate: {
+                matchPattern: (value) =>
+                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                  "Please enter a valid email address",
+              },
+            })}
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            {...register("password", { required: true })}
+          />
+          <Button
+            className={style.button}
+            style={{ backgroundColor: "#131313", color: "white" }}
+            type="submit"
+          >
+            Login
+          </Button>
+        </form>
       </div>
-      <h2 className={style.content}>Sign in to your account</h2>
-      <p className={style.content2}>
-        Don't have any account?
-        <Link to="/register">Sign up</Link>
-        {error && <p>{error}</p>}
-      </p>
-      <form onSubmit={handleSubmit(handleLogin)}>
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Enter your email"
-          {...register("email", {
-            required: true,
-            validate: {
-              matchPattern: (value) =>
-                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                "Please enter a valid email address",
-            },
-          })}
-        />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          {...register("password", { required: true })}
-        />
-        <Button
-          className={style.button}
-          style={{ backgroundColor: "#131313", color: "white" }}
-          type="submit"
-        >
-          Login
-        </Button>
-      </form>
-    </div>
     </div>
   );
 };

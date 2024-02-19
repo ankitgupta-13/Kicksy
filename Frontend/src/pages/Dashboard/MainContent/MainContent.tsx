@@ -1,3 +1,4 @@
+import { Container } from "../../../components";
 import Analytics from "../Analytics/Analytics";
 import AddBlog from "../Blog/AddBlog/AddBlog";
 import ListBlogs from "../Blog/ListBlogs/ListBlogs";
@@ -61,9 +62,15 @@ const MainContent = ({ currentSection , currentAction }) => {
   }
 
   return (
-    <div className={style.main}>
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div className={style.content}>{content}</div>
-    </div>
+    </Container>
   );
 };
 

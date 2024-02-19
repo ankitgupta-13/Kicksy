@@ -2,14 +2,17 @@ import { api } from "./auth.api";
 
 export const getCurrentUser = async () => {
   try {
-    const response = await api.get("/user/get-current-user");
-    return response;
+    const { data } = await api.get("/user/get-current-user");
+    return data;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
-export const addToCart = async (payload: { userID: string, productID: string }) => {
+export const addToCart = async (payload: {
+  userID: string;
+  productID: string;
+}) => {
   try {
     console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);

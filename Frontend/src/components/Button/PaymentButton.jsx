@@ -66,6 +66,6 @@ const PaymentButton = (props)=>{
     );
 }
 
-export default PaymentButton;
+// export default PaymentButton;
 
 
