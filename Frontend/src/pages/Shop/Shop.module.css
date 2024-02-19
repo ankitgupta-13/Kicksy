@@ -1,0 +1,9 @@
+.shoppage {
+    display: flex;
+  }
+  
+  .productlist {
+    flex: 3;
+    padding: 20px;
+  }
+  

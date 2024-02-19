@@ -31,8 +31,6 @@ const userSchema = new mongoose.Schema(
       type: mobileSchema,
       required: true,
     },
-<<<<<<< Updated upstream
-=======
     gender: {
       type: String,
       enum: ['M', 'F', 'O']
@@ -42,7 +40,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
->>>>>>> Stashed changes
     orders: [
       {
         type: mongoose.Schema.Types.ObjectId,
