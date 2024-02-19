@@ -22,6 +22,7 @@ import Shop from "./pages/Shop/Shop.tsx";
 import Anime from "./pages/Anime/Anime.tsx";
 import TrackOrder from "./pages/TrackOrder/TrackOrder.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
+import Blogs from "./pages/Blogs/Blogs.tsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
         <Route path="/shop" element={<Shop />} />
         <Route path="/anime" element={<Anime />} />
         <Route path="/trackorder" element={<TrackOrder />} />
+        <Route path="/blogs" element={<Blogs/>} />
       </Route>
       <Route
         path="/admin"

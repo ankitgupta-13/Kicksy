@@ -77,9 +77,6 @@
   align-items: center;
   justify-content: space-between;
 }
-.shoes__bestseller {
-  display: none;
-}
 .container__hotitem {
   display: flex;
   align-items: center;
@@ -110,6 +107,9 @@
     height: 18rem;
     width: 11rem;
     gap: 0.5rem;
+  }
+  .shoes__bestseller {
+    display: none;
   }
   .shoes {
     height: 6.5rem;

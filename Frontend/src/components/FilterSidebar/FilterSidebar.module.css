@@ -1,0 +1,5 @@
+.filtersidebar {
+    flex: 1;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+  }
