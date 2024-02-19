@@ -18,6 +18,7 @@ const Header = () => {
     { name: "Shop", slug: "/shop", isActive: true },
     { name: "Custom Anime", slug: "/anime", isActive: true },
     { name: "Track Order", slug: "/trackorder", isActive: true },
+    { name: "Blogs", slug: "/blogs", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
     isAdmin === "admin" && {

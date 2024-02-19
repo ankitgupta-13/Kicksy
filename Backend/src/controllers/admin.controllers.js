@@ -6,7 +6,8 @@ const createAdmin = async (req, res) => {
   try {
     const { email } = req.body;
     const existingAdmin = await Admin.findOne({ email });
-
+    
+    
     if (existingAdmin) {
       return res.json(new ApiResponse(409, "Admin already exists!"));
     }
