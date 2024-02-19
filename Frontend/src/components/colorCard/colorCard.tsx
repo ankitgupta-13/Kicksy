@@ -29,7 +29,8 @@ const colorCard: React.FC<ColorCardProps> = ({id, color, activeId, setActiveId, 
     setActiveId(id)
   }} style={{ 
     border: isSelected ? "0.5px solid #212121" : "0px",
-    borderRadius: "2px"
+    borderRadius: "2px",
+    outline:"none"
 }}/>
     </div>
   )
