@@ -20,18 +20,18 @@ const Home = () => {
       <h1>Home</h1>
       <p>Welcome to the home page</p>
       <div>
-      <h1>New Arrivals</h1>
+        <h1>New Arrivals</h1>
         <div className={style.cards}>
-        {products.map((product: any, index: number) => {
-          return (
-            <div key={index}>
-              <ProductCard product={product} />
-            </div>
-          );
-        })}
+          {products.map((product: any, index: number) => {
+            return (
+              <div key={index}>
+                <ProductCard product={product} />
+              </div>
+            );
+          })}
         </div>
         <div className={style.cards}>
-                <BestSeller/>
+          <BestSeller />
         </div>
       </div>
     </Container>

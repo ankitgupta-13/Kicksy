@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     getCurrentUser()
       .then((userData) => {
-        if (userData.data.statusCode === 200) {
+        if (userData.statusCode === 200) {
           dispatch(login({ userData: userData.data }));
         } else {
           dispatch(logout());
