@@ -1,3 +1,4 @@
+import { Container } from "../../../components";
 import Analytics from "../Analytics/Analytics";
 import DetailOrder from "../Order/DetailOrder/DetailOrder";
 import ListOrder from "../Order/ListOrder/ListOrder";
@@ -47,9 +48,15 @@ const MainContent = ({ currentSection, currentAction }) => {
   }
 
   return (
-    <div className={style.main}>
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div className={style.content}>{content}</div>
-    </div>
+    </Container>
   );
 };
 

@@ -12,6 +12,26 @@ export const axiosImageApi = axios.create({
   },
 });
 
+export const createAdmin = async (payload) => {
+  try {
+    const { data } = await api.post("/admin/create-admin", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const checkAdmin = async (payload: object) => {
+  try {
+    const { data } = await api.post("/admin/check-admin", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const addProduct = async (payload) => {
   try {
     const { data } = await api.post("/admin/add-product", payload);

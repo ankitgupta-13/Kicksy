@@ -166,10 +166,6 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.json(new ApiError(404, "User does not exist!"));
     }
-    if (!user.isEmailVerified) {
-      return res.json(new ApiError(401, "Please verify your Email!"));
-    }
-
     const isPasswordValid = await user.isPasswordCorrect(password);
 
     if (!isPasswordValid) {
@@ -179,14 +175,12 @@ const loginUser = async (req, res) => {
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
       user._id
     );
-
     const options = {
       httpOnly: true,
       secure: true,
       sameSite: "None",
       path: "/",
     };
-
     const loggedInUser = await User.findById(user._id).select(
       "-password -refreshToken"
     );

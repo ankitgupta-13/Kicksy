@@ -15,8 +15,8 @@ export const api = axios.create({
 
 export const authLogin = async (payload: object) => {
   try {
-    const response = await api.post("/user/login", payload);
-    return response;
+    const { data } = await api.post("/user/login", payload);
+    return data;
   } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));

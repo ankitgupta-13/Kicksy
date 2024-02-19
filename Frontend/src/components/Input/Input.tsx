@@ -9,13 +9,18 @@ const Input = (
   return (
     <div className={style.inputDiv}>
       {label && <label htmlFor={id}>{label}</label>}
-      <input
-        type={type}
-        placeholder={placeholder}
-        ref={ref}
-        {...props}
-        id={id}
-      />
+      <div className={style.inputBox}>
+        <input
+          type={type}
+          placeholder={placeholder}
+          ref={ref}
+          {...props}
+          id={id}
+        />
+        {props.showImage && (
+          <div className={style.imageDiv}>{props.showImage}</div>
+        )}
+      </div>
     </div>
   );
 };

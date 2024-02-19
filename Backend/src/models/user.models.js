@@ -13,11 +13,6 @@ const mobileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isVerified: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
 });
 
 const userSchema = new mongoose.Schema(
@@ -35,11 +30,6 @@ const userSchema = new mongoose.Schema(
     mobile: {
       type: mobileSchema,
       required: true,
-    },
-    isEmailVerified: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
     orders: [
       {
@@ -74,15 +64,6 @@ const userSchema = new mongoose.Schema(
     },
     refreshToken: {
       type: String,
-    },
-    referralCode: {
-      code: String,
-      users: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
     },
     role: {
       type: String,

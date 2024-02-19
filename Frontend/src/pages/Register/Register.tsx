@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 import { IoIosEyeOff } from "react-icons/io";
 import { IoMdEye } from "react-icons/io";
+import { FaCheckCircle } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Register = () => {
   const [phoneOtp, setPhoneOtp] = useState("");
   const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
@@ -47,31 +49,35 @@ const Register = () => {
 
   const handleSendEmailOtp = async (email: String) => {
     const response = await sendEmailOtp({ email });
-    response.statusCode === 200
-      ? setEmailOtpSent(true)
-      : setError(response.message);
+    if (response.statusCode === 200) {
+      setEmailOtpSent(true);
+      alert("OTP sent to your email");
+    } else setError(response.message);
   };
 
   const handleVerifyEmailOtp = async (email: String, otp: String) => {
     const response = await verifyEmailOtp({ email, otp });
-    response.statusCode === 200
-      ? setEmailOtpVerified(true)
-      : setError(response.message);
+    if (response.statusCode === 200) {
+      setEmailOtpVerified(true);
+      alert("Email Verified");
+    } else setError(response.message);
   };
 
   const handleSendPhoneOtp = async (mobile, countryCode) => {
     const response = await sendMobileOtp({ mobile, countryCode });
     console.log(response);
-    response.statusCode === 200
-      ? setPhoneOtpSent(true)
-      : setError(response.message);
+    if (response.statusCode === 200) {
+      setPhoneOtpSent(true);
+      alert("OTP sent to your mobile");
+    } else setError(response.message);
   };
 
   const handleVerifyPhoneOtp = async (mobile, otp) => {
     const response = await verifyMobileOtp({ mobile, otp });
-    response.statusCode === 200
-      ? setPhoneOtpVerified(true)
-      : setError(response.message);
+    if (response.statusCode === 200) {
+      setPhoneOtpVerified(true);
+      alert("Phone Verified");
+    } else setError(response.message);
   };
 
   const handleRegister = async (data) => {
@@ -103,10 +109,7 @@ const Register = () => {
       }}
     >
       <div className={style.CenterBody}>
-        <div className={style.logo}>
-          <Logo />
-        </div>
-        <h2 className={style.heading}>Register</h2>
+        <h2 className={style.heading}>REGISTER</h2>
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
           <Input
             label="Full Name"
@@ -129,25 +132,28 @@ const Register = () => {
               },
             })}
             onChange={handleEmailChange} // Call handleEmailChange on input change
+            showImage={emailOtpVerified ? <FaCheckCircle /> : null}
           />
-          {!emailOtpSent ? (
-            <button onClick={() => handleSendEmailOtp(watch("email"))}>
-              Send OTP
-            </button>
-          ) : (
-            <div>
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                onChange={(e) => setEmailOtp(e.target.value)}
-              />
-              <button
-                onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}
-              >
-                Verify
+          {!emailOtpVerified ? (
+            !emailOtpSent ? (
+              <button onClick={() => handleSendEmailOtp(watch("email"))}>
+                Send OTP
               </button>
-            </div>
-          )}
+            ) : (
+              <div>
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  onChange={(e) => setEmailOtp(e.target.value)}
+                />
+                <button
+                  onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}
+                >
+                  Verify
+                </button>
+              </div>
+            )
+          ) : null}
           <div className={style.mobile}>
             <Select
               height="55px"
@@ -155,17 +161,18 @@ const Register = () => {
               {...register("countryCode", { required: true })}
             />
             <Input
-              type="text"
+              type="number"
               placeholder="Enter your mobile number"
               {...register("phone", {
                 required: true,
                 validate: (value) => {
-                  // const isValidPhone = value.match(/^[0-9]{10}$/g);
-                  // setIsPhoneValid(isValidPhone);
+                  const isValidPhone = value.match(/^[0-9]{10}$/g);
+                  setIsPhoneValid(isValidPhone);
                   return true; // Always return true to avoid validation error
                 },
               })}
               onChange={handlePhoneChange} // Call handlePhoneChange on input change
+              showImage={phoneOtpVerified ? <FaCheckCircle /> : null}
             />
           </div>
           {!phoneOtpSent ? (

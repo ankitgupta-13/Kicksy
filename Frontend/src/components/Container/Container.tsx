@@ -1,10 +1,10 @@
 const Container = ({ sx, children }) => {
   const containerStyle = {
-    ...sx,
     display: "flex",
     flexDirection: "column",
     height: "100%",
     width: "100%",
+    ...sx,
   };
 
   return <div style={containerStyle}>{children}</div>;
