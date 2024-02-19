@@ -22,6 +22,7 @@ import {
 } from "../controllers/cart.controllers.js";
 
 import {
+  getAllProducts,
   getProductById,
   getRecentProducts
 } from "../controllers/product.controllers.js";
@@ -45,4 +46,6 @@ router.route("/get-current-user").get(verifyJWT, getCurrentUser);
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/get-recent-products").get(getRecentProducts);
 router.route("/get-product-by-id").post(getProductById);
+router.route("/get-all-products").post(getAllProducts);
+
 export default router;

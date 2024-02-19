@@ -106,8 +106,18 @@ const getProductById = async (req, res) => {
       res.json(new ApiError(404, "Invalid product id , product not found"));
     }
 
-    res.json(new ApiResponse(200 , product , "product fetched successfully."));
+    res.json(new ApiResponse(200, product, "product fetched successfully."));
 
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({})
+    res.json(new ApiResponse(200 , products , "products fetched successfully"));
   }
   catch (err) {
     console.log(err);
@@ -120,5 +130,6 @@ export {
   deleteProduct,
   addProductImage,
   getRecentProducts,
-  getProductById
+  getProductById,
+  getAllProducts
 };
