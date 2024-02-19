@@ -11,6 +11,7 @@ import favouriteIcon from "../../assets/favorite.png";
 
 const Header = () => {
   const authStatus = useSelector((state) => state.auth.status);
+  const isAdmin = useSelector((state) => state.auth.userData?.role);
   const navigate = useNavigate();
   const navItems = [
     { name: "Home", slug: "/", isActive: true },
@@ -19,6 +20,11 @@ const Header = () => {
     { name: "Track Order", slug: "/trackorder", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
+    isAdmin === "admin" && {
+      name: "Dashboard",
+      slug: "/admin",
+      isActive: isAdmin,
+    },
   ];
   return (
     <header className={style.header}>
@@ -50,7 +56,10 @@ const Header = () => {
             <li className={style.iconListItems}>
               <img src={searchIcon} alt="Search" />
             </li>
-            <li className={style.iconListItems} onClick={() => navigate("/cart")}>
+            <li
+              className={style.iconListItems}
+              onClick={() => navigate("/cart")}
+            >
               <img src={shoppingBagIcon} alt="ShoppingBag" />
             </li>
             <li className={style.iconListItems}>

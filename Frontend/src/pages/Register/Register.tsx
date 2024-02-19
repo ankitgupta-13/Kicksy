@@ -59,15 +59,14 @@ const Register = () => {
 
   const handleSendPhoneOtp = async (mobile, countryCode) => {
     const response = await sendMobileOtp({ mobile, countryCode });
-    console.log(response);
     if (response.statusCode === 200) {
       setPhoneOtpSent(true);
       alert("OTP sent to your mobile");
     } else setError(response.message);
   };
 
-  const handleVerifyPhoneOtp = async (mobile, otp) => {
-    const response = await verifyMobileOtp({ mobile, otp });
+  const handleVerifyPhoneOtp = async (countryCode, mobile, otp) => {
+    const response = await verifyMobileOtp({ countryCode, mobile, otp });
     if (response.statusCode === 200) {
       setPhoneOtpVerified(true);
       alert("Phone Verified");
@@ -77,18 +76,16 @@ const Register = () => {
   const handleRegister = async (data) => {
     setError("");
     try {
-      if (emailOtpVerified && phoneOtpVerified) {
-        const response = await authRegister(data);
-        if (response.statusCode === 201 || response.statusCode === 400) {
-          navigate("/verify");
-        } else if (response.statusCode === 409) {
-          setError(response.message);
-          navigate("/login");
-        } else {
-          setError(response.message);
-        }
+      if (!emailOtpVerified || !phoneOtpVerified) {
+        alert("Please verify your email and phone");
+        setError("Please verify your email and phone");
+        return;
+      }
+      const response = await authRegister(data);
+      if (response.statusCode === 201) {
+        navigate("/login");
       } else {
-        setError("Please verify email and phone");
+        setError(response.message);
       }
     } catch (error) {
       setError(error.message);
@@ -157,7 +154,7 @@ const Register = () => {
             <Input
               type="number"
               placeholder="Enter your mobile number"
-              {...register("phone", {
+              {...register("mobile", {
                 required: true,
                 validate: (value) => {
                   const isValidPhone = value.match(/^[0-9]{10}$/g);
@@ -169,28 +166,36 @@ const Register = () => {
               showImage={phoneOtpVerified ? <FaCheckCircle /> : null}
             />
           </div>
-          {!phoneOtpSent ? (
-            <button
-              onClick={() =>
-                handleSendPhoneOtp(watch("phone"), watch("countryCode"))
-              }
-            >
-              Send OTP
-            </button>
-          ) : (
-            <div>
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                onChange={(e) => setPhoneOtp(e.target.value)}
-              />
+          {!phoneOtpVerified ? (
+            !phoneOtpSent ? (
               <button
-                onClick={() => handleVerifyPhoneOtp(watch("phone"), phoneOtp)}
+                onClick={() =>
+                  handleSendPhoneOtp(watch("phone"), watch("countryCode"))
+                }
               >
-                Verify
+                Send OTP
               </button>
-            </div>
-          )}
+            ) : (
+              <div>
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  onChange={(e) => setPhoneOtp(e.target.value)}
+                />
+                <button
+                  onClick={() =>
+                    handleVerifyPhoneOtp(
+                      watch("countryCode"),
+                      watch("phone"),
+                      phoneOtp
+                    )
+                  }
+                >
+                  Verify
+                </button>
+              </div>
+            )
+          ) : null}
           <Input
             label="Password"
             type={showPassword ? "text" : "password"}
@@ -211,6 +216,8 @@ const Register = () => {
                 if (value !== watch("password")) {
                   setPasswordError("Password does not match");
                   return "Password does not match";
+                } else {
+                  setPasswordError("");
                 }
                 return true;
               },

@@ -3,7 +3,7 @@ import cartSlice from "../reducers/cartSlice";
 import authSlice from "../reducers/authSlice";
 import dashboardSlice from "../reducers/dashboardSlice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authSlice,
     cart: cartSlice,
@@ -11,4 +11,5 @@ const store = configureStore({
   },
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

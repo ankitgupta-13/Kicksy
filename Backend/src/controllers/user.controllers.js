@@ -103,14 +103,12 @@ const sendMobileOtp = async (req, res) => {
 const verifyMobileOtp = async (req, res) => {
   const { countryCode, mobile, otp } = req.body;
   try {
-    console.log(TWILIO_SERVICE_SID);
     const verifiedResponse = await client.verify.v2
       .services(TWILIO_SERVICE_SID)
       .verificationChecks.create({
         to: `${countryCode}${mobile}`,
         code: otp,
       });
-    console.log(verifiedResponse);
     res
       .status(200)
       .json(
@@ -236,16 +234,12 @@ const logoutUser = async (req, res) => {
   }
 };
 
-const editUser = async(req,res)=>{
-  const {userID} = req.body;
-  try{
-    const user = await User.findOne({_id:userID});
-    
-  }
-  catch(err){
-
-  }
-}
+const editUser = async (req, res) => {
+  const { userID } = req.body;
+  try {
+    const user = await User.findOne({ _id: userID });
+  } catch (err) {}
+};
 
 export {
   registerUser,
