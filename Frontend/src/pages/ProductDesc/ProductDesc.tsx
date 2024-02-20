@@ -6,6 +6,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { Button } from "../../components/index";
 import { useSelector} from "react-redux";
 import { getProductById } from "../../api/user.api";
+import ColorCard from "../../components/colorCard/colorCard";
 
 const ProductDesc = () => {
     const location = useLocation();
@@ -13,8 +14,15 @@ const ProductDesc = () => {
     const id = queryParams.get("product");
     const [products, setProducts] = useState([]);
     const [curProduct, setCurProduct] = useState([]);
+    const [shoesColorData,setShoesColorData] = useState([]);
+    const [activeColor, setActiveColor] = useState('');
+    const [activeColorId, setActiveColorId] = useState<number | null>(null);
     const [size, setSize] = useState();
     const userid = useSelector((state : any) => state.auth?.userData?._id);
+
+    const handleImageSrcChange = (src: string) => {
+      setActiveColor(src);
+    };
 
     const getProducts = async () => {
       const response = await getRecentProducts();
@@ -25,7 +33,10 @@ const ProductDesc = () => {
         productID : id,
       }
       const response = await getProductById(payload);
-      if (response.statusCode === 200) setCurProduct(response.data);
+      if (response.statusCode === 200)
+      {setCurProduct(response.data);
+        setShoesColorData(response.data.images)
+      }
     }
     useEffect(() => {
       getProducts();
@@ -59,16 +70,16 @@ const ProductDesc = () => {
 
   return (
     <div>
+      <div>
       <div className={style.product}>
-      <img src={curProduct.images} className={style.imagebox} alt="product-image"/>
+      <img src={activeColor} className={style.imagebox} alt="product-image"/>
       <div className={style.action}>
           <h4>{curProduct.brand}</h4>
           <h2>{curProduct.title}</h2>
-          {curProduct.category === "bestseller"?
+          {curProduct.category === "bestseller" &&
             <a className={style.bestseller}>BEST SELLER</a>
-            : <a></a>
           }
-          <h2>Rs. {curProduct.price}</h2>
+          <h2>Rs. {}</h2>
           <div >
           <select className={style.size} value={size} onChange={handleChange}>
          {sizes.map((size: any) => (
@@ -84,6 +95,18 @@ const ProductDesc = () => {
         >Add to Cart</Button>
 
       </div>
+      </div>
+      <div className={style.cards}>
+      {shoesColorData.map((color, index) => (
+                <ColorCard
+                    key={index}
+                    id={index}
+                    color={color}
+                    activeId={activeColorId || 0}
+                    setActiveId={(id) => setActiveColorId(id)}
+                    setImageSrc={handleImageSrcChange}
+                />
+        ))}
       </div>
       <h3>{curProduct.description}</h3>
       <a>Read More</a>
@@ -106,6 +129,7 @@ const ProductDesc = () => {
           <h5>RELEASE DATE</h5>
           <p></p>
         </div>
+      </div>
       </div>
         <div>
           <h1>You may also like</h1>

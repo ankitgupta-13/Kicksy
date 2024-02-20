@@ -44,14 +44,17 @@ const verifyPayment = async (req, res) => {
         razorpay_payment_id,
         razorpay_signature,
       });
+      
+      res.json(new ApiResponse(200 , {razorpay_order_id , razorpay_payment_id} , ""))
+
       res.redirect(
         `${process.env.FRONTEND_URL}/paymentsuccess?reference=${razorpay_payment_id}`
       );
     } else {
-      throw new ApiError(400, "Payment failed!");
+      res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
-    throw new ApiError(400, err.message);
+      throw new ApiError(400, err.message);
   }
 };
 

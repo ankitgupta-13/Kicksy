@@ -12,8 +12,10 @@ import { upload } from "../middlewares/multer.middlewares.js";
 import {
   addBlog,
   deleteBlog,
-  editBlog,
-  fetchBlog,
+  editBlogBody,
+  editBlogImage,
+  fetchAllBlog,
+  fetchBlogById,
 } from "../controllers/blog.controllers.js";
 
 import {

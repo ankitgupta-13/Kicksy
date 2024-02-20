@@ -1,5 +1,4 @@
 import style from "./ProductCard.module.css";
-import Shoes from "../../assets/adidas.png";
 import ColorCard from "../colorCard/colorCard";
 import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
@@ -8,11 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  console.log(product);
-  const { images } = product;
-  const [shoesColorData, setShoesColorData] = useState([product.images]);
-  const [activeId, setActiveId] = useState();
-  const [imagesrc, setImageSrc] = useState(Shoes);
+  const [shoesColorData, setShoesColorData] = useState(product.images);
+
+  const [activeColor, setActiveColor] = useState("");
+  const [activeColorId, setActiveColorId] = useState<number | null>(null);
+
+  const handleImageSrcChange = (src: string) => {
+    setActiveColor(src);
+  };
 
   return (
     <div className={style.container}>
@@ -27,25 +29,37 @@ const ProductCard = ({ product }) => {
       </div>
       <div className={style.shoes}>
         <img
-          src={shoesColorData[0]}
+          src={activeColor}
           className={style.shoes__image}
           onClick={() => navigate(`/productdesc?product=${product._id}`)}
         />
       </div>
-
       <div className={style.shoes__color}>
-        {images.map((imageUrl: any, id: index) => {
-          return <ColorCard imageUrl={imageUrl} key={id} />;
-        })}
+        {shoesColorData.map((color, index) => (
+          <ColorCard
+            key={index}
+            id={index}
+            color={color}
+            activeId={activeColorId || 0}
+            setActiveId={(id) => setActiveColorId(id)}
+            setImageSrc={handleImageSrcChange}
+          />
+        ))}
       </div>
       <div className={style.shoes__info}>
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
-          {/* <div className={style.shoes__price}>{product.price}</div> */}
+          <div className={style.shoes__price}>
+            {product.price.originalPrice}
+          </div>
         </div>
         <p className={style.shoes__tags}>{product.category}</p>
-        {/* <div className={style.mobile__shoes_price}>INR {product.price}</div> */}
-        {/* <div className={style.mobile__expected_price}>{product.price}</div> */}
+        <div className={style.mobile__shoes_price}>
+          INR {product.price.originalPrice}
+        </div>
+        <div className={style.mobile__expected_price}>
+          {product.price.originalPrice}
+        </div>
         <p className={style.shoes__tagline}>{product.description}</p>
       </div>
     </div>

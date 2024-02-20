@@ -96,6 +96,10 @@
   height: 1rem;
   width: 1rem;
 }
+.shoes__image {
+  width: auto;
+  height: auto;
+}
 .mobile__shoes_price {
   display: none;
 }

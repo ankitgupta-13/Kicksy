@@ -3,3 +3,10 @@
     display: none;
  }
 }
+.container {
+   display: flex;
+}
+.shoes__color {
+   height: 70px;
+   width: 70px;
+ }

@@ -4,5 +4,8 @@
     border-right: 1px solid #ccc;
   }
   .buttons {
+    padding: 20px;
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
