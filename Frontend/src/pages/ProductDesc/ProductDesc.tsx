@@ -6,8 +6,6 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { Button } from "../../components/index";
 import { useSelector} from "react-redux";
 import { getProductById } from "../../api/user.api";
-import { RootState } from "@reduxjs/toolkit/query";
-
 
 const ProductDesc = () => {
     const location = useLocation();
@@ -16,7 +14,7 @@ const ProductDesc = () => {
     const [products, setProducts] = useState([]);
     const [curProduct, setCurProduct] = useState([]);
     const [size, setSize] = useState();
-    const user = useSelector((state : any) => state.auth?.userData?.data._id);
+    const userid = useSelector((state : any) => state.auth?.userData?._id);
 
     const getProducts = async () => {
       const response = await getRecentProducts();
@@ -24,7 +22,7 @@ const ProductDesc = () => {
     };
     const getCurrentProduct = async () => {
       const payload = {
-        productID : id
+        productID : id,
       }
       const response = await getProductById(payload);
       if (response.statusCode === 200) setCurProduct(response.data);
@@ -47,7 +45,7 @@ const ProductDesc = () => {
 
     const handleAddToCart = async () => {
       const payload = {
-        userID: user,
+        userID: userid,
         productID: id,
       };
       try {
@@ -66,7 +64,10 @@ const ProductDesc = () => {
       <div className={style.action}>
           <h4>{curProduct.brand}</h4>
           <h2>{curProduct.title}</h2>
-          <a className={style.bestseller}>BEST SELLER</a>
+          {curProduct.category === "bestseller"?
+            <a className={style.bestseller}>BEST SELLER</a>
+            : <a></a>
+          }
           <h2>Rs. {curProduct.price}</h2>
           <div >
           <select className={style.size} value={size} onChange={handleChange}>
