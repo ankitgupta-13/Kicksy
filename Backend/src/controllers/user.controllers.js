@@ -27,7 +27,10 @@ const sendEmailOtp = async (req, res) => {
     const { email } = req.body;
     // Delete all previous otps for the user
     await Otp.deleteMany({ email });
-
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.json(new ApiResponse(409, "User already exists!"));
+    }
     // Generate a new otp
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
@@ -88,6 +91,12 @@ const verifyEmailOtp = async (req, res) => {
 const sendMobileOtp = async (req, res) => {
   const { countryCode, mobile } = req.body;
   try {
+    const user = await User.findOne({
+      mobile: { countryCode, number: mobile },
+    });
+    if (user) {
+      return res.json(new ApiResponse(409, "User already exists!"));
+    }
     const otpResponse = await client.verify.v2
       .services(TWILIO_SERVICE_SID)
       .verifications.create({

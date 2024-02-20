@@ -1,39 +1,39 @@
 .sidebarcontainer {
-    width: 200px;
-    height: 100vh;
-    padding: 20px 0;
-    flex-basis: 15%;
-  }
-  
-  .sidebarsection {
-    margin-bottom: 10px;
-  }
-  .Logo{
-    padding: 0 25%;
-    padding-bottom: 10px;
- }
-  .fullWidthButton {
-    width: 100%;
-    font-size: larger;
-    padding: 8px;
-    background-color: white;
-    border: none;
-    cursor: pointer;
-  }
+  width: 200px;
+  height: 100vh;
+  padding: 20px 0;
+  flex-basis: 15%;
+}
 
-  .subButton {
-    width: 100%;
-    padding: 4px;
-    background-color: rgb(216, 216, 216);
-    border: none;
-    cursor: pointer;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    cursor: pointer;
-  }
+.sidebarsection {
+  margin-bottom: 10px;
+}
+.Logo {
+  padding: 0 25%;
+  padding-bottom: 10px;
+}
+.fullWidthButton {
+  width: 100%;
+  font-size: larger;
+  padding: 8px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.subButton {
+  width: 100%;
+  padding: 4px;
+  background-color: rgb(216, 216, 216);
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  cursor: pointer;
+}

@@ -1,4 +1,3 @@
-import { title } from "process";
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -26,15 +25,14 @@ const addProduct = async (req, res) => {
       return res.status(409).send("Product already exist!");
     }
     const newProduct = await Product.create(req.body);
-    if (!req.body.mrp) {
-      newProduct.mrp = newProduct.price;
-    }
-    newProduct.tags.push(newProduct.title.toLowerCase())
-    newProduct.tags.push(newProduct.brand.toLowerCase())
-    newProduct.tags.push(newProduct.gender.toLowerCase())
+    newProduct.tags.push(newProduct.title.toLowerCase());
+    newProduct.tags.push(newProduct.brand.toLowerCase());
+    newProduct.tags.push(newProduct.gender.toLowerCase());
     await newProduct.save();
     if (!newProduct) {
-      return res.status(409).json(new ApiError(409, "Unable to Add Product"));
+      return res
+        .status(409)
+        .json(new ApiResponse(409, "Unable to Add Product"));
     }
 
     return res
@@ -107,22 +105,19 @@ const getProductById = async (req, res) => {
     }
 
     res.json(new ApiResponse(200, product, "product fetched successfully."));
-
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
 const getAllProducts = async (req, res) => {
   try {
-  const products = await Product.find({});
-    res.json(new ApiResponse(200 , products , "products fetched successfully"));
-  }
-  catch (err) {
+    const products = await Product.find({});
+    res.json(new ApiResponse(200, products, "products fetched successfully"));
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
 export {
   addProduct,
@@ -131,5 +126,5 @@ export {
   addProductImage,
   getRecentProducts,
   getProductById,
-  getAllProducts
+  getAllProducts,
 };

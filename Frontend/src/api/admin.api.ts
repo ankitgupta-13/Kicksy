@@ -26,7 +26,7 @@ export const checkAdmin = async (payload: object) => {
   try {
     const { data } = await api.post("/admin/check-admin", payload);
     return data;
-  } catch (error : any) {
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -34,6 +34,14 @@ export const checkAdmin = async (payload: object) => {
 
 export const addProduct = async (payload: any) => {
   try {
+    const { originalPrice, discountPercent } = payload;
+    payload.price = {
+      originalPrice,
+      discountPercent,
+    };
+    delete payload.originalPrice;
+    delete payload.discountPercent;
+    console.log(payload);
     const { data } = await api.post("/admin/add-product", payload);
     return data;
   } catch (error: any) {

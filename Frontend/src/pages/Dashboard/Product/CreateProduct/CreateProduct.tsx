@@ -5,7 +5,7 @@ import { addProduct, uploadImage } from "../../../../api/admin.api";
 import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   const navigate = useNavigate();
 
   const handleCreateProduct = async (data: any) => {
@@ -22,7 +22,6 @@ const CreateProduct = () => {
     const response = await addProduct(data);
     if (response.statusCode === 200) {
       alert(response.message);
-      navigate("/");
     } else alert(response.message);
   };
 
@@ -122,14 +121,19 @@ const CreateProduct = () => {
               type="number"
               label="Product Price"
               placeholder="Product Price"
-              {...register("price", { required: true })}
+              {...register("originalPrice", { required: true })}
             />
             <Input
               type="number"
-              label="Product Price"
-              placeholder="Product Price"
-              {...register("salePrice")}
+              label="Discount Percentage"
+              placeholder="xx%"
+              {...register("discountPercent")}
             />
+            <div>
+              <h2>Final price</h2>
+              {watch("originalPrice") -
+                (watch("discountPercent") / 100) * watch("originalPrice")}
+            </div>
           </div>
         </div>
         <Button type="submit">Create Product</Button>

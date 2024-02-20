@@ -1,4 +1,16 @@
 import mongoose from "mongoose";
+
+const priceSchema = new mongoose.Schema({
+  originalPrice: {
+    type: Number,
+    required: true,
+  },
+  discountPercent: {
+    type: Number,
+    default: 0,
+  },
+});
+
 const productSchema = new mongoose.Schema(
   {
     productCode: {
@@ -11,11 +23,8 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     price: {
-      type: Number,
+      type: priceSchema,
       required: true,
-    },
-    mrp:{
-      type:Number
     },
     description: {
       type: String,
@@ -69,21 +78,21 @@ const productSchema = new mongoose.Schema(
     ],
     tags: [
       {
-        type: String
-      }
+        type: String,
+      },
     ],
     analysis: {
       total_sale: {
         type: Number,
-        default: 0
+        default: 0,
       },
-      users:[
+      users: [
         {
-          type:mongoose.Schema.Types.ObjectId,
-          ref:"User"
-        }
-      ]
-    }
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+    },
   },
   {
     timestamps: true,
