@@ -10,7 +10,7 @@ import { Input, Button, Select, Container } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
-// import { IoIosEyeOff } from "react-icons/io";
+import { IoIosEyeOff } from "react-icons/io";
 // import { IoMdEye } from "react-icons/io";
 // import { FaCheckCircle } from "react-icons/fa";
 

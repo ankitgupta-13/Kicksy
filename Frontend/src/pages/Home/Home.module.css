@@ -1,3 +1,31 @@
+.banners {
+    width: 100%;
+    height: 350px;
+    font-size: 35px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    padding: 14px 15px;
+    justify-content: center;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+  
+    color: var(--Primary-Text, #fff);
+    text-align: center;
+    font-family: "Proxima Nova";
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.8px;
+  }
+  
 .cards {
     display: flex;
 }

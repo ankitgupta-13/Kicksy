@@ -1,0 +1,12 @@
+.card {
+    border-style: inset;
+    border-color: gray;
+    width: 400px;
+    height: 400px;
+    padding: 10px;
+    margin: 10px;
+}
+.image {
+    height: 330px;
+    width: 350px;
+}

@@ -27,7 +27,6 @@ const sendEmailOtp = async (req, res) => {
     const { email } = req.body;
     // Delete all previous otps for the user
     await Otp.deleteMany({ email });
-
     // Generate a new otp
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const mailOptions = {
