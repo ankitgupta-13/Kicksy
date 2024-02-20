@@ -5,6 +5,7 @@ const initialState = {
     user: false,
     product: false,
     order: false,
+    blog: false,
   },
   currentSection: null,
   currentAction: null,

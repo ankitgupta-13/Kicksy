@@ -92,7 +92,8 @@ const sendMobileOtp = async (req, res) => {
   const { countryCode, mobile } = req.body;
   try {
     const user = await User.findOne({
-      mobile: { countryCode, number: mobile },
+      "mobile.number": mobile,
+      "mobile.countryCode": countryCode,
     });
     if (user) {
       return res.json(new ApiResponse(409, "User already exists!"));

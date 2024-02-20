@@ -62,3 +62,23 @@ export const uploadImage = async (payload: FormData) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const { data } = await api.get("/admin/get-all-users");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const getAllProducts = async () => {
+  try {
+    const { data } = await api.get("/admin/get-all-products");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

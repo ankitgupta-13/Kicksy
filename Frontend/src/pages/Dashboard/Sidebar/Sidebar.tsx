@@ -5,22 +5,39 @@ import {
 } from "../../../redux/reducers/dashboardSlice";
 import logo from "../../../assets/Krisksy.svg";
 import style from "./Sidebar.module.css";
+import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
+import { Container } from "@mui/material";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const { sectionsState } = useSelector((state) => state.dashboard);
   const sections = [
     {
-      user: ["allUser", "editUser", "deleteUser"],
+      user: {
+        actions: ["allUser", "profileUser", "editUser"],
+        icon: <AccountBoxRoundedIcon />,
+      },
     },
     {
-      product: ["addProduct", "editProduct", "deleteProduct"],
+      product: {
+        actions: ["allProduct", "addProduct"],
+        icon: <AccountBoxRoundedIcon />,
+      },
     },
     {
-      order: ["allOrder", "editOrder", "deleteOrder"],
+      order: {
+        actions: ["allOrder", "editOrder", "deleteOrder"],
+        icon: <ShoppingCartRoundedIcon />,
+      },
     },
     {
-      blogs: ["addblog", "listblogs"],
+      blog: {
+        actions: ["addblog", "listblogs"],
+        icon: <NoteAltRoundedIcon />,
+      },
     },
   ];
 
@@ -35,38 +52,67 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={style.sidebarcontainer}>
+    <Container
+      sx={{
+        width: "15%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+        padding: "10px",
+        overflow: "auto",
+        borderRight: "1px solid #e0e0e0",
+      }}
+    >
       <img className={style.Logo} src={logo} alt="" />
-      {sections.map((section, index) => {
-        const sectionName = Object.keys(section)[0];
-        return (
-          <div key={index}>
-            <button
-              onClick={() => handleSectionClick(sectionName)}
-              className={style.fullWidthButton}
-            >
-              {sectionName}
-            </button>
-            {sectionsState[sectionName] && (
-              <ul>
-                {Object.values(section)[0].map((action, index) => {
-                  return (
-                    <li key={index}>
-                      <button
+      <div>
+        <h2>Overview</h2>
+        <button className={style.sectionButton}>App</button>
+      </div>
+      <div>
+        <h2>Management</h2>
+        {sections.map((section, index) => {
+          const sectionName = Object.keys(section)[0];
+          const actions = section[sectionName].actions;
+          return (
+            <div key={index} className={style.section}>
+              <div
+                onClick={() => handleSectionClick(sectionName)}
+                className={style.sectionButton}
+              >
+                <div className={style.sectionName}>
+                  {section[sectionName].icon}
+                  <p>{sectionName}</p>
+                </div>
+                <KeyboardArrowRightRoundedIcon
+                  style={{
+                    transform: sectionsState[sectionName]
+                      ? "rotate(90deg)"
+                      : "rotate(0deg)",
+                    transition: "transform 0.3s ease",
+                  }}
+                />
+              </div>
+              {sectionsState[sectionName] && (
+                <div className={style.actions}>
+                  {actions.map((action, index) => {
+                    return (
+                      <div
+                        key={index}
                         onClick={() => handleActionClick(sectionName, action)}
-                        className={style.subButton}
+                        className={style.actionButton}
                       >
-                        {action}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        );
-      })}
-    </div>
+                        <p>{action}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </Container>
   );
 };
 

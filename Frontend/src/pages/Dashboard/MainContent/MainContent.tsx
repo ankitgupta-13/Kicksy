@@ -10,7 +10,7 @@ import ListProduct from "../Product/ListProduct/ListProduct";
 import ListUser from "../User/ListUser/ListUser";
 import style from "./MainContent.module.css";
 
-const MainContent = ({ currentSection , currentAction }) => {
+const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
   switch (currentSection) {
     case "product":
@@ -21,7 +21,7 @@ const MainContent = ({ currentSection , currentAction }) => {
         case "editProduct":
           content = <EditProduct />;
           break;
-        case "listProduct":
+        case "allProduct":
           content = <ListProduct />;
           break;
         default:
@@ -46,10 +46,10 @@ const MainContent = ({ currentSection , currentAction }) => {
           content = <Analytics />;
       }
       break;
-      case "blogs":
+    case "blogs":
       switch (currentAction) {
         case "addblog":
-          content = <AddBlog/>;
+          content = <AddBlog />;
           break;
         case "listblogs":
           content = <ListBlogs />;

@@ -6,7 +6,7 @@ import { Button, Container } from "../../components";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
     const response = await getRecentProducts();
@@ -19,19 +19,16 @@ const Home = () => {
   return (
     <Container>
       <div className={style.banners}>
-         <h1>Home</h1>
-         <Button
-         className={style.button}
-         onClick={()=> navigate("/shop")}
-         >
+        <h1>Home</h1>
+        <Button className={style.button} onClick={() => navigate("/shop")}>
           GO TO SHOP
-         </Button>
+        </Button>
       </div>
       <p>Welcome to the home page</p>
       <div>
         <h1>New Arrivals</h1>
         <div className={style.cards}>
-          {products.map((product: any, index: number) => {
+          {products.map((product: Object, index: number) => {
             return (
               <div key={index}>
                 <ProductCard product={product} />

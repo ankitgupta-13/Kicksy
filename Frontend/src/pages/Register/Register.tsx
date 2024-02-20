@@ -62,7 +62,10 @@ const Register = () => {
     if (response.statusCode === 200) {
       setPhoneOtpSent(true);
       alert("OTP sent to your mobile");
-    } else setError(response.message);
+    } else {
+      alert(response.message);
+      setError(response.message);
+    }
   };
 
   const handleVerifyPhoneOtp = async (countryCode, mobile, otp) => {
@@ -170,7 +173,7 @@ const Register = () => {
             !phoneOtpSent ? (
               <button
                 onClick={() =>
-                  handleSendPhoneOtp(watch("phone"), watch("countryCode"))
+                  handleSendPhoneOtp(watch("mobile"), watch("countryCode"))
                 }
               >
                 Send OTP
@@ -186,7 +189,7 @@ const Register = () => {
                   onClick={() =>
                     handleVerifyPhoneOtp(
                       watch("countryCode"),
-                      watch("phone"),
+                      watch("mobile"),
                       phoneOtp
                     )
                   }

@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  console.log(product);
+  const { images } = product;
   const [shoesColorData, setShoesColorData] = useState([product.images]);
   const [activeId, setActiveId] = useState();
   const [imagesrc, setImageSrc] = useState(Shoes);
@@ -32,17 +34,8 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className={style.shoes__color}>
-        {shoesColorData.map((item: any) => {
-          return (
-            <ColorCard
-              setImageSrc={setImageSrc}
-              color={item.color}
-              key={item.id}
-              id={item.id}
-              activeId={activeId}
-              setActiveId={setActiveId}
-            />
-          );
+        {images.map((imageUrl: any, id: index) => {
+          return <ColorCard imageUrl={imageUrl} key={id} />;
         })}
       </div>
       <div className={style.shoes__info}>
