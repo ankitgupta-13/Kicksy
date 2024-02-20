@@ -130,8 +130,7 @@ const Register = () => {
               })}
               onChange={handleEmailChange} // Call handleEmailChange on input change
               showImage={emailOtpVerified ? <FaCheckCircle /> : null}
-            />
-          </div>
+            />         
           {!emailOtpVerified ? (
             !emailOtpSent ? (
               <button className={style.OTPbutton} onClick={() => handleSendEmailOtp(watch("email"))}>
@@ -152,6 +151,9 @@ const Register = () => {
               </div>
             )
           ) : null}
+          </div>
+
+
           <div className={style.mobile}>
             <Select
               height="55px"
@@ -223,11 +225,8 @@ const Register = () => {
                 <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
               ) : (
                 <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
-              )}
-              
-              </div>
-
-              
+              )}             
+              </div>   
             </div>
 
 
