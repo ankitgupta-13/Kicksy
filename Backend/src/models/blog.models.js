@@ -5,15 +5,12 @@ const blogSchema = new mongoose.Schema({
         type: String
     },
     imageurl: {
-        url: String,
-        location: {
-            type: String,
-            default: "left",
-            enum: ['left', 'right', 'center']
-        }
+        type: String,
+        required:true
     },
     content: {
-        type: String
+        type: String,
+        required:true
     }
 }, {
     timestamps: true

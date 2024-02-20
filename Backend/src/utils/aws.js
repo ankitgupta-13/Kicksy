@@ -2,18 +2,20 @@ import aws from "aws-sdk";
 import fs from "fs";
 import Fs from "@supercharge/fs";
 
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
+});
+
 const uploadOnAws = async (req, res) => {
   try {
-    const s3 = new aws.S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
-    });
+
 
     const productImage = fs.readFileSync(req);
     const fileName = Fs.filename(req);
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME, // bucket that we made earlier
-      Key: fileName, // Name of the image
+      Key: "image-"+Date.now(), // Name of the image
       Body: productImage, // Body which will contain the image in buffer format
       ACL: "public-read-write", // defining the permissions to get the public link
       ContentType: "image/jpeg", // Necessary to define the image content-type to view the photo in the browser with the link
@@ -34,4 +36,21 @@ const uploadOnAws = async (req, res) => {
   }
 };
 
-export { uploadOnAws };
+const deleteFromAws = async (imageUrl) => {
+  try {
+    await s3.deleteObject({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: imageUrl
+    }).promise()
+
+    return { keyDeleted: imageUrl, message: "image deleted successfully" }
+  }
+  catch (err) {
+    return {error: `${err.message}`};
+  }
+}
+
+export {
+  uploadOnAws,
+  deleteFromAws
+};

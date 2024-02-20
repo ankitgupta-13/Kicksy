@@ -91,7 +91,7 @@ const getRecentProducts = async (req, res) => {
     }
     return res.json(new ApiResponse(200, products, "Products found"));
   } catch (error) {
-    throw new ApiError(404, "No products found");
+      return new ApiError(404, "No products found");
   }
 };
 

@@ -62,7 +62,7 @@ const addOrder = async (req, res) => {
             res.json(new ApiResponse(200 , user._id , "order placed!"));
         }
         else{
-            throw new ApiError(400 , "invalid product type");
+            res.json(new ApiError(400 , "invalid product type"))
         }
     }
     catch (err) {
@@ -70,9 +70,8 @@ const addOrder = async (req, res) => {
     }
 }
 
-const setOrderStatus = async (req, res) => {
-
+const addOrder2 = async(req,res)=>{
+    
 }
-
 
 export {  addOrder };
