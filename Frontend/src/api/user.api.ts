@@ -54,3 +54,13 @@ export const getProductById = async (payload: {productID: string}) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getAllBlogs= async () => {
+  try {
+    const { data } = await api.get("/user/fetch-blogs");
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

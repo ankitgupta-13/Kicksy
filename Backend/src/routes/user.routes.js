@@ -27,6 +27,8 @@ import {
   getRecentProducts
 } from "../controllers/product.controllers.js";
 
+import { fetchAllBlog } from "../controllers/blog.controllers.js";
+
 const router = Router();
 
 router.route("/register").post(registerUser);
@@ -47,5 +49,6 @@ router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/get-recent-products").get(getRecentProducts);
 router.route("/get-product-by-id").post(getProductById);
 router.route("/get-all-products").get(getAllProducts);
+router.route("/fetch-blogs").get(fetchAllBlog);
 
 export default router;

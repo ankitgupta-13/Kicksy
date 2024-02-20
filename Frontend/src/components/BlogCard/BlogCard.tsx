@@ -1,13 +1,12 @@
 import style from './BlogCard.module.css'
-import adidas from '../../assets/adidas.png'
 
 
 const BlogCard = ({blog}) => {
   return (
     <div className={style.card}>
-        <img src={adidas}  className={style.image} alt="Blog image"></img>
-        <a>Games . Date</a>
-        <h3>Hii this is new blog</h3>
+        <img src={blog.imageurl}  className={style.image} alt="Blog image"></img>
+        <a>Games . {blog.createdAt}</a>
+        <h3>{blog.blogTitle}</h3>
     </div>
   )
 }

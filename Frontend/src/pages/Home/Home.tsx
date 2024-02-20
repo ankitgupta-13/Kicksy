@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);

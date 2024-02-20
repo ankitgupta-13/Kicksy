@@ -36,8 +36,9 @@ const fetchAllBlog = async (req, res) => {
   }
 }
 
-const addBlog = async (req, res) => {
-  const { content, blogTitle } = req.body;
+const addBlog = async (req,res) => {
+  const { content, blogTitle, image } = req.body;
+  console.log(req.file);
   try {
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
