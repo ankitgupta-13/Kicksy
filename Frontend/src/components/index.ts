@@ -8,6 +8,8 @@ import Input from "./Input/Input";
 import Select from "./Select/Select";
 import PaymentButton from "./Button/PaymentButton.tsx";
 import BlogUploadButton from "./Button/uploadButton";
+import colorCard from "./colorCard/colorCard.tsx";
+import ProductCard from "./ProductCard/ProductCard.tsx";
 
 export {
   Header,
@@ -20,4 +22,6 @@ export {
   Select,
   PaymentButton,
   BlogUploadButton,
+  colorCard,
+  ProductCard,
 };
