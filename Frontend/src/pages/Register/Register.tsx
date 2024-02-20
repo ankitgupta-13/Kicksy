@@ -10,8 +10,8 @@ import { Input, Button, Select, Container } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
-import { IoIosEyeOff } from "react-icons/io";
-import { IoMdEye } from "react-icons/io";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { FaCheckCircle } from "react-icons/fa";
 
 const Register = () => {
@@ -158,7 +158,6 @@ const Register = () => {
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
-
             <Input
               type="number"
               placeholder="Enter your mobile number"
@@ -206,24 +205,29 @@ const Register = () => {
             )
           ) : null}
           <div className={style.Input}>
-            <div style={{ position: 'relative'}}>
+            <div style={{ position: 'relative' }}>
               <Input
-                style={{ marginTop: '5px'}}
+                style={{ marginTop: '5px' }}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
                 {...register('password', { required: true })}
               />
-              <img
-                src={showPassword ? <IoMdEye /> : <IoIosEyeOff />}
-                onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: 'absolute',
-                  right: '20px',
-                  top: '56%',
-                  cursor: 'pointer',
-                }}
-              />
+              <div style={{
+                position: 'absolute',
+                right: '20px',
+                top: '56%',
+                cursor: 'pointer',
+              }}>
+              {showPassword ? (
+                <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
+              ) : (
+                <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
+              )}
+              
+              </div>
+
+              
             </div>
 
 
