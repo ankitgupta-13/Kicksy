@@ -39,7 +39,6 @@ router.route("/edit-blog-body").post(editBlogBody);
 router.route("/delete-blog").post(deleteBlog);
 router.route("/fetch-blog/id").post(fetchBlogById);
 router.route("/fetch-blogs").get(fetchAllBlog);
-
 router.route("/get-all-users").get(getAllUsers);
 router.route("/get-all-products").get(getAllProducts);
 router.route("/change-user-state").post(changeUserState);
