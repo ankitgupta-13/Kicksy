@@ -62,10 +62,7 @@ const Register = () => {
     if (response.statusCode === 200) {
       setPhoneOtpSent(true);
       alert("OTP sent to your mobile");
-    } else {
-      alert(response.message);
-      setError(response.message);
-    }
+    } else setError(response.message);
   };
 
   const handleVerifyPhoneOtp = async (countryCode, mobile, otp) => {
@@ -105,37 +102,44 @@ const Register = () => {
       <div className={style.CenterBody}>
         <h2 className={style.heading}>REGISTER</h2>
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
-          <Input
-            label="Full Name"
-            type="text"
-            placeholder="Enter your Full Name"
-            {...register("username", { required: true })}
-          />
-          <Input
-            label="Email"
-            type="email"
-            placeholder="Enter your email"
-            {...register("email", {
-              required: true,
-              validate: (value) => {
-                const isValidEmail = value.match(
-                  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-                );
-                setIsEmailValid(isValidEmail);
-                return true; // Always return true to avoid validation error
-              },
-            })}
-            onChange={handleEmailChange} // Call handleEmailChange on input change
-            showImage={emailOtpVerified ? <FaCheckCircle /> : null}
-          />
+          <div className={style.Input}>
+            <Input
+              style={{ marginTop: "5px" }}
+              label="Full Name"
+              type="text"
+              placeholder="Enter your Full Name"
+              {...register("username", { required: true })}
+            />
+          </div>
+
+          <div className={style.Input}>
+            <Input
+              style={{ marginTop: "5px" }}
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              {...register("email", {
+                required: true,
+                validate: (value) => {
+                  const isValidEmail = value.match(
+                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+                  );
+                  setIsEmailValid(isValidEmail);
+                  return true; // Always return true to avoid validation error
+                },
+              })}
+              onChange={handleEmailChange} // Call handleEmailChange on input change
+              showImage={emailOtpVerified ? <FaCheckCircle /> : null}
+            />
+          </div>
           {!emailOtpVerified ? (
             !emailOtpSent ? (
-              <button onClick={() => handleSendEmailOtp(watch("email"))}>
+              <button className={style.OTPbutton} onClick={() => handleSendEmailOtp(watch("email"))}>
                 Send OTP
               </button>
             ) : (
               <div>
-                <input
+                <Input
                   type="text"
                   placeholder="Enter OTP"
                   onChange={(e) => setEmailOtp(e.target.value)}
@@ -154,6 +158,7 @@ const Register = () => {
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
+
             <Input
               type="number"
               placeholder="Enter your mobile number"
@@ -169,18 +174,19 @@ const Register = () => {
               showImage={phoneOtpVerified ? <FaCheckCircle /> : null}
             />
           </div>
+
           {!phoneOtpVerified ? (
             !phoneOtpSent ? (
-              <button
+              <button className={style.OTPbutton}
                 onClick={() =>
-                  handleSendPhoneOtp(watch("mobile"), watch("countryCode"))
+                  handleSendPhoneOtp(watch("phone"), watch("countryCode"))
                 }
               >
                 Send OTP
               </button>
             ) : (
               <div>
-                <input
+                <Input
                   type="text"
                   placeholder="Enter OTP"
                   onChange={(e) => setPhoneOtp(e.target.value)}
@@ -189,7 +195,7 @@ const Register = () => {
                   onClick={() =>
                     handleVerifyPhoneOtp(
                       watch("countryCode"),
-                      watch("mobile"),
+                      watch("phone"),
                       phoneOtp
                     )
                   }
@@ -199,34 +205,53 @@ const Register = () => {
               </div>
             )
           ) : null}
-          <Input
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            {...register("password", { required: true })}
-          />
-          <img
-            src={showPassword ? <IoMdEye /> : <IoIosEyeOff />}
-            onClick={() => setShowPassword(!showPassword)}
-          />
-          <Input
-            label="Confirm Password"
-            type="password"
-            placeholder="Enter confirmation password"
-            {...register("confirm-password", {
-              required: true,
-              validate: (value) => {
-                if (value !== watch("password")) {
-                  setPasswordError("Password does not match");
-                  return "Password does not match";
-                } else {
-                  setPasswordError("");
-                }
-                return true;
-              },
-            })}
-          />
-          {passwordError && <p className={style.error}>{passwordError}</p>}
+          <div className={style.Input}>
+            <div style={{ position: 'relative'}}>
+              <Input
+                style={{ marginTop: '5px'}}
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Enter your password"
+                {...register('password', { required: true })}
+              />
+              <img
+                src={showPassword ? <IoMdEye /> : <IoIosEyeOff />}
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '20px',
+                  top: '56%',
+                  cursor: 'pointer',
+                }}
+              />
+            </div>
+
+
+          </div>
+
+          <div className={style.Input}>
+
+            <Input
+              style={{ marginTop: "5px" }}
+              label="Confirm Password"
+              type="password"
+              placeholder="Enter confirmation password"
+              {...register("confirm-password", {
+                required: true,
+                validate: (value) => {
+                  if (value !== watch("password")) {
+                    setPasswordError("Password does not match");
+                    return "Password does not match";
+                  } else {
+                    setPasswordError("");
+                  }
+                  return true;
+                },
+              })}
+            />
+            {passwordError && <p className={style.error}>{passwordError}</p>}
+          </div>
+
           <Button
             className={style.button}
             style={{ backgroundColor: "#131313", color: "white" }}

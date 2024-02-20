@@ -7,10 +7,12 @@
   margin: 0;
 }
 
+
 .CenterBody {
   border: 1px solid black;
-  padding: 40px;
+  padding: 30px 40px;
   width: 600px;
+  margin: 20px;
 }
 
 .logo {
@@ -24,7 +26,7 @@
   text-transform: uppercase;
   font-weight: 600;
   font-size: 18px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .button {
@@ -48,18 +50,32 @@
 
 .mobile {
   display: flex;
-  /* justify-content: center;
-  align-items: center;
-  width: 100%; */
+  margin-top: 20px;
 }
 
 .error {
   color: red;
 }
 
+.OTPbutton {
+  width: 30%;
+  border-radius: 2px;
+  background: #131313;
+  color: white;
+  border: none;
+  padding: 8px 36px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.Input {
+  margin-top: 20px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
+  gap: 5px;
 }
