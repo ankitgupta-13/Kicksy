@@ -73,9 +73,23 @@ const changeUserState = async (req, res) => {
   }
 }
 
+const fetchAdmins = async(req,res)=>{
+  try{
+    const admins = await User.find({role:"admin"})
+    if(!admins){
+      return res.json(new ApiResponse(404 , "No Admins Found!"));
+    }
+    res.json(new ApiResponse(200 , admins , "Admins Fetched successfully"));
+  }
+  catch(err){
+    throw new ApiError(400 , err.message)
+  }
+}
+
 export {
   createAdmin,
   checkAdmin,
+  fetchAdmins,
   getAllUsers,
   changeUserState
 };
