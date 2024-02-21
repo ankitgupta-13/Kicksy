@@ -2,7 +2,7 @@ import React, { useId } from "react";
 import style from "./Input.module.css";
 
 const Input = (
-  { width, label, type = "text", placeholder = "text", className = "", ...props }: any,
+  { width, label, labelcheckbox, type = "text", placeholder = "text", className = "", ...props }: any,
   ref
 ) => {
   const id = useId();
@@ -18,6 +18,7 @@ const Input = (
           {...props}
           id={id}
         />
+        {labelcheckbox && <label htmlFor={id}>{labelcheckbox}</label>}
         {props.showImage && (
           <div className={style.imageDiv}>{props.showImage}</div>
         )}

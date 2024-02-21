@@ -1,54 +1,82 @@
 import React, { useState } from 'react';
-import style from './FilterSidebar.module.css'
-import { Button } from '..';
+import style from './FilterSidebar.module.css';
+import { Button, Input } from '../index';
 
-interface FilterSidebarProps {
-  filters: Record<string, string>;
-  onFilterChange: (filterName: string, value: string) => void;
-}
 
-const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFilterChange }) => {
+const FilterSidebar = ({ filters, onFilterChange }) => {
   const [mActive, setMActive] = useState(false);
   const [wActive, setWActive] = useState(false);
+
+  const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
+  const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
+  const sizeOptions = ['S', 'M', 'L'];
+  const colorOptions = ['Black (10)', 'White (5)', 'Red (3)'];
+
+  const handleCheckboxChange = (filterName: string, value: string) => {
+    const currentFilters = filters[filterName] || [];
+  
+    if (currentFilters.includes(value)) {
+      const updatedFilters = currentFilters.filter((filter) => filter !== value);
+      onFilterChange(filterName, updatedFilters);
+    } else {
+      const updatedFilters = [...currentFilters, value];
+      onFilterChange(filterName, updatedFilters);
+    }
+  };
+
+  const handleGenderButtonClick = (gender: string) => {
+    const genderFilterName = 'gender';
+    if (gender === 'M') {
+      setMActive(!mActive);
+      onFilterChange(genderFilterName, mActive ? [] : [gender]);
+    } else if (gender === 'W') {
+      setWActive(!wActive);
+      onFilterChange(genderFilterName, wActive ? [] : [gender]);
+    }
+  };
+
   return (
     <div className={style.filtersidebar}>
       <h2>Current Filters</h2>
-      <div>
-
-      </div>
+      
       <label>Body Type:</label>
       <div className={style.buttons}>
-        <Button
-        style={{ backgroundColor: mActive ? "black" :"white",color: mActive ? "white" :"black"  }}
-        onClick={()=>setMActive(mActive? false : true)}
+      <Button
+          style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black' }}
+          onClick={() => handleGenderButtonClick('M')}
         >
           Men
         </Button>
         <Button
-          style={{ backgroundColor: wActive ? "black" :"white",color: wActive ? "white" :"black" }}
-          onClick={()=>setWActive(wActive? false : true)}
+          style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black' }}
+          onClick={() => handleGenderButtonClick('W')}
         >
           Women
         </Button>
+      </div>
 
-      </div>
-      <label>Product Type:</label>
-      <div>
-        
-      </div>
-      <label>Brand:</label>
-      <div>
-        
-      </div>
-      <label>Size:</label>
-      <div>
-        
-      </div>
-      <label>Color:</label>
-      <div>
-        
-      </div>
-      
+      {[
+        { filterName: 'category', options: productTypeOptions },
+        { filterName: 'brand', options: brandOptions },
+        { filterName: 'size', options: sizeOptions },
+        { filterName: 'colors', options: colorOptions },
+      ].map(({ filterName, options }) => (
+        <div key={filterName}>
+          <label>{filterName}:</label>
+          <div>
+            {options.map((option) => (
+              <Input
+                key={option}
+                style={{ height: '20px', width: '20px' }}
+                type="checkbox"
+                labelcheckbox={option}
+                onChange={() => handleCheckboxChange(filterName, option)}
+                checked={filters[filterName]?.includes(option) || false}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

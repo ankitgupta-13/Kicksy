@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import { getAllProducts } from '../../api/user.api';
-import style from './Shop.module.css'
+import style from './Shop.module.css';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
-
 const Shop: React.FC = () => {
-  const [filters, setFilters] = useState({
-    bodyType: '',
-    productType: '',
-    brand: '',
-    size: '',
-    color: '',
-  });
+  const [filters, setFilters] = useState({});
 
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -29,17 +22,23 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const filterProducts = () => {
       let filteredResult = [...allProducts];
+  
       Object.keys(filters).forEach((filterName) => {
-        if (filters[filterName]) {
-          filteredResult = filteredResult.filter(
-            (product) => product[filterName].toLowerCase().includes(filters[filterName].toLowerCase())
-          );
+        const filterValues = filters[filterName];
+  
+        if (filterValues && filterValues.length > 0) {
+          filteredResult = filteredResult.filter((product) => {
+            const productValues = product[filterName] || [];
+            return filterValues.some((filterValue) =>
+              productValues.includes(filterValue)
+            );
+          });
         }
       });
-
+  
       setFilteredProducts(filteredResult);
     };
-
+  
     filterProducts();
   }, [filters, allProducts]);
 
@@ -55,13 +54,11 @@ const Shop: React.FC = () => {
       <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
       <div className={style.productlist}>
         <ul>
-          {filteredProducts.map((product: any, index: number) => {
-            return (
-              <div key={index}>
-                <ProductCard product={product} />
-              </div>
-            );
-          })}
+          {filteredProducts.map((product: any, index: number) => (
+            <div key={index}>
+              <ProductCard product={product} />
+            </div>
+          ))}
         </ul>
       </div>
     </div>
