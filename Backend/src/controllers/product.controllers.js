@@ -125,10 +125,39 @@ const getProducts = async (req, res) => {
   }
 };
 
+const handleProductStock = async(req,res)=>{
+  try{
+    const {productID , operator , qty} = req.body
+    const product = await Product.findOne({_id:productID})
+    if(!qty){
+      if(operator === '+'){
+        product.stock += 1;
+        await product.save(); 
+      }
+      else if(operator === '-'){
+        product.stock -= 1;
+        await product.save();
+      }
+      else{
+        return res.json(new ApiResponse(422 , "Invalid Operator"))
+      }
+    }
+    else{
+      product.stock = qty;
+      await product.save();
+    }
+    res.json(new ApiResponse(200 , "Stock Updated"))
+  }
+  catch(err){
+    throw new ApiError(400 , err.message)
+  }
+}
+
 export {
   addProduct,
   updateProduct,
   deleteProduct,
+  handleProductStock,
   addProductImage,
   getRecentProducts,
   getProductById,

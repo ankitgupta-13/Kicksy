@@ -1,14 +1,26 @@
-import React from 'react'
-import style from "./Sidebar.module.css"
+import React, { useState } from 'react';
+import styles from './Sidebar.module.css';
 
-function Sidebar() {
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openNav = () => {
+    setIsOpen(true);
+  };
+
+  const closeNav = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <div className={style.body}> 
-        <div className={style.sidebar}>
-            
-        </div>
-    </div>
-  )
-}
+    <div>
+      <div id="mySidenav" className={`${styles.sidenav} ${isOpen ? styles.open : ''}`}>
+        <a href="javascript:void(0)" className={styles.closebtn} onClick={closeNav}>&times;</a>
+      </div>
 
-export default Sidebar
+      <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}>&#9776;</span>
+    </div>
+  );
+};
+
+export default Sidebar;

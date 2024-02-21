@@ -2,12 +2,13 @@ import { Blog } from "../models/blog.models.js";
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+
+
 import {
-  deleteObject,
-  getObjectUrl,
-  uploadObject,
-} from "../utils/aws.functions.js";
-import { deleteFromAws, uploadOnAws } from "../utils/aws.js";
+  deleteFromAws,
+  uploadOnAws
+} from "../utils/aws.js";
+
 import fs from "fs";
 
 const fetchBlogById = async (req, res) => {
@@ -15,30 +16,30 @@ const fetchBlogById = async (req, res) => {
   try {
     const blog = await Blog.findOne({ _id: blogID });
     if (!blog) {
-      throw new ApiError(404, "Blog not found");
+      return res.json(new ApiResponse((404, "Blog not found")));
     }
 
-    const url = await getObjectUrl(blog.imageurl.url);
+    res.json(new ApiResponse(200, blog, "Blog fetched successfully"));
 
-    res.json(new ApiResponse(200, { blog, url }, "Blog fetched successfully"));
-  } catch (err) {
+  }
+  catch (err) {
     throw new ApiError(400, "Error fetching the blog", err);
   }
 };
 
 const fetchAllBlog = async (req, res) => {
-  try{
+  try {
     const blogs = await Blog.find({});
-    res.json(new ApiResponse(200 , blogs));
+    res.json(new ApiResponse(200, blogs));
   }
-  catch(err){
-    res.json(new ApiError(400 , err.message))
+  catch (err) {
+    res.json(new ApiError(400, err.message))
   }
 }
 
-const addBlog = async (req,res) => {
+const addBlog = async (req, res) => {
   const { content, blogTitle, image } = req.body;
-  console.log(req.file);
+  // console.log(req.file);
   try {
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
@@ -80,7 +81,7 @@ const editBlogImage = async (req, res) => {
     const blog = await Blog.findOne({ _id: blogID })
     const imageUrl = blog.imageurl;
     const split = imageUrl.split("/")
-    console.log(split);
+    // console.log(split);
     const deletedImage = await deleteFromAws(split[split.length - 1]);
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
@@ -104,7 +105,7 @@ const editBlogBody = async (req, res) => {
   try {
     const { blogID, blogTitle, content } = req.body;
     const blog = await Blog.findOne({ _id: blogID });
-    console.log(req.body)
+    // console.log(req.body)
     if (!blog) {
       res.json(new ApiResponse(404, "Blog not found!!"))
     }
@@ -112,7 +113,7 @@ const editBlogBody = async (req, res) => {
       const updated = await Blog.findByIdAndUpdate({ _id: blogID },
         {
           $set: {
-            bodyTitle,
+            bodyTitle: blogTitle,
             content
           }
         },
@@ -131,13 +132,12 @@ const deleteBlog = async (req, res) => {
   const blog = await Blog.findOne({ _id: blogID });
   try {
     if (!blog) {
-      throw new ApiError(404, "blog not found");
+      return res.json(new ApiResponse(404, "blog not found"));
     }
+    const imageUrl = blog.imageurl
+    const split = imageUrl.split("/")
 
-    const img_deleted = await deleteObject(blog["imageurl"]["url"]);
-    if (!img_deleted) {
-      console.log("image not found , deleting the blog!");
-    }
+    const img_deleted = await deleteFromAws(split[split.length - 1]);
 
     const deleted = await Blog.findByIdAndDelete({ _id: blogID });
     res.json(new ApiResponse(200, deleted, "blog deleted successfully"));

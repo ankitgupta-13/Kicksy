@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./api/user.api";
 import { login, logout } from "./redux/reducers/authSlice";
-
+import Sidebar from "./components/Sidebar/Sidebar";
 const Layout = ({ loading }) => {
   return (
     <>
@@ -15,6 +15,7 @@ const Layout = ({ loading }) => {
           <Header />
           <Outlet />
           <Footer />
+
         </div>
       )}
     </>

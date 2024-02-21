@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
+import Cart from "../Cart/Cart";
 
 //Images and Icons
 import searchIcon from "../../assets/search.png";
@@ -9,9 +11,12 @@ import shoppingBagIcon from "../../assets/local_mall.png";
 import profileIcon from "../../assets/person_4.png";
 import favouriteIcon from "../../assets/favorite.png";
 
+
 const Header = () => {
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role);
+  const [cart, setCart] = useState(false);
+  console.log(cart)
   const navigate = useNavigate();
   const navItems = [
     { name: "Home", slug: "/", isActive: true },
@@ -59,9 +64,10 @@ const Header = () => {
             </li>
             <li
               className={style.iconListItems}
-              onClick={() => navigate("/cart")}
+              onClick={() => setCart(true)}
             >
               <img src={shoppingBagIcon} alt="ShoppingBag" />
+              <Cart visible={cart} onclose={() => setCart(false) }/>
             </li>
             <li className={style.iconListItems}>
               <img src={favouriteIcon} alt="Favourite" />

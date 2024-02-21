@@ -10,7 +10,7 @@ import {
 import Register from "./pages/Register/Register.tsx";
 import Verification from "./pages/Verification/Verification.tsx";
 import Login from "./pages/Login/Login.tsx";
-import Cart from "./pages/Cart/Cart.tsx";
+import Cart from "./components/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Home from "./pages/Home/Home.tsx";
@@ -24,6 +24,7 @@ import { getCurrentUser } from "./api/user.api.ts";
 import { useEffect, useState } from "react";
 import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
+
 
 const App = () => {
   const [loading, setLoading] = useState(false);
