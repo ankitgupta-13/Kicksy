@@ -105,5 +105,4 @@ export {
   changeUserState,
   getActiveUsersCount,
   fetchAdmins,
-  changeUserState,
 };
