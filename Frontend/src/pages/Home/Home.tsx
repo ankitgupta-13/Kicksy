@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { getRecentProducts } from "../../api/user.api";
 import style from "./Home.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import SliderCard from "../../components/SliderCard/SliderCard";
 import { Button, Container } from "../../components";
+
 import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  
+  
+  
   
   const getProducts = async () => {
     const response = await getRecentProducts();
@@ -17,8 +23,10 @@ const Home = () => {
     getProducts();
   }, []);
 
+
   return (
     <Container>
+       <SliderCard/>
       <div className={style.banners}>
         <h1>Home</h1>
         <Button className={style.button} onClick={() => navigate("/shop")}>
@@ -28,6 +36,7 @@ const Home = () => {
       <p>Welcome to the home page</p>
       <div>
         <h1>New Arrivals</h1>
+        
         <div className={style.cards}>
           {products.map((product: Object, index: number) => {
             return (
@@ -37,6 +46,7 @@ const Home = () => {
             );
           })}
         </div>
+
       </div>
     </Container>
   );
