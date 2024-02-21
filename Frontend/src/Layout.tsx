@@ -15,7 +15,6 @@ const Layout = ({ loading }) => {
           <Header />
           <Outlet />
           <Footer />
-          <Sidebar/>
 
         </div>
       )}

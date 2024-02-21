@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { FaCheckCircle } from "react-icons/fa";
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -130,40 +130,37 @@ const Register = () => {
                 },
               })}
               onChange={handleEmailChange} // Call handleEmailChange on input change
-              showImage={emailOtpVerified ? <FaCheckCircle /> : null}
-            />         
-          {!emailOtpVerified ? (
-            !emailOtpSent ? (
-              <button className={style.OTPbutton} onClick={() => handleSendEmailOtp(watch("email"))}>
-                Send OTP
-              </button>
-            ) : (
-              <div>
-                <Input
-                style={{marginTop:"5px"}}
-                  type="text"
-                  placeholder="Enter OTP"
-                  onChange={(e) => setEmailOtp(e.target.value)}
-                />
-                <button className={style.OTPbutton}
-                  onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}
-                >
-                  Verify
+              showImage={emailOtpVerified ? <CheckCircleRoundedIcon /> : null}
+            />
+            {!emailOtpVerified ? (
+              !emailOtpSent ? (
+                <button className={style.OTPbutton} onClick={() => handleSendEmailOtp(watch("email"))}>
+                  Send OTP
                 </button>
-              </div>
-            )
-          ) : null}
+              ) : (
+                <div>
+                  <Input
+                    style={{ marginTop: "5px" }}
+                    type="text"
+                    placeholder="Enter OTP"
+                    onChange={(e) => setEmailOtp(e.target.value)}
+                  />
+                  <button className={style.OTPbutton} onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}>
+                    Verify
+                  </button>
+                </div>
+              )
+            ) : null}
           </div>
-
-
           <div className={style.mobile}>
-            <Select         
-              border = "1px solid var(--Border-2, #CCC)"   
+            <Select
+              border="1px solid var(--Border-2, #CCC)"
               height="56px"
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
             <Input
+              width="90%"
               type="number"
               placeholder="Enter your mobile number"
               {...register("mobile", {
@@ -175,7 +172,7 @@ const Register = () => {
                 },
               })}
               onChange={handlePhoneChange} // Call handlePhoneChange on input change
-              showImage={phoneOtpVerified ? <FaCheckCircle /> : null}
+              showImage={phoneOtpVerified ? <CheckCircleRoundedIcon /> : null}
             />
           </div>
 
@@ -183,7 +180,7 @@ const Register = () => {
             !phoneOtpSent ? (
               <button className={style.OTPbutton}
                 onClick={() =>
-                  handleSendPhoneOtp(watch("phone"), watch("countryCode"))
+                  handleSendPhoneOtp(watch("mobile"), watch("countryCode"))
                 }
               >
                 Send OTP
@@ -191,15 +188,16 @@ const Register = () => {
             ) : (
               <div>
                 <Input
+                  style={{ marginTop: "5px" }}
                   type="text"
                   placeholder="Enter OTP"
                   onChange={(e) => setPhoneOtp(e.target.value)}
                 />
-                <button
+                <button className={style.OTPbutton}
                   onClick={() =>
                     handleVerifyPhoneOtp(
                       watch("countryCode"),
-                      watch("phone"),
+                      watch("mobile"),
                       phoneOtp
                     )
                   }
@@ -224,12 +222,12 @@ const Register = () => {
                 top: '56%',
                 cursor: 'pointer',
               }}>
-              {showPassword ? (
-                <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
-              ) : (
-                <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
-              )}             
-              </div>   
+                {showPassword ? (
+                  <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
+                ) : (
+                  <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
+                )}
+              </div>
             </div>
 
 
