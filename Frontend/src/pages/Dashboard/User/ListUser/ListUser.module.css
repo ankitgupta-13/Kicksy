@@ -1,0 +1,14 @@
+.container {
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
+}
+.sectionTitle {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #f0f0f0;
+  height: 50px;
+  margin: 0 50px;
+  padding: 0 20px;
+}

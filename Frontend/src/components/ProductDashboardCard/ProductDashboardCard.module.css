@@ -1,0 +1,35 @@
+.cardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
+  border: 2px solid #f0f0f0;
+  height: 90px;
+  cursor: pointer;
+  padding: 10px;
+}
+.cardContainer:hover {
+  border: 2px solid #dad1d1;
+  box-shadow: 0 0 10px #f1ebeb;
+  transition: 0.3s;
+}
+
+.image {
+  width: 80px;
+  height: 70px;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+}
+.date {
+  font-size: 1rem;
+}
+.time {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #363535;
+}

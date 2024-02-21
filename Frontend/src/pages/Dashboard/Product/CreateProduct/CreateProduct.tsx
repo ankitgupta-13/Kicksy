@@ -2,11 +2,9 @@ import { useForm } from "react-hook-form";
 import style from "./CreateProduct.module.css";
 import { Button, Container, Input, Select } from "../../../../components";
 import { addProduct, uploadImage } from "../../../../api/admin.api";
-import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();
-  const navigate = useNavigate();
 
   const handleCreateProduct = async (data: any) => {
     const { images } = data;

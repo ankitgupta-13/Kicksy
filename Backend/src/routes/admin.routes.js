@@ -33,9 +33,12 @@ router.route("/add-product").post(addProduct);
 router.route("/update-product").post(updateProduct);
 router.route("/delete-product").post(deleteProduct);
 router.route("/add-blog").post(addBlog);
-router.route("/edit-blog").post(editBlog);
+router.route("/edit-blog-image").post(upload.single("image"), editBlogImage);
+router.route("/edit-blog").post(editBlogBody);
 router.route("/delete-blog").post(deleteBlog);
-router.route("/fetch-blog").post(fetchBlog);
+router.route("/fetch-blog").post(fetchBlogById);
 router.route("/get-all-users").get(getAllUsers);
 router.route("/get-all-products").get(getAllProducts);
+router.route("/fetch-blog/all").get(fetchAllBlog);
+
 export default router;

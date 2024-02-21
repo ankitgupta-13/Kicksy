@@ -66,7 +66,6 @@ const MainContent = ({ currentSection, currentAction }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
       }}
     >
       <div className={style.content}>{content}</div>
