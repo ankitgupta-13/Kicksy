@@ -50,4 +50,32 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-export { createAdmin, checkAdmin, getAllUsers };
+const changeUserState = async (req, res) => {
+  const { userID, status } = req.body;
+  try {
+    const user = await User.findOne({ _id: userID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
+
+    user.status = status;
+    await user.save()
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          return res.json(new ApiResponse(422, "Invalid status value"))
+        }
+        else {
+          return res.json(new ApiResponse(400, err.message));
+        }
+      });
+
+  }
+  catch (err) {
+    res.json(new ApiError(400, "Error changing the status of the user."))
+  }
+}
+
+export {
+  createAdmin,
+  checkAdmin,
+  getAllUsers,
+  changeUserState
+};

@@ -2,7 +2,7 @@ import React, { useId } from "react";
 import style from "./Input.module.css";
 
 const Input = (
-  { label, type = "text", placeholder = "text", className = "", ...props },
+  { label, type = "text", placeholder = "text", className = "", ...props }: any,
   ref
 ) => {
   const id = useId();

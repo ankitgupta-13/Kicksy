@@ -39,6 +39,10 @@
   margin-left: 2px;
   text-decoration: underline;
 }
+
+.Input{
+  margin-top: 20px;
+}
 .button {
   display: flex;
   padding: 14px 150px;

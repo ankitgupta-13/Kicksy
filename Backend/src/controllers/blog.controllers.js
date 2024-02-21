@@ -36,8 +36,9 @@ const fetchAllBlog = async (req, res) => {
   }
 }
 
-const addBlog = async (req, res) => {
-  const { content, blogTitle } = req.body;
+const addBlog = async (req,res) => {
+  const { content, blogTitle, image } = req.body;
+  console.log(req.file);
   try {
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
@@ -84,10 +85,12 @@ const editBlogImage = async (req, res) => {
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       res.json(new ApiResponse(422, "unable to upload"))
+      fs.unlinkSync(req.file.path)
     }
     else {
       blog.imageurl = blogImageUrl;
       await Blog.findByIdAndUpdate({ _id: blogID }, { $set: { imageurl: blogImageUrl } }, { new: true });
+      fs.unlinkSync(req.file.path)
       // const updated = await blog.save();
       res.json(new ApiResponse(200, { deletedImage, updatedImage: blogImageUrl }))
     }

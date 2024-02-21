@@ -42,25 +42,33 @@ const Login = () => {
           {error && <p>{error}</p>}
         </p>
         <form onSubmit={handleSubmit(handleLogin)}>
-          <Input
-            label="Email"
-            type="email"
-            placeholder="Enter your email"
-            {...register("email", {
-              required: true,
-              validate: {
-                matchPattern: (value) =>
-                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                  "Please enter a valid email address",
-              },
-            })}
-          />
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            {...register("password", { required: true })}
-          />
+          <div className={style.Input}>
+            <Input
+              style={{ marginTop: "5px" }}
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              {...register("email", {
+                required: true,
+                validate: {
+                  matchPattern: (value) =>
+                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                    "Please enter a valid email address",
+                },
+              })}
+            />
+          </div>
+
+          <div className={style.Input}>
+            <Input
+              style={{ marginTop: "5px"}}
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              {...register("password", { required: true })}
+            />
+          </div>
+
           <Button
             className={style.button}
             style={{ backgroundColor: "#131313", color: "white" }}

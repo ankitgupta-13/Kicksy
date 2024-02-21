@@ -46,7 +46,7 @@ const MainContent = ({ currentSection, currentAction }) => {
           content = <Analytics />;
       }
       break;
-    case "blogs":
+    case "blog":
       switch (currentAction) {
         case "addblog":
           content = <AddBlog />;

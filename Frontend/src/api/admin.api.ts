@@ -16,7 +16,7 @@ export const createAdmin = async (payload: any) => {
   try {
     const { data } = await api.post("/admin/create-admin", payload);
     return data;
-  } catch (error) {
+  } catch (error : any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -67,7 +67,17 @@ export const getAllUsers = async () => {
   try {
     const { data } = await api.get("/admin/get-all-users");
     return data;
-  } catch (error) {
+  } catch (error : any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const addBlog = async (payload: any) => {
+  try {
+    const { data } = await axiosImageApi.post("/admin/add-blog", payload);
+    return data;
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -77,8 +87,18 @@ export const getAllProducts = async () => {
   try {
     const { data } = await api.get("/admin/get-all-products");
     return data;
-  } catch (error) {
+  } catch (error : any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
+export const getAllBlogs= async () => {
+  try {
+    const { data } = await api.get("/admin/fetch-blogs");
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
