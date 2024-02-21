@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
 
+
 const App = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();

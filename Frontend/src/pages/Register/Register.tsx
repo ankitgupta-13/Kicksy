@@ -102,6 +102,7 @@ const Register = () => {
       <div className={style.CenterBody}>
         <h2 className={style.heading}>REGISTER</h2>
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
+
           <div className={style.Input}>
             <Input
               style={{ marginTop: "5px" }}
@@ -139,11 +140,12 @@ const Register = () => {
             ) : (
               <div>
                 <Input
+                style={{marginTop:"5px"}}
                   type="text"
                   placeholder="Enter OTP"
                   onChange={(e) => setEmailOtp(e.target.value)}
                 />
-                <button
+                <button className={style.OTPbutton}
                   onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}
                 >
                   Verify
@@ -155,8 +157,9 @@ const Register = () => {
 
 
           <div className={style.mobile}>
-            <Select
-              height="55px"
+            <Select         
+              border = "1px solid var(--Border-2, #CCC)"   
+              height="56px"
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />
