@@ -18,10 +18,6 @@ const dashboardSlice = createSlice({
     toggleSection: (state, action) => {
       const sectionName = action.payload;
       state.sectionsState[sectionName] = !state.sectionsState[sectionName];
-      state.currentSection = state.sectionsState[sectionName]
-        ? sectionName
-        : null;
-      state.currentSection === null ? (state.currentAction = null) : null;
     },
     selectAction: (state, action) => {
       const { selectedSection, selectedAction } = action.payload;
@@ -34,9 +30,14 @@ const dashboardSlice = createSlice({
         }
       });
     },
+    closeSection: (state) => {
+      state.currentSection = null;
+      state.currentAction = null;
+    },
   },
 });
 
-export const { toggleSection, selectAction } = dashboardSlice.actions;
+export const { toggleSection, selectAction, closeSection } =
+  dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

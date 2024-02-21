@@ -22,9 +22,9 @@ import {
 } from "../controllers/cart.controllers.js";
 
 import {
-  getAllProducts,
   getProductById,
-  getRecentProducts
+  getProducts,
+  getRecentProducts,
 } from "../controllers/product.controllers.js";
 
 import { fetchAllBlog } from "../controllers/blog.controllers.js";
@@ -48,7 +48,7 @@ router.route("/get-current-user").get(verifyJWT, getCurrentUser);
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/get-recent-products").get(getRecentProducts);
 router.route("/get-product-by-id").post(getProductById);
-router.route("/get-all-products").get(getAllProducts);
+router.route("/get-products").get(getProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
 
 export default router;

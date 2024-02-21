@@ -24,8 +24,6 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "allProduct":
           content = <ListProduct />;
           break;
-        default:
-          content = <Analytics />;
       }
       break;
     case "order":
@@ -33,8 +31,6 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "allOrder":
           content = <ListOrder />;
           break;
-        default:
-          content = <Analytics />;
       }
       break;
     case "user":
@@ -42,8 +38,6 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "allUser":
           content = <ListUser />;
           break;
-        default:
-          content = <Analytics />;
       }
       break;
     case "blog":
@@ -54,11 +48,11 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "listblogs":
           content = <ListBlogs />;
           break;
-        default:
-          content = <Analytics />;
       }
       break;
     default:
+      content = <Analytics />;
+      break;
   }
 
   return (

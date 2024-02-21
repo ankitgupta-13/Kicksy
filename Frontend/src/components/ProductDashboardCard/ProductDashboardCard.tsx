@@ -9,8 +9,10 @@ const ProductDashboardCard = ({ data }) => {
 
   return (
     <div className={style.cardContainer}>
-      <img src={images[0]} alt="" className={style.image} />
-      <div className={style.title}>{title}</div>
+      <div className={style.nameImage}>
+        <img src={images[0]} alt="" className={style.image} />
+        <div className={style.title}>{title}</div>
+      </div>
       <div>
         <div className={style.date}>{createdDate}</div>
         <div className={style.time}>{createdTime}</div>

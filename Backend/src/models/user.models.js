@@ -80,10 +80,10 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    status:{
-      type:String,
-      default:"active",
-      enum:['active' , 'banned']
+    status: {
+      type: String,
+      default: "active",
+      enum: ["active", "banned"],
     },
     address: [
       {

@@ -34,19 +34,36 @@ const checkAdmin = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
-    const users = await User.find({ role: { $ne: "admin" } }).select(
-      "-password"
-    );
+    const users = await User.find({ role: { $ne: "admin" } })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .select("-password");
 
-    if (users.length === 0)
-      return res.json(new ApiResponse(404, "No users found!"));
     return res.json(
-      new ApiResponse(200, users, "Users retrieved successfully!")
+      new ApiResponse(
+        200,
+        {
+          users,
+          currentPage: page,
+        },
+        "Users retrieved successfully!"
+      )
     );
   } catch (error) {
     throw new ApiError(400, "Error getting users ", error);
+  }
+};
+
+const getActiveUsersCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ status: "active" });
+    return res.json(new ApiResponse(200, count, "Users count retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Error getting users count ", error);
   }
 };
 
@@ -57,25 +74,22 @@ const changeUserState = async (req, res) => {
     if (!user) return res.json(new ApiResponse(404, "user not found"));
 
     user.status = status;
-    await user.save()
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          return res.json(new ApiResponse(422, "Invalid status value"))
-        }
-        else {
-          return res.json(new ApiResponse(400, err.message));
-        }
-      });
-
+    await user.save().catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.json(new ApiResponse(422, "Invalid status value"));
+      } else {
+        return res.json(new ApiResponse(400, err.message));
+      }
+    });
+  } catch (err) {
+    res.json(new ApiError(400, "Error changing the status of the user."));
   }
-  catch (err) {
-    res.json(new ApiError(400, "Error changing the status of the user."))
-  }
-}
+};
 
 export {
   createAdmin,
   checkAdmin,
-  getAllUsers,
-  changeUserState
+  getUsers,
+  changeUserState,
+  getActiveUsersCount,
 };

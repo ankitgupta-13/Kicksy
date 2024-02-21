@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
-import { getAllUsers } from "../../../../api/admin.api";
+import { useEffect, useState } from "react";
+import { getUsers } from "../../../../api/admin.api";
 import style from "./ListUser.module.css";
 import UserDashboardCard from "../../../../components/UserDashboardCard/UserDashboardCard";
+import { Pagination } from "@mui/material";
 
 const ListUser = () => {
-  const [users, setUsers] = React.useState([]);
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const allUsers = async () => {
-    const response = await getAllUsers();
-    console.log(response);
+  const fetchUsers = async (page) => {
+    const response = await getUsers(page);
     if (response.statusCode === 200) {
-      setUsers(response.data);
+      setUsers(response.data.users);
     }
   };
   useEffect(() => {
-    allUsers();
-  }, []);
+    fetchUsers(page);
+  }, [page]);
 
   return (
     <div className={style.container}>
@@ -32,6 +33,13 @@ const ListUser = () => {
           </div>
         );
       })}
+      <div className={style.pagination}>
+        <Pagination
+          count={10}
+          page={page}
+          onChange={(e, value) => setPage(value)}
+        />
+      </div>
     </div>
   );
 };

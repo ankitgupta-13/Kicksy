@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../../../../api/admin.api";
+import { getProducts } from "../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import ProductDashboardCard from "../../../../components/ProductDashboardCard/ProductDashboardCard";
+import { Pagination } from "@mui/material";
 
 const ListProduct = () => {
+  const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
 
-  const allProducts = async () => {
-    const response = await getAllProducts();
+  const allProducts = async (page) => {
+    const response = await getProducts(page);
     if (response.statusCode === 200) {
-      setProducts(response.data);
+      setProducts(response.data.products);
     }
   };
 
   useEffect(() => {
-    allProducts();
-  }, []);
+    allProducts(page);
+  }, [page]);
 
   return (
     <div className={style.container}>
@@ -24,7 +26,6 @@ const ListProduct = () => {
         <div>Create at</div>
         <div>Stock</div>
         <div>Price</div>
-        <div>Publish</div>
       </div>
       {products.map((product, index) => {
         return (
@@ -33,6 +34,13 @@ const ListProduct = () => {
           </div>
         );
       })}
+      <div className={style.pagination}>
+        <Pagination
+          count={10}
+          page={page}
+          onChange={(e, value) => setPage(value)}
+        />
+      </div>
     </div>
   );
 };

@@ -91,7 +91,7 @@ const getRecentProducts = async (req, res) => {
     }
     return res.json(new ApiResponse(200, products, "Products found"));
   } catch (error) {
-      return new ApiError(404, "No products found");
+    return new ApiError(404, "No products found");
   }
 };
 
@@ -110,10 +110,16 @@ const getProductById = async (req, res) => {
   }
 };
 
-const getAllProducts = async (req, res) => {
+const getProducts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
-    const products = await Product.find({});
-    res.json(new ApiResponse(200, products, "products fetched successfully"));
+    const products = await Product.find()
+      .skip((page - 1) * limit)
+      .limit(limit);
+    res.json(
+      new ApiResponse(200, { products, page }, "Products fetched successfully")
+    );
   } catch (err) {
     console.log(err);
   }
@@ -126,5 +132,5 @@ export {
   addProductImage,
   getRecentProducts,
   getProductById,
-  getAllProducts,
+  getProducts,
 };
