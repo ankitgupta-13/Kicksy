@@ -244,11 +244,26 @@ const logoutUser = async (req, res) => {
   }
 };
 
+const findByID = async (req, res) => {
+  const { userID } = req.body;
+  try {
+    const user = await User.findOne({ _id: userID })
+    if (!user) {
+      return res.json(new ApiResponse(404, "user not found"))
+    }
+    res.json(new ApiResponse(200, user, "User Found"));
+  }
+  catch (err) {
+    res.json(new ApiError(400 , err.message));
+  }
+}
+
 export {
   registerUser,
   loginUser,
   getCurrentUser,
   logoutUser,
+  findByID,
   sendEmailOtp,
   verifyEmailOtp,
   sendMobileOtp,
