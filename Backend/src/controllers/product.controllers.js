@@ -2,6 +2,7 @@ import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
+import pluralize from "pluralize"
 import fs from "fs";
 
 const addProductImage = async (req, res) => {
@@ -70,8 +71,8 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const { productID } = req.body;
-    const deleted_product = await Product.findByIdAndDelete({ _id: productID });
+    const { _id, images } = req.body;
+    const deleted_product = await Product.findByIdAndDelete({ _id });
     if (!deleted_product) {
       throw new ApiError("invalid product id");
     }
@@ -91,7 +92,7 @@ const getRecentProducts = async (req, res) => {
     }
     return res.json(new ApiResponse(200, products, "Products found"));
   } catch (error) {
-      return new ApiError(404, "No products found");
+    return new ApiError(404, "No products found");
   }
 };
 
@@ -110,41 +111,93 @@ const getProductById = async (req, res) => {
   }
 };
 
-const getAllProducts = async (req, res) => {
+const getProducts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
-    const products = await Product.find({});
-    res.json(new ApiResponse(200, products, "products fetched successfully"));
+    const products = await Product.find()
+      .skip((page - 1) * limit)
+      .limit(limit);
+    res.json(
+      new ApiResponse(200, { products, page }, "Products fetched successfully")
+    );
   } catch (err) {
     console.log(err);
   }
 };
 
-const handleProductStock = async(req,res)=>{
-  try{
-    const {productID , operator , qty} = req.body
-    const product = await Product.findOne({_id:productID})
-    if(!qty){
-      if(operator === '+'){
+const getProductsCount = async (req, res) => {
+  try {
+    const count = await Product.countDocuments();
+    return res.json(new ApiResponse(200, count, "Products count retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Error getting products", error);
+  }
+};
+
+const handleProductStock = async (req, res) => {
+  try {
+    const { productID, operator, qty } = req.body;
+    const product = await Product.findOne({ _id: productID });
+    if (!qty) {
+      if (operator === "+") {
         product.stock += 1;
-        await product.save(); 
-      }
-      else if(operator === '-'){
+        await product.save();
+      } else if (operator === "-") {
         product.stock -= 1;
         await product.save();
+      } else {
+        return res.json(new ApiResponse(422, "Invalid Operator"));
       }
-      else{
-        return res.json(new ApiResponse(422 , "Invalid Operator"))
-      }
-    }
-    else{
+    } else {
       product.stock = qty;
       await product.save();
     }
-    res.json(new ApiResponse(200 , "Stock Updated"))
+    res.json(new ApiResponse(200, "Stock Updated"));
+  } catch (err) {
+    throw new ApiError(400, err.message);
   }
-  catch(err){
-    throw new ApiError(400 , err.message)
+};
+
+// console.log(pluralize.singular("women"));
+// console.log("hello,people men.women.hello".split(/[ ,.]+/));
+
+const searchBarProducts = async (req, res) => {
+  const { search_string } = req.body
+  try {
+    if (!search_string) return res.json(new ApiResponse(422, "Enter Search String First"))
+    const products = await Product.find({})
+    const search_array = search_string.split(/[ ,.]+/)
+    // console.log(search_array)
+    const products_array = []
+    products.forEach((product) => {
+      // const toBeSearched = []
+      // product.tags.forEach((tag)=>{
+      //   toBeSearched.push(tag.split(/[ ,.]+/))
+      // })
+
+      const toBeSearched = product.tags;
+
+      const variation = [];
+      search_array.forEach((item) => {
+        variation.push(pluralize.singular(item).toLowerCase())
+        variation.push(pluralize.plural(item).toLowerCase())
+        variation.push(item.toLowerCase())
+      })
+      
+      const hasCommon = toBeSearched.some((tag)=>variation.includes(tag.toLowerCase()))
+      
+      // console.log(hasCommon);
+      if(hasCommon){
+        products_array.push(product)
+      }
+      
+    })
+    return res.json(new ApiResponse(200 , products_array));
   }
+  catch (err) {
+    return res.json(new ApiError(400 , err.message));
+  } 
 }
 
 export {
@@ -155,5 +208,7 @@ export {
   addProductImage,
   getRecentProducts,
   getProductById,
-  getAllProducts,
+  getProducts,
+  getProductsCount,
+  searchBarProducts
 };

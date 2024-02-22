@@ -10,9 +10,9 @@ import { Input, Button, Select, Container } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -102,7 +102,6 @@ const Register = () => {
       <div className={style.CenterBody}>
         <h2 className={style.heading}>REGISTER</h2>
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
-
           <div className={style.Input}>
             <Input
               style={{ marginTop: "5px" }}
@@ -134,7 +133,10 @@ const Register = () => {
             />
             {!emailOtpVerified ? (
               !emailOtpSent ? (
-                <button className={style.OTPbutton} onClick={() => handleSendEmailOtp(watch("email"))}>
+                <button
+                  className={style.OTPbutton}
+                  onClick={() => handleSendEmailOtp(watch("email"))}
+                >
                   Send OTP
                 </button>
               ) : (
@@ -145,7 +147,12 @@ const Register = () => {
                     placeholder="Enter OTP"
                     onChange={(e) => setEmailOtp(e.target.value)}
                   />
-                  <button className={style.OTPbutton} onClick={() => handleVerifyEmailOtp(watch("email"), emailOtp)}>
+                  <button
+                    className={style.OTPbutton}
+                    onClick={() =>
+                      handleVerifyEmailOtp(watch("email"), emailOtp)
+                    }
+                  >
                     Verify
                   </button>
                 </div>
@@ -178,7 +185,8 @@ const Register = () => {
 
           {!phoneOtpVerified ? (
             !phoneOtpSent ? (
-              <button className={style.OTPbutton}
+              <button
+                className={style.OTPbutton}
                 onClick={() =>
                   handleSendPhoneOtp(watch("mobile"), watch("countryCode"))
                 }
@@ -193,7 +201,8 @@ const Register = () => {
                   placeholder="Enter OTP"
                   onChange={(e) => setPhoneOtp(e.target.value)}
                 />
-                <button className={style.OTPbutton}
+                <button
+                  className={style.OTPbutton}
                   onClick={() =>
                     handleVerifyPhoneOtp(
                       watch("countryCode"),
@@ -208,33 +217,36 @@ const Register = () => {
             )
           ) : null}
           <div className={style.Input}>
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: "relative" }}>
               <Input
-                style={{ marginTop: '5px' }}
+                style={{ marginTop: "5px" }}
                 label="Password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                {...register('password', { required: true })}
+                {...register("password", { required: true })}
               />
-              <div style={{
-                position: 'absolute',
-                right: '20px',
-                top: '56%',
-                cursor: 'pointer',
-              }}>
+              <div
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  top: "56%",
+                  cursor: "pointer",
+                }}
+              >
                 {showPassword ? (
-                  <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
+                  <VisibilityOffIcon
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
                 ) : (
-                  <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
+                  <VisibilityIcon
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
                 )}
               </div>
             </div>
-
-
           </div>
 
           <div className={style.Input}>
-
             <Input
               style={{ marginTop: "5px" }}
               label="Confirm Password"

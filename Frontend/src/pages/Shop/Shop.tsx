@@ -13,9 +13,9 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       const data = await getAllProducts();
-      setAllProducts(data.data);
+      setAllProducts(data.data.products);
+      console.log(data.data.products);
     };
-
     fetchAllProducts();
   }, []);
 
@@ -52,15 +52,11 @@ const Shop: React.FC = () => {
   return (
     <div className={style.shoppage}>
       <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
-      <div className={style.productlist}>
-        <ul>
           {filteredProducts.map((product: any, index: number) => (
-            <div key={index}>
+            <div key={index} className={style.productlist}>
               <ProductCard product={product} />
             </div>
           ))}
-        </ul>
-      </div>
     </div>
   );
 };

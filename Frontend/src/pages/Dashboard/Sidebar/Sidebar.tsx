@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
+  closeSection,
   selectAction,
   toggleSection,
 } from "../../../redux/reducers/dashboardSlice";
@@ -14,6 +15,7 @@ import { Container } from "@mui/material";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const { sectionsState } = useSelector((state) => state.dashboard);
+
   const sections = [
     {
       user: {
@@ -67,7 +69,12 @@ const Sidebar = () => {
       <img className={style.Logo} src={logo} alt="" />
       <div>
         <h2>Overview</h2>
-        <button className={style.sectionButton}>App</button>
+        <button
+          className={style.sectionButton}
+          onClick={() => dispatch(closeSection())}
+        >
+          App
+        </button>
       </div>
       <div>
         <h2>Management</h2>

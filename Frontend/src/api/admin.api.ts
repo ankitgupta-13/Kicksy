@@ -16,7 +16,7 @@ export const createAdmin = async (payload: any) => {
   try {
     const { data } = await api.post("/admin/create-admin", payload);
     return data;
-  } catch (error : any) {
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -63,11 +63,11 @@ export const uploadImage = async (payload: FormData) => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getUsers = async (page: Number) => {
   try {
-    const { data } = await api.get("/admin/get-all-users");
+    const { data } = await api.get(`/admin/get-users?page=${page}?limit=10`);
     return data;
-  } catch (error : any) {
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -83,16 +83,17 @@ export const addBlog = async (payload: any) => {
   }
 };
 
-export const getAllProducts = async () => {
+export const getProducts = async (page: Number) => {
   try {
-    const { data } = await api.get("/admin/get-all-products");
+    const { data } = await api.get(`/admin/get-products?page=${page}?limit=10`);
     return data;
-  } catch (error : any) {
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
-export const getAllBlogs= async () => {
+
+export const getAllBlogs = async () => {
   try {
     const { data } = await api.get("/admin/fetch-blogs");
     return data;
@@ -102,3 +103,32 @@ export const getAllBlogs= async () => {
   }
 };
 
+export const totalActiveUsers = async () => {
+  try {
+    const { data } = await api.get("/admin/total-active-users");
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const totalProductsCount = async () => {
+  try {
+    const { data } = await api.get("/admin/total-products-count");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const deleteProduct = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/delete-product", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

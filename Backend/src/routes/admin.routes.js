@@ -4,8 +4,9 @@ import {
   addProductImage,
   updateProduct,
   deleteProduct,
-  getAllProducts,
+  getProducts,
   handleProductStock,
+  getProductsCount,
 } from "../controllers/product.controllers.js";
 
 import { upload } from "../middlewares/multer.middlewares.js";
@@ -23,8 +24,10 @@ import {
   changeUserState,
   checkAdmin,
   createAdmin,
+  getActiveUsersCount,
+  getUsers,
   fetchAdmins,
-  getAllUsers,
+  getUsersCount,
 } from "../controllers/admin.controllers.js";
 
 const router = Router();
@@ -43,9 +46,11 @@ router.route("/edit-blog-body").post(editBlogBody);
 router.route("/delete-blog").post(deleteBlog);
 router.route("/fetch-blog/id").post(fetchBlogById);
 router.route("/fetch-blogs").get(fetchAllBlog);
-router.route("/get-all-users").get(getAllUsers);
-router.route("/get-all-products").get(getAllProducts);
+router.route("/get-users").get(getUsers);
+router.route("/get-products").get(getProducts);
 router.route("/change-user-state").post(changeUserState);
+router.route("/total-active-users").get(getActiveUsersCount);
+router.route("/total-products-count").get(getProductsCount);
+router.route("/total-users").get(getUsersCount);
 
 export default router;
-  

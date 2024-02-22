@@ -1,23 +1,27 @@
 .cardContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
   align-items: center;
-  justify-content: space-around;
-  gap: 1rem;
-  border: 2px solid #f0f0f0;
-  height: 90px;
+  margin: 0 50px;
+  padding: 0 20px;
+  height: 80px;
   cursor: pointer;
-  padding: 10px;
 }
 .cardContainer:hover {
   border: 2px solid #dad1d1;
   box-shadow: 0 0 10px #f1ebeb;
   transition: 0.3s;
 }
-
 .image {
   width: 80px;
   height: 70px;
   border-radius: 10px;
+}
+.nameImage {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .title {
@@ -32,4 +36,9 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: #363535;
+}
+.priceDelete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

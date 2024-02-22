@@ -34,19 +34,45 @@ const checkAdmin = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
-    const users = await User.find({ role: { $ne: "admin" } }).select(
-      "-password"
-    );
+    const users = await User.find({ role: { $ne: "admin" } })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .select("-password");
 
-    if (users.length === 0)
-      return res.json(new ApiResponse(404, "No users found!"));
     return res.json(
-      new ApiResponse(200, users, "Users retrieved successfully!")
+      new ApiResponse(
+        200,
+        {
+          users,
+          currentPage: page,
+        },
+        "Users retrieved successfully!"
+      )
     );
   } catch (error) {
     throw new ApiError(400, "Error getting users ", error);
+  }
+};
+
+const getActiveUsersCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ status: "active" });
+    return res.json(new ApiResponse(200, count, "Users count retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Error getting users count ", error);
+  }
+};
+
+const getUsersCount = async (req, res) => {
+  try {
+    const users = await User.countDocuments({ role: { $ne: "admin" } });
+    return res.json(new ApiResponse(200, users, "Toal Users retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Unable to retrieve Users", error);
   }
 };
 
@@ -57,39 +83,36 @@ const changeUserState = async (req, res) => {
     if (!user) return res.json(new ApiResponse(404, "user not found"));
 
     user.status = status;
-    await user.save()
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          return res.json(new ApiResponse(422, "Invalid status value"))
-        }
-        else {
-          return res.json(new ApiResponse(400, err.message));
-        }
-      });
-
+    await user.save().catch((err) => {
+      if (err.name === "ValidationError") {
+        return res.json(new ApiResponse(422, "Invalid status value"));
+      } else {
+        return res.json(new ApiResponse(400, err.message));
+      }
+    });
+  } catch (err) {
+    res.json(new ApiError(400, "Error changing the status of the user."));
   }
-  catch (err) {
-    res.json(new ApiError(400, "Error changing the status of the user."))
-  }
-}
+};
 
-const fetchAdmins = async(req,res)=>{
-  try{
-    const admins = await User.find({role:"admin"})
-    if(!admins){
-      return res.json(new ApiResponse(404 , "No Admins Found!"));
+const fetchAdmins = async (req, res) => {
+  try {
+    const admins = await User.find({ role: "admin" });
+    if (!admins) {
+      return res.json(new ApiResponse(404, "No Admins Found!"));
     }
-    res.json(new ApiResponse(200 , admins , "Admins Fetched successfully"));
+    res.json(new ApiResponse(200, admins, "Admins Fetched successfully"));
+  } catch (err) {
+    throw new ApiError(400, err.message);
   }
-  catch(err){
-    throw new ApiError(400 , err.message)
-  }
-}
+};
 
 export {
   createAdmin,
   checkAdmin,
+  getUsers,
+  changeUserState,
+  getActiveUsersCount,
   fetchAdmins,
-  getAllUsers,
-  changeUserState
+  getUsersCount,
 };
