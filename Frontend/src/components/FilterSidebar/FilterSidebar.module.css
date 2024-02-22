@@ -2,6 +2,7 @@
     flex: 1;
     padding: 20px;
     border-right: 1px solid #ccc;
+    width: 200px;
   }
   .buttons {
     padding: 20px;

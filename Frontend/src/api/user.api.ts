@@ -36,7 +36,7 @@ export const getRecentProducts = async () => {
 
 export const getAllProducts = async () => {
   try {
-    const { data } = await api.get("/user/get-all-products");
+    const { data } = await api.get("/user/get-products");
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

@@ -1,9 +1,13 @@
 .shoppage {
     display: flex;
+    justify-content: space-between;
   }
   
   .productlist {
-    flex: 3;
+    width: calc(100% - 200px);
     padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
   }
   
