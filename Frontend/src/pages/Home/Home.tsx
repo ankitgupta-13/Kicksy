@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  
-  
-  
-  
+
+
+
+
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);
@@ -26,17 +26,55 @@ const Home = () => {
 
   return (
     <Container>
-       <SliderCard/>
-       <div className={style.Gender}>
-        <div className={style.GenderBox}></div>
-        <div className={style.GenderBox}></div>
-        <div className={style.GenderBox}></div>
-        <div className={style.SaleBox}>Sale</div>
-       </div>
+      <SliderCard />
+      <div className={style.Gender}>
+        <div className={style.GenderContainer}>
+          <div className={style.GenderBox}></div>
+          <div className={style.GenderBoxTitle}>Women</div>
+        </div>
+        <div className={style.GenderContainer}>
+          <div className={style.GenderBox}></div>
+          <div className={style.GenderBoxTitle}>Men</div>
+        </div>
+        <div className={style.GenderContainer}>
+          <div className={style.GenderBox}></div>
+          <div className={style.GenderBoxTitle}>Kids</div>
+        </div>
+        <div className={style.SaleBox}>
+          <div className={style.Box}><span className={style.SaleBoxContent}>Sale</span></div>
+        </div>
+      </div>
+
+      <div className={style.CompanyContainer}>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+          <div className={style.CompanyItemTitle}>Jordan</div>
+
+        </div>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+          <div className={style.CompanyItemTitle}>Jordan</div>
+        </div>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+          <div className={style.CompanyItemTitle}>Jordan</div>
+        </div>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+          <div className={style.CompanyItemTitle}>Jordan</div>
+        </div>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+        </div>
+        <div className={style.CompanyItemBox}>
+          <div className={style.CompanyItem}></div>
+        </div>
+      </div>
+
       <p>Welcome to the home page</p>
       <div>
         <h1>New Arrivals</h1>
-        
+
         <div className={style.cards}>
           {products.map((product: Object, index: number) => {
             return (
