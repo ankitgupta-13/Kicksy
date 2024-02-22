@@ -1,4 +1,4 @@
-.banners {
+/* .banners {
     width: 100%;
     height: 350px;
     font-size: 35px;
@@ -24,8 +24,26 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.8px;
-  }
-  
+  } */
+
+.Gender {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 50px 0;
+}
+
+.GenderBox {
+    height: 312px;
+    width: 23%;
+    background: lightgrey;
+}
+
+.SaleBox {
+    height: 350px;
+    width: 23%;
+    background: url("../../assets/Footer.png");
+}
+
 .cards {
     display: flex;
 }

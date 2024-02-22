@@ -27,12 +27,12 @@ const Home = () => {
   return (
     <Container>
        <SliderCard/>
-      <div className={style.banners}>
-        <h1>Home</h1>
-        <Button className={style.button} onClick={() => navigate("/shop")}>
-          GO TO SHOP
-        </Button>
-      </div>
+       <div className={style.Gender}>
+        <div className={style.GenderBox}></div>
+        <div className={style.GenderBox}></div>
+        <div className={style.GenderBox}></div>
+        <div className={style.SaleBox}>Sale</div>
+       </div>
       <p>Welcome to the home page</p>
       <div>
         <h1>New Arrivals</h1>
