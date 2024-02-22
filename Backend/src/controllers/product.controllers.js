@@ -2,6 +2,7 @@ import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
+import pluralize from "pluralize"
 import fs from "fs";
 
 const addProductImage = async (req, res) => {
@@ -158,6 +159,47 @@ const handleProductStock = async (req, res) => {
   }
 };
 
+// console.log(pluralize.singular("women"));
+// console.log("hello,people men.women.hello".split(/[ ,.]+/));
+
+const searchBarProducts = async (req, res) => {
+  const { search_string } = req.body
+  try {
+    if (!search_string) return res.json(new ApiResponse(422, "Enter Search String First"))
+    const products = await Product.find({})
+    const search_array = search_string.split(/[ ,.]+/)
+    // console.log(search_array)
+    const products_array = []
+    products.forEach((product) => {
+      // const toBeSearched = []
+      // product.tags.forEach((tag)=>{
+      //   toBeSearched.push(tag.split(/[ ,.]+/))
+      // })
+
+      const toBeSearched = product.tags;
+
+      const variation = [];
+      search_array.forEach((item) => {
+        variation.push(pluralize.singular(item).toLowerCase())
+        variation.push(pluralize.plural(item).toLowerCase())
+        variation.push(item.toLowerCase())
+      })
+      
+      const hasCommon = toBeSearched.some((tag)=>variation.includes(tag.toLowerCase()))
+      
+      // console.log(hasCommon);
+      if(hasCommon){
+        products_array.push(product)
+      }
+      
+    })
+    return res.json(new ApiResponse(200 , products_array));
+  }
+  catch (err) {
+    return res.json(new ApiError(400 , err.message));
+  } 
+}
+
 export {
   addProduct,
   updateProduct,
@@ -168,4 +210,5 @@ export {
   getProductById,
   getProducts,
   getProductsCount,
+  searchBarProducts
 };
