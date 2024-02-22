@@ -67,6 +67,15 @@ const getActiveUsersCount = async (req, res) => {
   }
 };
 
+const getUsersCount = async (req, res) => {
+  try {
+    const users = await User.countDocuments({ role: { $ne: "admin" } });
+    return res.json(new ApiResponse(200, users, "Toal Users retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Unable to retrieve Users", error);
+  }
+};
+
 const changeUserState = async (req, res) => {
   const { userID, status } = req.body;
   try {
@@ -105,4 +114,5 @@ export {
   changeUserState,
   getActiveUsersCount,
   fetchAdmins,
+  getUsersCount,
 };

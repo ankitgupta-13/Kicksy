@@ -70,8 +70,8 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const { productID } = req.body;
-    const deleted_product = await Product.findByIdAndDelete({ _id: productID });
+    const { _id, images } = req.body;
+    const deleted_product = await Product.findByIdAndDelete({ _id });
     if (!deleted_product) {
       throw new ApiError("invalid product id");
     }
@@ -125,33 +125,38 @@ const getProducts = async (req, res) => {
   }
 };
 
-const handleProductStock = async(req,res)=>{
-  try{
-    const {productID , operator , qty} = req.body
-    const product = await Product.findOne({_id:productID})
-    if(!qty){
-      if(operator === '+'){
+const getProductsCount = async (req, res) => {
+  try {
+    const count = await Product.countDocuments();
+    return res.json(new ApiResponse(200, count, "Products count retrieved!"));
+  } catch (error) {
+    throw new ApiError(400, "Error getting products", error);
+  }
+};
+
+const handleProductStock = async (req, res) => {
+  try {
+    const { productID, operator, qty } = req.body;
+    const product = await Product.findOne({ _id: productID });
+    if (!qty) {
+      if (operator === "+") {
         product.stock += 1;
-        await product.save(); 
-      }
-      else if(operator === '-'){
+        await product.save();
+      } else if (operator === "-") {
         product.stock -= 1;
         await product.save();
+      } else {
+        return res.json(new ApiResponse(422, "Invalid Operator"));
       }
-      else{
-        return res.json(new ApiResponse(422 , "Invalid Operator"))
-      }
-    }
-    else{
+    } else {
       product.stock = qty;
       await product.save();
     }
-    res.json(new ApiResponse(200 , "Stock Updated"))
+    res.json(new ApiResponse(200, "Stock Updated"));
+  } catch (err) {
+    throw new ApiError(400, err.message);
   }
-  catch(err){
-    throw new ApiError(400 , err.message)
-  }
-}
+};
 
 export {
   addProduct,
@@ -162,4 +167,5 @@ export {
   getRecentProducts,
   getProductById,
   getProducts,
+  getProductsCount,
 };

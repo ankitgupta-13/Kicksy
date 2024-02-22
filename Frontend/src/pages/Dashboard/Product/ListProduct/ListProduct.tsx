@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "../../../../api/admin.api";
+import {
+  deleteProduct,
+  getProducts,
+  totalProductsCount,
+} from "../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import ProductDashboardCard from "../../../../components/ProductDashboardCard/ProductDashboardCard";
 import { Pagination } from "@mui/material";
@@ -7,17 +11,36 @@ import { Pagination } from "@mui/material";
 const ListProduct = () => {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
+  const [productsCount, setProductsCount] = useState(0);
 
-  const allProducts = async (page) => {
+  const getLimitedProducts = async (page) => {
     const response = await getProducts(page);
     if (response.statusCode === 200) {
       setProducts(response.data.products);
     }
   };
 
+  const countProducts = async () => {
+    const response = await totalProductsCount();
+    setProductsCount(response.data);
+  };
+
+  const handleDeleteProduct = async (_id: Number, images: []) => {
+    try {
+      await deleteProduct({ _id, images });
+      getLimitedProducts(page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    allProducts(page);
+    getLimitedProducts(page);
   }, [page]);
+
+  useEffect(() => {
+    countProducts();
+  }, []);
 
   return (
     <div className={style.container}>
@@ -30,13 +53,17 @@ const ListProduct = () => {
       {products.map((product, index) => {
         return (
           <div key={index}>
-            <ProductDashboardCard data={product} />
+            <ProductDashboardCard
+              data={product}
+              onDeleteProduct={handleDeleteProduct}
+              page={page}
+            />
           </div>
         );
       })}
       <div className={style.pagination}>
         <Pagination
-          count={10}
+          count={Math.ceil(productsCount / 10)}
           page={page}
           onChange={(e, value) => setPage(value)}
         />

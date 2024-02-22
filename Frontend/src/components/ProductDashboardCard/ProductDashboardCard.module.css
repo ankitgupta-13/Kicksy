@@ -37,3 +37,8 @@
   font-weight: 500;
   color: #363535;
 }
+.priceDelete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

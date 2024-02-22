@@ -112,3 +112,23 @@ export const totalActiveUsers = async () => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const totalProductsCount = async () => {
+  try {
+    const { data } = await api.get("/admin/total-products-count");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const deleteProduct = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/delete-product", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

@@ -6,6 +6,7 @@ import {
   deleteProduct,
   getProducts,
   handleProductStock,
+  getProductsCount,
 } from "../controllers/product.controllers.js";
 
 import { upload } from "../middlewares/multer.middlewares.js";
@@ -26,6 +27,7 @@ import {
   getActiveUsersCount,
   getUsers,
   fetchAdmins,
+  getUsersCount,
 } from "../controllers/admin.controllers.js";
 
 const router = Router();
@@ -48,5 +50,7 @@ router.route("/get-users").get(getUsers);
 router.route("/get-products").get(getProducts);
 router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
+router.route("/total-products-count").get(getProductsCount);
+router.route("/total-users").get(getUsersCount);
 
 export default router;
