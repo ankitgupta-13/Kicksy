@@ -37,11 +37,11 @@ const SliderCard = (props: any) => {
         <>
         <div className={style.container}>
           <div className={style.container__backgroudtext}>The New 2023</div>
-          <div className={style.container__shoesname}>{item.name}</div>
-          <div className={style.container__info}>
-           <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
-           <button className={style.container__shopbtn}>Go to Shop</button>
-          </div>
+              <div className={style.container__shoesname}>{item.name}</div>
+                <div className={style.container__info}>
+                        <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
+                        <button className={style.container__shopbtn}>Go to Shop</button>
+                </div>
          </div>
           </>
        ))}
