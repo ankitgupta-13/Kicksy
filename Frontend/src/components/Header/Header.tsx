@@ -6,7 +6,6 @@ import {toggleCartVisibility} from "../../redux/reducers/cartSlice";
 import { toggleWishlistVisibility} from "../../redux/reducers/wishlistSlice";
 import { toggleProfileVisibility } from '../../redux/reducers/authSlice';
 
-//Images and Icons
 import searchIcon from "../../assets/search.png";
 import shoppingBagIcon from "../../assets/local_mall.png";
 import profileIcon from "../../assets/person_4.png";

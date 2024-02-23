@@ -15,7 +15,7 @@ const Cart = () => {
   };
 
   return (
-      <div id="mySidenav" className={`${style.sidenav} ${isCartOpen ? style.open : ''}`}>
+      <div className={`${style.sidenav} ${isCartOpen ? style.open : ''}`}>
       <div className={style.head}>
         <h2>Cart</h2>
         <a className={style.closebtn} onClick={handleToggleCartVisibility}>&times;</a>  

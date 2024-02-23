@@ -26,7 +26,7 @@ const CartItem = ({productID,quantity}) => {
       </div>
       <div className={style.productDetails}>
         <h3>{product.title}</h3>
-        {/* <p>Price: Rs. {product.price.originalPrice}</p>  */}
+        {/* <p>Price: Rs. {product.price}</p>  */}
         <p>Description: {product.description}</p>
         <p>Size: {product.size}</p>
         <p>Quantity: {quantity}</p>
