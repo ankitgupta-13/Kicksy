@@ -80,8 +80,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div>
-        <h1>New Arrivals</h1>
+      <div className={style.NewArrivalsSlider}>
+        <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
 
         <div className={style.cards}>
           {products.map((product: Object, index: number) => {

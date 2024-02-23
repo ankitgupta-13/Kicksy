@@ -18,14 +18,14 @@ function HeroSection() {
                 <div className={style.div2}>
                     <img src={HeroImg2} alt="" className={style.squareImage} />
                     <div className={style.CenterBox}>
-                        <h1>Designed to<br/>
+                        <h1 className={style.CenterBoxTitle}>Designed to<br/>
                             complement your<br/>
                             everyday life</h1>
-                        <p>
+                        <p className={style.CenterBoxContent}>
                             Lorem ipsum dolor sit amet consectetur. Aliquet risus aliquam ac pretium viverra amet ornare. Integer elementum adipiscing vel ut ut natoque congue tortor id. Vulputate pellentesque tempor ultricies nibh eu. Imperdiet vitae fusce proin posuere faucibus ac dignissim eget.
                         </p>
                     </div>
-                    <img src={HeroImg5} alt="" className={style.squareImage} />
+                    <img src={HeroImg5} alt="" className={`${style.squareImage} ${style.HeroImg5}`} />
                 </div>
                 <div className={style.div3}>
                     <img src={HeroImg3} alt="" className={style.squareImage} />
