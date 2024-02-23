@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const PaymentButton = (props) => {
-  const [userID , setUserID] = useState("")
   const user = useSelector((state)=>{return state})
   console.log(user);
   const amount = props.amount * 100;

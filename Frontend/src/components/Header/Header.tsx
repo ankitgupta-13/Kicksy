@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
-import {
-  toggleCartVisibility,
-} from "../../redux/reducers/cartSlice";
+import {toggleCartVisibility} from "../../redux/reducers/cartSlice";
+import { toggleWishlistVisibility} from "../../redux/reducers/wishlistSlice";
+import { toggleProfileVisibility } from '../../redux/reducers/authSlice';
 
 //Images and Icons
 import searchIcon from "../../assets/search.png";
@@ -36,6 +36,15 @@ const Header = () => {
   const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
   };
+  
+  const handleToggleWishlistVisibility = () => {
+    dispatch(toggleWishlistVisibility());
+  };
+
+  const handleToggleProfileVisibility = () => {
+    dispatch(toggleProfileVisibility());
+  };
+
   return (
     <header className={style.header}>
       <Container>
@@ -71,10 +80,13 @@ const Header = () => {
               onClick={handleToggleCartVisibility}>
               <img src={shoppingBagIcon} alt="ShoppingBag" />
             </li>
-            <li className={style.iconListItems}>
+            <li 
+              className={style.iconListItems}
+              onClick={handleToggleWishlistVisibility}>
               <img src={favouriteIcon} alt="Favourite" />
             </li>
-            <li className={style.iconListItems}>
+            <li className={style.iconListItems}
+              onClick={handleToggleProfileVisibility}>
               <img src={profileIcon} alt="Profile" />
             </li>
           </ul>
