@@ -51,6 +51,6 @@ router.route("/get-products").get(getProducts);
 router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
 router.route("/total-products-count").get(getProductsCount);
-router.route("/total-users").get(getUsersCount);
+router.route("/total-users-count").get(getUsersCount);
 
 export default router;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers } from "../../../../api/admin.api";
+import { getUsers, totalUsersCount } from "../../../../api/admin.api";
 import style from "./ListUser.module.css";
 import UserDashboardCard from "../../../../components/UserDashboardCard/UserDashboardCard";
 import { Pagination } from "@mui/material";
@@ -7,6 +7,7 @@ import { Pagination } from "@mui/material";
 const ListUser = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+  const [usersCount, setUsersCount] = useState(0);
 
   const fetchUsers = async (page) => {
     const response = await getUsers(page);
@@ -14,9 +15,21 @@ const ListUser = () => {
       setUsers(response.data.users);
     }
   };
+
+  const getUsersCount = async () => {
+    const response = await totalUsersCount();
+    if (response.statusCode === 200) {
+      setUsersCount(response.data);
+    }
+  };
+
   useEffect(() => {
     fetchUsers(page);
   }, [page]);
+
+  useEffect(() => {
+    getUsersCount();
+  }, []);
 
   return (
     <div className={style.container}>
@@ -35,7 +48,7 @@ const ListUser = () => {
       })}
       <div className={style.pagination}>
         <Pagination
-          count={10}
+          count={Math.ceil(usersCount / 10)}
           page={page}
           onChange={(e, value) => setPage(value)}
         />

@@ -113,6 +113,16 @@ export const totalActiveUsers = async () => {
   }
 };
 
+export const totalUsersCount = async () => {
+  try {
+    const { data } = await api.get("/admin/total-users-count");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const totalProductsCount = async () => {
   try {
     const { data } = await api.get("/admin/total-products-count");

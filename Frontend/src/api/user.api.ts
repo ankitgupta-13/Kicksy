@@ -36,7 +36,7 @@ export const getRecentProducts = async () => {
 
 export const getAllProducts = async () => {
   try {
-    const { data } = await api.get("/user/get-all-products");
+    const { data } = await api.get("/user/get-products");
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
@@ -44,7 +44,7 @@ export const getAllProducts = async () => {
   }
 };
 
-export const getProductById = async (payload: {productID: string}) => {
+export const getProductById = async (payload: { productID: string }) => {
   try {
     const { data } = await api.post("/user/get-product-by-id", payload);
     return data;
@@ -55,7 +55,7 @@ export const getProductById = async (payload: {productID: string}) => {
   }
 };
 
-export const getAllBlogs= async () => {
+export const getAllBlogs = async () => {
   try {
     const { data } = await api.get("/user/fetch-blogs");
     return data;
