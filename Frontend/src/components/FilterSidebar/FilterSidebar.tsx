@@ -29,7 +29,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
     if (gender === 'M') {
       setMActive(!mActive);
       onFilterChange(genderFilterName, mActive ? [] : [gender]);
-    } else if (gender === 'W') {
+    } else if (gender === 'F') {
       setWActive(!wActive);
       onFilterChange(genderFilterName, wActive ? [] : [gender]);
     }
@@ -49,7 +49,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
         </Button>
         <Button
           style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black' }}
-          onClick={() => handleGenderButtonClick('W')}
+          onClick={() => handleGenderButtonClick('F')}
         >
           Women
         </Button>

@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
           />
         ))}
       </div>
-      <div className={style.shoes__info}>
+      <div className={style.shoes__info} onClick={() => navigate(`/productdesc?product=${product._id}`)}>
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
           <div className={style.shoes__price}>

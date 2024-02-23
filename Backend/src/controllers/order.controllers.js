@@ -8,7 +8,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addOrder = async (req, res) => {
     const { userID, qty, productID, paymentMethod ,addressID} = req.body;
-
     /*
     * in case of buying from cart :
     * no value will be given to variable 'qty' and instead

@@ -1,22 +1,31 @@
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import style from './Cart.module.css'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  removeItem,
+  toggleCartVisibility,
+  setInitialCartItems,
+} from "../../redux/reducers/cartSlice";
+import styles from './Cart.module.css';
 
-const Cart = ({ visible, onclose }) => {
-  const userCart = useSelector((state) => state.auth?.userData?.cart);
+const Sidebar = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const isCartOpen = useSelector((state) => state.cart.isOpen);
+
+  const handleToggleCartVisibility = () => {
+    dispatch(toggleCartVisibility());
+  };
+
   return (
-    <div className={`${visible ? style.sidebar : style.notvisible}`}>
-      <button onClick={onclose}>close</button>
-      {visible && (
-        <div>
-          {/* {userCart.map((item, index) => (
-            <div key={index}>
-              {item}
-            </div>
-          ))} */}
-        </div>
-      )}
+    <div>
+      <div id="mySidenav" className={`${styles.sidenav} ${isCartOpen ? styles.open : ''}`}>
+        <h3>Cart</h3>
+        <a href="javascript:void(0)" className={styles.closebtn} onClick={handleToggleCartVisibility}>&times;</a>
+      </div>
+
     </div>
   );
 };
-export default Cart;
+
+export default Sidebar;
