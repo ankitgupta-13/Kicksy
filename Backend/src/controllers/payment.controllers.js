@@ -72,7 +72,7 @@ const verifyPayment = async (req, res) => {
 
       // console.log(data);
 
-      if (payment.data.amount !== total_amt) return new ApiResponse(422, "Order Not placed due to insufficient fund transfer")
+      // if (payment.data.amount !== total_amt) return new ApiResponse(422, "Order Not placed due to insufficient fund transfer")
 
       const order = new Order({
         customer: user._id,
@@ -97,7 +97,7 @@ const verifyPayment = async (req, res) => {
       res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
     return res.json(new ApiError(400, err));
   }
 };

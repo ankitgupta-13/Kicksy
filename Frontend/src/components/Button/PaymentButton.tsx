@@ -36,7 +36,7 @@ const PaymentButton = (props) => {
     razorPay.open();
   };
 
-  return <button onClick={checkOutHandler}>Pay Now</button>;
+  return <button style={{backgroundColor: 'black', width: '180px', height:'40px', color: 'white'}} onClick={checkOutHandler}>Pay Now</button>;
 };
 
 export default PaymentButton;

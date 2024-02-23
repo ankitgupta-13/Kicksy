@@ -79,7 +79,7 @@ const ProductDesc = () => {
           {curProduct.category === "bestseller" &&
             <a className={style.bestseller}>BEST SELLER</a>
           }
-          <h2>Rs. {}</h2>
+          {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
           <div >
           <select className={style.size} value={size} onChange={handleChange}>
          {sizes.map((size: any) => (
