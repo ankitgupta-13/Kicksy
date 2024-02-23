@@ -6,6 +6,7 @@ import { Payment } from "../models/payment.models.js";
 import fetch from "node-fetch";
 import { User } from "../models/user.models.js";
 import { Order } from "../models/order.models.js";
+import { Product } from "../models/product.models.js";
 
 
 const rpayInstance = new Razorpay({
@@ -34,9 +35,9 @@ const makePayment = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-  const {userID} = req.params;
+  const { userID } = req.params;
   try {
-    const user = await User.findOne({_id:userID})
+    const user = await User.findOne({ _id: userID })
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RPAY_KEY_SECRET)
@@ -50,36 +51,44 @@ const verifyPayment = async (req, res) => {
       });
 
       const cartItems = [];
-      user.cart.forEach((item)=>{
+      let total_amt = 0
+      user.cart.forEach(async (item) => {
         cartItems.push(item);
+        const product = await Product.findOne({ _id: item['product'] })
+        total_amt += product['price']
       })
 
-      const data = await fetch(`${process.env.BACKEND_URI}/api/user/payments/fetch-by-id` , {
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json'
+      const data = await fetch(`${process.env.BACKEND_URI}/api/user/payments/fetch-by-id`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify({
-          paymentId:razorpay_payment_id
+        body: JSON.stringify({
+          paymentId: razorpay_payment_id
         })
       })
 
       const payment = await data.json()
-      
+
       // console.log(data);
-      
+
+      if (payment.data.amount !== total_amt) return new ApiResponse(422, "Order Not placed due to insufficient fund transfer")
+
       const order = new Order({
-        customer:user._id,
-        orderItems:cartItems,
-        orderPrice:payment.data.amount,
-        paymentStatus:true,
-        paymentMethod:payment.data.method
+        customer: user._id,
+        orderItems: cartItems,
+        orderPrice: payment.data.amount,
+        paymentStatus: true,
+        paymentMethod: payment.data.method
       })
 
       await order.save();
+      user.orders.push(order._id)
+      user.cart = [];
+      await user.save();
       // console.log(payment)
-      res.json(new ApiResponse(200, order, "order placed"))
-      
+      return res.json(new ApiResponse(200, order, "order placed"))
+
 
       // res.redirect(
       //   `/paymentsuccess?reference=${razorpay_payment_id}`
@@ -115,9 +124,9 @@ const fetchPayment = async (req, res) => {
     const payment = await rpayInstance.payments.fetch(paymentId);
     // console.log(payment)
     if (payment) {
-      return res.json(new ApiResponse(200 ,payment));
+      return res.json(new ApiResponse(200, payment));
     } else {
-      return res.json(new ApiResponse(404 ,"Payment Not Found"));
+      return res.json(new ApiResponse(404, "Payment Not Found"));
     }
   } catch (err) {
     throw new ApiError(
