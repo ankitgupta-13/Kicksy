@@ -24,6 +24,7 @@ import { getCurrentUser } from "./api/user.api.ts";
 import { useEffect, useState } from "react";
 import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
+import { PaymentButton } from "./components/index.ts";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/anime" element={<Anime />} />
           <Route path="/trackorder" element={<TrackOrder />} />
           <Route path="/blogs" element={<Blogs/>} />
+          <Route path="/payments" element={<PaymentButton amount={5000}/>} />
         </Route>
         <Route
           element={
