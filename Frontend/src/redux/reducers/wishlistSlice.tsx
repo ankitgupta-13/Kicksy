@@ -5,8 +5,8 @@ const initialState = {
   isOpen: false, 
 };
 
-const cartSlice = createSlice({
-  name: "cart",
+const wishlistSlice = createSlice({
+  name: "wishlist",
   initialState,
   reducers: {
     addItem: (state, action) => {
@@ -15,15 +15,15 @@ const cartSlice = createSlice({
     removeItem: (state, action) => {
       state.items.pop();
     },
-    toggleCartVisibility: (state) => {
+    toggleWishlistVisibility: (state) => {
       state.isOpen = !state.isOpen;
     },
-    setInitialCartItems: (state, action) => {
+    setInitialWishlistItems: (state, action) => {
       state.items = action.payload;
     },
   },
 });
 
-export const { addItem, removeItem, toggleCartVisibility, setInitialCartItems } = cartSlice.actions;
+export const { addItem, removeItem, toggleWishlistVisibility, setInitialWishlistItems } = wishlistSlice.actions;
 
-export default cartSlice.reducer;
+export default wishlistSlice.reducer;

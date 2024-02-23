@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
-import Cart from "../Cart/Cart";
+import {
+  toggleCartVisibility,
+} from "../../redux/reducers/cartSlice";
 
 //Images and Icons
 import searchIcon from "../../assets/search.png";
@@ -13,10 +14,10 @@ import favouriteIcon from "../../assets/favorite.png";
 
 
 const Header = () => {
+  const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role);
-  const [cart, setCart] = useState(false);
-  console.log(cart)
+  
   const navigate = useNavigate();
   const navItems = [
     { name: "Home", slug: "/", isActive: true },
@@ -32,6 +33,9 @@ const Header = () => {
       isActive: isAdmin,
     },
   ];
+  const handleToggleCartVisibility = () => {
+    dispatch(toggleCartVisibility());
+  };
   return (
     <header className={style.header}>
       <Container>
@@ -64,10 +68,8 @@ const Header = () => {
             </li>
             <li
               className={style.iconListItems}
-              onClick={() => setCart(true)}
-            >
+              onClick={handleToggleCartVisibility}>
               <img src={shoppingBagIcon} alt="ShoppingBag" />
-              <Cart visible={cart} onclose={() => setCart(false) }/>
             </li>
             <li className={style.iconListItems}>
               <img src={favouriteIcon} alt="Favourite" />
