@@ -91,12 +91,9 @@ const Home = () => {
               </div>
             );
           })}
-        </div>
-        <HeroSection/>
-
-        
-
+        </div>     
       </div>
+      <HeroSection/>
     </Container>
   );
 };
