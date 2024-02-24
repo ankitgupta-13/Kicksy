@@ -1,0 +1,33 @@
+.bloghead {
+    display: flex;
+    height: 200px;
+    flex-direction: column;
+    background-color: brown;
+    justify-content: space-evenly;
+}
+
+.blogtitle {
+    font-size: 40px;
+    align-self: center;
+}
+
+.blogsub {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 60px;
+}
+
+.blogsection {
+
+}
+
+.blogimage {
+    display: flex;
+    width: 60%;
+    height: 600px;
+    margin: 0px 250px;
+}
+
+.blogcontent {
+
+}

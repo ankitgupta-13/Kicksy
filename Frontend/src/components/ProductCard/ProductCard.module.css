@@ -5,8 +5,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 39rem;
-  width: 30rem;
+  height: 30rem;
+  width: 25rem;
   border: 1px solid #dfe0e1;
   padding: 20px;
   box-sizing: border-box;

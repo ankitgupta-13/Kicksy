@@ -37,18 +37,18 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 
   return (
     <div className={style.filtersidebar}>
-      <h2>Current Filters</h2>
+      <h4>Current Filters</h4>
       
       <label>Body Type:</label>
       <div className={style.buttons}>
       <Button
-          style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black' }}
+          style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black', width: '80px' }}
           onClick={() => handleGenderButtonClick('M')}
         >
           Men
         </Button>
         <Button
-          style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black' }}
+          style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black', width: '80px' }}
           onClick={() => handleGenderButtonClick('F')}
         >
           Women
