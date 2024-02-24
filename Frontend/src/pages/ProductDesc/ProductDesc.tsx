@@ -74,8 +74,8 @@ const ProductDesc = () => {
       <div className={style.product}>
       <img src={activeColor} className={style.imagebox} alt="product-image"/>
       <div className={style.action}>
-          <h4>{curProduct.brand}</h4>
-          <h2>{curProduct.title}</h2>
+          <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+          <h2 className={style.SampleProduct}>{curProduct.title}</h2>
           {curProduct.category === "bestseller" &&
             <a className={style.bestseller}>BEST SELLER</a>
           }
@@ -108,31 +108,36 @@ const ProductDesc = () => {
                 />
         ))}
       </div>
-      <h3>{curProduct.description}</h3>
+      
+      <div className={style.description}>
+        <h1 className={style.productDescTitle}>Product Detail</h1>
+      <h3 className={style.productDesc}>{curProduct.description}</h3>
       <a>Read More</a>
+      </div>
+      
       <div className={style.table}>
         <div className={style.column}>
-          <h5>MANUFACTURED SKU</h5>
+          <h5 style={{color: "#656565"}}>MANUFACTURED SKU</h5>
           <p></p>
-          <h5>COLORWAY</h5>
-          <p></p>
-        </div>
-        <div className={style.column}>
-          <h5>BRAND</h5>
-          <p></p>
-          <h5>GENDER</h5>
+          <h5 style={{color: "#656565"}}>COLORWAY</h5>
           <p></p>
         </div>
         <div className={style.column}>
-          <h5>NICKNAME</h5>
+          <h5 style={{color: "#656565"}}>BRAND</h5>
           <p></p>
-          <h5>RELEASE DATE</h5>
+          <h5 style={{color: "#656565"}}>GENDER</h5>
+          <p></p>
+        </div>
+        <div className={style.column}>
+          <h5 style={{color: "#656565"}}>NICKNAME</h5>
+          <p></p>
+          <h5 style={{color: "#656565"}}>RELEASE DATE</h5>
           <p></p>
         </div>
       </div>
       </div>
-        <div>
-          <h1>You may also like</h1>
+        <div className={style.AlsoLikeSlider}>
+          <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
           <div className={style.cards}>
             {products.map((product: any, index: number) => {
               return (
@@ -142,7 +147,8 @@ const ProductDesc = () => {
               );
             })}
             </div>
-            <h1>New Arrivals</h1>
+            <div className={style.NewArrivalsSlider}></div>
+            <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
           <div className={style.cards}>
             {products.map((product: any, index: number) => {
               return (

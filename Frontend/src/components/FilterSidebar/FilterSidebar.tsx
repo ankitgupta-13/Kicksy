@@ -37,23 +37,31 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 
   return (
     <div className={style.filtersidebar}>
-      <h4>Current Filters</h4>
+      <div className={style.CurrentFiltersContainer}>
+      <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
+      </div>
       
-      <label>Body Type:</label>
+      
+      <div className={style.BodyTypeContainer}>
+      <label className={style.BodyType}>Body Type:</label>
       <div className={style.buttons}>
       <Button
+      className={style.Button}
           style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black', width: '80px' }}
           onClick={() => handleGenderButtonClick('M')}
         >
           Men
         </Button>
         <Button
+        className={style.Button}
           style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black', width: '80px' }}
           onClick={() => handleGenderButtonClick('F')}
         >
           Women
         </Button>
       </div>
+      </div>
+      
 
       {[
         { filterName: 'category', options: productTypeOptions },

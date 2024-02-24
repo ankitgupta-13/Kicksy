@@ -1,12 +1,63 @@
 .filtersidebar {
-    flex: 1;
-    padding: 20px;
-    border-right: 1px solid #ccc;
-    width: 200px;
-  }
-  .buttons {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  width: 385px;
+  padding: 132px 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.CurrentFiltersContainer{
+  width: 100%;
+  border-bottom: 1px solid rgba(34, 34, 34, 0.50);
+}
+
+.CurrentFiltersContainerHeading {
+  color: #000;
+  font-family: Inter;
+  font-size: 13.672px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 23.94px;
+  text-transform: uppercase;
+
+}
+
+.BodyTypeContainer {
+  width: 100%;
+  border-bottom: 1px solid rgba(34, 34, 34, 0.50);
+
+}
+
+.BodyType {
+  color: #000;
+  font-family: Inter;
+  font-size: 13.453px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+
+.buttons {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.Button{
+  display: flex;
+  padding: 10px 120px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin: 2px;
+
+  color: var(--Primary-Text, #fff);
+  text-align: center;
+  font-family: "Proxima Nova";
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.8px;
 }
