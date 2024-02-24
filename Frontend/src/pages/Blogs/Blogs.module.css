@@ -33,6 +33,9 @@
     color: white;
     line-height: 2rem;
     background-color: brown;
+    background: url('../../assets/post_banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
     height: 600px;
     padding: 50px;
@@ -40,5 +43,8 @@
 }
 .recent_blogs_title {
     font-size: 0.8rem;
+}
+.recent__blogs_container {
+    padding: 20px;
 }
 

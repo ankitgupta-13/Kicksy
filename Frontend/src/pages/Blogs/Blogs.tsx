@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import style from './Blogs.module.css'
 import BlogCard from '../../components/BlogCard/BlogCard';
+import PostCard from '../../components/PostCard/PostCard';
 import { getAllBlogs } from '../../api/user.api';
 
 
@@ -38,7 +39,7 @@ const Blog = () => {
 
   
   return (
-    <div className={style.container}>
+<div className={style.container}>
       <div className={style.topbar}>
    <span className={style.topbar__heading}>Blog</span>
    <span className={style.topbar__subheading}>Home - <span >All Posts</span></span>
@@ -51,7 +52,11 @@ const Blog = () => {
       <div className={style.recent_blogs}>
         <div className={style.recent_blogs_title}>Stay-up-to-date</div>
         <h2>RECENT POSTS</h2>
+     <div className={style.recent__blogs_container}>
+       <PostCard/>
       </div>
+
+    </div>
     </div>
   )
 }
