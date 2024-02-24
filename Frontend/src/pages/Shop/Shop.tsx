@@ -21,7 +21,6 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const filterProducts = () => {
       let filteredResult = [...allProducts];
-
       Object.keys(filters).forEach((filterName) => {
         const filterValues = filters[filterName];
 
