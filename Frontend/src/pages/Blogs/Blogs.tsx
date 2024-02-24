@@ -45,8 +45,8 @@ const Blog = () => {
    <span className={style.topbar__subheading}>Home - <span >All Posts</span></span>
       </div>
       <div className={style.bloglist}>
-         {bloglist.map((blogs)=>(
-          <BlogCard blog={blogs}/>
+         {bloglist.map((blog)=>(
+          <BlogCard blog={blog}/>
          ))}
       </div>
       <div className={style.recent_blogs}>
