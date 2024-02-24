@@ -21,7 +21,6 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const filterProducts = () => {
       let filteredResult = [...allProducts];
-
       Object.keys(filters).forEach((filterName) => {
         const filterValues = filters[filterName];
 
@@ -51,11 +50,13 @@ const Shop: React.FC = () => {
   return (
     <div className={style.shoppage}>
       <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
+      <div className={style.productlist}>
       {filteredProducts.map((product: any, index: number) => (
-        <div key={index} className={style.productlist}>
+        <div key={index}>
           <ProductCard product={product} />
-        </div>
+        </div> 
       ))}
+      </div>
     </div>
   );
 };

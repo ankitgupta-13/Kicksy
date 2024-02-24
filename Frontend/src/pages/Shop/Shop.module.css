@@ -1,13 +1,13 @@
 .shoppage {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   
-  .productlist {
-    width: calc(100% - 200px);
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-  }
+.productlist {
+  width: calc(100% - 200px);
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 10px;
+}
   
