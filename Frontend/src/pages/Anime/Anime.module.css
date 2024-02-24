@@ -13,67 +13,69 @@
 .image{
     height: 580px;
     width: 320px;
-    right: 30px;
+    right: 2px;
     bottom: 40px;
     position:absolute;
 }
 .Card1{
-    width: 98.5%;
+    width: 95%;
     height: 900px;
     padding-top: 20px;
     /* padding: 50px; */
     margin-top: 2px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 0.8%;
     border-radius: 30px;
-    background: linear-gradient(180deg, #0C0001 0%, #67181B 49%, #FE494A 100%);
+    background: linear-gradient(180deg, #36080A 0%, #9D262B 50%, #FF7474 100%);
 }
 .Card2{
-    width: 98.5%;
+    width: 95%;
     height: 900px;
     padding: 50px;
-    margin-top: 2px;
+    margin-top: 0.8%;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
     border-radius: 30px;
-    background: linear-gradient(180deg, #FE494A 0%, #67181B 49%, #0C0001 100%);
+    background: linear-gradient(180deg, #FF7474 0%, #9D262B 50%, #36080A 100%);
 }
 
 .head{
     display: flex;
     font-family: "Bevan";
     font-weight: 300;
-    font-size: 38px;
+    font-size: 46px;
+    margin-top: 30px;
     color: #fff;
     width: 100%;
     text-align: center;
     justify-content: center;
-    /* background-color: aqua; */
 }
 .Content{
     display: flex;
     font-family: "Bebas Neue";
     font-weight: 400;
     text-align: center;
-    margin-top: 20px;
-    padding: 20px;
+    margin-top: 10px;
+    padding: 60px;
     font-size: 34px;
     color: #fff;
     width: 100%;
-    letter-spacing: 2;
+    height: 80%;
+    letter-spacing: 1.4px;
     word-wrap: break-word;
-    text-transform: uppercase;
-    justify-content: center;
+    line-height: 150%;
+    text-transform: lowercase;
+    justify-content:flex-start;
 }
 
 .Circle1{
     position: absolute;
-    right: -30px;
+    right: -20px;
     bottom: -60px;
-    height: 400px;
-    width: 400px;
+    height: 300px;
+    width: 300px;
     border-radius: 50%;
     background-color: #fff;
 
@@ -81,11 +83,12 @@
 }
 .Circle2{
     position: absolute;
-    left: -35px;
+    left: -20px;
     bottom: -60px;
-    height: 400px;
-    width: 400px;
+    height: 300px;
+    width: 300px;
     border-radius: 50%;
     background-color: #fff;
 }
+
 
