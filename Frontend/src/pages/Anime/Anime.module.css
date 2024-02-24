@@ -10,6 +10,11 @@
     height: 100%;
     position: relative;
 }
+
+.exploresec {
+    display: none;
+}
+
 .image{
     height: 580px;
     width: 320px;

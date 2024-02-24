@@ -16,6 +16,7 @@ import favouriteIcon from "../../assets/favorite.png";
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [active, setActive] = useState("Home");
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role);
   
@@ -62,8 +63,8 @@ const Header = () => {
               item.isActive ? (
                 <li className={style.navListItem} key={item.name}>
                   <button
-                    className={style.navListItemButton}
-                    onClick={() => navigate(item.slug)}
+                    className={item.name=== active ? style.activeNavListItemButton :style.navListItemButton}
+                    onClick={() => {navigate(item.slug); setActive(item.name);}}
                   >
                     {item.name}
                   </button>
