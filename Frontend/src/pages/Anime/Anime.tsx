@@ -8,14 +8,19 @@ const Anime = () => {
   return (
     <div>
       <div className={style.Container}>
+          
           <div className={style.Card1}>
+            
             <div className={style.head}> Explore our customized anime sneakers</div>
-            <div className={style.Circle1}>
-              
-              {/* <div className={style.image}> LOL</div> */}
-              <img className={style.image} src={img}></img>
-            </div>
+            <div className={style.Content}> 
+            Calling all anime aficionados and sneakerheads alike – we've crafted a fusion like no other, blending your passion for iconic anime characters with the comfort and style of premium sneakers. Here, every pair tells a story, merging the dynamic worlds of anime creativity and sneaker fashion into one breathtaking masterpiece.
+            </div>  
+              <div className={style.Circle1}>
+                <img className={style.image} src={img}></img>
+              </div>
+
           </div>
+
         </div>
 
       <div className={style.Container}>
