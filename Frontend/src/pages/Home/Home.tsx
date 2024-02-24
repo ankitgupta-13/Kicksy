@@ -79,10 +79,9 @@ const Home = () => {
           <img src={CustomNike} alt="" />
         </div>
       </div>
-
+      <div className={style.NewArrivals}>
+      <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
       <div className={style.NewArrivalsSlider}>
-        <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
-
         <div className={style.cards}>
           {products.map((product: Object, index: number) => {
             return (
@@ -91,9 +90,12 @@ const Home = () => {
               </div>
             );
           })}
-        </div>     
+        </div>
       </div>
-      <HeroSection/>
+      </div>
+      <div className={style.BestSellerSlider}>
+        <h1 className={style.BestSellerSliderHeading}>Best Seller</h1></div>
+      <HeroSection />
     </Container>
   );
 };

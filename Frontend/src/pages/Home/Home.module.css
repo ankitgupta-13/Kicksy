@@ -84,7 +84,39 @@
     letter-spacing: 0.48px;
 }
 
-.NewArrivalsSlider {
+/* .NewArrivalsSlider {
+    display: flex;
+    width: 100%;
+    padding-left: 40px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 8px;
+} */
+
+.NewArrivalsSliderTitle {
+    color: #000;
+    font-family: "Noir Pro";
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.BestSellerSlider {
+    margin: 50px 0px;
+    padding-left: 40px;
+}
+
+.BestSellerSliderHeading {
+    color: #131313;
+    font-family: "Proxima Nova";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.NewArrivals {
     display: flex;
     width: 100%;
     padding-left: 40px;
@@ -94,14 +126,35 @@
     gap: 8px;
 }
 
-.NewArrivalsSliderTitle {
-    color: #000;
-    font-family: "Noir Pro";
-    font-size: 18px;
-    font-weight: bold;
+.NewArrivalsSlider {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
 }
 
+.NewArrivalsSlider::-webkit-scrollbar {
+    display: none;
+}
 
 .cards {
     display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+
+.cards::-webkit-scrollbar {
+    height: 8px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 8px;
+}
+
+.cards::-webkit-scrollbar-track {
+    background-color: transparent;
 }
