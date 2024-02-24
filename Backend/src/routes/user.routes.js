@@ -29,7 +29,7 @@ import {
   searchBarProducts,
 } from "../controllers/product.controllers.js";
 
-import { fetchAllBlog } from "../controllers/blog.controllers.js";
+import { fetchAllBlog, fetchBlogById } from "../controllers/blog.controllers.js";
 
 const router = Router();
 
@@ -54,5 +54,6 @@ router.route("/get-product-by-id").post(getProductById);
 router.route("/get-products").get(getProducts);
 router.route("/search-products").post(searchBarProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
+router.route("/fetch-blog-by-id").post(fetchBlogById);
 
 export default router;

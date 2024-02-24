@@ -1,5 +1,5 @@
 .sidenav {
-    height: 100%;
+    height: auto;
     width: 0;
     position: fixed;
     z-index: 1;
@@ -37,4 +37,11 @@
 
   .sidenav .closebtn {
     font-size: 36px;
+  }
+
+  .logoutbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0px;
   }

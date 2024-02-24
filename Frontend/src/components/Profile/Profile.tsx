@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleProfileVisibility } from '../../redux/reducers/authSlice';
 import style from './Profile.module.css';
+import { LogoutBtn } from "..";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,9 @@ const Profile = () => {
         <div className={style.head}>
         <h2>Profile</h2>
         <a className={style.closebtn} onClick={handleToggleProfileVisibility}>&times;</a>  
+        </div>
+        <div className={style.logoutbutton}>
+          <LogoutBtn/>
         </div>
       </div>
   );

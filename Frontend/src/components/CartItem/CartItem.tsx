@@ -3,12 +3,12 @@ import style from './CartItem.module.css';
 import { getProductById } from '../../api/user.api';
 
 const CartItem = ({productID,quantity}) => {
-    const [product, setProduct] = useState([]);
-    const getProduct = async () => {
-        const payload = {
-          productID : productID,
-        }
-        const response = await getProductById(payload);
+  const [product, setProduct] = useState([]);
+  const getProduct = async () => {
+      const payload = {
+        productID : productID,
+      }
+      const response = await getProductById(payload);
         if (response.statusCode === 200)
         {setProduct(response.data);
           console.log(product);
@@ -17,7 +17,7 @@ const CartItem = ({productID,quantity}) => {
     
     useEffect(() => {
         getProduct();
-    }, []);
+  }, []);
 
   return (
     <div className={style.cartItem}>

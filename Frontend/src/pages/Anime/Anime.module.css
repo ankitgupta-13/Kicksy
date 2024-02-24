@@ -60,13 +60,11 @@
 }
 .Circle2{
     position: absolute;
-    left: -50px;
-    /* top: 480px; */
+    left: -35px;
     bottom: -60px;
     height: 400px;
     width: 400px;
     border-radius: 50%;
     background-color: #fff;
-    z-index: 0;
 }
 

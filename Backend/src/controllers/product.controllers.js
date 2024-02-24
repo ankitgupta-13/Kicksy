@@ -164,6 +164,7 @@ const handleProductStock = async (req, res) => {
 
 const searchBarProducts = async (req, res) => {
   const { search_string } = req.body
+  console.log(search_string);
   try {
     if (!search_string) return res.json(new ApiResponse(422, "Enter Search String First"))
     const products = await Product.find({})

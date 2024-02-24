@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
@@ -5,7 +6,7 @@ import style from "./Header.module.css";
 import {toggleCartVisibility} from "../../redux/reducers/cartSlice";
 import { toggleWishlistVisibility} from "../../redux/reducers/wishlistSlice";
 import { toggleProfileVisibility } from '../../redux/reducers/authSlice';
-
+import Searchbar from "../Searchbar/Searchbar";
 import searchIcon from "../../assets/search.png";
 import shoppingBagIcon from "../../assets/local_mall.png";
 import profileIcon from "../../assets/person_4.png";
@@ -14,6 +15,7 @@ import favouriteIcon from "../../assets/favorite.png";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role);
   
@@ -44,6 +46,10 @@ const Header = () => {
     dispatch(toggleProfileVisibility());
   };
 
+  const toggleSearchVisibility = () => {
+    setIsSearchOpen(!isSearchOpen);
+  }
+
   return (
     <header className={style.header}>
       <Container>
@@ -64,14 +70,10 @@ const Header = () => {
                 </li>
               ) : null
             )}
-            {authStatus && (
-              <li>
-                <LogoutBtn />
-              </li>
-            )}
           </ul>
           <ul className={style.iconList}>
-            <li className={style.iconListItems}>
+            <li className={style.iconListItems}
+              onClick={toggleSearchVisibility}>
               <img src={searchIcon} alt="Search" />
             </li>
             <li
@@ -89,6 +91,7 @@ const Header = () => {
               <img src={profileIcon} alt="Profile" />
             </li>
           </ul>
+          <Searchbar open={isSearchOpen} close={toggleSearchVisibility}/>
         </nav>
       </Container>
     </header>
