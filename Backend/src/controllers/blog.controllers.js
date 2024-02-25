@@ -38,7 +38,7 @@ const fetchAllBlog = async (req, res) => {
 }
 
 const addBlog = async (req, res) => {
-  const { content, blogTitle, image } = req.body;
+  const { content, blogTitle, image , category } = req.body;
   // console.log(req.file);
   try {
     const blogImageUrl = await uploadOnAws(req.file.path);
@@ -55,6 +55,7 @@ const addBlog = async (req, res) => {
         const blog = new Blog({
           blogTitle: `Blog ${length + 1}`,
           content,
+          category:category,
           imageurl: blogImageUrl
         })
         await blog.save()
@@ -63,6 +64,7 @@ const addBlog = async (req, res) => {
         const blog = new Blog({
           blogTitle,
           content,
+          category:category,
           imageurl: blogImageUrl
         })
         await blog.save();
@@ -127,6 +129,21 @@ const editBlogBody = async (req, res) => {
   }
 }
 
+const attachProductToBlog = async(req,res)=>{
+  const {productArray , blogID} = req.body;
+  try{
+    const blog = await Blog.findOne({_id:blogID})
+    if(!blog) return res.json(new ApiResponse(404 , "no product found"))
+    productArray.forEach(async(product)=>{
+      blog.productID.push(product);
+    })
+    await blog.save();
+  }
+  catch(err){
+    return res.json(new ApiError(400 , err.message));
+  }
+}
+
 const deleteBlog = async (req, res) => {
   const { blogID } = req.body;
   const blog = await Blog.findOne({ _id: blogID });
@@ -153,5 +170,6 @@ export {
   editBlogBody,
   deleteBlog,
   fetchBlogById,
-  fetchAllBlog
+  fetchAllBlog,
+  attachProductToBlog
 };

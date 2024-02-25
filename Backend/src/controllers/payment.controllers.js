@@ -35,7 +35,7 @@ const makePayment = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-  const { userID } = req.params;
+  const { userID , addressID} = req.params;
   try {
     const user = await User.findOne({ _id: userID })
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -44,6 +44,7 @@ const verifyPayment = async (req, res) => {
       .update(body.toString())
       .digest("hex");
     if (expectedSign === razorpay_signature) {
+      
       await Payment.create({
         razorpay_order_id,
         razorpay_payment_id,
@@ -161,4 +162,12 @@ const fetchPaymentByTime = async (req, res) => {
   }
 };
 
-export { getKey, makePayment, verifyPayment, fetchall, fetchPayment };
+export {
+  getKey,
+  makePayment,
+  verifyPayment,
+  fetchall,
+  fetchPayment
+};
+
+

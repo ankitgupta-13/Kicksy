@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import style from './CartItem.module.css';
-import { getProductById } from '../../api/user.api';
+import React, { useEffect, useState } from "react";
+import style from "./CartItem.module.css";
+import { getProductById } from "../../api/user.api";
 
 const CartItem = ({productID,quantity}) => {
   const [product, setProduct] = useState([]);

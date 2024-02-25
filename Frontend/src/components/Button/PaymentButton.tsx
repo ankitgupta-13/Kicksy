@@ -19,7 +19,7 @@ const PaymentButton = (props) => {
       description: "Razorpay tutorial",
       image: "",
       order_id: order.id,
-      callback_url: `${baseURL}/user/payments/verify-payment/${user.auth.userData._id}`,
+      callback_url: `${baseURL}/user/payments/verify-payment/${user.auth.userData._id}/`,
       prefill: {
         name: "Ankit Gupta",
         email: "guptankit0522@gmail.com",
