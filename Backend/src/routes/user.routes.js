@@ -15,11 +15,12 @@ import {
 import {
   addListName,
   addToCart,
-  addSubtractCartQty,
   addToList,
   deleteFromCart,
   removeFromList,
   removeList,
+  removeFromCart,
+  getCartByUser,
 } from "../controllers/cart.controllers.js";
 
 import {
@@ -41,7 +42,8 @@ router.route("/verify-mobile-otp").post(verifyMobileOtp);
 router.route("/login").post(loginUser);
 router.route("/fetch-by-id").post(findByID);
 router.route("/add-to-cart").post(addToCart);
-router.route("/add-subtract-cart-qty").post(addSubtractCartQty);
+router.route("/remove-from-cart").post(removeFromCart);
+router.route("/get-user-cart").post(getCartByUser);
 router.route("/delete-from-cart").post(deleteFromCart);
 router.route("/add-list-name").post(addListName);
 router.route("/add-to-list").post(addToList);

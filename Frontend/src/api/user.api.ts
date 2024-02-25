@@ -14,7 +14,6 @@ export const addToCart = async (payload: {
   productID: string;
 }) => {
   try {
-    console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);
     return data;
   } catch (error: any) {
@@ -58,6 +57,16 @@ export const getProductById = async (payload: { productID: string }) => {
 export const getAllBlogs = async () => {
   try {
     const { data } = await api.get("/user/fetch-blogs");
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const getUserCartItems = async (payload) => {
+  try {
+    const { data } = await api.get("/user/get-user-cart", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

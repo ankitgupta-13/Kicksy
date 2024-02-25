@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [],
-  isOpen: false, 
+  items: [{}],
+  isOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -10,7 +10,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      state.items.push(action.payload);
+      state.items = action.payload;
     },
     removeItem: (state, action) => {
       state.items.pop();
@@ -24,6 +24,11 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, toggleCartVisibility, setInitialCartItems } = cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  toggleCartVisibility,
+  setInitialCartItems,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

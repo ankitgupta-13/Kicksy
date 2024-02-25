@@ -41,33 +41,14 @@ const userSchema = new mongoose.Schema(
         ref: "Order",
       },
     ],
-    cart: [
-      {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-        },
-        qty: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
-    wishlist: [
-      {
-        listName: {
-          type: String,
-          required: true,
-        },
-        listItems: [
-          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product",
-            timestamps: true,
-          },
-        ],
-      },
-    ],
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cart",
+    },
+    wishlist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wishlist",
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -118,6 +99,7 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
@@ -136,26 +118,26 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.addToCart = async function (productId) {
-  try {
-    if (!productId) {
-      throw new Error("ProductId Required.");
-    }
+// userSchema.methods.addToCart = async function (productId) {
+//   try {
+//     if (!productId) {
+//       throw new Error("ProductId Required.");
+//     }
 
-    const index = this.cart.findIndex((item) => {
-      return item["product"]["_id"].equals(productId);
-    });
-    if (index === -1) {
-      this.cart = this.cart.concat({ product: productId });
-      await this.save();
-      return this.cart;
-    } else {
-      throw new Error("Item already present in cart.");
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
+//     const index = this.cart.findIndex((item) => {
+//       return item["product"]["_id"].equals(productId);
+//     });
+//     if (index === -1) {
+//       this.cart = this.cart.concat({ product: productId });
+//       await this.save();
+//       return this.cart;
+//     } else {
+//       throw new Error("Item already present in cart.");
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 userSchema.methods.addToList = async function (listID, productID) {
   try {
@@ -226,7 +208,6 @@ userSchema.methods.removeProductFromList = async function (listID, productID) {
           );
         });
       }
-      console.log("hello world");
       await this.save();
       return this.wishlist[listIndex];
     }

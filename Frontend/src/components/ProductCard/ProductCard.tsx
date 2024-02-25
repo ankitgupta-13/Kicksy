@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
         <img
           src={activeColor}
           className={style.shoes__image}
-          onClick={() => navigate(`/productdesc?product=${product._id}`)}
+          onClick={() => navigate(`/product/${product._id}`)}
         />
       </div>
       <div className={style.shoes__color}>
@@ -46,7 +46,10 @@ const ProductCard = ({ product }) => {
           />
         ))}
       </div>
-      <div className={style.shoes__info} onClick={() => navigate(`/productdesc?product=${product._id}`)}>
+      <div
+        className={style.shoes__info}
+        onClick={() => navigate(`/productdesc?product=${product._id}`)}
+      >
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
           <div className={style.shoes__price}>

@@ -3,21 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
 import {
+  setInitialCartItems,
   toggleCartVisibility,
 } from "../../redux/reducers/cartSlice";
+import { toggleWishlistVisibility } from "../../redux/reducers/wishlistSlice";
 
-//Images and Icons
-import searchIcon from "../../assets/search.png";
-import shoppingBagIcon from "../../assets/local_mall.png";
-import profileIcon from "../../assets/person_4.png";
-import favouriteIcon from "../../assets/favorite.png";
-
+//Icons
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SearchIcon from "@mui/icons-material/Search";
+import { getUserCartItems } from "../../api/user.api";
 
 const Header = () => {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
-  const isAdmin = useSelector((state) => state.auth.userData?.role);
-  
+  const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
+  const user = useSelector((state) => state.auth.userData);
+  const userID = user?._id;
   const navigate = useNavigate();
   const navItems = [
     { name: "Home", slug: "/", isActive: true },
@@ -27,15 +30,25 @@ const Header = () => {
     { name: "Blogs", slug: "/blogs", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
-    isAdmin === "admin" && {
+    isAdmin && {
       name: "Dashboard",
       slug: "/admin",
       isActive: isAdmin,
     },
   ];
-  const handleToggleCartVisibility = () => {
+
+  const handleCart = async (userID) => {
     dispatch(toggleCartVisibility());
+    const response = await getUserCartItems({ userID });
+    console.log(response);
+    if (response.statusCode === 200)
+      dispatch(setInitialCartItems(response.data.items));
   };
+
+  const handleWishlistVisibility = () => {
+    dispatch(toggleWishlistVisibility());
+  };
+
   return (
     <header className={style.header}>
       <Container>
@@ -64,18 +77,19 @@ const Header = () => {
           </ul>
           <ul className={style.iconList}>
             <li className={style.iconListItems}>
-              <img src={searchIcon} alt="Search" />
+              <SearchIcon />
+            </li>
+            <li className={style.iconListItems}>
+              <ShoppingCartIcon onClick={() => handleCart(userID)} />
             </li>
             <li
               className={style.iconListItems}
-              onClick={handleToggleCartVisibility}>
-              <img src={shoppingBagIcon} alt="ShoppingBag" />
+              onClick={handleWishlistVisibility}
+            >
+              <FavoriteIcon />
             </li>
             <li className={style.iconListItems}>
-              <img src={favouriteIcon} alt="Favourite" />
-            </li>
-            <li className={style.iconListItems}>
-              <img src={profileIcon} alt="Profile" />
+              <AccountCircleIcon />
             </li>
           </ul>
         </nav>

@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
 import { Footer, Header } from "./components";
 import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getCurrentUser } from "./api/user.api";
-import { login, logout } from "./redux/reducers/authSlice";
 import Sidebar from "./components/Cart/Cart";
+
 const Layout = ({ loading }) => {
   return (
     <>
@@ -14,7 +11,7 @@ const Layout = ({ loading }) => {
         <div>
           <Header />
           <Outlet />
-          <Sidebar/>
+          <Sidebar />
           <Footer />
         </div>
       )}

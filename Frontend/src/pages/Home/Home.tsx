@@ -3,17 +3,13 @@ import { getRecentProducts } from "../../api/user.api";
 import style from "./Home.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SliderCard from "../../components/SliderCard/SliderCard";
-import { Button, Container } from "../../components";
+import { Container } from "../../components";
 
 import { useNavigate } from "react-router-dom";
-
 
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-
-
-
 
   const getProducts = async () => {
     const response = await getRecentProducts();
@@ -22,7 +18,6 @@ const Home = () => {
   useEffect(() => {
     getProducts();
   }, []);
-
 
   return (
     <Container>
@@ -41,7 +36,9 @@ const Home = () => {
           <div className={style.GenderBoxTitle}>Kids</div>
         </div>
         <div className={style.SaleBox}>
-          <div className={style.Box}><span className={style.SaleBoxContent}>Sale</span></div>
+          <div className={style.Box}>
+            <span className={style.SaleBoxContent}>Sale</span>
+          </div>
         </div>
       </div>
 
@@ -49,7 +46,6 @@ const Home = () => {
         <div className={style.CompanyItemBox}>
           <div className={style.CompanyItem}></div>
           <div className={style.CompanyItemTitle}>Jordan</div>
-
         </div>
         <div className={style.CompanyItemBox}>
           <div className={style.CompanyItem}></div>
@@ -84,7 +80,6 @@ const Home = () => {
             );
           })}
         </div>
-
       </div>
     </Container>
   );

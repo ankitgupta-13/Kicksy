@@ -8,9 +8,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Register from "./pages/Register/Register.tsx";
-import Verification from "./pages/Verification/Verification.tsx";
 import Login from "./pages/Login/Login.tsx";
-import Cart from "./components/Cart/Cart.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Home from "./pages/Home/Home.tsx";
@@ -26,7 +24,6 @@ import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
 import { PaymentButton } from "./components/index.ts";
 
-
 const App = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -38,16 +35,14 @@ const App = () => {
         <Route path="/" element={<Layout loading={loading} />}>
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/verify" element={<Verification />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<Cart />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-          <Route path="/productdesc" element={<ProductDesc />} />
+          <Route path="/product/:id" element={<ProductDesc />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/anime" element={<Anime />} />
           <Route path="/trackorder" element={<TrackOrder />} />
-          <Route path="/blogs" element={<Blogs/>} />
-          <Route path="/payments" element={<PaymentButton amount={5000}/>} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/payments" element={<PaymentButton amount={5000} />} />
         </Route>
         <Route
           element={

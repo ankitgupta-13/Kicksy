@@ -2,7 +2,7 @@ import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
-import pluralize from "pluralize"
+import pluralize from "pluralize";
 import fs from "fs";
 
 const addProductImage = async (req, res) => {
@@ -102,10 +102,14 @@ const getProductById = async (req, res) => {
     const product = await Product.findOne({ _id: productID });
 
     if (!product) {
-      res.json(new ApiError(404, "Invalid product id , product not found"));
+      return res.json(
+        new ApiError(404, "Invalid product id , product not found")
+      );
     }
 
-    res.json(new ApiResponse(200, product, "product fetched successfully."));
+    return res.json(
+      new ApiResponse(200, product, "product fetched successfully.")
+    );
   } catch (err) {
     console.log(err);
   }
@@ -163,13 +167,14 @@ const handleProductStock = async (req, res) => {
 // console.log("hello,people men.women.hello".split(/[ ,.]+/));
 
 const searchBarProducts = async (req, res) => {
-  const { search_string } = req.body
+  const { search_string } = req.body;
   try {
-    if (!search_string) return res.json(new ApiResponse(422, "Enter Search String First"))
-    const products = await Product.find({})
-    const search_array = search_string.split(/[ ,.]+/)
+    if (!search_string)
+      return res.json(new ApiResponse(422, "Enter Search String First"));
+    const products = await Product.find({});
+    const search_array = search_string.split(/[ ,.]+/);
     // console.log(search_array)
-    const products_array = []
+    const products_array = [];
     products.forEach((product) => {
       // const toBeSearched = []
       // product.tags.forEach((tag)=>{
@@ -180,25 +185,25 @@ const searchBarProducts = async (req, res) => {
 
       const variation = [];
       search_array.forEach((item) => {
-        variation.push(pluralize.singular(item).toLowerCase())
-        variation.push(pluralize.plural(item).toLowerCase())
-        variation.push(item.toLowerCase())
-      })
-      
-      const hasCommon = toBeSearched.some((tag)=>variation.includes(tag.toLowerCase()))
-      
+        variation.push(pluralize.singular(item).toLowerCase());
+        variation.push(pluralize.plural(item).toLowerCase());
+        variation.push(item.toLowerCase());
+      });
+
+      const hasCommon = toBeSearched.some((tag) =>
+        variation.includes(tag.toLowerCase())
+      );
+
       // console.log(hasCommon);
-      if(hasCommon){
-        products_array.push(product)
+      if (hasCommon) {
+        products_array.push(product);
       }
-      
-    })
-    return res.json(new ApiResponse(200 , products_array));
+    });
+    return res.json(new ApiResponse(200, products_array));
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
   }
-  catch (err) {
-    return res.json(new ApiError(400 , err.message));
-  } 
-}
+};
 
 export {
   addProduct,
@@ -210,5 +215,5 @@ export {
   getProductById,
   getProducts,
   getProductsCount,
-  searchBarProducts
+  searchBarProducts,
 };
