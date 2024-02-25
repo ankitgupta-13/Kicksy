@@ -32,7 +32,7 @@ const Cart = () => {
         </a>
       </div>
       <div className={style.itemlist}>
-        {cartItems.map((item) => (
+        {cartItems?.map((item) => (
           <CartItem productID={item.product} quantity={item.qty} />
         ))}
       </div>
