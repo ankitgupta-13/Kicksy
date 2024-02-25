@@ -10,6 +10,7 @@ import ytIcon from "../../assets/yt-icon.png"
 
 const Footer = () => {
   return (
+    <>
     <div className={style.Footer}>
       <div className={style.footerTop}>
         <div className={style.section1}>
@@ -69,6 +70,13 @@ const Footer = () => {
         </div>
       </div>
     </div>
+    <div className={style.bottomnavbar}>
+    <a href="/">Home</a>
+    <a href="/shop">Shop</a>
+    <a href="#cart">Cart</a>
+    <a href="#profile">Profile</a>
+  </div>
+  </>
   );
 };
 

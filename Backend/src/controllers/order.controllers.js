@@ -16,7 +16,6 @@ const addOrder = async (req, res) => {
     * sample obj:
     * const productID  = { productID:<id> , qty:<Number> }
     */
-
     try {
         const user = await User.findOne({ _id: userID })
         if (!user) throw new ApiError(404, "user not found")

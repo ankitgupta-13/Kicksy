@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
 import {
-  setInitialCartItems,
   toggleCartVisibility,
 } from "../../redux/reducers/cartSlice";
 
@@ -13,7 +12,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
-import { getUserCartItems } from "../../api/user.api";
 import { toggleWishlistVisibility } from "../../redux/reducers/wishlistSlice";
 import { toggleProfileVisibility } from "../../redux/reducers/authSlice";
 import Searchbar from "../Searchbar/Searchbar";
@@ -21,11 +19,12 @@ import Searchbar from "../Searchbar/Searchbar";
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  console.log(isSearchOpen);
   const [active, setActive] = useState("Home");
+  const [sidebar, setSidebar] = useState(false);
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
-  const user = useSelector((state) => state.auth.userData);
-  const userID = user?._id;
+
   const navigate = useNavigate();
   const navItems = [
     { name: "Home", slug: "/", isActive: true },
@@ -41,13 +40,9 @@ const Header = () => {
       isActive: isAdmin,
     },
   ];
-
-  const handleCart = async (userID) => {
+  
+  const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
-    const response = await getUserCartItems({ userID });
-    console.log(response);
-    if (response.statusCode === 200)
-      dispatch(setInitialCartItems(response.data.items));
   };
 
   const handleToggleWishlistVisibility = () => {
@@ -63,6 +58,7 @@ const Header = () => {
   };
 
   return (
+    <>
     <header className={style.header}>
       <Container>
         <nav className={style.nav}>
@@ -91,11 +87,11 @@ const Header = () => {
             )}
           </ul>
           <ul className={style.iconList}>
-            <li className={style.iconListItems}>
+            <li className={style.iconListItems} onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <SearchIcon />
             </li>
             <li className={style.iconListItems}>
-              <ShoppingCartIcon onClick={() => handleCart(userID)} />
+              <ShoppingCartIcon onClick={handleToggleCartVisibility} />
             </li>
             <li
               className={style.iconListItems}
@@ -103,7 +99,8 @@ const Header = () => {
             >
               <FavoriteIcon />
             </li>
-            <li className={style.iconListItems}>
+            <li className={style.iconListItems}
+              onClick={handleToggleProfileVisibility}>
               <AccountCircleIcon />
             </li>
           </ul>
@@ -111,6 +108,28 @@ const Header = () => {
         </nav>
       </Container>
     </header>
+    <div className={style.topbar}>
+    <span className={style.openbtn} onClick={() => setSidebar(!sidebar)}>&#9776;</span>
+    <Logo width="100px" />
+      <div className={sidebar? style.sidenav : style.closeSidenav}>
+        <a className={style.closebtn} onClick={() => setSidebar(!sidebar)}>&times;</a>
+        <h1>Menu</h1>
+        <a href="#">My Profile</a>
+        <a href="#">Orders</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Delivery Address</a>
+        <a href="/blogs">Blogs</a>
+        <div className={style.buttons}>
+          {authStatus ? <div>
+              <button className={style.loginbtn} onClick={navigate('/login')}>Login</button>
+              <button className={style.loginbtn} onClick={navigate('/register')}>Signup</button>
+            </div>
+            : <LogoutBtn/>
+          }
+        </div>
+      </div>
+    </div>
+    </>
   );
 };
 
