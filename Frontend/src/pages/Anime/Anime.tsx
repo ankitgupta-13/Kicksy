@@ -25,7 +25,7 @@ const Anime = () => {
                 masterpiece.
               </div>
               <div className={style.Circle1}>
-                <img className={style.image} src={img}></img>
+                <img className={style.image1} src={img}></img>
               </div>
             </div>
           </div>
@@ -50,30 +50,45 @@ const Anime = () => {
                   position: "absolute",
                   width: "200px",
                   height: "40px",
-                  backgroundColor: "black",
-                  color: "white",
-                  right: "0",
+                  right: "150px",
+                  bottom: "100px",
+                  borderRadius: "10px",
+                  backgroundColor: "white",
+                  fontFamily: "Bevan",
+                  letterSpacing: "1.5px",
+                  justifyContent: "center",
+                  color: "black",
+                  zIndex: "5",
                 }}
                 onClick={() => setExplore(true)}
               >
                 Explore
               </button>
-              <div className={style.head}>
+              {/* <div className={style.head}>
                 {" "}
                 Sneaker Culture + Anime Artistry
               </div>
               <div className={style.head}>
                 {" "}
                 Sneaker Culture + Anime Artistry
-              </div>
+              </div> */}
               <div className={style.Circle2}>
-                <img className={style.image} src={img2}></img>
+                <img className={style.image2} src={img2}></img>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className={explore ? " " : style.exploresec}>hello</div>
+      
+      
+      //making the pt2 below-here
+      
+      <div className={explore ? " " : style.exploresec}>
+        hello
+              <div>
+                
+              </div>
+      </div>
     </div>
   );
 };
