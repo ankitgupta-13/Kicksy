@@ -23,6 +23,8 @@ import { useEffect, useState } from "react";
 import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
 import { PaymentButton } from "./components/index.ts";
+import { setInitialCartItems } from "./redux/reducers/cartSlice.ts";
+import BlogPage from "./pages/BlogPage/BlogPage.tsx";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -42,6 +44,7 @@ const App = () => {
           <Route path="/anime" element={<Anime />} />
           <Route path="/trackorder" element={<TrackOrder />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogpage" element={<BlogPage />} />
           <Route path="/payments" element={<PaymentButton amount={5000} />} />
         </Route>
         <Route
@@ -61,6 +64,7 @@ const App = () => {
         if (userData.statusCode === 200) {
           setLoading(false);
           dispatch(login({ userData: userData.data }));
+          dispatch(setInitialCartItems(userData.data.cart));
         } else {
           dispatch(logout());
         }

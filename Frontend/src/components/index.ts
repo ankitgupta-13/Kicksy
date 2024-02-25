@@ -1,6 +1,6 @@
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
-import LogoutBtn from "./Header/LogoutBtn";
+import LogoutBtn from "./Button/LogoutBtn.tsx";
 import Logo from "./Logo/Logo";
 import Container from "./Container/Container";
 import Button from "./Button/Button";

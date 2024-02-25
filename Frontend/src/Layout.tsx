@@ -1,6 +1,8 @@
 import { Footer, Header } from "./components";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./components/Cart/Cart";
+import Cart from "./components/Cart/Cart";
+import Wishlist from "./components/Wishlist/Wishlist";
+import Profile from "./components/Profile/Profile";
 
 const Layout = ({ loading }) => {
   return (
@@ -11,7 +13,9 @@ const Layout = ({ loading }) => {
         <div>
           <Header />
           <Outlet />
-          <Sidebar />
+          <Cart />
+          <Wishlist />
+          <Profile />
           <Footer />
         </div>
       )}

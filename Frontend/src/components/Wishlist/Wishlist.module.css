@@ -9,11 +9,21 @@
   backdrop-filter: blur(10px);
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
 }
 
 .sidenav.open {
   width: 300px;
+}
+
+.head {
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  align-items: center;
+  font-size: 20px;
+  padding: 10px 20px;
 }
 
 .sidenav a {
@@ -26,9 +36,5 @@
 }
 
 .sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
   font-size: 36px;
-  margin-left: 50px;
 }

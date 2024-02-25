@@ -3,10 +3,12 @@ import style from './SliderCard.module.css'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
+
 
 import HeroShoes from '../../assets/images/hero-product.png'
 const SliderCard = (props: any) => {
-  // Dummy Data
+    const navigate = useNavigate();
     const [data,setData] = useState([{
         id: 1,
         name: "Air Jordan",
@@ -40,7 +42,7 @@ const SliderCard = (props: any) => {
               <div className={style.container__shoesname}>{item.name}</div>
                 <div className={style.container__info}>
                         <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
-                        <button className={style.container__shopbtn}>Go to Shop</button>
+                        <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button>
                 </div>
          </div>
           </>

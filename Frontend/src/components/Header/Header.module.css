@@ -1,5 +1,5 @@
 .header {
-    margin: 20px;
+    margin: 20px 20px 1px 20px;
     border-bottom: 1px solid #E2E2E2;
     padding: 5px;
 }
@@ -24,6 +24,16 @@
     background-color: white;
     letter-spacing: 1.5px;
     color: #727373;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+.activeNavListItemButton{
+    border: none;
+    background-color: white;
+    letter-spacing: 1.5px;
+    color: #000;
+    font-weight: bold;
     text-transform: uppercase;
     transition: color 0.3s ease;
     cursor: pointer;

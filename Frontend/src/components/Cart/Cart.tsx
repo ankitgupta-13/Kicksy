@@ -5,7 +5,9 @@ import {
   toggleCartVisibility,
   setInitialCartItems,
 } from "../../redux/reducers/cartSlice";
-import styles from "./Cart.module.css";
+import style from "./Cart.module.css";
+import CartItem from "../CartItem/CartItem";
+import { PaymentButton } from "..";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -22,39 +24,22 @@ const Cart = () => {
   // }, []);
 
   return (
-    <div>
-      <div
-        id="mySidenav"
-        className={`${styles.sidenav} ${isCartOpen ? styles.open : ""}`}
-      >
-        <h3>Cart</h3>
-        <a
-          href="javascript:void(0)"
-          className={styles.closebtn}
-          onClick={handleToggleCartVisibility}
-        >
+    <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
+      <div className={style.head}>
+        <h2>Cart</h2>
+        <a className={style.closebtn} onClick={handleToggleCartVisibility}>
           &times;
         </a>
-        <div>
-          {cartItems.length > 0 ? (
-            cartItems.map((item, index) => {
-              return (
-                <div key={index}>
-                  <img src={item.image} alt={item.name} />
-                  <p>{item.product}</p>
-                  <p>{item.quantity}</p>
-                  <button
-                    onClick={() => dispatch(removeItem(item))}
-                    className={styles.remove}
-                  >
-                    Remove
-                  </button>
-                </div>
-              );
-            })
-          ) : (
-            <p>No items in cart</p>
-          )}
+      </div>
+      <div className={style.itemlist}>
+        {cartItems.map((item) => (
+          <CartItem productID={item.product} quantity={item.qty} />
+        ))}
+      </div>
+      <div>
+        <div></div>
+        <div className={style.paymentbutton}>
+          <PaymentButton amount={100} />
         </div>
       </div>
     </div>

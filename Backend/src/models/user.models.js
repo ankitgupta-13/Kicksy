@@ -118,27 +118,6 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-// userSchema.methods.addToCart = async function (productId) {
-//   try {
-//     if (!productId) {
-//       throw new Error("ProductId Required.");
-//     }
-
-//     const index = this.cart.findIndex((item) => {
-//       return item["product"]["_id"].equals(productId);
-//     });
-//     if (index === -1) {
-//       this.cart = this.cart.concat({ product: productId });
-//       await this.save();
-//       return this.cart;
-//     } else {
-//       throw new Error("Item already present in cart.");
-//     }
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 userSchema.methods.addToList = async function (listID, productID) {
   try {
     const index = this.wishlist.findIndex((item) => {

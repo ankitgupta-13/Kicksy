@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const PaymentButton = (props) => {
-  const [userID , setUserID] = useState("")
   const user = useSelector((state)=>{return state})
   console.log(user);
   const amount = props.amount * 100;
@@ -37,7 +36,7 @@ const PaymentButton = (props) => {
     razorPay.open();
   };
 
-  return <button onClick={checkOutHandler}>Pay Now</button>;
+  return <button style={{backgroundColor: 'black', width: '180px', height:'40px', color: 'white'}} onClick={checkOutHandler}>Pay Now</button>;
 };
 
 export default PaymentButton;

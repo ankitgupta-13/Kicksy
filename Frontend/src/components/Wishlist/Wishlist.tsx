@@ -1,28 +1,30 @@
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  removeItem,
+  toggleWishlistVisibility,
+  setInitialWishlistItems,
+} from "../../redux/reducers/wishlistSlice";
 import style from "./Wishlist.module.css";
-import { toggleWishlistVisibility } from "../../redux/reducers/wishlistSlice";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
   const wishlistItems = useSelector((state) => state.wishlist.items);
   const isWishlistOpen = useSelector((state) => state.wishlist.isOpen);
 
-  const handleWishlistVisibility = () => {
+  const handleToggleWishlistVisibility = () => {
     dispatch(toggleWishlistVisibility());
   };
 
   return (
-    <div>
-      <div
-        id="mySidenav"
-        className={`${style.sidenav} ${isWishlistOpen ? style.open : ""}`}
-      >
-        <h3>Wishlist</h3>
-        <a
-          href="javascript:void(0)"
-          className={style.closebtn}
-          onClick={handleWishlistVisibility}
-        >
+    <div
+      id="mySidenav"
+      className={`${style.sidenav} ${isWishlistOpen ? style.open : ""}`}
+    >
+      <div className={style.head}>
+        <h2>Wishlist</h2>
+        <a className={style.closebtn} onClick={handleToggleWishlistVisibility}>
           &times;
         </a>
       </div>

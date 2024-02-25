@@ -73,3 +73,23 @@ export const getUserCartItems = async (payload) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+export const getBlogById = async (payload: { productID: string }) => {
+  try {
+    const { data } = await api.post("/user/fetch-blog-by-id", payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const searchProducts = async (payload: { search_string: string }) => {
+  try {
+    const { data } = await api.post("/user/search-products", payload);
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
