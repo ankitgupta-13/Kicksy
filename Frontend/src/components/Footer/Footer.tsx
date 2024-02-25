@@ -1,12 +1,17 @@
 import style from "./Footer.module.css";
 
 import customerSupportIcon from "../../assets/customerSupport-icon.png"
+import { Home } from "@mui/icons-material";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import fbIcon from "../../assets/fb-icon.png"
 import igIcon from "../../assets/ig-icon.png"
 import ptIcon from "../../assets/pt-icon.png"
 import verifiedIcon from "../../assets/verified-icon.png"
 import replacementIcon from "../../assets/replacement-icon.png"
 import ytIcon from "../../assets/yt-icon.png"
+
 
 const Footer = () => {
   return (
@@ -71,10 +76,10 @@ const Footer = () => {
       </div>
     </div>
     <div className={style.bottomnavbar}>
-    <a href="/">Home</a>
-    <a href="/shop">Shop</a>
-    <a href="#cart">Cart</a>
-    <a href="#profile">Profile</a>
+    <a href="/"><Home/></a>
+    <a href="#search"><SearchIcon/></a>
+    <a href="#cart"><AddShoppingCartIcon/></a>
+    <a href="#profile"><AccountCircleIcon/></a>
   </div>
   </>
   );

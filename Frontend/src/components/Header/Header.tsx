@@ -19,11 +19,10 @@ import Searchbar from "../Searchbar/Searchbar";
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  console.log(isSearchOpen);
-  const [active, setActive] = useState("Home");
   const [sidebar, setSidebar] = useState(false);
   const authStatus = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
+  const location = window.location.pathname.split().pop();
 
   const navigate = useNavigate();
   const navItems = [
@@ -71,13 +70,12 @@ const Header = () => {
                 <li className={style.navListItem} key={item.name}>
                   <button
                     className={
-                      item.name === active
+                      item.slug === location
                         ? style.activeNavListItemButton
                         : style.navListItemButton
                     }
                     onClick={() => {
                       navigate(item.slug);
-                      setActive(item.name);
                     }}
                   >
                     {item.name}
@@ -90,6 +88,7 @@ const Header = () => {
             <li className={style.iconListItems} onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <SearchIcon />
             </li>
+            { authStatus && <>
             <li className={style.iconListItems}>
               <ShoppingCartIcon onClick={handleToggleCartVisibility} />
             </li>
@@ -103,6 +102,8 @@ const Header = () => {
               onClick={handleToggleProfileVisibility}>
               <AccountCircleIcon />
             </li>
+            </>
+            }
           </ul>
           <Searchbar open={isSearchOpen} close={toggleSearchVisibility} />
         </nav>
@@ -120,12 +121,7 @@ const Header = () => {
         <a href="#">Delivery Address</a>
         <a href="/blogs">Blogs</a>
         <div className={style.buttons}>
-          {authStatus ? <div>
-              <button className={style.loginbtn} onClick={navigate('/login')}>Login</button>
-              <button className={style.loginbtn} onClick={navigate('/register')}>Signup</button>
-            </div>
-            : <LogoutBtn/>
-          }
+          <LogoutBtn/>
         </div>
       </div>
     </div>

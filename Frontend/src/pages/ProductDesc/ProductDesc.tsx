@@ -168,16 +168,6 @@ const ProductDesc = () => {
             );
           })}
         </div>
-        <h1>New Arrivals</h1>
-        <div className={style.cards}>
-          {products.map((product: any, index: number) => {
-            return (
-              <div key={index}>
-                <ProductCard product={product} />
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );

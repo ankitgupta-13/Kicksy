@@ -60,12 +60,16 @@
       display: none;
     }
     .topbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
         background-color: #ffffff;
         color: #000000;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 10px;
+        z-index: 2;
       }
     .sidenav {
         height: 100%;

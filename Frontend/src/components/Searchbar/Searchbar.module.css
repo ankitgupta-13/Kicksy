@@ -48,12 +48,14 @@
 .clearButton {
   position: absolute;
   top: 50%;
-  right: 50px;
+  right: 60px;
   transform: translateY(-50%);
-  background: none;
+  background-color: #d1d1d1;
   border: none;
-  font-size: 22px;
-  cursor: pointer;
+  font-size: 16px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
 }
 
 .searchButton:focus {
