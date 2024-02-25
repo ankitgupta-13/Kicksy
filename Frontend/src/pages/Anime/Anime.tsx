@@ -7,9 +7,9 @@ const Anime = () => {
   const [explore, setExplore] = useState(false);
   console.log(explore);
   return (
-    <div>
+    <div className={style.mainBody}>
       <div className={explore ? style.exploresec : ""}>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div >
           <div className={style.Container}>
             <div className={style.Card1}>
               <div className={style.head}>
@@ -58,6 +58,7 @@ const Anime = () => {
                   letterSpacing: "1.5px",
                   justifyContent: "center",
                   color: "black",
+                  left:"42%",
                   zIndex: "5",
                 }}
                 onClick={() => setExplore(true)}
