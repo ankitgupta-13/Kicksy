@@ -2,6 +2,20 @@ import style from "./Anime.module.css";
 import img from "../../assets/images/AnimePage/bakugoS.png";
 import img2 from "../../assets/images/AnimePage/spideyS.png";
 import { useState } from "react";
+// import img3 from "../../assets/images/Animepage/animeBackdrop.png"
+
+
+import yeah from "../../assets/images/AnimePage/backdrop/Yeah.png"
+import bang from "../../assets/images/AnimePage/backdrop/Bang.png"
+import bg from "../../assets/images/AnimePage/backdrop/bg.png"
+import blastic from "../../assets/images/AnimePage/backdrop/blastic.png"
+import Hallo from "../../assets/images/AnimePage/backdrop/Hallo.png"
+import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
+import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
+import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
+
+
+
 
 const Anime = () => {
   const [explore, setExplore] = useState(false);
@@ -23,6 +37,10 @@ const Anime = () => {
                 Here, every pair tells a story, merging the dynamic worlds of
                 anime creativity and sneaker fashion into one breathtaking
                 masterpiece.
+              </div>
+              <div className={style.Content}>
+                {" "}
+              level up your style game with our killer kicks that blend anime awesomeness with premium sneaker vibes.
               </div>
               <div className={style.Circle1}>
                 <img className={style.image1} src={img}></img>
@@ -82,12 +100,36 @@ const Anime = () => {
       </div>
       
       
-      //making the pt2 below-here
-      
+     
       <div className={explore ? " " : style.exploresec}>
         hello
-              <div>
-                
+              <div className={style.Container}>
+                  {/* <img className={style.animeBackdrop} src={img3}></img> */}
+                  
+                  <div className={style.animeBackdrop}>
+                    <div>
+                      
+                      <img className={style.back} src={bg}></img>
+                      <img className={style.lCorner} src={lCorner}></img>
+                      <img className={style.rCorner} src={rCorner}></img>
+                      <img className={style.hallo} src={Hallo}></img>
+                      <img className={style.yeah} src={yeah}></img>
+                      <img className={style.bang} src={bang}></img>
+                      <img className={style.hi} src={Hi}></img>
+                      <img className={style.blastic} src={blastic}></img>
+                      <img className={style.blastic} src={blastic}></img>
+                      <img className={style.blastic} src={blastic}></img>
+                      
+                        <div>  
+                          <div className={style.subTitle}>Lorem ipsum dolor sit amet consectetur.</div>
+                          <div className={style.title}> Custom Anime Shoes</div>
+                          <button className={style.red} onClick={() => setExplore(true)}>
+                            Explore 
+                          </button>
+                        </div>
+
+                    </div>
+                  </div>
               </div>
       </div>
     </div>
