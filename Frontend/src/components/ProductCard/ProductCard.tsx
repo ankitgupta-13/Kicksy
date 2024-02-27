@@ -27,13 +27,11 @@ const ProductCard = ({ product }) => {
       <div className={style.shoes__bestseller}>
         <div className={style.shoes__bestseller_text}>BestSeller</div>
       </div>
-      <div className={style.shoes}>
         <img
           src={activeColor}
           className={style.shoes__image}
           onClick={() => navigate(`/product/${product._id}`)}
         />
-      </div>
       <div className={style.shoes__color}>
         {shoesColorData.map((color, index) => (
           <ColorCard

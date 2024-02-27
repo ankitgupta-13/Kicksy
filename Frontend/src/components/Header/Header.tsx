@@ -12,6 +12,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
+import { Home } from "@mui/icons-material";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { toggleWishlistVisibility } from "../../redux/reducers/wishlistSlice";
 import { toggleProfileVisibility } from "../../redux/reducers/authSlice";
 import Searchbar from "../Searchbar/Searchbar";
@@ -105,10 +107,10 @@ const Header = () => {
             </>
             }
           </ul>
-          <Searchbar open={isSearchOpen} close={toggleSearchVisibility} />
         </nav>
       </Container>
     </header>
+    <Searchbar open={isSearchOpen} close={toggleSearchVisibility} />
     <div className={style.topbar}>
     <span className={style.openbtn} onClick={() => setSidebar(!sidebar)}>&#9776;</span>
     <Logo width="100px" />
@@ -124,6 +126,12 @@ const Header = () => {
           <LogoutBtn/>
         </div>
       </div>
+    </div>
+    <div className={style.bottomnavbar}>
+    <a href="/"><Home/></a>
+    <a onClick={() => setIsSearchOpen(!isSearchOpen)}><SearchIcon/></a>
+    <a href="#cart"><AddShoppingCartIcon/></a>
+    <a href="#profile"><AccountCircleIcon/></a>
     </div>
     </>
   );
