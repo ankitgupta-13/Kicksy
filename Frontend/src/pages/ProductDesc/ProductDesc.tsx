@@ -3,7 +3,7 @@ import style from "./ProductDesc.module.css";
 import { useEffect, useState } from "react";
 import { getRecentProducts, addToCart } from "../../api/user.api";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { Button } from "../../components/index";
+import { Button, PaymentButton } from "../../components/index";
 import { useSelector } from "react-redux";
 import { getProductById } from "../../api/user.api";
 import ColorCard from "../../components/colorCard/colorCard";
@@ -35,6 +35,7 @@ const ProductDesc = () => {
     };
     const response = await getProductById(payload);
     if (response.statusCode === 200) {
+      console.log(response);
       setCurProduct(response.data);
       setShoesColorData(response.data.images);
     }
@@ -104,6 +105,7 @@ const ProductDesc = () => {
             >
               Add to Cart
             </Button>
+            <PaymentButton amount="10" />
           </div>
         </div>
         <div className={style.cards}>

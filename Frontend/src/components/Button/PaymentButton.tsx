@@ -1,16 +1,16 @@
-import { getKey, makePayment } from "../../api/payment.api";
+import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
 import { baseURL } from "../../api/auth.api";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const PaymentButton = (props) => {
-  const user = useSelector((state)=>{return state})
-  console.log(user);
+  const user = useSelector((state) => state.auth.userData);
+  const userID = user?._id;
   const amount = props.amount * 100;
+  console.log(amount);
   const checkOutHandler = async () => {
     const key = await getKey();
-    const order = await makePayment({ amount });
-    console.log(order);
+    const order = await makePayment({ amount, userID });
     const options = {
       key,
       amount: order.amount,
@@ -19,7 +19,6 @@ const PaymentButton = (props) => {
       description: "Razorpay tutorial",
       image: "",
       order_id: order.id,
-      callback_url: `${baseURL}/user/payments/verify-payment/${user.auth.userData._id}`,
       prefill: {
         name: "Ankit Gupta",
         email: "guptankit0522@gmail.com",
@@ -31,12 +30,36 @@ const PaymentButton = (props) => {
       theme: {
         color: "#000000",
       },
+      handler: function (response) {
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+          response;
+        const payload = {
+          razorpay_payment_id,
+          razorpay_order_id,
+          razorpay_signature,
+          userID,
+          orderDetails: order,
+        };
+        verifyPayment(payload);
+      },
     };
-    const razorPay = new window.Razorpay(options);
+    const razorPay = new Razorpay(options);
     razorPay.open();
   };
 
-  return <button style={{backgroundColor: 'black', width: '180px', height:'40px', color: 'white'}} onClick={checkOutHandler}>Pay Now</button>;
+  return (
+    <button
+      style={{
+        backgroundColor: "black",
+        width: "180px",
+        height: "40px",
+        color: "white",
+      }}
+      onClick={checkOutHandler}
+    >
+      Buy Now
+    </button>
+  );
 };
 
 export default PaymentButton;

@@ -4,10 +4,9 @@ import { ApiError } from "../utils/ApiError.js";
 import crypto from "crypto";
 import { Payment } from "../models/payment.models.js";
 import fetch from "node-fetch";
-import { User } from "../models/user.models.js";
 import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
-
+import { Cart } from "../models/cart.models.js";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -19,7 +18,7 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  const { amount } = req.body;
+  let { amount, userID } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
@@ -34,61 +33,46 @@ const makePayment = async (req, res) => {
 };
 
 const verifyPayment = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-  const { userID } = req.params;
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    userID,
+    orderDetails,
+  } = req.body;
   try {
-    const user = await User.findOne({ _id: userID })
+    const userCart = await Cart.findOne({ user: userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
     if (expectedSign === razorpay_signature) {
-      await Payment.create({
-        razorpay_order_id,
-        razorpay_payment_id,
-        razorpay_signature,
-      });
-
-      const cartItems = [];
-      let total_amt = 0
-      user.cart.forEach(async (item) => {
-        cartItems.push(item);
-        const product = await Product.findOne({ _id: item['product'] })
-        total_amt += product['price']
-      })
-
-      const data = await fetch(`${process.env.BACKEND_URI}/api/user/payments/fetch-by-id`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          paymentId: razorpay_payment_id
-        })
-      })
-
-      const payment = await data.json()
-
-      // console.log(data);
-
-      // if (payment.data.amount !== total_amt) return new ApiResponse(422, "Order Not placed due to insufficient fund transfer")
-
       const order = new Order({
-        customer: user._id,
-        orderItems: cartItems,
-        orderPrice: payment.data.amount,
+        user: userID,
+        orderItems: userCart.items,
+        orderPrice: orderDetails.amount,
         paymentStatus: true,
-        paymentMethod: payment.data.method
-      })
-
+        paymentMethod: "Razorpay",
+      });
       await order.save();
-      user.orders.push(order._id)
-      user.cart = [];
-      await user.save();
-      // console.log(payment)
-      return res.json(new ApiResponse(200, order, "order placed"))
+      // const products = await Product.find();
+      // for (let i = 0; i < userCart.items.length; i++) {
+      //   const product = products.find(
+      //     (p) => p._id.toString() === userCart.items[i].product.toString()
+      //   );
+      //   product.stock -= userCart.items[i].quantity;
+      //   await product.save();
+      // }
+      // userCart.items = [];
+      // await userCart.save();
 
+      // await order.save();
+      // user.orders.push(order._id);
+      // user.cart = [];
+      // await user.save();
+      // console.log(payment)
+      return res.json(new ApiResponse(200, order, "order placed"));
 
       // res.redirect(
       //   `/paymentsuccess?reference=${razorpay_payment_id}`
