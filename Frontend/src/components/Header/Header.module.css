@@ -55,6 +55,9 @@
 .topbar{
     display: none;
 }
+.bottomnavbar {
+  display: none;
+}
 @media screen and (max-width: 430px) {
     .header {
       display: none;
@@ -143,5 +146,25 @@
         width: 180px; 
         height:40px;
         color: white;
+      }
+      .bottomnavbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #010101;
+        color: #fff;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+        box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+        a {
+          text-decoration: none;
+          color: #fff;
+        }
+        a:hover {
+          font-size: 30px;
+        }
       }
 }

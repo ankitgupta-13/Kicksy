@@ -28,7 +28,7 @@ const Searchbar = ({open, close}) => {
   }, [searchTerm]);
 
   return (
-    <div id="mySidenav" className={`${style.sidenav} ${open ? style.open : ''}`}>
+    <div className={`${style.sidenav} ${open ? style.open : ''}`}>
       <div className={style.head}>
       <div className={style.searchContainer}>
         <input
@@ -46,7 +46,7 @@ const Searchbar = ({open, close}) => {
       <div style={{width:'100%', height: '100%'}}  onClick={close}>
         <ul>
           {products.map((product) => (
-          <div style={{display: 'flex', justifyContent: 'center'}} onClick={() => {navigate(`/products?product=${product._id}`); close()}}>
+          <div style={{display: 'flex', justifyContent: 'center'}} onClick={() => {navigate(`/product/${product._id}`); close()}}>
             <CartItem productID={product._id}/>
           </div>
           ))}

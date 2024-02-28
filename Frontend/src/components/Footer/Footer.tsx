@@ -1,10 +1,6 @@
 import style from "./Footer.module.css";
 
 import customerSupportIcon from "../../assets/customerSupport-icon.png"
-import { Home } from "@mui/icons-material";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import fbIcon from "../../assets/fb-icon.png"
 import igIcon from "../../assets/ig-icon.png"
 import ptIcon from "../../assets/pt-icon.png"
@@ -75,12 +71,6 @@ const Footer = () => {
         </div>
       </div>
     </div>
-    <div className={style.bottomnavbar}>
-    <a href="/"><Home/></a>
-    <a href="#search"><SearchIcon/></a>
-    <a href="#cart"><AddShoppingCartIcon/></a>
-    <a href="#profile"><AccountCircleIcon/></a>
-  </div>
   </>
   );
 };
