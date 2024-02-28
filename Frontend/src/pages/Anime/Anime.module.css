@@ -13,8 +13,13 @@
     width: 100%;
     height: 100%;
     position: relative;
-    margin-left: 5px;
-    margin-right: 5px;
+}
+.Container_first{
+    width: 49.5%;
+    height: 100%;
+    margin-left: 2px;
+    margin-right: 2px;
+    position: relative;
 }
 
 .exploresec {
@@ -156,7 +161,6 @@
     top: 0px;
     position: absolute;
 }
-
 .hi{
     width: auto;
     height: auto;
@@ -165,8 +169,6 @@
     position: absolute;
 }
 .title{
-    /* width: 100%; */
-    /* height: 800px; */
     font-size: 5rem;
     font-weight: 400;
     color: white;
@@ -181,7 +183,6 @@
     font-weight: 300;
     color:#fff;
     position: relative;
-
     font-family: "Bebas Neue";
 
 }
@@ -189,7 +190,24 @@
     width: 100px;
     height: 40px;
     position: relative;
+    outline:none;
+    border:none;
     background-color:#D61B1B;
     border-radius: 5px;
-    
+    color: white;
+    letter-spacing: 2px;
+    font-family: "Bebas Neue";
+}
+
+
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 30%;
+    left: 8%;
+    position: relative;
+    width: 100%;
 }

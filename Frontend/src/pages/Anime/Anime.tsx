@@ -23,8 +23,8 @@ const Anime = () => {
   return (
     <div className={style.mainBody}>
       <div className={explore ? style.exploresec : ""}>
-        <div >
-          <div className={style.Container}>
+        <div style={{display:"flex", flexDirection: "row"}}>
+          <div className={style.Container_first}>
             <div className={style.Card1}>
               <div className={style.head}>
                 {" "}
@@ -48,7 +48,7 @@ const Anime = () => {
             </div>
           </div>
 
-          <div className={style.Container}>
+          <div className={style.Container_first}>
             <div className={style.Card2}>
               <div className={style.head}>
                 {" "}
@@ -102,13 +102,13 @@ const Anime = () => {
       
      
       <div className={explore ? " " : style.exploresec}>
-        hello
+        
               <div className={style.Container}>
                   {/* <img className={style.animeBackdrop} src={img3}></img> */}
                   
                   <div className={style.animeBackdrop}>
-                    <div>
-                      
+                    <div className={style.animeBackdrop__container}>
+                      {/* BEM convention  */}
                       <img className={style.back} src={bg}></img>
                       <img className={style.lCorner} src={lCorner}></img>
                       <img className={style.rCorner} src={rCorner}></img>
@@ -120,7 +120,7 @@ const Anime = () => {
                       <img className={style.blastic} src={blastic}></img>
                       <img className={style.blastic} src={blastic}></img>
                       
-                        <div>  
+                        <div className={style.header}>  
                           <div className={style.subTitle}>Lorem ipsum dolor sit amet consectetur.</div>
                           <div className={style.title}> Custom Anime Shoes</div>
                           <button className={style.red} onClick={() => setExplore(true)}>
