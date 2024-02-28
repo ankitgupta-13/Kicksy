@@ -112,7 +112,7 @@ const Anime = () => {
                           <div className={style.subTitle}>Lorem ipsum dolor sit amet consectetur.</div>
                           <div className={style.title}> Custom Anime Shoes</div>
                           <button className={style.red} onClick={() => setExplore(true)}>
-                            Explore 
+                            View Collections 
                           </button>
                         </div>                   
                   </div>
