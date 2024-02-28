@@ -83,14 +83,6 @@ const Anime = () => {
               >
                 Explore
               </button>
-              {/* <div className={style.head}>
-                {" "}
-                Sneaker Culture + Anime Artistry
-              </div>
-              <div className={style.head}>
-                {" "}
-                Sneaker Culture + Anime Artistry
-              </div> */}
               <div className={style.Circle2}>
                 <img className={style.image2} src={img2}></img>
               </div>
@@ -103,12 +95,8 @@ const Anime = () => {
      
       <div className={explore ? " " : style.exploresec}>
         
-              <div className={style.Container}>
-                  {/* <img className={style.animeBackdrop} src={img3}></img> */}
-                  
-                  <div className={style.animeBackdrop}>
-                    <div className={style.animeBackdrop__container}>
-                      {/* BEM convention  */}
+              <div className={style.Container}>                
+                  <div className={style.animeBackdrop}>                 
                       <img className={style.back} src={bg}></img>
                       <img className={style.lCorner} src={lCorner}></img>
                       <img className={style.rCorner} src={rCorner}></img>
@@ -126,9 +114,7 @@ const Anime = () => {
                           <button className={style.red} onClick={() => setExplore(true)}>
                             Explore 
                           </button>
-                        </div>
-
-                    </div>
+                        </div>                   
                   </div>
               </div>
       </div>
