@@ -5,8 +5,10 @@
 }
 .container {
    display: flex;
+   height: 50px;
+   width: 50px;
 }
 .shoes__color {
-   height: 70px;
-   width: 70px;
+   object-fit: scale-down;
+   aspect-ratio: 3/2;
  }
