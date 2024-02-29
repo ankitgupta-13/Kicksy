@@ -17,6 +17,7 @@
     width: 70%;
     height: 600px;
     border: 1px solid #C6C8CA;
+    padding: 80px;
 }
 
 .table {
@@ -28,7 +29,7 @@
 
 .SampleBrand {
     color: #656565;
-    font-family: "Proxima Nova";
+    font-family:  ProximaNova Medium;
     margin: 5px 0;
     font-size: 12px;
     letter-spacing: 0.8px;
@@ -37,7 +38,7 @@
 
 .SampleProduct {
     color: #131313;
-    font-family: "Proxima Nova";
+    font-family:  ProximaNova Medium;
     margin: 5px 0;
     font-size: 24px;
     font-weight: Bold;
@@ -89,7 +90,7 @@
 
 .productDescTitle {
     color: #656565;
-    font-family: "Proxima Nova";
+    font-family:  ProximaNova Medium;
     font-size: 16px;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -107,7 +108,7 @@
 
 .AlsoLikeSliderTitle {
     color: #131313;
-    font-family: "Proxima Nova";
+    font-family: ProximaNova Medium;
     font-size: 24px;
     text-transform: capitalize;
     font-weight: 700;
@@ -117,7 +118,7 @@
 
 .NewArrivalsSliderTitle {
     color: #131313;
-    font-family: "Proxima Nova";
+    font-family:  ProximaNova Medium;
     font-size: 24px;
     text-transform: capitalize;
     font-weight: 700;

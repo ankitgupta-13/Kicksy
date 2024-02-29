@@ -71,7 +71,7 @@ const ProductDesc = () => {
 
   return (
     <div>
-      <div>
+      <div style={{margin:"25px"}}>
         <div className={style.product}>
           <img
             src={activeColor}

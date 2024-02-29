@@ -73,14 +73,9 @@
     text-align: center;
     justify-content: center;
 }
-<<<<<<< Updated upstream
 
 .Content {
     display: flex;
-=======
-.Content{
-    display: flex 2;
->>>>>>> Stashed changes
     font-family: "Bebas Neue";
     font-weight: 400;
     text-align: center;
