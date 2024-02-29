@@ -19,8 +19,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 28rem;
-  width: 28rem;
+  object-fit: scale-down;
+  aspect-ratio: 3/2;
 }
 
 .shoes__bestseller {
@@ -81,10 +81,13 @@
   color: #727373;
   font-size: 0.75rem;
   font-weight: 300;
-  max-width: 100%;
+  max-width: 90%;
   line-height: 1rem;
-  font-family: Inter;
-  text-transform: capitalize;
+  font-family: "Noir Pro", Regular;
+  max-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .container__header {
