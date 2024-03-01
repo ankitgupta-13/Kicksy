@@ -17,6 +17,7 @@ const Layout = ({ loading }) => {
           <Wishlist />
           <Profile />
           <Footer />
+          
         </div>
       )}
     </>
