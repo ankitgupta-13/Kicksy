@@ -27,7 +27,7 @@ const Shop: React.FC = () => {
         if (filterValues && filterValues.length > 0) {
           filteredResult = filteredResult.filter((product) => {
             const productValues = product[filterName] || [];
-            return filterValues.some((filterValue) =>
+            return filterValues.every((filterValue) =>
               productValues.includes(filterValue)
             );
           });

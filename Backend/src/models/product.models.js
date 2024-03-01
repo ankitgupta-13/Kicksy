@@ -18,6 +18,12 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    sellers:[
+      {
+        sellerID:mongoose.Schema.Types.ObjectId,
+        price:priceSchema
+      }
+    ],
     title: {
       type: String,
       required: true,
@@ -44,6 +50,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: [String],
+      enum:['anime', 'boots' , 'sneakers' , 'sandals'],
       required: true,
     },
     color: {

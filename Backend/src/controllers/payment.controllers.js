@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import { User } from "../models/user.models.js";
 import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
+import { Cart } from "../models/cart.models.js";
 
 
 const rpayInstance = new Razorpay({
@@ -50,14 +51,19 @@ const verifyPayment = async (req, res) => {
         razorpay_payment_id,
         razorpay_signature,
       });
-
+      
       const cartItems = [];
       let total_amt = 0
-      user.cart.forEach(async (item) => {
+      const cart = await Cart.findOne({user:userID})
+      cart['items'].forEach(async (item) => {
         cartItems.push(item);
         const product = await Product.findOne({ _id: item['product'] })
         total_amt += product['price']
       })
+
+      const url = process.env.BACKEND_URI;
+
+      if(!url) return res.json(new ApiResponse(422 , 'put BACKEND_URI in your .env file'));
 
       const data = await fetch(`${process.env.BACKEND_URI}/api/user/payments/fetch-by-id`, {
         method: "POST",
@@ -69,7 +75,7 @@ const verifyPayment = async (req, res) => {
         })
       })
 
-      const payment = await data.json()
+      const payment = await data.json();
 
       // console.log(data);
 
@@ -85,7 +91,16 @@ const verifyPayment = async (req, res) => {
 
       await order.save();
       user.orders.push(order._id)
-      user.cart = [];
+      // user.cart = [];
+
+      // cart['items'] = []
+
+
+      if(!cart) return res.json(new ApiResponse(422 , 'Invalid cart id'));
+
+      cart.items = [];
+
+      await cart.save()
       await user.save();
       // console.log(payment)
       return res.json(new ApiResponse(200, order, "order placed"))

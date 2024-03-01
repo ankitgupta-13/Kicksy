@@ -11,7 +11,7 @@ client.verify.v2.services
       friendlyName: 'My First Verify Service'
     })
     .then((service) => {
-      console.log(service);
+      // console.log(service);
       TWILIO_SERVICE_SID = service.sid;
     })
     .catch((error) => {

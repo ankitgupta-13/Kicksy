@@ -6,8 +6,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const addToCart = async (req, res) => {
   try {
     const { userID, productID } = req.body;
-    if (!userID || !productID)
-      return res.json(new ApiResponse(401, "Fields are required"));
+    if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
+    
     const cart = await Cart.findOne({ user: userID });
     // If user does not have a cart, create a new cart and add the product to it
     if (!cart) {

@@ -11,12 +11,13 @@ const app = express();
 dotenv.config();
 
 // middlewares
+
 app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    exposedHeaders: ["set-cookie"],
+    exposedHeaders: ["set-cookie"]
   })
 );
 
