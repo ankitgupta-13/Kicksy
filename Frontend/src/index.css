@@ -1,6 +1,12 @@
 body {
     overflow-x: hidden;
 }
+
+@font-face{
+    font-family: Inter;
+    src: url(../src/assets/fonts/Inter/Inter-Regular.otf);
+}
+
 @font-face {
     font-family: Comic Hero;
     src: url(../src/assets/fonts/ComicHeroRegular.otf);

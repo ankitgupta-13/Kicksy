@@ -7,6 +7,7 @@ import {
   getProducts,
   handleProductStock,
   getProductsCount,
+  deleteProductImage,
 } from "../controllers/product.controllers.js";
 
 import { upload } from "../middlewares/multer.middlewares.js";
@@ -41,6 +42,7 @@ router.route("/add-product").post(addProduct);
 router.route("/update-stock").post(handleProductStock);
 router.route("/update-product").post(updateProduct);
 router.route("/delete-product").post(deleteProduct);
+router.route("/delete-product-image").post(deleteProductImage);
 router.route("/add-blog").post(addBlog);
 router.route("/edit-blog-image").post(upload.single("image"), editBlogImage);
 router.route("/edit-blog-body").post(editBlogBody);

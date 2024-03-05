@@ -1,7 +1,7 @@
 import style from "./Anime.module.css";
 import img from "../../assets/images/AnimePage/bakugoS.png";
 import img2 from "../../assets/images/AnimePage/spideyS.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import img3 from "../../assets/images/Animepage/animeBackdrop.png"
 
 
@@ -14,17 +14,35 @@ import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
 import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
 import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
 
+import ProductDesc from "../ProductDesc/ProductDesc";
+
+
 
 
 
 const Anime = () => {
   const [explore, setExplore] = useState(false);
+  const [animeShoes, setAnimeShoes] = useState([]);
+
+  useEffect(() => {
+    const fetchAnimeShoes = async () => {
+      try {
+        const response = await getAnimeShoesFromAPI(); // Replace with your actual method
+        setAnimeShoes(response.data);
+      } catch (error) {
+        console.error("Error fetching anime shoes:", error);
+      }
+    };
+
+    fetchAnimeShoes();
+  }, []);
+
   console.log(explore);
   return (
     <div className={style.mainBody}>
       <div className={explore ? style.exploresec : ""}>
-        <div >
-          <div className={style.Container}>
+        <div style={{display:"flex", flexDirection: "row"}}>
+          <div className={style.Container_first}>
             <div className={style.Card1}>
               <div className={style.head}>
                 {" "}
@@ -48,7 +66,7 @@ const Anime = () => {
             </div>
           </div>
 
-          <div className={style.Container}>
+          <div className={style.Container_first}>
             <div className={style.Card2}>
               <div className={style.head}>
                 {" "}
@@ -83,14 +101,6 @@ const Anime = () => {
               >
                 Explore
               </button>
-              {/* <div className={style.head}>
-                {" "}
-                Sneaker Culture + Anime Artistry
-              </div>
-              <div className={style.head}>
-                {" "}
-                Sneaker Culture + Anime Artistry
-              </div> */}
               <div className={style.Circle2}>
                 <img className={style.image2} src={img2}></img>
               </div>
@@ -102,13 +112,9 @@ const Anime = () => {
       
      
       <div className={explore ? " " : style.exploresec}>
-        hello
-              <div className={style.Container}>
-                  {/* <img className={style.animeBackdrop} src={img3}></img> */}
-                  
-                  <div className={style.animeBackdrop}>
-                    <div>
-                      
+        
+              <div className={style.Container}>                
+                  <div className={style.animeBackdrop}>                 
                       <img className={style.back} src={bg}></img>
                       <img className={style.lCorner} src={lCorner}></img>
                       <img className={style.rCorner} src={rCorner}></img>
@@ -120,17 +126,27 @@ const Anime = () => {
                       <img className={style.blastic} src={blastic}></img>
                       <img className={style.blastic} src={blastic}></img>
                       
-                        <div>  
+                        <div className={style.header}>  
                           <div className={style.subTitle}>Lorem ipsum dolor sit amet consectetur.</div>
                           <div className={style.title}> Custom Anime Shoes</div>
                           <button className={style.red} onClick={() => setExplore(true)}>
-                            Explore 
+                            View Collections 
                           </button>
-                        </div>
-
-                    </div>
+                        </div>                   
                   </div>
               </div>
+
+
+            <div style={{
+              marginTop:'5%', 
+                  }}>
+              {/* <ProductDesc/> */}
+              {animeShoes.map((shoe) => (
+          <ProductDesc key={shoe._id} product={shoe} />
+        ))}
+            </div>
+
+
       </div>
     </div>
   );

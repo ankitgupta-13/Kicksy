@@ -15,6 +15,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Seller",
+    },
     orderItems: {
       type: [orderItemSchema],
     },

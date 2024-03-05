@@ -56,23 +56,26 @@ const verifyPayment = async (req, res) => {
         paymentMethod: "Razorpay",
       });
       await order.save();
-      // const products = await Product.find();
-      // for (let i = 0; i < userCart.items.length; i++) {
-      //   const product = products.find(
-      //     (p) => p._id.toString() === userCart.items[i].product.toString()
-      //   );
-      //   product.stock -= userCart.items[i].quantity;
-      //   await product.save();
-      // }
-      // userCart.items = [];
-      // await userCart.save();
+      user.orders.push(order._id);
+      // user.cart = [];
+
+      // cart['items'] = []
+
+      // if (!cart) return res.json(new ApiResponse(422, "Invalid cart id"));
+
+      // cart.items = [];
+
+      // await cart.save();
+      // await user.save();
+      // console.log(payment)
+      // return res.json(new ApiResponse(200, order, "order placed"));
 
       // await order.save();
       // user.orders.push(order._id);
       // user.cart = [];
       // await user.save();
       // console.log(payment)
-      return res.json(new ApiResponse(200, order, "order placed"));
+      // return res.json(new ApiResponse(200, order, "order placed"));
 
       // res.redirect(
       //   `/paymentsuccess?reference=${razorpay_payment_id}`

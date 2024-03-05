@@ -1,7 +1,7 @@
 import { Product } from "../models/product.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { uploadOnAws } from "../utils/aws.js";
+import { deleteFromAws, uploadOnAws } from "../utils/aws.js";
 import pluralize from "pluralize";
 import fs from "fs";
 
@@ -72,6 +72,18 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const { _id, images } = req.body;
+    const product = await Product.findOne({_id})
+    
+    if(!product) return res.json(new ApiResponse(404 , 'product not found'));
+
+    product.images.forEach(async(image)=>{
+      
+      const split = image.split('/')
+
+      await deleteFromAws(split[split.length-1]);
+
+    })
+    
     const deleted_product = await Product.findByIdAndDelete({ _id });
     if (!deleted_product) {
       throw new ApiError("invalid product id");
@@ -83,6 +95,25 @@ const deleteProduct = async (req, res) => {
     console.log(err);
   }
 };
+
+const deleteProductImage = async(req,res)=>{
+  const {imageurl , productID} = req.body
+  try{
+    const product = await Product.findOne({_id:productID})
+    
+    product.images.filter((img)=>{
+      return img !== imageurl
+    })
+
+    await product.save();
+
+    const split = imageurl.split('/')
+    await deleteFromAws(split[split.length-1]);
+  }
+  catch(err){
+    return res.json(new ApiError(400 , err.message))
+  }
+}
 
 const getRecentProducts = async (req, res) => {
   try {
@@ -209,6 +240,7 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
+  deleteProductImage,
   handleProductStock,
   addProductImage,
   getRecentProducts,

@@ -14,7 +14,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
 
   const handleCheckboxChange = (filterName: string, value: string) => {
     const currentFilters = filters[filterName] || [];
-  
+
     if (currentFilters.includes(value)) {
       const updatedFilters = currentFilters.filter((filter) => filter !== value);
       onFilterChange(filterName, updatedFilters);
@@ -38,30 +38,30 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
   return (
     <div className={style.filtersidebar}>
       <div className={style.CurrentFiltersContainer}>
-      <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
+        <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
       </div>
-      
-      
+
+
       <div className={style.BodyTypeContainer}>
-      <label className={style.BodyType}>Body Type:</label>
-      <div className={style.buttons}>
-      <Button
-      className={style.Button}
-          style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black', width: '80px' }}
-          onClick={() => handleGenderButtonClick('M')}
-        >
-          Men
-        </Button>
-        <Button
-        className={style.Button}
-          style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black', width: '80px' }}
-          onClick={() => handleGenderButtonClick('F')}
-        >
-          Women
-        </Button>
+        <label className={style.BodyType}>Body Type:</label>
+        <div className={style.buttons}>
+          <Button
+            className={style.Button}
+            style={{ backgroundColor: mActive ? 'black' : 'white', color: mActive ? 'white' : 'black', width: '80px' }}
+            onClick={() => handleGenderButtonClick('M')}
+          >
+            Men
+          </Button>
+          <Button
+            className={style.Button}
+            style={{ backgroundColor: wActive ? 'black' : 'white', color: wActive ? 'white' : 'black', width: '80px' }}
+            onClick={() => handleGenderButtonClick('F')}
+          >
+            Women
+          </Button>
+        </div>
       </div>
-      </div>
-      
+
 
       {[
         { filterName: 'category', options: productTypeOptions },
@@ -69,13 +69,15 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
         { filterName: 'size', options: sizeOptions },
         { filterName: 'colors', options: colorOptions },
       ].map(({ filterName, options }) => (
-        <div key={filterName}>
-          <label>{filterName}:</label>
+        <div className={style.FilterNameContainer} key={filterName}>
+          <label className={style.FilterName}>{filterName}:</label>
           <div>
             {options.map((option) => (
               <Input
                 key={option}
-                style={{ height: '20px', width: '20px' }}
+                padding="5px"
+                margin="5px"
+                style={{ height: '20px', width: '20px', marginRight: '10px'}}
                 type="checkbox"
                 labelcheckbox={option}
                 onChange={() => handleCheckboxChange(filterName, option)}

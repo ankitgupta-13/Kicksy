@@ -2,14 +2,14 @@ import React, { useId } from "react";
 import style from "./Input.module.css";
 
 const Input = (
-  { width, label, labelcheckbox, type = "text", placeholder = "text", className = "", ...props }: any,
+  { margin, padding, width, label, labelcheckbox, type = "text", placeholder = "text", className = "", ...props }: any,
   ref
 ) => {
   const id = useId();
   return (
     <div className={style.inputDiv} style={{ width: `${width}`}}>
       {label && <label htmlFor={id}>{label}</label>}
-      <div className={style.inputBox}>
+      <div className={style.inputBox} style={{ padding: `${padding}`, margin: `${margin}`}}>
         <input
         className={className}
           type={type}

@@ -47,6 +47,7 @@ const App = () => {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogpage" element={<BlogPage />} />
           <Route path="/payments" element={<PaymentButton amount={5000} />} />
+          
         </Route>
         <Route
           element={

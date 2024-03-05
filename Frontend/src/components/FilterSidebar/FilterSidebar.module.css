@@ -1,7 +1,7 @@
 .filtersidebar {
   display: flex;
-  width: 385px;
-  padding: 132px 40px;
+  width: 300px;
+  padding: 40px 20px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
@@ -9,6 +9,7 @@
 .CurrentFiltersContainer{
   width: 100%;
   border-bottom: 1px solid rgba(34, 34, 34, 0.50);
+  padding: 10px;
 }
 
 .CurrentFiltersContainerHeading {
@@ -25,7 +26,7 @@
 .BodyTypeContainer {
   width: 100%;
   border-bottom: 1px solid rgba(34, 34, 34, 0.50);
-
+  padding: 10px;
 }
 
 .BodyType {
@@ -35,7 +36,6 @@
   font-weight: bold;
   text-transform: uppercase;
 }
-
 
 
 .buttons {
@@ -57,7 +57,23 @@
   color: var(--Primary-Text, #fff);
   text-align: center;
   font-family: "Proxima Nova";
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
 }
+
+.FilterNameContainer{
+  border-bottom: 1px solid rgba(34, 34, 34, 0.50);
+  width: 100%;
+  padding: 10px;
+}
+
+.FilterName{
+  color: #000;
+font-family: Inter;
+font-size: 13.453px;
+font-style: normal;
+font-weight: bold;
+text-transform: uppercase;
+}
+

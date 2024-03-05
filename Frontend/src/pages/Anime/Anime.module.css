@@ -1,41 +1,47 @@
-.mainBody{
+.mainBody {}
 
-}
-
-.button{
-    
+.button {
     width: 200px;
     height: 20px;
     background-color: #fff;
-    
+
 }
-.Container{
+
+.Container {
     width: 100%;
     height: 100%;
     position: relative;
-    margin-left: 5px;
-    margin-right: 5px;
+}
+
+.Container_first {
+    width: 49.5%;
+    height: 100%;
+    margin-left: 2px;
+    margin-right: 2px;
+    position: relative;
 }
 
 .exploresec {
     display: none;
 }
 
-.image1{
+.image1 {
     height: 320px;
     width: 180px;
     right: 50px;
     bottom: 40px;
-    position:absolute;
+    position: absolute;
 }
-.image2{
+
+.image2 {
     height: 320px;
     width: 160px;
-    left : 50px;
+    left: 50px;
     bottom: 40px;
-    position:absolute;
+    position: absolute;
 }
-.Card1{
+
+.Card1 {
     width: 100%;
     height: 730px;
     padding-top: 20px;
@@ -44,7 +50,8 @@
     border-radius: 30px;
     background: linear-gradient(180deg, #36080A 0%, #9D262B 50%, #FF7474 100%);
 }
-.Card2{
+
+.Card2 {
     width: 100%;
     height: 730px;
     padding-top: 20px;
@@ -55,7 +62,7 @@
     background: linear-gradient(180deg, #FF7474 0%, #9D262B 50%, #36080A 100%);
 }
 
-.head{
+.head {
     display: flex;
     font-family: "Bevan";
     font-weight: 300;
@@ -66,7 +73,8 @@
     text-align: center;
     justify-content: center;
 }
-.Content{
+
+.Content {
     display: flex;
     font-family: "Bebas Neue";
     font-weight: 400;
@@ -74,7 +82,6 @@
     margin-top: 40px;
     padding-left: 50px;
     padding-right: 50px;
-    /* padding: 60px; */
     font-size: 24px;
     color: #fff;
     width: 100%;
@@ -83,10 +90,10 @@
     word-wrap: break-word;
     line-height: 150%;
     text-transform: lowercase;
-    justify-content:flex-start;
+    justify-content: flex-start;
 }
 
-.Circle1{
+.Circle1 {
     position: absolute;
     right: -10px;
     bottom: -60px;
@@ -97,7 +104,8 @@
 
 
 }
-.Circle2{
+
+.Circle2 {
     position: absolute;
     left: -10px;
     bottom: -60px;
@@ -106,50 +114,58 @@
     border-radius: 50%;
     background-color: #fff;
 }
-.animeBackdrop{
-    width:100%;
-    height:800px;
+
+.animeBackdrop {
+    width: 100%;
+    height: 800px;
     background-color: #FFC800;
     /* margin-bottom: 1%; */
 }
-.back{
-    width:100%;
-    height:800px;
-    position: absolute ;
+
+.back {
+    width: 100%;
+    height: 800px;
+    position: absolute;
 }
-.yeah{
+
+.yeah {
     height: auto;
     width: auto;
     right: 20%;
     top: 10%;
     position: absolute;
 }
-.bang{
+
+.bang {
     height: auto;
     width: auto;
     right: 20%;
     bottom: 14%;
     position: absolute;
 }
-.blastic{
+
+.blastic {
     width: auto;
     height: auto;
 }
-.hallo{
+
+.hallo {
     width: auto;
-    height:auto;
+    height: auto;
     top: 65%;
     left: 20%;
     position: absolute;
 }
-.rCorner{
+
+.rCorner {
     width: auto;
     height: auto;
     bottom: 0px;
     right: 0px;
     position: absolute;
 }
-.lCorner{
+
+.lCorner {
     width: auto;
     height: auto;
     left: 0px;
@@ -157,16 +173,15 @@
     position: absolute;
 }
 
-.hi{
+.hi {
     width: auto;
     height: auto;
     left: 22%;
     top: 10%;
     position: absolute;
 }
-.title{
-    /* width: 100%; */
-    /* height: 800px; */
+
+.title {
     font-size: 5rem;
     font-weight: 400;
     color: white;
@@ -174,22 +189,46 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    text-align: center;
     font-family: "Comic Hero";
 }
-.subTitle{
+
+.subTitle {
     font-size: 2rem;
     font-weight: 300;
-    color:#fff;
+    color: #fff;
     position: relative;
-
     font-family: "Bebas Neue";
+    margin-bottom: 10px;
 
 }
-.red{
-    width: 100px;
+
+.red {
+    width: 150px;
     height: 40px;
     position: relative;
-    background-color:#D61B1B;
+    outline: none;
+    border: none;
+    background-color: #D61B1B;
     border-radius: 5px;
-    
+    color: white;
+    letter-spacing: 2px;
+    font-family: "Bebas Neue";
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+    position: absolute;
+    top: 40%;
 }
