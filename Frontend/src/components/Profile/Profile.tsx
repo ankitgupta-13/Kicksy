@@ -8,13 +8,15 @@ const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state : any) => state.auth?.userData);
   const isProfileOpen = useSelector((state) => state.auth.isOpen);
+  const authStatus = useSelector((state) => state.auth.status);
+
 
   const handleToggleProfileVisibility = () => {
     dispatch(toggleProfileVisibility());
   };
 
   return (
-      <div id="mySidenav" className={`${style.sidenav} ${isProfileOpen ? style.open : ''}`}>
+      <div id="mySidenav" className={`${style.sidenav} ${isProfileOpen&&authStatus ? style.open : ''}`}>
         <div className={style.head}>
         <h2>Profile</h2>
         <a className={style.closebtn} onClick={handleToggleProfileVisibility}>&times;</a>  

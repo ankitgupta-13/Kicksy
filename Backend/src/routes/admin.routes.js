@@ -13,6 +13,7 @@ import { upload } from "../middlewares/multer.middlewares.js";
 
 import {
   addBlog,
+  attachProductToBlog,
   deleteBlog,
   editBlogBody,
   editBlogImage,
@@ -43,6 +44,7 @@ router.route("/delete-product").post(deleteProduct);
 router.route("/add-blog").post(addBlog);
 router.route("/edit-blog-image").post(upload.single("image"), editBlogImage);
 router.route("/edit-blog-body").post(editBlogBody);
+router.route("/attach-product-to-blog").post(attachProductToBlog);
 router.route("/delete-blog").post(deleteBlog);
 router.route("/fetch-blog/id").post(fetchBlogById);
 router.route("/fetch-blogs").get(fetchAllBlog);

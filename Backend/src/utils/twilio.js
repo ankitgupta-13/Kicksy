@@ -12,6 +12,8 @@ client.verify.v2.services
   })
   .then((service) => {
     TWILIO_SERVICE_SID = service.sid;
+  })
+  .catch((error) => {
+    console.error("Error creating service:", error);
   });
-
 export { client, TWILIO_SERVICE_SID };

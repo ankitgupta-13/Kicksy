@@ -8,8 +8,10 @@ import verifiedIcon from "../../assets/verified-icon.png"
 import replacementIcon from "../../assets/replacement-icon.png"
 import ytIcon from "../../assets/yt-icon.png"
 
+
 const Footer = () => {
   return (
+    <>
     <div className={style.Footer}>
       <div className={style.footerTop}>
         <div className={style.section1}>
@@ -69,6 +71,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

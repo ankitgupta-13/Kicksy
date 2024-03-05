@@ -52,3 +52,119 @@
     margin: 0 12px;
     cursor: pointer;
 }
+.topbar{
+    display: none;
+}
+.bottomnavbar {
+  display: none;
+}
+@media screen and (max-width: 430px) {
+    .header {
+      display: none;
+    }
+    .topbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #ffffff;
+        color: #000000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        z-index: 2;
+      }
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #ffffff;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        a:hover {
+            color: #f1f1f1;
+        }
+      }
+      .closeSidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #ffffff;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-self: baseline;
+        margin: 15px 0px;
+      }
+
+      .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 30px;
+        margin-left: 50px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+      }
+      .openbtn {
+        font-size:30px;
+        cursor:pointer;
+      }
+      .loginbtn {
+        backgroundColor: black;
+        width: 180px; 
+        height:40px;
+        color: white;
+      }
+      .bottomnavbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #010101;
+        color: #fff;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+        box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+        a {
+          text-decoration: none;
+          color: #fff;
+        }
+        a:hover {
+          font-size: 30px;
+        }
+      }
+}

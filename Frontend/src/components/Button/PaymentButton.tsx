@@ -30,7 +30,7 @@ const PaymentButton = (props) => {
       theme: {
         color: "#000000",
       },
-      handler: function (response) {
+      handler: async function (response) {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
           response;
         const payload = {
@@ -40,7 +40,8 @@ const PaymentButton = (props) => {
           userID,
           orderDetails: order,
         };
-        verifyPayment(payload);
+        const data = await verifyPayment(payload);
+        alert(data.message);
       },
     };
     const razorPay = new Razorpay(options);
