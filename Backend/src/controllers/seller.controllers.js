@@ -1,7 +1,8 @@
-import { Request, Seller } from "../models/seller.model";
-import { User } from "../models/user.models";
-import { ApiError } from "../utils/ApiError"
-import { ApiResponse } from "../utils/ApiResponse"
+import { Product } from "../models/product.models.js";
+import { Request, Seller } from "../models/seller.model.js";
+import { User } from "../models/user.models.js";
+import { ApiError } from "../utils/ApiError.js"
+import { ApiResponse } from "../utils/ApiResponse.js"
 
 const createSeller = async (req, res) => {
     try {
@@ -27,6 +28,8 @@ const createSeller = async (req, res) => {
         return res.json(new ApiError(400, err.message));
     }
 }
+
+
 
 // seller makes a request ---> 
 
@@ -90,11 +93,30 @@ const getAllRequests = async (req, res) => {
 }
 
 const acceptRequest = async (req, res) => {
+    const { requestID, productID,  existing } = req.body;
 
+    // typeof(existing) -------> boolean
+
+    try {
+        const request = await Request.findOne({ _id: requestID });
+
+        if (!request) return res.json(new ApiResponse(422, 'invalid requestID'))
+
+        if (existing) {
+            const product = await Product.findOne({ _id: productID });
+            if (!product) return res.json(new ApiResponse(422, 'invalid productID'))
+            product.sellers.concat(request.seller);
+        }
+
+    }
+    catch (err) {
+        return res.json(new ApiError(400, err.message));
+    }
 }
 
 export {
     createSeller,
     productAddRequest,
-    getAllRequests
+    getAllRequests,
+    acceptRequest
 }

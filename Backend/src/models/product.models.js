@@ -8,7 +8,7 @@ const priceSchema = new mongoose.Schema({
   discountPercent: {
     type: Number,
     default: 0,
-  },
+  }
 });
 
 const productSchema = new mongoose.Schema(
@@ -20,8 +20,7 @@ const productSchema = new mongoose.Schema(
     },
     sellers:[
       {
-        sellerID:mongoose.Schema.Types.ObjectId,
-        price:priceSchema
+        type:mongoose.Schema.Types.ObjectId
       }
     ],
     title: {

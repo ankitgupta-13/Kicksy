@@ -5,6 +5,7 @@ import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import orderRouter from "./routes/order.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
+import sellerRouter from './routes/seller.routes.js';
 import dotenv from "dotenv";
 
 const app = express();
@@ -30,5 +31,6 @@ app.use("/api/user", userRouter);
 app.use("/api/user/order", orderRouter);
 app.use("/api/user/payments", paymentRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/seller", sellerRouter);
 
 export { app };
