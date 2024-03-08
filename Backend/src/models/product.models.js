@@ -19,10 +19,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    
     sellers: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-      },
+        type: mongoose.Schema.Types.ObjectId
+      }
     ],
     title: {
       type: String,
@@ -50,7 +51,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: [String],
-      enum: ["anime", "boots", "sneakers", "sandals"],
+      enum: ['anime', 'boots', 'sneakers', 'sandals'],
       required: true,
     },
     color: {
@@ -101,4 +102,4 @@ const productSchema = new mongoose.Schema(
 );
 const Product = mongoose.model("Product", productSchema);
 
-export { Product, productSchema };
+export { Product }

@@ -25,10 +25,10 @@ const makePayment = async (req, res) => {
       currency: "INR",
     };
     const order = await rpayInstance.orders.create(options);
-    res.json(new ApiResponse(200, order, "Payment Successfull"));
+    return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
-    throw new ApiError(400, "Unable to make payment");
+    return res.json(new ApiError(400, "Unable to make payment"));
   }
 };
 
@@ -56,30 +56,9 @@ const verifyPayment = async (req, res) => {
         paymentMethod: "Razorpay",
       });
       await order.save();
+      
       user.orders.push(order._id);
-      // user.cart = [];
-
-      // cart['items'] = []
-
-      // if (!cart) return res.json(new ApiResponse(422, "Invalid cart id"));
-
-      // cart.items = [];
-
-      // await cart.save();
-      // await user.save();
-      // console.log(payment)
-      // return res.json(new ApiResponse(200, order, "order placed"));
-
-      // await order.save();
-      // user.orders.push(order._id);
-      // user.cart = [];
-      // await user.save();
-      // console.log(payment)
-      // return res.json(new ApiResponse(200, order, "order placed"));
-
-      // res.redirect(
-      //   `/paymentsuccess?reference=${razorpay_payment_id}`
-      // );
+      
     } else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }

@@ -32,4 +32,9 @@ class ApiError extends Error {
   }
 }
 
-export { ApiError };
+
+const err_message = (res , status_code , message)=>{
+  return res.json(new ApiError(status_code , message))
+}
+
+export { ApiError  , err_message};

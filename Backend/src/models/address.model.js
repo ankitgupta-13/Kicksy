@@ -30,12 +30,10 @@ const addressSchema = new mongoose.Schema({
         required: true,
     },
     latitude:String,
-    longitude:String,
-    phoneNumber: {
-        type: String,
-        required: true,
-    },
+    longitude:String
 }, {
     timestamps: true,
 });
+
+
 export const Address = mongoose.model("Address", addressSchema);

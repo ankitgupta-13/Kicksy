@@ -1,25 +1,65 @@
+import { Address } from "../models/address.model.js";
+import { Offer } from "../models/offer.model.js";
 import { Product } from "../models/product.models.js";
 import { Request, Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
-import { ApiError } from "../utils/ApiError.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse, message} from "../utils/ApiResponse.js";
+import { uploadOnAws } from "../utils/aws.js";
+import fs from 'fs'
+
+/*
+try{
+        
+}
+catch(err){
+    return res.json(new ApiError(400 , err.message));
+}
+*/
+
+
 
 const createSeller = async (req, res) => {
     try {
-        const { email } = req.body;
-        const user = await User.findOne({ email })
+        const { userID, gstNumber,  storeName , whatsappNumber} = req.body;
+        // console.log(req.body)
+        
+        
+
+        const user = await User.findOne({ _id:userID });
 
         if (!user) return res.json(new ApiResponse(404, 'user not found'))
 
         user.role = 'seller';
         await user.save()
 
+        if(!req.file) return message(res , 'res' , 404 , 'Image not found , upload image'); 
+
+        const logoImageUrl = await uploadOnAws(req.file.path);
+
+        
+        if (!logoImageUrl) {
+            fs.unlinkSync(req.file.path);
+            return res.json(new ApiResponse(400, "Unable to upload logo"));
+        }
+
+        fs.unlinkSync(req.file.path);
+        
+        const address = new Address(req.body);
+        await address.save()
+
         const seller = new Seller({
             email: user.email,
-            userID: user._id
+            userID: user._id,
+            gstNumber,
+            storeAddress:address._id,
+            storeName,
+            storeLogo:logoImageUrl,
+            whatsappNumber
         })
 
         await seller.save();
+
 
         return res.json(new ApiResponse(200, `role updated to ${user.role}`))
 
@@ -28,6 +68,9 @@ const createSeller = async (req, res) => {
         return res.json(new ApiError(400, err.message));
     }
 }
+
+
+
 
 
 
@@ -49,6 +92,9 @@ const createSeller = async (req, res) => {
 
 const productAddRequest = async (req, res) => {
     const { sellerID } = req.body
+
+    console.log(req.body)
+
     try {
         const { images } = req.body;
         if (!images || images.length === 0) {
@@ -72,6 +118,19 @@ const productAddRequest = async (req, res) => {
     }
 }
 
+
+/* this api is for raising request to add offer to the existing product */
+
+const addOfferRequest = async (req, res) => {
+    const { productID } = req.body;
+    try {
+
+    }
+    catch (err) {
+
+    }
+}
+
 const getAllRequests = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -92,21 +151,13 @@ const getAllRequests = async (req, res) => {
 
 }
 
-const acceptRequest = async (req, res) => {
-    const { requestID, productID,  existing } = req.body;
+const acceptProductRequest = async (req, res) => {
 
-    // typeof(existing) -------> boolean
+    const { requestID } = req.body;
 
     try {
-        const request = await Request.findOne({ _id: requestID });
 
-        if (!request) return res.json(new ApiResponse(422, 'invalid requestID'))
 
-        if (existing) {
-            const product = await Product.findOne({ _id: productID });
-            if (!product) return res.json(new ApiResponse(422, 'invalid productID'))
-            product.sellers.concat(request.seller);
-        }
 
     }
     catch (err) {
@@ -114,9 +165,13 @@ const acceptRequest = async (req, res) => {
     }
 }
 
+
+
 export {
+
     createSeller,
     productAddRequest,
     getAllRequests,
-    acceptRequest
+    acceptProductRequest
+
 }

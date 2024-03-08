@@ -44,7 +44,7 @@ const addBlog = async (req, res) => {
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       fs.unlinkSync(req.file.path);
-      res.json(new ApiResponse(400, "Unable to upload"));
+      return res.json(new ApiResponse(400, "Unable to upload"));
     }
     else {
       fs.unlinkSync(req.file.path);
@@ -58,7 +58,7 @@ const addBlog = async (req, res) => {
           category:category,
           imageurl: blogImageUrl
         })
-        await blog.save()
+        await blog.save();
       }
       else {
         const blog = new Blog({
@@ -69,10 +69,12 @@ const addBlog = async (req, res) => {
         })
         await blog.save();
       }
+      return res.json(new ApiResponse(200 , 'blog uploaded successfully'))
     }
+
   }
   catch (err) {
-    res.json(new ApiError(400, err.message))
+    return res.json(new ApiError(400, err.message))
   }
 }
 

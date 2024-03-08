@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use("/api/user", userRouter);
 app.use("/api/user/order", orderRouter);
 app.use("/api/user/payments", paymentRouter);
-app.use("/api/admin", adminRouter);
 app.use("/api/seller", sellerRouter);
+app.use("/api/admin", adminRouter);
 
 export { app };
