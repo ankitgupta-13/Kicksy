@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const addressSchema = new mongoose.Schema({
-    userId: {
+    userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
