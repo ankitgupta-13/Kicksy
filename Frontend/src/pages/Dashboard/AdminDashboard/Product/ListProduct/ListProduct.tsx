@@ -3,9 +3,9 @@ import {
   deleteProduct,
   getProducts,
   totalProductsCount,
-} from "../../../../api/admin.api";
+} from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
-import ProductDashboardCard from "../../../../components/ProductDashboardCard/ProductDashboardCard";
+import ProductDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
 import { Pagination } from "@mui/material";
 
 const ListProduct = () => {

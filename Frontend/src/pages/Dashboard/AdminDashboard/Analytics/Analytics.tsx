@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { totalActiveUsers } from "../../../api/admin.api";
+import { totalActiveUsers } from "../../../../api/admin.api";
 
 const Analytics = () => {
   const [activeUsers, setActiveUsers] = useState(0);

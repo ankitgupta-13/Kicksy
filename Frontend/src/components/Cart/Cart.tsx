@@ -7,11 +7,13 @@ import {
 } from "../../redux/reducers/cartSlice";
 import style from "./Cart.module.css";
 import CartItem from "../CartItem/CartItem";
-import { PaymentButton } from "..";
+import { Button, PaymentButton } from "..";
 import { getUserCartItems } from "../../api/user.api";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
   const isCartOpen = useSelector((state) => state.cart.isOpen);
   const user = useSelector((state) => state.auth.userData);
@@ -27,7 +29,7 @@ const Cart = () => {
       dispatch(setInitialCartItems(response.data.items));
   };
   useEffect(() => {
-   handleCart(userID);
+    handleCart(userID);
   }, []);
 
   return (
@@ -45,9 +47,10 @@ const Cart = () => {
       </div>
       <div>
         <div></div>
-        <div className={style.paymentbutton}>
-          <PaymentButton amount={100} />
-        </div>
+        <Button onClick={() => navigate("/checkout")}>
+          Checkout
+          {/* <PaymentButton amount={100} /> */}
+        </Button>
       </div>
     </div>
   );

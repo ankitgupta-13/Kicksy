@@ -1,31 +1,10 @@
-import Sidebar from "./Sidebar/Sidebar";
-import MainContent from "./MainContent/MainContent";
 import { useSelector } from "react-redux";
-import style from "./Dashboard.module.css";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import { Container } from "../../components";
+import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import SellerDashboard from "./SellerDashboard/SellerDashboard";
 
 const Dashboard = () => {
-  const { currentSection, currentAction } = useSelector(
-    (state) => state.dashboard
-  );
-  return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      <Sidebar />
-      <div className={style.right}>
-        <Breadcrumb />
-        <MainContent
-          currentSection={currentSection}
-          currentAction={currentAction}
-        />
-      </div>
-    </Container>
-  );
+  const userRole = useSelector((state) => state.auth.userData.role);
+  return <>{userRole === "admin" ? <AdminDashboard /> : <SellerDashboard />}</>;
 };
 
 export default Dashboard;

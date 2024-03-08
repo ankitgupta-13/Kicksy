@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import style from "./CreateProduct.module.css";
-import { Button, Container, Input, Select } from "../../../../components";
-import { addProduct, uploadImage } from "../../../../api/admin.api";
+import { Button, Container, Input, Select } from "../../../../../components";
+import { addProduct, uploadImage } from "../../../../../api/admin.api";
 
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();

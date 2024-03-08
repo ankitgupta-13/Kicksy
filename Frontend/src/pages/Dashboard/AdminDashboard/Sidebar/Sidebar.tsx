@@ -3,8 +3,8 @@ import {
   closeSection,
   selectAction,
   toggleSection,
-} from "../../../redux/reducers/dashboardSlice";
-import logo from "../../../assets/Krisksy.svg";
+} from "../../../../redux/reducers/dashboardSlice";
+import logo from "../../../../assets/Krisksy.svg";
 import style from "./Sidebar.module.css";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
