@@ -2,7 +2,7 @@ import { Router } from "express";
 import { upload } from "../middlewares/multer.middlewares.js";
 
 import {
-  acceptProductRequest,
+  addProductViaOffer,
   sellerRequest,
   getAllRequests,
   productAddRequest,
@@ -13,6 +13,6 @@ const router = Router();
 router.route("/request-seller").post(upload.single("storeLogo"), sellerRequest);
 router.route("/create-request").post(productAddRequest);
 router.route("/fetch-requests").post(getAllRequests);
-router.route("/accept-request").post(acceptProductRequest);
+router.route("/accept-request").post(addProductViaOffer);
 
 export default router;

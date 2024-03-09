@@ -19,6 +19,7 @@ const sellerSchema = new mongoose.Schema({
   },
   storeAddress: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Address",
     required: true,
   },
   userID: {
@@ -39,7 +40,7 @@ const sellerSchema = new mongoose.Schema({
   ],
 });
 
-const requestProductSchema = new mongoose.Schema({
+const productRequestSchema = new mongoose.Schema({
   productCode: {
     type: String,
     required: true,
@@ -87,21 +88,16 @@ const requestProductSchema = new mongoose.Schema({
   ],
 });
 
-const requestSchema = new mongoose.Schema(
-  {
-    product: requestProductSchema,
-    seller: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "Seller",
-    },
+const requestSchema = new mongoose.Schema({
+  product: productRequestSchema,
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Seller",
   },
-  {
-    timestamps: true,
-  }
-);
+});
 
 const Seller = new mongoose.model("Seller", sellerSchema);
-const Request = new mongoose.model("Request", requestSchema);
+const ProductRequest = new mongoose.model("ProductRequest", requestSchema);
 
-export { Seller, Request };
+export { Seller, ProductRequest };

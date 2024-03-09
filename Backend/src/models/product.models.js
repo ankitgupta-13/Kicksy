@@ -19,10 +19,16 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    
+    skuID: {
+      type: String,
+      // required: true,
+      unique: true,
+    },
     sellers: [
       {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
+        unique:true
       }
     ],
     title: {
