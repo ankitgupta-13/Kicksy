@@ -33,6 +33,14 @@ import {
   getSellers,
 } from "../controllers/admin.controllers.js";
 
+import {
+  acceptSellerRequest,
+  declineSellerRequest,
+  getAllSellerRequests
+} from "../controllers/admin-seller.controllers.js";
+import { addOfferToProduct, addProductViaOffer, getAllProductRequests } from "../controllers/admin-product.controllers.js";
+import { addImagesToProductRequest } from "../controllers/seller.controllers.js";
+
 const router = Router();
 
 router.route("/create-admin").post(createAdmin);
@@ -58,5 +66,18 @@ router.route("/total-active-users").get(getActiveUsersCount);
 router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
 router.route("/get-sellers").get(getSellers);
+
+
+// routes for handling seller requests
+router.route("/requests/seller/getAll").get(getAllSellerRequests);
+router.route("/requests/seller/accept-request").get(acceptSellerRequest);
+router.route("/requests/seller/decline-request").get(declineSellerRequest);
+
+// routes for handling product requests
+router.route("/add-product-image").post(upload.array("image"), addImagesToProductRequest);
+router.route("/requests/product/getAll").get(getAllProductRequests);
+router.route("/requests/product/add-offer-to-product").get(addOfferToProduct);
+
+// router.route("/requests/product/add-product-via-offer").get(addProductViaOffer);
 
 export default router;
