@@ -1,7 +1,7 @@
 import { Address } from "../models/address.model.js";
 import { Offer } from "../models/offer.model.js";
 import { Product } from "../models/product.models.js";
-import { Request, Seller } from "../models/seller.model.js";
+import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse, message } from "../utils/ApiResponse.js";
