@@ -43,7 +43,7 @@ const sellerSchema = new mongoose.Schema({
   ]
 })
 
-const requestProductSchema = new mongoose.Schema({
+const productRequestSchema = new mongoose.Schema({
   
   productCode: {
     type: String,
@@ -95,7 +95,7 @@ const requestProductSchema = new mongoose.Schema({
 
 
 const requestSchema = new mongoose.Schema({
-  product: requestProductSchema,
+  product: productRequestSchema,
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -106,7 +106,7 @@ const requestSchema = new mongoose.Schema({
 })
 
 const Seller = new mongoose.model('Seller', sellerSchema);
-const Request = new mongoose.model('Request', requestSchema);
+const ProductRequest = new mongoose.model('ProductRequest', requestSchema);
 
-export { Seller, Request }
+export { Seller, ProductRequest }
 
