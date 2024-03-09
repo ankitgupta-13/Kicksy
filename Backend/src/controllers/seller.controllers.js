@@ -1,7 +1,8 @@
 import { Address } from "../models/address.model.js";
 import { Offer } from "../models/offer.model.js";
 import { Product } from "../models/product.models.js";
-import { Seller } from "../models/seller.model.js";
+import { SellerRequest } from "../models/request.model.js";
+import { ProductRequest, Seller } from "../models/request.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse, message } from "../utils/ApiResponse.js";
@@ -21,6 +22,7 @@ const sellerRequest = async (req, res) => {
       city,
       pincode,
     } = req.body;
+
     const user = await User.findOne({ _id: userId });
 
     if (!user) return res.json(new ApiResponse(404, "user not found"));
@@ -50,7 +52,7 @@ const sellerRequest = async (req, res) => {
     if (!sellerAddress)
       return res.json(new ApiResponse(400, "Unable to save address"));
 
-    const seller = new Seller({
+    const seller = new SellerRequest({
       userID: user._id,
       gstNumber,
       storeAddress: sellerAddress._id,
@@ -58,12 +60,13 @@ const sellerRequest = async (req, res) => {
       storeLogo: logoImageUrl,
       whatsappNumber,
     });
+    
+    await seller.save();
 
     if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
 
-    await seller.save();
-
     return res.json(new ApiResponse(200, seller, "Seller request sent"));
+
   } catch (err) {
     return res.json(new ApiError(400, err));
   }
@@ -103,20 +106,37 @@ const productAddRequest = async (req, res) => {
 
     const seller = await Seller.findOne({ _id: sellerID });
 
-    if (!seller || seller.role !== "seller")
-      return res.json(new ApiResponse(404, "seller not found"));
+    if (!seller || seller.role !== "seller") return res.json(new ApiResponse(404, "seller not found"));
 
-    const request = new Request({
-      product: req.body,
-      seller: sellerID,
-    });
 
+    /*
+    
+    for raising a ProductRequest req.body should contain
+    
+    skuid
+    title
+    price
+    brand
+    size - array of string
+    category - [string]
+    color - [string]
+    stock - Number
+    seller - id
+    tags - [string]
+
+
+    */
+
+    const request = new ProductRequest(req.body)
     await request.save();
-  } catch (err) {
+
+  } 
+  catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
 /* this api is for accepting the request and hence adding a new product */
+
 const addProductViaOffer = async (req, res) => {
   const { requestID } = req.body;
 };
@@ -129,7 +149,8 @@ const addOfferToProduct = async (req, res) => {
 
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
-    const request = await Request.findOne({ _id: requestID });
+    const request = await ProductRequest.findOne({ _id: requestID });
+    // const request = await Request.findOne({ _id: requestID });
 
     if (!request) return res.json(new ApiError(422, "Invalid requestID"));
 
