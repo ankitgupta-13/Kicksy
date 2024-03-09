@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:3000/api";
+export const baseURL = import.meta.env.VITE_BACKEND_URL! as string;
 
 export const api = axios.create({
   baseURL: baseURL,
@@ -10,6 +10,17 @@ export const api = axios.create({
     authorization: `Bearer ${document.cookie.split(";")}`,
     Accept: "application/json",
     "Content-Type": "application/json",
+  },
+});
+
+export const imageApi = axios.create({
+  baseURL: baseURL,
+  timeout: 1000 * 10,
+  withCredentials: true,
+  headers: {
+    authorization: `Bearer ${document.cookie.split(";")}`,
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
   },
 });
 

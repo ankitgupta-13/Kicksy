@@ -1,16 +1,4 @@
-import { api, baseURL } from "./auth.api";
-import axios from "axios";
-
-export const axiosImageApi = axios.create({
-  baseURL: baseURL,
-  timeout: 1000 * 10,
-  withCredentials: true,
-  headers: {
-    authorization: `Bearer ${document.cookie.split(";")}`,
-    Accept: "application/json",
-    "Content-Type": "multipart/form-data",
-  },
-});
+import { api, imageApi } from "./auth.api";
 
 export const createAdmin = async (payload: any) => {
   try {
@@ -52,10 +40,7 @@ export const addProduct = async (payload: any) => {
 
 export const uploadImage = async (payload: FormData) => {
   try {
-    const { data } = await axiosImageApi.post(
-      "/admin/add-product-image",
-      payload
-    );
+    const { data } = await imageApi.post("/admin/add-product-image", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
@@ -75,7 +60,7 @@ export const getUsers = async (page: Number) => {
 
 export const addBlog = async (payload: any) => {
   try {
-    const { data } = await axiosImageApi.post("/admin/add-blog", payload);
+    const { data } = await imageApi.post("/admin/add-blog", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

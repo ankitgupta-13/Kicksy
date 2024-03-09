@@ -21,6 +21,7 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
   const authStatus = useSelector((state) => state.auth.status);
+  const isUser = useSelector((state) => state.auth.status);
   const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
   const isSeller =
     useSelector((state) => state.auth.userData?.role) === "seller";
@@ -31,11 +32,10 @@ const Header = () => {
     { name: "Home", slug: "/", isActive: true },
     { name: "Shop", slug: "/shop", isActive: true },
     { name: "Custom Anime", slug: "/anime", isActive: true },
-    { name: "Track Order", slug: "/trackorder", isActive: true },
     { name: "Blogs", slug: "/blogs", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
-    { name: "Seller", slug: "/seller", isActive: true },
+    { name: "Seller", slug: "/seller", isActive: isUser },
     (isAdmin || isSeller) && {
       name: "Dashboard",
       slug: "/admin",

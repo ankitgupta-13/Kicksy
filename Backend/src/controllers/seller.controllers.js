@@ -4,83 +4,78 @@ import { Product } from "../models/product.models.js";
 import { Request, Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse, message} from "../utils/ApiResponse.js";
+import { ApiResponse, message } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
-import fs from 'fs'
+import fs from "fs";
 
-/*
-try{
-        
-}
-catch(err){
-    return res.json(new ApiError(400 , err.message));
-}
-*/
+const sellerRequest = async (req, res) => {
+  try {
+    const {
+      userId,
+      gstNumber,
+      storeName,
+      whatsappNumber,
+      street,
+      country,
+      state,
+      city,
+      pincode,
+    } = req.body;
+    const user = await User.findOne({ _id: userId });
 
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
 
+    if (!req.file)
+      return message(res, "res", 404, "Image not found , upload image");
 
-const createSeller = async (req, res) => {
-    try {
-        const { userID, gstNumber,  storeName , whatsappNumber} = req.body;
-        // console.log(req.body)
-        
-        
+    const logoImageUrl = await uploadOnAws(req.file.path);
 
-        const user = await User.findOne({ _id:userID });
-
-        if (!user) return res.json(new ApiResponse(404, 'user not found'))
-
-        user.role = 'seller';
-        await user.save()
-
-        if(!req.file) return message(res , 'res' , 404 , 'Image not found , upload image'); 
-
-        const logoImageUrl = await uploadOnAws(req.file.path);
-
-        
-        if (!logoImageUrl) {
-            fs.unlinkSync(req.file.path);
-            return res.json(new ApiResponse(400, "Unable to upload logo"));
-        }
-
-        fs.unlinkSync(req.file.path);
-        
-        const address = new Address(req.body);
-        await address.save()
-
-        const seller = new Seller({
-            email: user.email,
-            userID: user._id,
-            gstNumber,
-            storeAddress:address._id,
-            storeName,
-            storeLogo:logoImageUrl,
-            whatsappNumber
-        })
-
-        await seller.save();
-
-
-        return res.json(new ApiResponse(200, `role updated to ${user.role}`))
-
+    if (!logoImageUrl) {
+      fs.unlinkSync(req.file.path);
+      return res.json(new ApiResponse(400, "Unable to upload logo"));
     }
-    catch (err) {
-        return res.json(new ApiError(400, err.message));
-    }
-}
 
+    fs.unlinkSync(req.file.path);
 
+    const sellerAddress = await new Address({
+      userId,
+      recipientName: storeName,
+      country,
+      state,
+      city,
+      street,
+      pincode,
+    }).save();
 
+    if (!sellerAddress)
+      return res.json(new ApiResponse(400, "Unable to save address"));
 
+    const seller = new Seller({
+      userID: user._id,
+      gstNumber,
+      storeAddress: sellerAddress._id,
+      storeName,
+      storeLogo: logoImageUrl,
+      whatsappNumber,
+    });
 
+    if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
 
-// seller makes a request ---> 
+    await seller.save();
 
-// ---> request gets stored in DB ---> 
+    return res.json(new ApiResponse(200, seller, "Seller request sent"));
+  } catch (err) {
+    return res.json(new ApiError(400, err));
+  }
+};
 
-// ---> Admin dashboard will have an option to see all these requests ---> 
+// seller makes a request --->
 
-// ---> requests can be accepted or declined from dashboard ---> 
+// ---> request gets stored in DB --->
+
+// ---> Admin dashboard will have an option to see all these requests --->
+
+// ---> requests can be accepted or declined from dashboard --->
 
 // ---> admin will be given an option to 1) add the qty to the existing product or 2) create new product --->
 
@@ -91,87 +86,74 @@ const createSeller = async (req, res) => {
 // ---> admin will have an option to edit the request parameters as per his need and requirements
 
 const productAddRequest = async (req, res) => {
-    const { sellerID } = req.body
+  const { sellerID } = req.body;
 
-    console.log(req.body)
+  console.log(req.body);
 
-    try {
-        const { images } = req.body;
-        if (!images || images.length === 0) {
-            return res.json(new ApiResponse(422, 'You need to attach atleast 1 image of the product '));
-        }
-
-        const seller = await Seller.findOne({ _id: sellerID })
-
-        if (!seller || seller.role !== 'seller') return res.json(new ApiResponse(404, 'seller not found'));
-
-        const request = new Request({
-            product: req.body,
-            seller: sellerID
-        })
-
-        await request.save();
-
+  try {
+    const { images } = req.body;
+    if (!images || images.length === 0) {
+      return res.json(
+        new ApiResponse(
+          422,
+          "You need to attach atleast 1 image of the product "
+        )
+      );
     }
-    catch (err) {
-        return res.json(new ApiError(400, err.message))
-    }
-}
 
+    const seller = await Seller.findOne({ _id: sellerID });
+
+    if (!seller || seller.role !== "seller")
+      return res.json(new ApiResponse(404, "seller not found"));
+
+    const request = new Request({
+      product: req.body,
+      seller: sellerID,
+    });
+
+    await request.save();
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
+  }
+};
 
 /* this api is for raising request to add offer to the existing product */
 
 const addOfferRequest = async (req, res) => {
-    const { productID } = req.body;
-    try {
-
-    }
-    catch (err) {
-
-    }
-}
+  const { productID } = req.body;
+  try {
+  } catch (err) {}
+};
 
 const getAllRequests = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
 
-    try {
-        const requests = await Request.find({})
-            .skip((page - 1) * limit)
-            .limit(limit)
+  try {
+    const requests = await Request.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
 
-        res.json(
-            new ApiResponse(200, { requests, page }, 'requests fetched successfully')
-        )
-    }
-
-    catch (err) {
-        return res.json(new ApiError(400, err.message))
-    }
-
-}
+    res.json(
+      new ApiResponse(200, { requests, page }, "requests fetched successfully")
+    );
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
+  }
+};
 
 const acceptProductRequest = async (req, res) => {
+  const { requestID } = req.body;
 
-    const { requestID } = req.body;
-
-    try {
-
-
-
-    }
-    catch (err) {
-        return res.json(new ApiError(400, err.message));
-    }
-}
-
-
+  try {
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
+  }
+};
 
 export {
-
-    createSeller,
-    productAddRequest,
-    getAllRequests,
-    acceptProductRequest
-
-}
+  sellerRequest,
+  productAddRequest,
+  getAllRequests,
+  acceptProductRequest,
+};
