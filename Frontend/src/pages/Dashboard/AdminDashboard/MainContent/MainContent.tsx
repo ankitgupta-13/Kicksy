@@ -7,6 +7,7 @@ import ListOrder from "../Order/ListOrder/ListOrder";
 import CreateProduct from "../Product/CreateProduct/CreateProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
+import ListSeller from "../Seller/ListSeller/ListSeller";
 import ListUser from "../User/ListUser/ListUser";
 import style from "./MainContent.module.css";
 
@@ -37,6 +38,13 @@ const MainContent = ({ currentSection, currentAction }) => {
       switch (currentAction) {
         case "allUser":
           content = <ListUser />;
+          break;
+      }
+      break;
+    case "seller":
+      switch (currentAction) {
+        case "allSeller":
+          content = <ListSeller />;
           break;
       }
       break;

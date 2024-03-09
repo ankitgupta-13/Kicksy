@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const productRequestSchema = new mongoose.Schema({
-
   productCode: {
     type: String,
     required: true,
@@ -18,88 +17,85 @@ const productRequestSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   brand: {
     type: String,
-    required: true
+    required: true,
   },
   size: {
     type: [String],
-    required: true
+    required: true,
   },
   category: {
     type: [String],
-    enum: ['anime', 'boots', 'sneakers', 'sandals'],
+    enum: ["anime", "boots", "sneakers", "sandals"],
     required: true,
   },
   color: {
     type: [String],
-    required: true
+    required: true,
   },
   stock: {
     type: Number,
     required: true,
     default: 1,
   },
-  tags: [
-    {
-      type: String
-    }
-  ]
-
-})
-
-
-
-
-const requestProductSchema = new mongoose.Schema({
-  product: productRequestSchema,
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Seller'
-  }
-}, {
-  timestamps: true
-})
-
+    ref: "Seller",
+  },
+  tags: [
+    {
+      type: String,
+    },
+  ],
+});
 
 const sellerRequestSchema = new mongoose.Schema({
-  userID: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true
-  },
-  gstNumber:{
-    type:String,
-    validate: {
-      validator: function (value) {
-     // Check if the GST number has exactly 15 characters
-        return value.length === 15;
-      },
-      message: props => `${props.value} is not a valid GST number. It should have exactly 15 characters.`,
-    }
-  },
-  website: String,
   whatsappNumber: {
     type: String,
-    unique: true
+    required: true,
   },
-  instagram: {
+  storeName: {
     type: String,
-    unique: false
+    required: true,
   },
-  notes:{
-    type: String
-  }
+  storeLogo: {
+    type: String,
+  },
+  storeAddress: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Address",
+    required: true,
+  },
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  gstNumber: {
+    type: String,
+    validate: {
+      validator: function (value) {
+        // Check if the GST number has exactly 15 characters
+        return value.length === 15;
+      },
+      message: (props) =>
+        `${props.value} is not a valid GST number. It should have exactly 15 characters.`,
+    },
+  },
+  website: String,
+  instagram: String,
+  notes: String,
+});
 
-})
+const ProductRequest = new mongoose.model(
+  "ProductRequest",
+  productRequestSchema
+);
 
+const SellerRequest = new mongoose.model("SellerRequest", sellerRequestSchema);
 
-
-
-const ProductRequest = new mongoose.model('ProductRequest', requestProductSchema);
-const SellerRequest = new mongoose.model('SellerRequest' , sellerRequestSchema);
-
-export {ProductRequest , SellerRequest}
+export { ProductRequest, SellerRequest };

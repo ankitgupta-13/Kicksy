@@ -2,6 +2,8 @@ import { Admin } from "../models/admin.models.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { Seller } from "../models/seller.model.js";
+import { SellerRequest } from "../models/request.model.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -107,6 +109,36 @@ const fetchAdmins = async (req, res) => {
   }
 };
 
+const getSellers = async (req, res) => {
+  try {
+    const sellers = await Seller.find();
+    if (!sellers) {
+      return res.json(new ApiResponse(404, "No Sellers Found!"));
+    }
+    res.json(new ApiResponse(200, sellers, "Sellers Fetched successfully"));
+  } catch (err) {
+    throw new ApiError(400, err.message);
+  }
+};
+
+export const getSellersRequest = async (req, res) => {
+  try {
+    const sellersRequest = await SellerRequest.find();
+    if (!sellersRequest) {
+      return res.json(new ApiResponse(404, "No Sellers Request Found!"));
+    }
+    return res.json(
+      new ApiResponse(
+        200,
+        sellersRequest,
+        "Sellers Request Fetched successfully"
+      )
+    );
+  } catch (error) {
+    throw new ApiError(400, error.message);
+  }
+};
+
 export {
   createAdmin,
   checkAdmin,
@@ -115,4 +147,5 @@ export {
   getActiveUsersCount,
   fetchAdmins,
   getUsersCount,
+  getSellers,
 };

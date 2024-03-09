@@ -88,16 +88,6 @@ const productRequestSchema = new mongoose.Schema({
   ],
 });
 
-const requestSchema = new mongoose.Schema({
-  product: productRequestSchema,
-  seller: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Seller",
-  },
-});
-
 const Seller = new mongoose.model("Seller", sellerSchema);
-const ProductRequest = new mongoose.model("ProductRequest", requestSchema);
 
-export { Seller, ProductRequest };
+export { Seller };

@@ -127,3 +127,23 @@ export const deleteProduct = async (payload: Object) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getAllSellers = async () => {
+  try {
+    const { data } = await api.get("/admin/get-sellers");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const getSellersRequest = async () => {
+  try {
+    const { data } = await api.get("/admin/get-sellers-request");
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

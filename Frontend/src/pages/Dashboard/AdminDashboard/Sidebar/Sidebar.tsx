@@ -24,6 +24,12 @@ const Sidebar = () => {
       },
     },
     {
+      seller: {
+        actions: ["allSeller", "profileSeller", "Requests"],
+        icon: <AccountBoxRoundedIcon />,
+      },
+    },
+    {
       product: {
         actions: ["allProduct", "addProduct"],
         icon: <AccountBoxRoundedIcon />,

@@ -30,6 +30,7 @@ import {
   getUsers,
   fetchAdmins,
   getUsersCount,
+  getSellers,
 } from "../controllers/admin.controllers.js";
 
 const router = Router();
@@ -56,5 +57,6 @@ router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
 router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
+router.route("/get-sellers").get(getSellers);
 
 export default router;
