@@ -1,6 +1,7 @@
 import { Address } from "../models/address.model.js";
 import { Offer } from "../models/offer.model.js";
 import { Product } from "../models/product.models.js";
+import { SellerRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -50,7 +51,7 @@ const sellerRequest = async (req, res) => {
     if (!sellerAddress)
       return res.json(new ApiResponse(400, "Unable to save address"));
 
-    const seller = new Seller({
+    const seller = new SellerRequest({
       userID: user._id,
       gstNumber,
       storeAddress: sellerAddress._id,

@@ -141,6 +141,7 @@ export const getAllSellers = async () => {
 export const getSellersRequest = async () => {
   try {
     const { data } = await api.get("/admin/get-sellers-request");
+    console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;

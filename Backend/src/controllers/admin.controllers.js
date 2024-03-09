@@ -121,7 +121,7 @@ const getSellers = async (req, res) => {
   }
 };
 
-export const getSellersRequest = async (req, res) => {
+const getSellersRequest = async (req, res) => {
   try {
     const sellersRequest = await SellerRequest.find();
     if (!sellersRequest) {
@@ -148,4 +148,5 @@ export {
   fetchAdmins,
   getUsersCount,
   getSellers,
+  getSellersRequest,
 };
