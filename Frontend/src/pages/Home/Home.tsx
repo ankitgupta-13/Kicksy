@@ -90,8 +90,31 @@ const Home = () => {
       </div>
       <div className={style.NewArrivals}>
         <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
-        <div className={style.NewArrivalsSlider}>
-          <div className={style.cards}>
+        <div className={style.Slider}>
+        <div className={style.cards}>
+            {products.map((product: Object, index: number) => {
+              return (
+                  <div key={index} className={style.container}>
+                     <img
+                        src={product.images[0]}
+                        className={style.shoes__image}
+                        onClick={() => navigate(`/product/${product._id}`)}
+                      />
+                      <div className={style.shoes__name}>{product.title}</div>
+                      <div className={style.shoes__price}>
+                        {product.price.originalPrice}
+                      </div>
+                  </div>
+              );
+            })}
+          </div>
+          </div>
+
+      </div>
+      <div className={style.BestSellerSlider}>
+        <h1 className={style.BestSellerSliderHeading}>Best Seller</h1>
+        <div className={style.Slider}>
+        <div className={style.cards}>
             {products.map((product: Object, index: number) => {
               return (
                 <div key={index}>
@@ -100,10 +123,7 @@ const Home = () => {
               );
             })}
           </div>
-        </div>
-      </div>
-      <div className={style.BestSellerSlider}>
-        <h1 className={style.BestSellerSliderHeading}>Best Seller</h1>
+          </div>
       </div>
       <HeroSection />
     </Container>

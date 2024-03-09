@@ -102,7 +102,7 @@
     gap: 8px;
 }
 
-.NewArrivalsSlider {
+.Slider {
     overflow-x: auto;
     white-space: nowrap;
     padding-bottom: 20px;
@@ -110,8 +110,23 @@
     -ms-overflow-style: none;
     width: 100%;
 }
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 15rem;
+    width: 15rem;
+    gap: 1rem;
+  }
 
-.NewArrivalsSlider::-webkit-scrollbar {
+  .shoes__image {
+    position: relative;
+    display: flex;
+    object-fit: contain;
+    border-bottom: 1px solid #dfe0e1;
+    aspect-ratio: 3/2;
+  }
+
+.Slider::-webkit-scrollbar {
     display: none;
 }
 

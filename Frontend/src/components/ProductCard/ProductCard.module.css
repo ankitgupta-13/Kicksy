@@ -19,7 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  object-fit: scale-down;
+  object-fit: contain;
   aspect-ratio: 3/2;
 }
 
