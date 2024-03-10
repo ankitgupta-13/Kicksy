@@ -24,10 +24,11 @@ const productSchema = new mongoose.Schema(
       // required: true,
       unique: true,
     },
-    sellers: [
+    offers: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required:true,
+        ref:"Offer",
         unique:true
       }
     ],

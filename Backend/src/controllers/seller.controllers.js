@@ -108,6 +108,24 @@ const addImagesToProductRequest = async (req, res) => {
 const productAddRequest = async (req, res) => {
   const { sellerID } = req.body;
 
+  /*
+    
+    for raising a ProductRequest req.body should contain
+    
+    skuid
+    title
+    price
+    brand
+    size - array of string
+    category - [string]
+    color - [string]
+    stock - Number
+    seller - id
+    tags - [string]
+
+
+  */
+
   console.log(req.body);
 
   try {
@@ -126,23 +144,7 @@ const productAddRequest = async (req, res) => {
     if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
 
-    /*
     
-    for raising a ProductRequest req.body should contain
-    
-    skuid
-    title
-    price
-    brand
-    size - array of string
-    category - [string]
-    color - [string]
-    stock - Number
-    seller - id
-    tags - [string]
-
-
-    */
 
     const request = new ProductRequest(req.body)
     await request.save();
@@ -173,11 +175,13 @@ const addOfferToProduct = async (req, res) => {
       quantity
     })
 
-    product.offers.concat(offer._id);
-    await product.save();
+    await offer.save();
 
-    const seller = await Seller.findOne({ _id: sellerID })
-    seller.offers.concat(offer._id);
+    console.log(offer._id)
+    
+    await Product.findByIdAndUpdate(productID , {$push:{offers:offer._id}})
+
+    await Seller.findByIdAndUpdate(sellerID , {$push:{offers:offer._id}})
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
 
