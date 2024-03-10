@@ -4,9 +4,10 @@ import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { deleteFromAws } from "../utils/aws.js";
 
 
-const handleErr = (err) => {
+const handleErr = (res, err) => {
   console.log(err);
   return res.json(new ApiError(400, err.message));
 }
@@ -31,6 +32,8 @@ const getAllProductRequests = async (req, res) => {
   }
 };
 
+
+/* this api is for editing the product request */
 const editProductRequest = async (req, res) => {
   const { requestID } = req.body;
   try {
@@ -39,12 +42,12 @@ const editProductRequest = async (req, res) => {
     if (!request) return res.json(new ApiResponse(404, 'product request not found'));
 
     const updatedRequest = await ProductRequest.findByIdAndUpdate(requestID, req.body);
-    
+
     return res.json(new ApiResponse(200, updatedRequest));
 
   }
   catch (err) {
-    return handleErr(err);
+    return handleErr(res, err);
   }
 }
 
@@ -57,16 +60,79 @@ const addProductViaRequest = async (req, res) => {
     const request = await ProductRequest.findOne({ _id: requestID });
     if (!request) return res.json(new ApiResponse(404, 'product request not found'));
 
-    const product = new Product(request);
+    const {
+      productCode,
+      skuID,
+      gender,
+      description,
+      title,
+      price,
+      brand,
+      size,
+      category,
+      color,
+      stock,
+      seller,
+      tags,
+      images
+    } = request
+
+    const product = new Product({
+      productCode,
+      skuID,
+      gender,
+      description,
+      title,
+      price,
+      brand,
+      size,
+      category,
+      color,
+      stock,
+      seller,
+      tags,
+      images
+    });
+
     await product.save();
+
+    await ProductRequest.findByIdAndDelete(requestID);
 
     return res.json(200, product, "product added successfully!");
 
   }
   catch (err) {
-    return handleErr(err);
+    return handleErr(res, err);
   }
 };
+
+/* this api is for declining the product request */
+const declineProductRequest = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+
+    const request = await ProductRequest.findOne({ _id: requestID });
+    if (!request) return res.json(new ApiResponse(404, 'product request not found'));
+
+    request.images.forEach(async (image) => {
+      await deleteFromAws(image);
+    })
+
+    const deletedRequest = await ProductRequest.findByIdAndDelete(requestID);
+    return res.json(new ApiResponse(200 ,deletedRequest , 'request declined successfully'));
+    
+  }
+  catch (err) {
+    return handleErr(res, err);
+  }
+}
+
+
+/* this api is for deleting an image in product request */
+const deleteProductRequestImage = async (req, res) => {
+
+}
+
 
 
 

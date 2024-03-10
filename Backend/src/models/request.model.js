@@ -11,6 +11,15 @@ const productRequestSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  gender: {
+    type: String,
+    enum: ["M", "F", "K"],
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -32,7 +41,7 @@ const productRequestSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: [String],
+    type: String,
     enum: ["anime", "boots", "sneakers", "sandals"],
     required: true,
   },
@@ -55,6 +64,8 @@ const productRequestSchema = new mongoose.Schema({
       type: String,
     },
   ],
+}, {
+  timestamps: true
 });
 
 const sellerRequestSchema = new mongoose.Schema({
@@ -94,6 +105,8 @@ const sellerRequestSchema = new mongoose.Schema({
   website: String,
   instagram: String,
   notes: String
+}, {
+  timestamps: true
 });
 
 const ProductRequest = new mongoose.model("ProductRequest", productRequestSchema);

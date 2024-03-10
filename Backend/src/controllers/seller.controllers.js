@@ -112,12 +112,12 @@ const productAddRequest = async (req, res) => {
     
     for raising a ProductRequest req.body should contain
     
-    skuid
+    skuID
     title
     price
     brand
     size - array of string
-    category - [string]
+    category - string
     color - [string]
     stock - Number
     seller - id
@@ -146,8 +146,10 @@ const productAddRequest = async (req, res) => {
 
     
 
-    const request = new ProductRequest(req.body)
+    const request = new ProductRequest({...req.body , seller:sellerID})
     await request.save();
+
+    return res.json(new ApiResponse(200 , request , "Product Request Raised!"));
 
   }
   catch (err) {
@@ -188,19 +190,6 @@ const addOfferToProduct = async (req, res) => {
   }
   catch (err) {
     console.log(err);
-    return res.json(new ApiError(400, err.message));
-  }
-};
-
-
-
-
-
-const acceptProductRequest = async (req, res) => {
-  const { requestID } = req.body;
-
-  try {
-  } catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };

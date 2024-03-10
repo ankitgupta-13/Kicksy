@@ -38,7 +38,7 @@ import {
   declineSellerRequest,
   getAllSellerRequests
 } from "../controllers/admin-seller.controllers.js";
-import { editProductRequest, getAllProductRequests } from "../controllers/admin-product.controllers.js";
+import { addProductViaRequest, editProductRequest, getAllProductRequests } from "../controllers/admin-product.controllers.js";
 
 const router = Router();
 
@@ -75,5 +75,5 @@ router.route("/requests/seller/decline-request").post(declineSellerRequest);
 // routes for handling product requests
 router.route("/requests/product/getAll").get(getAllProductRequests);
 router.route("/requests/product/edit").post(editProductRequest);
-
+router.route("/requests/product/accept-request").post(addProductViaRequest)
 export default router;

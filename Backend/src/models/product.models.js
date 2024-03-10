@@ -16,7 +16,6 @@ const productSchema = new mongoose.Schema(
   {
     productCode: {
       type: String,
-      required: true,
       unique: true,
     },
     skuID: {
@@ -36,10 +35,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: priceSchema,
-      required: true,
-    },
     description: {
       type: String,
       required: true,
@@ -57,7 +52,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: [String],
+      type: String,
       enum: ['anime', 'boots', 'sneakers', 'sandals'],
       required: true,
     },
