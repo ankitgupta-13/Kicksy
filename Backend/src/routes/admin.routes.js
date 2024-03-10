@@ -38,8 +38,7 @@ import {
   declineSellerRequest,
   getAllSellerRequests
 } from "../controllers/admin-seller.controllers.js";
-import { addOfferToProduct, addProductViaOffer, getAllProductRequests } from "../controllers/admin-product.controllers.js";
-import { addImagesToProductRequest } from "../controllers/seller.controllers.js";
+import { editProductRequest, getAllProductRequests } from "../controllers/admin-product.controllers.js";
 
 const router = Router();
 
@@ -70,14 +69,11 @@ router.route("/get-sellers").get(getSellers);
 
 // routes for handling seller requests
 router.route("/requests/seller/getAll").get(getAllSellerRequests);
-router.route("/requests/seller/accept-request").get(acceptSellerRequest);
-router.route("/requests/seller/decline-request").get(declineSellerRequest);
+router.route("/requests/seller/accept-request").post(acceptSellerRequest);
+router.route("/requests/seller/decline-request").post(declineSellerRequest);
 
 // routes for handling product requests
-router.route("/add-product-image").post(upload.array("image"), addImagesToProductRequest);
 router.route("/requests/product/getAll").get(getAllProductRequests);
-router.route("/requests/product/add-offer-to-product").get(addOfferToProduct);
-
-// router.route("/requests/product/add-product-via-offer").get(addProductViaOffer);
+router.route("/requests/product/edit").post(editProductRequest);
 
 export default router;

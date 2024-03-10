@@ -5,6 +5,12 @@ import { Seller } from "../models/seller.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+
+const handleErr = (err) => {
+  console.log(err);
+  return res.json(new ApiError(400, err.message));
+}
+
 const getAllProductRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -25,48 +31,43 @@ const getAllProductRequests = async (req, res) => {
   }
 };
 
-
-
-/* this api is for accepting the request and hence adding a new product */
-const addProductViaOffer = async (req, res) => {
+const editProductRequest = async (req, res) => {
   const { requestID } = req.body;
-};
-
-
-/* this api is for adding offer to the existing product */
-const addOfferToProduct = async (req, res) => {
-  const { productID, requestID } = req.body;
   try {
-    const product = await Product.findOne({ _id: productID });
-
-    if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
     const request = await ProductRequest.findOne({ _id: requestID });
-    // const request = await Request.findOne({ _id: requestID });
+    if (!request) return res.json(new ApiResponse(404, 'product request not found'));
 
-    if (!request) return res.json(new ApiError(422, "Invalid requestID"));
-
-    const offer = new Offer({
-      productID,
-      sellerID: request.seller,
-      price: request.price,
-      quantity: request.stock,
-    });
-
-    await offer.save();
-
-    product.offers.concat(offer._id);
-    await product.save();
-
-    const seller = await Seller.findOne({ _id: request.seller })
-    seller.offers.concat(offer._id);
-
-    return res.json(new ApiResponse(200, product, "offer added successfully"));
+    const updatedRequest = await ProductRequest.findByIdAndUpdate(requestID, req.body);
+    
+    return res.json(new ApiResponse(200, updatedRequest));
 
   }
   catch (err) {
-    return res.json(new ApiError(400, err.message));
+    return handleErr(err);
+  }
+}
+
+
+/* this api is for accepting the request and hence adding a new product */
+const addProductViaRequest = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+
+    const request = await ProductRequest.findOne({ _id: requestID });
+    if (!request) return res.json(new ApiResponse(404, 'product request not found'));
+
+    const product = new Product(request);
+    await product.save();
+
+    return res.json(200, product, "product added successfully!");
+
+  }
+  catch (err) {
+    return handleErr(err);
   }
 };
 
-export { getAllProductRequests, addOfferToProduct, addProductViaOffer }
+
+
+export { getAllProductRequests, addProductViaRequest, editProductRequest }

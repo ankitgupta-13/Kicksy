@@ -55,11 +55,16 @@ const sellerRequest = async (req, res) => {
 
     const seller = new SellerRequest({
       userID: user._id,
-      gstNumber,
+      // gstNumber,
       storeAddress: sellerAddress._id,
-      storeName,
+      // storeName,
       storeLogo: logoImageUrl,
-      whatsappNumber,
+      // whatsappNumber,
+      // website,
+      // instagram,
+      // notes,
+      ...req.body
+
     });
 
     await seller.save();
@@ -68,7 +73,9 @@ const sellerRequest = async (req, res) => {
 
     return res.json(new ApiResponse(200, seller, "Seller request sent"));
 
-  } catch (err) {
+  }
+  catch (err) {
+    console.log(err.code)
     return res.json(new ApiError(400, err));
   }
 };
@@ -116,7 +123,7 @@ const productAddRequest = async (req, res) => {
 
     const seller = await Seller.findOne({ _id: sellerID });
 
-    if (!seller || seller.role !== "seller") return res.json(new ApiResponse(404, "seller not found"));
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
 
     /*
@@ -142,28 +149,48 @@ const productAddRequest = async (req, res) => {
 
   }
   catch (err) {
+    console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
 
 
+/* this api is for adding offer to the existing product */
+const addOfferToProduct = async (req, res) => {
 
-const getAllRequests = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const { productID, sellerID, price, quantity } = req.body;
 
   try {
-    const requests = await SellerRequest.find({})
-      .skip((page - 1) * limit)
-      .limit(limit);
 
-    res.json(
-      new ApiResponse(200, { requests, page }, "requests fetched successfully")
-    );
-  } catch (err) {
+    const product = await Product.findOne({ _id: productID });
+
+    if (!product) return res.json(new ApiError(422, "Invalid productID"));
+
+    const offer = new Offer({
+      productID,
+      sellerID,
+      price,
+      quantity
+    })
+
+    product.offers.concat(offer._id);
+    await product.save();
+
+    const seller = await Seller.findOne({ _id: sellerID })
+    seller.offers.concat(offer._id);
+
+    return res.json(new ApiResponse(200, offer, "offer added successfully"));
+
+  }
+  catch (err) {
+    console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
+
+
+
+
 
 const acceptProductRequest = async (req, res) => {
   const { requestID } = req.body;
@@ -177,6 +204,6 @@ const acceptProductRequest = async (req, res) => {
 export {
   sellerRequest,
   productAddRequest,
-  getAllRequests,
-  addImagesToProductRequest
+  addImagesToProductRequest,
+  addOfferToProduct
 };

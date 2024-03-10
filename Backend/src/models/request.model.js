@@ -89,10 +89,11 @@ const sellerRequestSchema = new mongoose.Schema({
       message: (props) =>
         `${props.value} is not a valid GST number. It should have exactly 15 characters.`,
     },
+    unique:true
   },
   website: String,
   instagram: String,
-  notes: String,
+  notes: String
 });
 
 const ProductRequest = new mongoose.model(
