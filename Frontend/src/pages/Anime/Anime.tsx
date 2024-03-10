@@ -4,6 +4,8 @@ import img2 from "../../assets/images/AnimePage/spideyS.png";
 import { useState, useEffect } from "react";
 // import img3 from "../../assets/images/Animepage/animeBackdrop.png"
 
+import aiz from "../../assets/images/AnimePage/aizawa.png"
+import panel from "../../assets/images/AnimePage/picture.png"
 
 import yeah from "../../assets/images/AnimePage/backdrop/Yeah.png"
 import bang from "../../assets/images/AnimePage/backdrop/Bang.png"
@@ -15,6 +17,7 @@ import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
 import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
 
 import ProductDesc from "../ProductDesc/ProductDesc";
+import { getAllProducts } from "../../api/user.api";
 
 
 
@@ -23,50 +26,76 @@ import ProductDesc from "../ProductDesc/ProductDesc";
 const Anime = () => {
   const [explore, setExplore] = useState(false);
   const [animeShoes, setAnimeShoes] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchAnimeShoes = async () => {
-      try {
-        const response = await getAnimeShoesFromAPI(); // Replace with your actual method
-        setAnimeShoes(response.data);
-      } catch (error) {
-        console.error("Error fetching anime shoes:", error);
-      }
-    };
 
-    fetchAnimeShoes();
-  }, []);
+  
+    //trying something above
+
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await getAllProducts();
+        
+  //       const filteredProducts = response.data.products.filter(
+  //         (product) => product.category === "Anime"
+  //       ); 
+
+  //       setProducts(filteredProducts); 
+  //     } catch (error) {
+  //       console.error("Error fetching anime shoes:", error);
+  //     }
+  //   };
+
+  //   fetchProducts(); 
+  // }, []);
 
   console.log(explore);
+  
+
   return (
     <div className={style.mainBody}>
       <div className={explore ? style.exploresec : ""}>
-        <div style={{display:"flex", flexDirection: "row"}}>
+        <div style={{display:"flex", flexDirection: "column"}}>
           <div className={style.Container_first}>
-            <div className={style.Card1}>
-              <div className={style.head}>
-                {" "}
-                Explore our customized anime sneakers
-              </div>
+            
+            
+            <div style={{display:"flex", flexDirection: "column"}}>
+              <img className={style.characterImg} src={aiz}></img>
               <div className={style.Content}>
-                Calling all anime aficionados and sneakerheads alike – we've
-                crafted a fusion like no other, blending your passion for iconic
-                anime characters with the comfort and style of premium sneakers.
-                Here, every pair tells a story, merging the dynamic worlds of
-                anime creativity and sneaker fashion into one breathtaking
-                masterpiece.
+              Explore our customized anime sneakers
               </div>
-              <div className={style.Content}>
-                {" "}
-              level up your style game with our killer kicks that blend anime awesomeness with premium sneaker vibes.
-              </div>
-              <div className={style.Circle1}>
-                <img className={style.image1} src={img}></img>
-              </div>
+              <img className={style.picture} src={panel}></img>
+              
             </div>
-          </div>
+            
 
-          <div className={style.Container_first}>
+
+          </div>
+          <div style={{margin:"5%", justifyContent: "center", }}>
+              <button
+                style={{
+                  position: "relative",
+                  width: "200px",
+                  height: "40px",
+                  right: "150px",
+                  bottom: "20px",
+                  // borderRadius: "10px",
+                  backgroundColor: "white",
+                  fontFamily: "Bevan",
+                  letterSpacing: "1.5px",
+                  justifyContent: "center",
+                  color: "black",
+                  left:"42%",
+                  zIndex: "5",
+                }}
+                onClick={() => setExplore(true)}
+              >
+                Explore
+              </button>
+              </div>
+
+          {/* <div className={style.Container_first}>
             <div className={style.Card2}>
               <div className={style.head}>
                 {" "}
@@ -105,7 +134,7 @@ const Anime = () => {
                 <img className={style.image2} src={img2}></img>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       
@@ -132,19 +161,19 @@ const Anime = () => {
                           <button className={style.red} onClick={() => setExplore(true)}>
                             View Collections 
                           </button>
+                        
+                          </div> ))}
                         </div>                   
                   </div>
               </div>
 
 
-            <div style={{
-              marginTop:'5%', 
-                  }}>
-              {/* <ProductDesc/> */}
-              {animeShoes.map((shoe) => (
+
+            <div style={{ marginTop: "5%" }}>
+        {products.filter((product) => product.category === "anime").map((shoe) => (
           <ProductDesc key={shoe._id} product={shoe} />
         ))}
-            </div>
+      </div>
 
 
       </div>
