@@ -120,7 +120,7 @@ const declineProductRequest = async (req, res) => {
 
     const deletedRequest = await ProductRequest.findByIdAndDelete(requestID);
     return res.json(new ApiResponse(200 ,deletedRequest , 'request declined successfully'));
-    
+
   }
   catch (err) {
     return handleErr(res, err);
@@ -130,7 +130,32 @@ const declineProductRequest = async (req, res) => {
 
 /* this api is for deleting an image in product request */
 const deleteProductRequestImage = async (req, res) => {
+  const {imageLink , requestID} = req.body;
+  try{
+    const request = await ProductRequest.findOne({_id:requestID});
+    
+    if(!request) return res.json(new ApiResponse(404 , "product request not found"));
+    
+    const index = request.images.findIndex((item)=>{
+      return item === imageLink
+    })
 
+    
+    if(index!==-1){
+      await deleteFromAws(request.images[index]);
+      request.images = request.images.filter((image)=>{
+        return image !== imageLink
+      })
+
+      await request.save();
+      return res.json(new ApiResponse(200 , request , 'image deleted'))
+
+    }
+    
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
 }
 
 
