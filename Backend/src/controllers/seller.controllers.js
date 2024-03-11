@@ -1,6 +1,4 @@
 import { Address } from "../models/address.model.js";
-import { Offer } from "../models/offer.model.js";
-import { Product } from "../models/product.models.js";
 import { SellerRequest } from "../models/request.model.js";
 import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
@@ -63,19 +61,13 @@ const sellerRequest = async (req, res) => {
       // website,
       // instagram,
       // notes,
-      ...req.body
-
+      ...req.body,
     });
-
     await seller.save();
-
     if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
-
     return res.json(new ApiResponse(200, seller, "Seller request sent"));
-
-  }
-  catch (err) {
-    console.log(err.code)
+  } catch (err) {
+    console.log(err.code);
     return res.json(new ApiError(400, err));
   }
 };
@@ -127,7 +119,6 @@ const productAddRequest = async (req, res) => {
   */
 
   console.log(req.body);
-
   try {
     const { images } = req.body;
     if (!images || images.length === 0) {
@@ -138,34 +129,25 @@ const productAddRequest = async (req, res) => {
         )
       );
     }
-
     const seller = await Seller.findOne({ _id: sellerID });
 
     if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
-
-    
-
-    const request = new ProductRequest({...req.body , seller:sellerID})
+    const request = new ProductRequest({ ...req.body, seller: sellerID });
     await request.save();
 
-    return res.json(new ApiResponse(200 , request , "Product Request Raised!"));
-
-  }
-  catch (err) {
+    return res.json(new ApiResponse(200, request, "Product Request Raised!"));
+  } catch (err) {
     console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
 
-
 /* this api is for adding offer to the existing product */
 const addOfferToProduct = async (req, res) => {
-
   const { productID, sellerID, price, quantity } = req.body;
 
   try {
-
     const product = await Product.findOne({ _id: productID });
 
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
@@ -174,21 +156,21 @@ const addOfferToProduct = async (req, res) => {
       productID,
       sellerID,
       price,
-      quantity
-    })
+      quantity,
+    });
 
     await offer.save();
 
-    console.log(offer._id)
-    
-    await Product.findByIdAndUpdate(productID , {$push:{offers:offer._id}})
+    console.log(offer._id);
 
-    await Seller.findByIdAndUpdate(sellerID , {$push:{offers:offer._id}})
+    await Product.findByIdAndUpdate(productID, {
+      $push: { offers: offer._id },
+    });
+
+    await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
-
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     return res.json(new ApiError(400, err.message));
   }
@@ -198,5 +180,5 @@ export {
   sellerRequest,
   productAddRequest,
   addImagesToProductRequest,
-  addOfferToProduct
+  addOfferToProduct,
 };

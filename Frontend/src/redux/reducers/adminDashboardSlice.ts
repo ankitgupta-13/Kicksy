@@ -11,8 +11,8 @@ const initialState = {
   currentAction: null,
 };
 
-const dashboardSlice = createSlice({
-  name: "dashboard",
+const adminDashboardSlice = createSlice({
+  name: "adminDashboard",
   initialState,
   reducers: {
     toggleSection: (state, action) => {
@@ -38,6 +38,6 @@ const dashboardSlice = createSlice({
 });
 
 export const { toggleSection, selectAction, closeSection } =
-  dashboardSlice.actions;
+  adminDashboardSlice.actions;
 
-export default dashboardSlice.reducer;
+export default adminDashboardSlice.reducer;

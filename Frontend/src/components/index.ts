@@ -3,13 +3,14 @@ import Footer from "./Footer/Footer";
 import LogoutBtn from "./Button/LogoutBtn.tsx";
 import Logo from "./Logo/Logo";
 import Container from "./Container/Container";
-import Button from "./Button/Button";
+import Button from "./Button/Button.tsx";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
 import PaymentButton from "./Button/PaymentButton.tsx";
 import BlogUploadButton from "./Button/uploadButton";
 import colorCard from "./colorCard/colorCard.tsx";
 import ProductCard from "./ProductCard/ProductCard.tsx";
+import Breadcrumb from "./Breadcrumb/Breadcrumb.tsx";
 
 export {
   Header,
@@ -24,4 +25,5 @@ export {
   BlogUploadButton,
   colorCard,
   ProductCard,
+  Breadcrumb,
 };

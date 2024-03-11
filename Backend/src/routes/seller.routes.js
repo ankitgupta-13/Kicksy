@@ -11,14 +11,15 @@ import {
 const router = Router();
 
 /* Seller creation requests */
-router.route("/create-request/seller").post(upload.single("storeLogo"), sellerRequest);
+router
+  .route("/create-request/seller")
+  .post(upload.single("storeLogo"), sellerRequest);
 
 /* product request */
 router.route("/create-request/product").post(productAddRequest); // raise a request to add a product.
-router.route("/add-product-image").post(upload.array("image"), addImagesToProductRequest); // add images to the product request
+router
+  .route("/add-product-image")
+  .post(upload.array("image"), addImagesToProductRequest); // add images to the product request
 router.route("/add-offer-to-product").post(addOfferToProduct);
-
-
-
 
 export default router;

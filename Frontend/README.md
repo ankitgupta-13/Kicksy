@@ -17,14 +17,34 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+<!-- seperate file for types
+backend frontend - small letter
+reducers -> slices
+index.ts in each component
+
+feat -> feature
+fix -> bug fix
+docs -> documentation
+style -> formatting, lint stuff
+refactor -> code restructure without changing exterrnal behavior
+test -> adding missing tests
+chore -> maintenance
+init -> initial commit
+rearrange -> files moved, added, deleted etc
+update -> update code (versions, library compatibility)
+
+<Suspense fallback={<Loading />}>
+<SomeComponent />
+</Suspense> -->

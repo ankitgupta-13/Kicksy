@@ -1,67 +1,35 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store/store";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
+import style from "./Sidebar.module.css";
 import {
   closeSection,
   selectAction,
   toggleSection,
-} from "../../../../redux/reducers/adminDashboardSlice";
-import logo from "../../../../assets/Krisksy.svg";
-import style from "./Sidebar.module.css";
+} from "../../../../redux/reducers/sellerDashboardSlice";
+import { Container, Logo } from "../../../../components";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import { Container } from "@mui/material";
-import { RootState } from "../../../../redux/store/store";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
   const { sectionsState } = useSelector(
-    (state: RootState) => state.adminDashboard
+    (state: RootState) => state.sellerDashboard
   );
-
+  const dispatch = useDispatch();
   const sections = [
     {
-      user: {
-        actions: ["allUser", "profileUser", "editUser"],
-        icon: <AccountBoxRoundedIcon />,
-      },
-    },
-    {
-      seller: {
-        actions: ["allSeller", "profileSeller", "requestSellers"],
-        icon: <AccountBoxRoundedIcon />,
-      },
-    },
-    {
       product: {
-        actions: ["allProduct", "addProduct", "requestProducts"],
+        actions: ["allProduct", "addProduct"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       order: {
-        actions: ["allOrder", "editOrder", "deleteOrder"],
+        actions: ["allOrder"],
         icon: <ShoppingCartRoundedIcon />,
       },
     },
-    {
-      blog: {
-        actions: ["addblog", "listblogs"],
-        icon: <NoteAltRoundedIcon />,
-      },
-    },
   ];
-
-  const handleSectionClick = (sectionName) => {
-    dispatch(toggleSection(sectionName));
-  };
-
-  const handleActionClick = (sectionName, actionName) => {
-    dispatch(
-      selectAction({ selectedSection: sectionName, selectedAction: actionName })
-    );
-  };
-
   return (
     <Container
       sx={{
@@ -75,7 +43,7 @@ const Sidebar = () => {
         borderRight: "1px solid #e0e0e0",
       }}
     >
-      <img className={style.Logo} src={logo} alt="" />
+      <img className={style.Logo} src={Logo} alt="" />
       <div>
         <h2>Overview</h2>
         <button
@@ -93,7 +61,7 @@ const Sidebar = () => {
           return (
             <div key={index} className={style.section}>
               <div
-                onClick={() => handleSectionClick(sectionName)}
+                onClick={() => dispatch(toggleSection(sectionName))}
                 className={style.sectionButton}
               >
                 <div className={style.sectionName}>
@@ -115,7 +83,14 @@ const Sidebar = () => {
                     return (
                       <div
                         key={index}
-                        onClick={() => handleActionClick(sectionName, action)}
+                        onClick={() =>
+                          dispatch(
+                            selectAction({
+                              selectedSection: sectionName,
+                              selectedAction: action,
+                            })
+                          )
+                        }
                         className={style.actionButton}
                       >
                         <p>{action}</p>

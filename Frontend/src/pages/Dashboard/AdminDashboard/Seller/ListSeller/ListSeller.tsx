@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { getAllSellers } from "../../../../../api/admin.api";
+import { getSellers } from "../../../../../api/admin.api";
 
 const ListSeller = () => {
   const [sellerList, setSellerList] = useState([]);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     (async () => {
-      const response = await getAllSellers();
+      const response = await getSellers();
       if (response.statusCode === 200) {
-        console.log(response.data);
-        setSellerList(response.data);
+        setSellerList(response.data.sellers);
+        setPage(response.data.page);
       }
     })();
   }, []);
@@ -22,6 +24,7 @@ const ListSeller = () => {
           </div>
         );
       })}
+      {page}
     </div>
   );
 };

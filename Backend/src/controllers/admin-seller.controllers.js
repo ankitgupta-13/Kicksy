@@ -5,7 +5,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { deleteFromAws } from "../utils/aws.js";
 
-const getAllSellerRequests = async (req, res) => {
+const getSellerRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
@@ -22,57 +22,53 @@ const getAllSellerRequests = async (req, res) => {
   }
 };
 
-
 const acceptSellerRequest = async (req, res) => {
+  const { requestID } = req.body;
+
   try {
-    const { requestID } = req.body;
-    const request = await SellerRequest.findOne({ _id: requestID })
-    if (!request) return res.json(new ApiResponse(404, 'request not found'));
+    const sellerRequest = await SellerRequest.findOne({ _id: requestID });
+    if (!sellerRequest)
+      return res.json(new ApiResponse(404, "request not found"));
 
+    const user = await User.findOne({ _id: sellerRequest.userID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
 
-    const user = await User.findOne({ _id: request.userID });
-    if (!user) return res.json(new ApiResponse(404, 'user not found'))
-
-    user.role = 'seller';
+    user.role = "seller";
     await user.save();
 
     const {
+      userID,
+      storeName,
+      storeAddress,
+      storeLogo,
       whatsappNumber,
       gstNumber,
-      storeName,
-      storeLogo,
-      storeAddress,
-      userID,
       website,
       instagram,
-      notes
-    } = request
+      notes,
+    } = sellerRequest;
 
-    console.log("38 " + request.whatsappNumber)
     const seller = new Seller({
+      userID,
+      storeName,
+      storeAddress,
+      storeLogo,
       whatsappNumber,
       gstNumber,
-      storeName,
-      storeLogo,
-      storeAddress,
-      userID,
       website,
       instagram,
-      notes
+      notes,
     });
     await seller.save();
 
     await SellerRequest.findByIdAndDelete({ _id: requestID });
 
-    return res.json(new ApiResponse(200, seller, 'seller created'))
-
-
-  }
-  catch (err) {
+    return res.json(new ApiResponse(200, seller, "seller created"));
+  } catch (err) {
     console.log(err);
-    return res.json(new ApiError(400, err.message))
+    return res.json(new ApiError(400, err.message));
   }
-}
+};
 
 const declineSellerRequest = async (req, res) => {
   const { requestID } = req.body;
@@ -81,17 +77,14 @@ const declineSellerRequest = async (req, res) => {
 
     await deleteFromAws(request.storeLogo);
 
-    if (!request) return res.json(new ApiResponse(404, 'request not found'));
+    if (!request) return res.json(new ApiResponse(404, "request not found"));
 
-    return res.json(new ApiResponse(200, request, 'Seller request deleted successfully'));
-  }
-  catch (err) {
+    return res.json(
+      new ApiResponse(200, request, "Seller request deleted successfully")
+    );
+  } catch (err) {
     return res.json(new ApiError(400, err.message, err));
   }
-}
-
-export {
-  getAllSellerRequests,
-  acceptSellerRequest,
-  declineSellerRequest
 };
+
+export { getSellerRequests, acceptSellerRequest, declineSellerRequest };

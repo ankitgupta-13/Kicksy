@@ -30,15 +30,18 @@ import {
   getUsers,
   fetchAdmins,
   getUsersCount,
-  getSellers,
 } from "../controllers/admin.controllers.js";
 
 import {
   acceptSellerRequest,
   declineSellerRequest,
-  getAllSellerRequests
+  getSellerRequests,
 } from "../controllers/admin-seller.controllers.js";
-import { addProductViaRequest, editProductRequest, getAllProductRequests } from "../controllers/admin-product.controllers.js";
+import {
+  addProductViaRequest,
+  editProductRequest,
+  getProductRequests,
+} from "../controllers/admin-product.controllers.js";
 
 const router = Router();
 
@@ -64,16 +67,14 @@ router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
 router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
-router.route("/get-sellers").get(getSellers);
-
 
 // routes for handling seller requests
-router.route("/requests/seller/getAll").get(getAllSellerRequests);
+router.route("/requests/seller/getAll").get(getSellerRequests);
 router.route("/requests/seller/accept-request").post(acceptSellerRequest);
 router.route("/requests/seller/decline-request").post(declineSellerRequest);
 
 // routes for handling product requests
-router.route("/requests/product/getAll").get(getAllProductRequests);
+router.route("/requests/product/getAll").get(getProductRequests);
 router.route("/requests/product/edit").post(editProductRequest);
-router.route("/requests/product/accept-request").post(addProductViaRequest)
+router.route("/requests/product/accept-request").post(addProductViaRequest);
 export default router;

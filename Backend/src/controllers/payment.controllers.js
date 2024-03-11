@@ -56,9 +56,8 @@ const verifyPayment = async (req, res) => {
         paymentMethod: "Razorpay",
       });
       await order.save();
-      
+
       user.orders.push(order._id);
-      
     } else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }

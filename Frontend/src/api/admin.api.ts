@@ -128,7 +128,7 @@ export const deleteProduct = async (payload: Object) => {
   }
 };
 
-export const getAllSellers = async () => {
+export const getSellers = async () => {
   try {
     const { data } = await api.get("/admin/get-sellers");
     return data;
@@ -138,11 +138,63 @@ export const getAllSellers = async () => {
   }
 };
 
-export const getSellersRequest = async () => {
+export const getSellerRequests = async () => {
   try {
-    const { data } = await api.get("/admin/get-sellers-request");
+    const { data } = await api.get("/admin/get-seller-requests");
     return data;
   } catch (error) {
+    console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const acceptSellerRequest = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/accept-seller-request", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const declineSellerRequest = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/decline-seller-request", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const acceptProductRequest = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/accept-product-request", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const declineProductRequest = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/decline-product-request", payload);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const getProductRequests = async () => {
+  try {
+    const { data } = await api.get("/admin/get-product-requests");
+    return data;
+  } catch (error) {
+    console.log(error);
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
