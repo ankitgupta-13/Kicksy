@@ -87,6 +87,8 @@ const editBlogImage = async (req, res) => {
     const split = imageUrl.split("/")
     // console.log(split);
     const deletedImage = await deleteFromAws(split[split.length - 1]);
+    if(!deletedImage) return res.json(new ApiResponse(422 , "unable to delete image"));
+    
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       res.json(new ApiResponse(422, "unable to upload"))

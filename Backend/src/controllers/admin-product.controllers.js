@@ -4,6 +4,12 @@ import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { deleteFromAws } from "../utils/aws.js";
+
+const handleErr = (res, err) => {
+  console.log(err);
+  return res.json(new ApiError(400, err.message));
+};
 
 const getProductRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -22,43 +28,129 @@ const getProductRequests = async (req, res) => {
   }
 };
 
-/* this api is for accepting the request and hence adding a new product */
-const addProductViaOffer = async (req, res) => {
+/* this api is for editing the product request */
+const editProductRequest = async (req, res) => {
   const { requestID } = req.body;
-};
-
-/* this api is for adding offer to the existing product */
-const addOfferToProduct = async (req, res) => {
-  const { productID, requestID } = req.body;
   try {
-    const product = await Product.findOne({ _id: productID });
-
-    if (!product) return res.json(new ApiError(422, "Invalid productID"));
-
     const request = await ProductRequest.findOne({ _id: requestID });
-    // const request = await Request.findOne({ _id: requestID });
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
 
-    if (!request) return res.json(new ApiError(422, "Invalid requestID"));
+    const updatedRequest = await ProductRequest.findByIdAndUpdate(
+      requestID,
+      req.body
+    );
 
-    const offer = new Offer({
-      productID,
-      sellerID: request.seller,
-      price: request.price,
-      quantity: request.stock,
-    });
-
-    await offer.save();
-
-    product.offers.concat(offer._id);
-    await product.save();
-
-    const seller = await Seller.findOne({ _id: request.seller });
-    seller.offers.concat(offer._id);
-
-    return res.json(new ApiResponse(200, product, "offer added successfully"));
+    return res.json(new ApiResponse(200, updatedRequest));
   } catch (err) {
-    return res.json(new ApiError(400, err.message));
+    return handleErr(res, err);
   }
 };
 
-export { getProductRequests, addOfferToProduct, addProductViaOffer };
+/* this api is for accepting the request and hence adding a new product */
+const addProductViaRequest = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+    const request = await ProductRequest.findOne({ _id: requestID });
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
+
+    const {
+      productCode,
+      skuID,
+      gender,
+      description,
+      title,
+      price,
+      brand,
+      size,
+      category,
+      color,
+      stock,
+      seller,
+      tags,
+      images,
+    } = request;
+
+    const product = new Product({
+      productCode,
+      skuID,
+      gender,
+      description,
+      title,
+      price,
+      brand,
+      size,
+      category,
+      color,
+      stock,
+      seller,
+      tags,
+      images,
+    });
+
+    await product.save();
+
+    await ProductRequest.findByIdAndDelete(requestID);
+
+    return res.json(200, product, "product added successfully!");
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+/* this api is for declining the product request */
+const declineProductRequest = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+    const request = await ProductRequest.findOne({ _id: requestID });
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
+
+    request.images.forEach(async (image) => {
+      await deleteFromAws(image);
+    });
+
+    const deletedRequest = await ProductRequest.findByIdAndDelete(requestID);
+    return res.json(
+      new ApiResponse(200, deletedRequest, "request declined successfully")
+    );
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+/* this api is for deleting an image in product request */
+const deleteProductRequestImage = async (req, res) => {
+  const { imageLink, requestID } = req.body;
+  try {
+    const request = await ProductRequest.findOne({ _id: requestID });
+
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
+
+    const index = request.images.findIndex((item) => {
+      return item === imageLink;
+    });
+
+    if (index !== -1) {
+      await deleteFromAws(request.images[index]);
+      request.images = request.images.filter((image) => {
+        return image !== imageLink;
+      });
+
+      await request.save();
+      return res.json(new ApiResponse(200, request, "image deleted"));
+    }
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+export {
+  getProductRequests,
+  addProductViaRequest,
+  editProductRequest,
+  deleteProductRequestImage,
+  declineProductRequest,
+};

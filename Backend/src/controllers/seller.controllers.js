@@ -53,16 +53,21 @@ const sellerRequest = async (req, res) => {
 
     const seller = new SellerRequest({
       userID: user._id,
-      gstNumber,
+      // gstNumber,
       storeAddress: sellerAddress._id,
-      storeName,
+      // storeName,
       storeLogo: logoImageUrl,
-      whatsappNumber,
+      // whatsappNumber,
+      // website,
+      // instagram,
+      // notes,
+      ...req.body,
     });
     await seller.save();
     if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
     return res.json(new ApiResponse(200, seller, "Seller request sent"));
   } catch (err) {
+    console.log(err.code);
     return res.json(new ApiError(400, err));
   }
 };
@@ -94,6 +99,25 @@ const addImagesToProductRequest = async (req, res) => {
 
 const productAddRequest = async (req, res) => {
   const { sellerID } = req.body;
+
+  /*
+    
+    for raising a ProductRequest req.body should contain
+    
+    skuID
+    title
+    price
+    brand
+    size - array of string
+    category - string
+    color - [string]
+    stock - Number
+    seller - id
+    tags - [string]
+
+
+  */
+
   console.log(req.body);
   try {
     const { images } = req.body;
@@ -105,35 +129,56 @@ const productAddRequest = async (req, res) => {
         )
       );
     }
-
     const seller = await Seller.findOne({ _id: sellerID });
 
-    if (!seller || seller.role !== "seller")
-      return res.json(new ApiResponse(404, "seller not found"));
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
-    /*
-    
-    for raising a ProductRequest req.body should contain
-    
-    skuid
-    title
-    price
-    brand
-    size - array of string
-    category - [string]
-    color - [string]
-    stock - Number
-    seller - id
-    tags - [string]
-
-
-    */
-
-    const request = new ProductRequest(req.body);
+    const request = new ProductRequest({ ...req.body, seller: sellerID });
     await request.save();
+
+    return res.json(new ApiResponse(200, request, "Product Request Raised!"));
   } catch (err) {
+    console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
 
-export { sellerRequest, productAddRequest, addImagesToProductRequest };
+/* this api is for adding offer to the existing product */
+const addOfferToProduct = async (req, res) => {
+  const { productID, sellerID, price, quantity } = req.body;
+
+  try {
+    const product = await Product.findOne({ _id: productID });
+
+    if (!product) return res.json(new ApiError(422, "Invalid productID"));
+
+    const offer = new Offer({
+      productID,
+      sellerID,
+      price,
+      quantity,
+    });
+
+    await offer.save();
+
+    console.log(offer._id);
+
+    await Product.findByIdAndUpdate(productID, {
+      $push: { offers: offer._id },
+    });
+
+    await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
+
+    return res.json(new ApiResponse(200, offer, "offer added successfully"));
+  } catch (err) {
+    console.log(err);
+    return res.json(new ApiError(400, err.message));
+  }
+};
+
+export {
+  sellerRequest,
+  productAddRequest,
+  addImagesToProductRequest,
+  addOfferToProduct,
+};

@@ -3,6 +3,7 @@ import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { deleteFromAws } from "../utils/aws.js";
 
 const getSellerRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -61,7 +62,10 @@ const acceptSellerRequest = async (req, res) => {
     await seller.save();
 
     await SellerRequest.findByIdAndDelete({ _id: requestID });
+
+    return res.json(new ApiResponse(200, seller, "seller created"));
   } catch (err) {
+    console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
@@ -70,6 +74,8 @@ const declineSellerRequest = async (req, res) => {
   const { requestID } = req.body;
   try {
     const request = await SellerRequest.findByIdAndDelete({ _id: requestID });
+
+    await deleteFromAws(request.storeLogo);
 
     if (!request) return res.json(new ApiResponse(404, "request not found"));
 
@@ -81,26 +87,4 @@ const declineSellerRequest = async (req, res) => {
   }
 };
 
-const getSellers = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-
-  try {
-    const sellers = await Seller.find({})
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    return res.json(
-      new ApiResponse(200, { sellers, page }, "Sellers fetched successfully")
-    );
-  } catch (err) {
-    return res.json(new ApiError(400, err.message));
-  }
-};
-
-export {
-  getSellerRequests,
-  acceptSellerRequest,
-  declineSellerRequest,
-  getSellers,
-};
+export { getSellerRequests, acceptSellerRequest, declineSellerRequest };

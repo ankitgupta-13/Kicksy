@@ -36,15 +36,12 @@ import {
   acceptSellerRequest,
   declineSellerRequest,
   getSellerRequests,
-  getSellers,
 } from "../controllers/admin-seller.controllers.js";
-
 import {
-  addOfferToProduct,
-  addProductViaOffer,
+  addProductViaRequest,
+  editProductRequest,
   getProductRequests,
 } from "../controllers/admin-product.controllers.js";
-import { addImagesToProductRequest } from "../controllers/seller.controllers.js";
 
 const router = Router();
 
@@ -72,18 +69,12 @@ router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
 
 // routes for handling seller requests
-router.route("/get-sellers").get(getSellers);
-router.route("/get-seller-requests").get(getSellerRequests);
-router.route("/accept-seller-request").post(acceptSellerRequest);
-router.route("/decline-seller-request").post(declineSellerRequest);
+router.route("/requests/seller/getAll").get(getSellerRequests);
+router.route("/requests/seller/accept-request").post(acceptSellerRequest);
+router.route("/requests/seller/decline-request").post(declineSellerRequest);
 
 // routes for handling product requests
-router
-  .route("/add-product-image")
-  .post(upload.array("image"), addImagesToProductRequest);
-router.route("/get-product-requests").get(getProductRequests);
-router.route("/requests/product/add-offer-to-product").get(addOfferToProduct);
-
-// router.route("/requests/product/add-product-via-offer").get(addProductViaOffer);
-
+router.route("/requests/product/getAll").get(getProductRequests);
+router.route("/requests/product/edit").post(editProductRequest);
+router.route("/requests/product/accept-request").post(addProductViaRequest);
 export default router;

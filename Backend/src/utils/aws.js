@@ -38,9 +38,13 @@ const uploadOnAws = async (req, res) => {
 
 const deleteFromAws = async (imageUrl) => {
   try {
+
+    const split = imageUrl.split("/")
+
+
     await s3.deleteObject({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: imageUrl
+      Key: split[split.length - 1]
     }).promise()
 
     return { keyDeleted: imageUrl, message: "image deleted successfully" }
