@@ -5,12 +5,11 @@ import { Seller } from "../models/seller.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-const getAllProductRequests = async (req, res) => {
+const getProductRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
   try {
-
     const requests = await ProductRequest.find({})
       .skip((page - 1) * limit)
       .limit(limit);
@@ -18,20 +17,15 @@ const getAllProductRequests = async (req, res) => {
     res.json(
       new ApiResponse(200, { requests, page }, "requests fetched successfully")
     );
-
-  }
-  catch (err) {
+  } catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
-
-
 
 /* this api is for accepting the request and hence adding a new product */
 const addProductViaOffer = async (req, res) => {
   const { requestID } = req.body;
 };
-
 
 /* this api is for adding offer to the existing product */
 const addOfferToProduct = async (req, res) => {
@@ -58,15 +52,13 @@ const addOfferToProduct = async (req, res) => {
     product.offers.concat(offer._id);
     await product.save();
 
-    const seller = await Seller.findOne({ _id: request.seller })
+    const seller = await Seller.findOne({ _id: request.seller });
     seller.offers.concat(offer._id);
 
     return res.json(new ApiResponse(200, product, "offer added successfully"));
-
-  }
-  catch (err) {
+  } catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
 
-export { getAllProductRequests, addOfferToProduct, addProductViaOffer }
+export { getProductRequests, addOfferToProduct, addProductViaOffer };

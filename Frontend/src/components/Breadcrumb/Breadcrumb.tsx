@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
 import style from "./Breadcrumb.module.css";
 
-const Breadcrumb = () => {
-  const { currentSection, currentAction } = useSelector(
-    (state) => state.dashboard
-  );
+const Breadcrumb = ({ currentSection, currentAction }) => {
   return (
     <div className={style.container}>
       <div className={style.heading}>Dashboard</div>

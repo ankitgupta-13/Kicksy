@@ -4,7 +4,7 @@ import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-const getAllSellerRequests = async (req, res) => {
+const getSellerRequests = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
@@ -21,44 +21,86 @@ const getAllSellerRequests = async (req, res) => {
   }
 };
 
-
 const acceptSellerRequest = async (req, res) => {
-  const { requestID } = req.bopdy;
+  const { requestID } = req.body;
+
   try {
+    const sellerRequest = await SellerRequest.findOne({ _id: requestID });
+    if (!sellerRequest)
+      return res.json(new ApiResponse(404, "request not found"));
 
-    const request = await SellerRequest.findOne({ _id: requestID })
-    if (!request) return res.json(new ApiResponse(404, 'request not found'));
+    const user = await User.findOne({ _id: sellerRequest.userID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
 
-
-    const user = await User.findOne({ _id: request.userID });
-    if (!user) return res.json(new ApiResponse(404, 'user not found'))
-
-    user.role = 'seller';
+    user.role = "seller";
     await user.save();
 
-    const seller = new Seller(request);
+    const {
+      userID,
+      storeName,
+      storeAddress,
+      storeLogo,
+      whatsappNumber,
+      gstNumber,
+      website,
+      instagram,
+      notes,
+    } = sellerRequest;
+
+    const seller = new Seller({
+      userID,
+      storeName,
+      storeAddress,
+      storeLogo,
+      whatsappNumber,
+      gstNumber,
+      website,
+      instagram,
+      notes,
+    });
     await seller.save();
 
     await SellerRequest.findByIdAndDelete({ _id: requestID });
-
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
   }
-  catch (err) {
-    return res.json(new ApiError(400, err.message))
-  }
-}
+};
 
 const declineSellerRequest = async (req, res) => {
   const { requestID } = req.body;
   try {
     const request = await SellerRequest.findByIdAndDelete({ _id: requestID });
 
-    if (!request) return res.json(new ApiResponse(404, 'request not found'));
+    if (!request) return res.json(new ApiResponse(404, "request not found"));
 
-    return res.json(new ApiResponse(200, request, 'Seller request deleted successfully'));
-  }
-  catch (err) {
+    return res.json(
+      new ApiResponse(200, request, "Seller request deleted successfully")
+    );
+  } catch (err) {
     return res.json(new ApiError(400, err.message, err));
   }
-}
+};
 
-export { getAllSellerRequests, acceptSellerRequest, declineSellerRequest };
+const getSellers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  try {
+    const sellers = await Seller.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return res.json(
+      new ApiResponse(200, { sellers, page }, "Sellers fetched successfully")
+    );
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
+  }
+};
+
+export {
+  getSellerRequests,
+  acceptSellerRequest,
+  declineSellerRequest,
+  getSellers,
+};

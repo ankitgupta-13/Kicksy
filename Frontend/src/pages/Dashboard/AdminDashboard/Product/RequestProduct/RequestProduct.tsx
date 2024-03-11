@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { getSellerRequests } from "../../../../../api/admin.api";
+import {
+  getProductRequests,
+  getSellerRequests,
+} from "../../../../../api/admin.api";
 import RequestCard from "../../../../../components/RequestCard/RequestCard";
 
-const RequestSeller = () => {
+const RequestProduct = () => {
   const [requestList, setRequestList] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     (async () => {
-      const response = await getSellerRequests();
+      const response = await getProductRequests();
       if (response.statusCode === 200) {
         setRequestList(response.data.requests);
         setPage(response.data.page);
@@ -22,7 +25,7 @@ const RequestSeller = () => {
         return (
           <div key={index}>
             <RequestCard
-              type="seller"
+              type="product"
               id={request._id}
               name={request.storeName}
               logo={request.storeLogo}
@@ -34,4 +37,4 @@ const RequestSeller = () => {
   );
 };
 
-export default RequestSeller;
+export default RequestProduct;

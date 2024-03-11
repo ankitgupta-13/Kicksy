@@ -1,13 +1,13 @@
 import MainContent from "./MainContent/MainContent";
 import { useSelector } from "react-redux";
 import style from "./AdminDashboard.module.css";
-import Breadcrumb from "../../../components/Breadcrumb/Breadcrumb";
-import { Container } from "../../../components";
+import { Breadcrumb, Container } from "../../../components";
 import Sidebar from "./Sidebar/Sidebar";
+import { RootState } from "../../../redux/store/store";
 
 const AdminDashboard = () => {
   const { currentSection, currentAction } = useSelector(
-    (state) => state.dashboard
+    (state: RootState) => state.adminDashboard
   );
   return (
     <Container
@@ -18,7 +18,10 @@ const AdminDashboard = () => {
     >
       <Sidebar />
       <div className={style.right}>
-        <Breadcrumb />
+        <Breadcrumb
+          currentSection={currentSection}
+          currentAction={currentAction}
+        />
         <MainContent
           currentSection={currentSection}
           currentAction={currentAction}

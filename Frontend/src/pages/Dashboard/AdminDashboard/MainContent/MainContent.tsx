@@ -2,12 +2,13 @@ import { Container } from "../../../../components";
 import Analytics from "../Analytics/Analytics";
 import AddBlog from "../Blog/AddBlog/AddBlog";
 import ListBlogs from "../Blog/ListBlogs/ListBlogs";
-import DetailOrder from "../Order/DetailOrder/DetailOrder";
 import ListOrder from "../Order/ListOrder/ListOrder";
 import CreateProduct from "../Product/CreateProduct/CreateProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
+import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import ListSeller from "../Seller/ListSeller/ListSeller";
+import RequestSeller from "../Seller/RequestSeller/RequestSeller";
 import ListUser from "../User/ListUser/ListUser";
 import style from "./MainContent.module.css";
 
@@ -25,7 +26,11 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "allProduct":
           content = <ListProduct />;
           break;
+        case "requestProducts":
+          content = <RequestProduct />;
+          break;
       }
+
       break;
     case "order":
       switch (currentAction) {
@@ -45,6 +50,9 @@ const MainContent = ({ currentSection, currentAction }) => {
       switch (currentAction) {
         case "allSeller":
           content = <ListSeller />;
+          break;
+        case "requestSellers":
+          content = <RequestSeller />;
           break;
       }
       break;

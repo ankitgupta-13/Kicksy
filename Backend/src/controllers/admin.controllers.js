@@ -109,51 +109,11 @@ const fetchAdmins = async (req, res) => {
   }
 };
 
-const getSellers = async (req, res) => {
-  try {
-    const sellers = await Seller.find();
-    if (!sellers) {
-      return res.json(new ApiResponse(404, "No Sellers Found!"));
-    }
-    res.json(new ApiResponse(200, sellers, "Sellers Fetched successfully"));
-  } catch (err) {
-    throw new ApiError(400, err.message);
-  }
-};
-
-const getSellersRequest = async (req, res) => {
-  try {
-    const sellersRequest = await SellerRequest.find();
-    if (!sellersRequest) {
-      return res.json(new ApiResponse(404, "No Sellers Request Found!"));
-    }
-    return res.json(
-      new ApiResponse(
-        200,
-        sellersRequest,
-        "Sellers Request Fetched successfully"
-      )
-    );
-  } catch (error) {
-    throw new ApiError(400, error.message);
-  }
-};
-
-
-
 // -----------> HANDLING SELLER REQUESTS <--------------
 
-const acceptSellerRequest = async(req,res)=>{
+const acceptSellerRequest = async (req, res) => {};
 
-}
-
-const declineSellerRequest = async(req,res)=>{
-
-}
-
-
-
-
+const declineSellerRequest = async (req, res) => {};
 
 export {
   createAdmin,
@@ -163,6 +123,4 @@ export {
   getActiveUsersCount,
   fetchAdmins,
   getUsersCount,
-  getSellers,
-  getSellersRequest,
 };
