@@ -38,55 +38,12 @@ const sellerSchema = new mongoose.Schema({
       ref: "Offer",
     },
   ],
+  website: String,
+  instagram: String,
+  notes: String,
 });
 
-const productRequestSchema = new mongoose.Schema({
-  productCode: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  skuid: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  brand: {
-    type: String,
-    required: true,
-  },
-  size: {
-    type: [String],
-    required: true,
-  },
-  category: {
-    type: [String],
-    enum: ["anime", "boots", "sneakers", "sandals"],
-    required: true,
-  },
-  color: {
-    type: [String],
-    required: true,
-  },
-  stock: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  tags: [
-    {
-      type: String,
-    },
-  ],
-});
+
 
 const Seller = new mongoose.model("Seller", sellerSchema);
 

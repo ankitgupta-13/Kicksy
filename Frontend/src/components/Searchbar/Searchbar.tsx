@@ -38,7 +38,7 @@ const Searchbar = ({open, close}) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className={style.clearButton} onClick={clearInput}>&times;</button>
+        {/* <button className={style.clearButton} onClick={clearInput}>&times;</button> */}
         <button className={style.searchButton} onClick={search}><SearchIcon/></button>
       </div>
       <a className={style.closebtn} onClick={close}>&times;</a>

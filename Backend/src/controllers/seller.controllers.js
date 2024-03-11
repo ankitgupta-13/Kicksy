@@ -1,7 +1,6 @@
 import { Address } from "../models/address.model.js";
-import { Offer } from "../models/offer.model.js";
-import { Product } from "../models/product.models.js";
 import { SellerRequest } from "../models/request.model.js";
+import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -22,6 +21,7 @@ const sellerRequest = async (req, res) => {
       city,
       pincode,
     } = req.body;
+
     const user = await User.findOne({ _id: userId });
 
     if (!user) return res.json(new ApiResponse(404, "user not found"));
@@ -59,11 +59,8 @@ const sellerRequest = async (req, res) => {
       storeLogo: logoImageUrl,
       whatsappNumber,
     });
-
-    if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
-
     await seller.save();
-
+    if (!seller) return res.json(new ApiResponse(400, "Unable to save seller"));
     return res.json(new ApiResponse(200, seller, "Seller request sent"));
   } catch (err) {
     return res.json(new ApiError(400, err));
@@ -86,11 +83,18 @@ const sellerRequest = async (req, res) => {
 
 // ---> admin will have an option to edit the request parameters as per his need and requirements
 
+const addImagesToProductRequest = async (req, res) => {
+  const productImageUrl = await uploadOnAws(req.files[0].path);
+  if (!productImageUrl) {
+    return res.send(new ApiError(500, "Upload Failed"));
+  }
+  fs.unlinkSync(req.files[0].path);
+  return res.json(new ApiResponse(200, productImageUrl, "Upload Success"));
+};
+
 const productAddRequest = async (req, res) => {
   const { sellerID } = req.body;
-
   console.log(req.body);
-
   try {
     const { images } = req.body;
     if (!images || images.length === 0) {
@@ -107,80 +111,29 @@ const productAddRequest = async (req, res) => {
     if (!seller || seller.role !== "seller")
       return res.json(new ApiResponse(404, "seller not found"));
 
-    const request = new Request({
-      product: req.body,
-      seller: sellerID,
-    });
+    /*
+    
+    for raising a ProductRequest req.body should contain
+    
+    skuid
+    title
+    price
+    brand
+    size - array of string
+    category - [string]
+    color - [string]
+    stock - Number
+    seller - id
+    tags - [string]
 
+
+    */
+
+    const request = new ProductRequest(req.body);
     await request.save();
   } catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
-/* this api is for accepting the request and hence adding a new product */
-const addProductViaOffer = async (req, res) => {
-  const { requestID } = req.body;
-};
 
-/* this api is for adding offer to the existing product */
-const addOfferToProduct = async (req, res) => {
-  const { productID, requestID } = req.body;
-  try {
-    const product = await Product.findOne({ _id: productID });
-
-    if (!product) return res.json(new ApiError(422, "Invalid productID"));
-
-    const request = await Request.findOne({ _id: requestID });
-
-    if (!request) return res.json(new ApiError(422, "Invalid requestID"));
-
-    const offer = new Offer({
-      productID,
-      sellerID: request.seller,
-      price: request.product.price,
-      quantity: request.product.stock,
-    });
-
-    await offer.save();
-
-    product.offers.concat(offer._id);
-    await product.save();
-    return res.json(new ApiResponse(200, product, "offer added successfully"));
-  } catch (err) {
-    return res.json(new ApiError(400, err.message));
-  }
-};
-
-const getAllRequests = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-
-  try {
-    const requests = await Request.find({})
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    res.json(
-      new ApiResponse(200, { requests, page }, "requests fetched successfully")
-    );
-  } catch (err) {
-    return res.json(new ApiError(400, err.message));
-  }
-};
-
-const acceptProductRequest = async (req, res) => {
-  const { requestID } = req.body;
-
-  try {
-  } catch (err) {
-    return res.json(new ApiError(400, err.message));
-  }
-};
-
-export {
-  sellerRequest,
-  productAddRequest,
-  getAllRequests,
-  addProductViaOffer,
-  addOfferToProduct,
-};
+export { sellerRequest, productAddRequest, addImagesToProductRequest };

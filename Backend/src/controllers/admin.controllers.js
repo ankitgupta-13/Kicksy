@@ -139,6 +139,22 @@ const getSellersRequest = async (req, res) => {
   }
 };
 
+
+
+// -----------> HANDLING SELLER REQUESTS <--------------
+
+const acceptSellerRequest = async(req,res)=>{
+
+}
+
+const declineSellerRequest = async(req,res)=>{
+
+}
+
+
+
+
+
 export {
   createAdmin,
   checkAdmin,

@@ -36,6 +36,7 @@
 }
 
 .searchButton {
+  display: flex;
   position: absolute;
   top: 50%;
   right: 10px;
@@ -45,7 +46,7 @@
   font-size: 22px;
   cursor: pointer;
 }
-.clearButton {
+/* .clearButton {
   position: absolute;
   top: 50%;
   right: 60px;
@@ -55,8 +56,9 @@
   font-size: 16px;
   height: 20px;
   width: 20px;
+ 
   border-radius: 50%;
-}
+} */
 
 .searchButton:focus {
   outline: none;
@@ -77,6 +79,7 @@
   }
 
   .sidenav .closebtn {
+    cursor: pointer;
     font-size: 36px;
   }
   @media screen and (max-width: 430px) {

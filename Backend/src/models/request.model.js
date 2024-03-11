@@ -27,6 +27,10 @@ const productRequestSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  images: {
+    type: [String],
+    required: true,
+  },
   category: {
     type: [String],
     enum: ["anime", "boots", "sneakers", "sandals"],
