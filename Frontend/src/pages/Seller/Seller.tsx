@@ -1,5 +1,5 @@
 import style from "./Seller.module.css";
-import { Button, Input, Select } from "../../components";
+import {Logo, Button, Input, Select } from "../../components";
 import { useForm } from "react-hook-form";
 import { registerSeller } from "../../api/seller.api";
 import { useEffect, useState } from "react";
@@ -75,56 +75,106 @@ const Seller = () => {
   }, [watch("state")]);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(handleRegisterSeller)}>
-        <Input
-          placeholder="Store Name"
-          label="Store Name"
-          {...register("storeName", { required: true })}
-        />
-        <Input
-          placeholder="Whatsapp Number"
-          label="Whatsapp Number"
-          {...register("whatsappNumber", { required: true })}
-        />
-        <Input
-          placeholder="Store Logo"
-          label="Store Logo"
-          type="file"
-          {...register("storeLogo", { required: true })}
-        />
-        <Input
-          placeholder="GST Number"
-          label="GST Number"
-          {...register("gstNumber", { required: true })}
-        />
-        <Input
-          placeholder="Store Address"
-          label="Store Address"
-          {...register("street", { required: true })}
-        />
-        <Select
-          label="Country"
-          options={countries.map((country) => country.name)}
-          {...register("country", { required: true })}
-        />
-        <Select
-          label="State"
-          options={states.map((state) => state.name)}
-          {...register("state", { required: true })}
-        />
-        <Select
-          label="City"
-          options={cities}
-          {...register("city", { required: true })}
-        />
-        <Input
-          placeholder="Pincode"
-          label="Pincode"
-          {...register("pincode", { required: true })}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
+    <div className={style.body}>
+      <div className={style.CenterBody}>
+      {/* <div className={style.logo}>
+          <Logo/>
+        </div> */}
+      <h2 className={style.heading}> SELLER REGISTERATION</h2>
+        <form onSubmit={handleSubmit(handleRegisterSeller)}>
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px"}}
+              placeholder="Store Name"
+              label="Store Name"
+              {...register("storeName", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="Whatsapp Number"
+              label="Whatsapp Number"
+              {...register("whatsappNumber", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="Store Logo"
+              label="Store Logo"
+              type="file"
+              {...register("storeLogo", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="GST Number"
+              label="GST Number"
+              {...register("gstNumber", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="House No., Street, Area ..."
+              label="Full Address"
+              {...register("street", { required: true })}
+            /></div>
+
+          <div className={style.inputBox}>
+            <Select
+              style={{ marginTop: "5px" }}
+              label="Country"
+              options={countries.map((country) => country.name)}
+              {...register("country", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Select
+              style={{ marginTop: "5px" }}
+              label="State"
+              options={states.map((state) => state.name)}
+              {...register("state", { required: true })}
+            />
+          </div>
+
+
+          <div className={style.inputBox}>
+            <Select
+              style={{ marginTop: "5px" }}
+              label="City"
+              options={cities}
+              {...register("city", { required: true })}
+            />
+          </div>
+
+
+
+          <div className={style.inputBox}>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="Pincode"
+              label="Pincode"
+              {...register("pincode", { required: true })}
+            />
+          </div>
+
+          <Button className={style.button} type="submit">Submit</Button>
+        </form>
+      </div>
+
     </div>
   );
 };

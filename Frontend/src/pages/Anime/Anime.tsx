@@ -55,6 +55,7 @@ const Anime = () => {
 
   return (
     <div className={style.mainBody}>
+      <div>
       <div className={explore ? style.exploresec : ""}>
         <div style={{display:"flex", flexDirection: "column"}}>
           <div className={style.Container_first}>
