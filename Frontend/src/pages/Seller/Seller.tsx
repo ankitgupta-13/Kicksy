@@ -1,5 +1,5 @@
 import style from "./Seller.module.css";
-import {Logo, Button, Input, Select } from "../../components";
+import { Logo, Button, Input, Select } from "../../components";
 import { useForm } from "react-hook-form";
 import { registerSeller } from "../../api/seller.api";
 import { useEffect, useState } from "react";
@@ -77,14 +77,14 @@ const Seller = () => {
   return (
     <div className={style.body}>
       <div className={style.CenterBody}>
-      {/* <div className={style.logo}>
+        <div className={style.logo}>
           <Logo/>
-        </div> */}
-      <h2 className={style.heading}> SELLER REGISTERATION</h2>
+        </div>
+        <h2 className={style.heading}> SELLER REGISTERATION</h2>
         <form onSubmit={handleSubmit(handleRegisterSeller)}>
           <div className={style.inputBox}>
             <Input
-              style={{ marginTop: "5px"}}
+              style={{ marginTop: "5px" }}
               placeholder="Store Name"
               label="Store Name"
               {...register("storeName", { required: true })}

@@ -98,7 +98,7 @@ const addImagesToProductRequest = async (req, res) => {
 };
 
 const productAddRequest = async (req, res) => {
-  const { sellerID } = req.body;
+  const { userID } = req.body;
 
   /*
     
@@ -118,7 +118,7 @@ const productAddRequest = async (req, res) => {
 
   */
 
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const { images } = req.body;
     if (!images || images.length === 0) {
@@ -129,12 +129,18 @@ const productAddRequest = async (req, res) => {
         )
       );
     }
-    const seller = await Seller.findOne({ _id: sellerID });
 
-    if (!seller)
-      return res.json(new ApiResponse(404, null, "seller not found"));
+    console.log(userID);
+    const seller = await Seller.findOne({ userID: userID });
+    const user = await User.findOne({ _id: userID });
 
-    const request = new ProductRequest({ ...req.body, seller: sellerID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+
+    if (user.role !== "seller")
+      return res.json(new ApiResponse(404, "Given user is not a seller yet!!"));
+
+    const request = new ProductRequest({ ...req.body, seller: seller._id });
     await request.save();
 
     return res.json(new ApiResponse(200, request, "Product Request Raised!"));

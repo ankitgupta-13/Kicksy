@@ -13,7 +13,6 @@ const CreateProduct = () => {
   const userID = useSelector((state: RootState) => state.auth.userData._id);
 
   const handleCreateProduct = async (data: any) => {
-    console.log(userID);
     const { images } = data;
     const imageUrls = [];
     for (const image of images) {
@@ -64,7 +63,7 @@ const CreateProduct = () => {
               label="Product Code"
               type="text"
               placeholder="Product Code"
-              {...register("productCode", { required: true })}
+              {...register("skuID", { required: true })}
             />
             <Input
               label="Quantity"
@@ -75,7 +74,7 @@ const CreateProduct = () => {
 
             <Select
               label="Category"
-              options={["Category 1", "Category 2"]}
+              options={["boots", "sneakers"]}
               {...register("category", { required: true })}
             />
             <Select
@@ -126,19 +125,8 @@ const CreateProduct = () => {
               type="number"
               label="Product Price"
               placeholder="Product Price"
-              {...register("originalPrice", { required: true })}
+              {...register("price", { required: true })}
             />
-            <Input
-              type="number"
-              label="Discount Percentage"
-              placeholder="xx%"
-              {...register("discountPercent")}
-            />
-            <div>
-              <h2>Final price</h2>
-              {watch("originalPrice") -
-                (watch("discountPercent") / 100) * watch("originalPrice")}
-            </div>
           </div>
         </div>
         <Button type="submit">Create Product</Button>
