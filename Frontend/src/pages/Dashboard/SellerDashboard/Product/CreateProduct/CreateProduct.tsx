@@ -1,23 +1,30 @@
 import { useForm } from "react-hook-form";
 import style from "./CreateProduct.module.css";
 import { Button, Container, Input, Select } from "../../../../../components";
-import { addProduct, uploadImage } from "../../../../../api/admin.api";
+import {
+  addProductRequest,
+  uploadProductRequestImage,
+} from "../../../../../api/seller.api";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store/store";
 
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();
+  const userID = useSelector((state: RootState) => state.auth.userData._id);
 
   const handleCreateProduct = async (data: any) => {
+    console.log(userID);
     const { images } = data;
     const imageUrls = [];
     for (const image of images) {
       const formData = new FormData();
       formData.append("image", image);
-      const response = await uploadImage(formData);
+      const response = await uploadProductRequestImage(formData);
       if (response.statusCode !== 200) return console.log(response.message);
       imageUrls.push(response.data);
     }
-    data = { ...data, images: imageUrls };
-    const response = await addProduct(data);
+    data = { ...data, images: imageUrls, userID: userID };
+    const response = await addProductRequest(data);
     if (response.statusCode === 200) {
       alert(response.message);
     } else alert(response.message);

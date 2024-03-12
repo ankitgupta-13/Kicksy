@@ -131,7 +131,8 @@ const productAddRequest = async (req, res) => {
     }
     const seller = await Seller.findOne({ _id: sellerID });
 
-    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+    if (!seller)
+      return res.json(new ApiResponse(404, null, "seller not found"));
 
     const request = new ProductRequest({ ...req.body, seller: sellerID });
     await request.save();
