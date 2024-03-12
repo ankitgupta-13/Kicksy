@@ -34,7 +34,12 @@ const Sidebar = () => {
     },
     {
       product: {
-        actions: ["allProduct", "addProduct", "requestProducts"],
+        actions: [
+          "allProduct",
+          "detailProduct",
+          "addProduct",
+          "requestProducts",
+        ],
         icon: <AccountBoxRoundedIcon />,
       },
     },

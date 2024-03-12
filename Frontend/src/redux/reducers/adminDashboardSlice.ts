@@ -9,6 +9,8 @@ const initialState = {
   },
   currentSection: null,
   currentAction: null,
+  currentProduct: null,
+  currentOrder: null,
 };
 
 const adminDashboardSlice = createSlice({
@@ -23,7 +25,6 @@ const adminDashboardSlice = createSlice({
       const { selectedSection, selectedAction } = action.payload;
       state.currentSection = selectedSection;
       state.currentAction = selectedAction;
-      console.log(selectedSection, selectAction);
       Object.keys(state.sectionsState).forEach((key) => {
         if (key !== selectedSection) {
           state.sectionsState[key] = false;
@@ -34,10 +35,13 @@ const adminDashboardSlice = createSlice({
       state.currentSection = null;
       state.currentAction = null;
     },
+    selectProduct: (state, action) => {
+      state.currentProduct = action.payload;
+    },
   },
 });
 
-export const { toggleSection, selectAction, closeSection } =
+export const { toggleSection, selectAction, closeSection, selectProduct } =
   adminDashboardSlice.actions;
 
 export default adminDashboardSlice.reducer;

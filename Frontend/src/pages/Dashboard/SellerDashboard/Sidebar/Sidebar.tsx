@@ -19,7 +19,7 @@ const Sidebar = () => {
   const sections = [
     {
       product: {
-        actions: ["allProduct", "addProduct"],
+        actions: ["allProduct", "addProduct", "detailProduct"],
         icon: <AccountBoxRoundedIcon />,
       },
     },

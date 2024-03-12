@@ -1,10 +1,10 @@
 import style from "./MainContent.module.css";
 import CreateProduct from "../Product/CreateProduct/CreateProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
-import EditProduct from "../Product/EditProduct/EditProduct";
 import ListOrder from "../Order/ListOrder/ListOrder";
 import Analytics from "../Analytics/Analytics";
 import { Container } from "../../../../components";
+import DetailProduct from "../Product/DetailProduct/DetailProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
@@ -14,8 +14,8 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "addProduct":
           content = <CreateProduct />;
           break;
-        case "editProduct":
-          content = <EditProduct />;
+        case "detailProduct":
+          content = <DetailProduct />;
           break;
         case "allProduct":
           content = <ListProduct />;

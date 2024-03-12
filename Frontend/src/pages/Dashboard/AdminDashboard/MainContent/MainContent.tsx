@@ -4,7 +4,7 @@ import AddBlog from "../Blog/AddBlog/AddBlog";
 import ListBlogs from "../Blog/ListBlogs/ListBlogs";
 import ListOrder from "../Order/ListOrder/ListOrder";
 import CreateProduct from "../Product/CreateProduct/CreateProduct";
-import EditProduct from "../Product/EditProduct/EditProduct";
+import DetailProduct from "../Product/DetailProduct/DetailProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import ListSeller from "../Seller/ListSeller/ListSeller";
@@ -20,8 +20,8 @@ const MainContent = ({ currentSection, currentAction }) => {
         case "addProduct":
           content = <CreateProduct />;
           break;
-        case "editProduct":
-          content = <EditProduct />;
+        case "detailProduct":
+          content = <DetailProduct />;
           break;
         case "allProduct":
           content = <ListProduct />;

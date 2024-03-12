@@ -43,17 +43,6 @@ export const getAllProducts = async () => {
   }
 };
 
-export const getProductById = async (payload: { productID: string }) => {
-  try {
-    const { data } = await api.post("/user/get-product-by-id", payload);
-    return data;
-  } catch (error: any) {
-    console.log(error);
-    if (error.response) return error.response;
-    else return JSON.parse(JSON.stringify(error));
-  }
-};
-
 export const getAllBlogs = async () => {
   try {
     const { data } = await api.get("/user/fetch-blogs");
