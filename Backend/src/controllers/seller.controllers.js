@@ -53,14 +53,8 @@ const sellerRequest = async (req, res) => {
 
     const seller = new SellerRequest({
       userID: user._id,
-      // gstNumber,
       storeAddress: sellerAddress._id,
-      // storeName,
       storeLogo: logoImageUrl,
-      // whatsappNumber,
-      // website,
-      // instagram,
-      // notes,
       ...req.body,
     });
     await seller.save();
@@ -99,26 +93,6 @@ const addImagesToProductRequest = async (req, res) => {
 
 const productAddRequest = async (req, res) => {
   const { userID } = req.body;
-
-  /*
-    
-    for raising a ProductRequest req.body should contain
-    
-    skuID
-    title
-    price
-    brand
-    size - array of string
-    category - string
-    color - [string]
-    stock - Number
-    seller - id
-    tags - [string]
-
-
-  */
-
-  // console.log(req.body);
   try {
     const { images } = req.body;
     if (!images || images.length === 0) {
@@ -129,8 +103,6 @@ const productAddRequest = async (req, res) => {
         )
       );
     }
-
-    console.log(userID);
     const seller = await Seller.findOne({ userID: userID });
     const user = await User.findOne({ _id: userID });
 

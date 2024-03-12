@@ -1,10 +1,13 @@
 import React, { useId } from "react";
+import style from "./Select.module.css";
 
-
-const Select = ({ border, height, options, label, className = "", ...props }, ref) => {
+const Select = (
+  { border, height, options, label, className = "", ...props },
+  ref
+) => {
   const id = useId();
   return (
-    <div>
+    <div className={style.container}>
       {label && (
         <label htmlFor={id} className="">
           {label}
@@ -14,7 +17,7 @@ const Select = ({ border, height, options, label, className = "", ...props }, re
         {...props}
         id={id}
         ref={ref}
-        className=""
+        className={style.select}
         style={{ height: `${height}`, border: `${border}` }}
       >
         {options?.map((option) => (
