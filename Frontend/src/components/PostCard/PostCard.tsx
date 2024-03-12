@@ -34,7 +34,7 @@ const PostCard = (props) => {
 const BlockCard = (props) => {
   return (
     <div className={style.block}>
-      <img src={BlockImage} alt="error" />
+      <img src={BlockImage} alt="error" className={style.block__image} />
       <div className={style.block__info}>
         <div className={style.block__info_heading}>
           Adaptation <span className={style.block__info_circle}>&#9679;</span>{" "}

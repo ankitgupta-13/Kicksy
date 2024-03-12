@@ -41,6 +41,7 @@ const addBlog = async (req, res) => {
   const { content, blogTitle, image , category } = req.body;
   // console.log(req.file);
   try {
+
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       fs.unlinkSync(req.file.path);
@@ -74,6 +75,7 @@ const addBlog = async (req, res) => {
 
   }
   catch (err) {
+    // console.log(err);
     return res.json(new ApiError(400, err.message))
   }
 }
@@ -156,9 +158,8 @@ const deleteBlog = async (req, res) => {
       return res.json(new ApiResponse(404, "blog not found"));
     }
     const imageUrl = blog.imageurl
-    const split = imageUrl.split("/")
 
-    const img_deleted = await deleteFromAws(split[split.length - 1]);
+    await deleteFromAws(imageUrl);
 
     const deleted = await Blog.findByIdAndDelete({ _id: blogID });
     res.json(new ApiResponse(200, deleted, "blog deleted successfully"));

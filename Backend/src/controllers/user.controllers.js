@@ -18,7 +18,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     return { accessToken, refreshToken };
   } catch (err) {
     console.log(err);
-    res.json(new ApiError(400, "Error generating token! ", err));
+    return res.json(new ApiError(400, "Error generating token! ", err));
   }
 };
 
@@ -49,9 +49,10 @@ const sendEmailOtp = async (req, res) => {
       otp: hashedOtp,
     }).save();
     transporter.sendMail(mailOptions);
-    res.status(200).json(new ApiResponse(200, "Otp sent successfully"));
+    return res.status(200).json(new ApiResponse(200, "Otp sent successfully"));
   } catch (err) {
     console.log(err);
+    return res.json(new ApiError(400 , err.message));
   }
 };
 
@@ -72,19 +73,20 @@ const verifyEmailOtp = async (req, res) => {
     }
     const { createdAt } = hashedOtp;
     if (createdAt < Date.now() - 600000) {
-      return new ApiResponse("Otp has expired , please request again");
+      return res.json(new ApiResponse(422 , "Otp has expired , please request again"));
     }
     const verify = bcrypt.compareSync(otp, hashedOtp.otp);
 
     if (verify) {
       await Otp.deleteOne({ email });
       return res.json(new ApiResponse(200, "Email verified successfully"));
-    } else {
+    } 
+    else {
       return res.json(new ApiResponse(400, "Otp entered is wrong"));
     }
   } catch (err) {
-    console.log(err);
-    throw new ApiError(400, "verification failed", err.message);
+    // console.log(err);
+    return res.json(new ApiError(400, "verification failed", err.message));
   }
 };
 
@@ -104,9 +106,12 @@ const sendMobileOtp = async (req, res) => {
         to: `${countryCode}${mobile}`,
         channel: "sms",
       });
-    return res.json(new ApiResponse(200, otpResponse, "Mobile otp sent"));
-  } catch (error) {
-    throw new ApiError(400, "Error sending mobile otp ", error);
+    
+      return res.json(new ApiResponse(200, otpResponse, "Mobile otp sent"));
+
+    } 
+  catch (error) {
+    return res.json(new ApiError(400, "Error sending mobile otp ", error))
   }
 };
 
@@ -119,13 +124,13 @@ const verifyMobileOtp = async (req, res) => {
         to: `${countryCode}${mobile}`,
         code: otp,
       });
-    res
+    return res
       .status(200)
       .json(
         new ApiResponse(200, verifiedResponse, "Mobile verified successfully")
       );
   } catch (error) {
-    res.json(new ApiError(400, "Error verifying mobile ", error));
+    return res.json(new ApiError(400, "Error verifying mobile ", error));
   }
 };
 
