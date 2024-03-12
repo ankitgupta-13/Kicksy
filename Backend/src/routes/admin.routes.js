@@ -54,7 +54,7 @@ router.route("/update-stock").post(handleProductStock);
 router.route("/update-product").post(updateProduct);
 router.route("/delete-product").post(deleteProduct);
 router.route("/delete-product-image").post(deleteProductImage);
-router.route("/add-blog").post(addBlog);
+router.route("/add-blog").post(upload.single("image") , addBlog);
 router.route("/edit-blog-image").post(upload.single("image"), editBlogImage);
 router.route("/edit-blog-body").post(editBlogBody);
 router.route("/attach-product-to-blog").post(attachProductToBlog);
