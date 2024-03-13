@@ -1,4 +1,4 @@
-import { Footer, Header } from "./components";
+import {Footer, Header } from "./components";
 import { Outlet } from "react-router-dom";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
@@ -17,6 +17,8 @@ const Layout = ({ loading }) => {
           <Wishlist />
           <Profile />
           <Footer />
+         
+
           
         </div>
       )}

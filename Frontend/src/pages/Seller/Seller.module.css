@@ -17,9 +17,8 @@
   display: flex;
   justify-content: center;
 }
-.logo Logo{
-  
-}
+
+
 .heading {
   text-align: center;
   letter-spacing: 1px;
@@ -69,6 +68,10 @@
   padding: 5px;
 }
 
+.inputBox input[type="file"] {
+ 
+}
+
 .inputBox label {
   margin-right: 8px;
   font-weight: 600;
@@ -77,4 +80,5 @@
 .inputBox select {
   padding: 4px;
   border: 1px solid var(--Border-2, #CCC);
+  margin-top: 5px;
 }
