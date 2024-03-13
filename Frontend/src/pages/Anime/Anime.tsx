@@ -1,12 +1,9 @@
 import style from "./Anime.module.css";
-import img from "../../assets/images/AnimePage/bakugoS.png";
-import img2 from "../../assets/images/AnimePage/spideyS.png";
 import { useState, useEffect } from "react";
 // import img3 from "../../assets/images/Animepage/animeBackdrop.png"
 
 import aiz from "../../assets/images/AnimePage/aizawa.png"
 import panel from "../../assets/images/AnimePage/picture.png"
-
 import yeah from "../../assets/images/AnimePage/backdrop/Yeah.png"
 import bang from "../../assets/images/AnimePage/backdrop/Bang.png"
 import bg from "../../assets/images/AnimePage/backdrop/bg.png"
@@ -15,15 +12,50 @@ import Hallo from "../../assets/images/AnimePage/backdrop/Hallo.png"
 import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
 import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
 import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
-import { getAllProducts } from "../../api/user.api";
-import { ProductCard } from "../../components";
+import { addToCart, getAllProducts } from "../../api/user.api";
+import { Button, PaymentButton, ProductCard } from "../../components";
+import ColorCard from "../../components/colorCard/colorCard";
+import { addItem } from "../../redux/reducers/cartSlice";
+import { useDispatch } from "react-redux";
 
 
 
 const Anime = () => {
+  const dispatch = useDispatch();
   const [explore, setExplore] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [animeProducts, setAnimeProducts] = useState([]);
+  const [curProduct, setCurProduct] = useState([]);
+  const [shoesColorData, setShoesColorData] = useState([]);
+  const [activeColor, setActiveColor] = useState("");
+  const [activeColorId, setActiveColorId] = useState<number | null>(null);
+  const [size, setSize] = useState();
+  
+  const handleImageSrcChange = (src: string) => {
+    setActiveColor(src);
+  };
+  const sizes = [
+    { label: "Select Size" },
+    { label: "11", value: "11" },
+    { label: "12", value: "12" },
+    { label: "13", value: "13" },
+  ];
+  const handleChange = (event: any) => {
+    setSize(event.target.value);
+  };
+  const handleAddToCart = async () => {
+    const payload = {
+      userID,
+      productID,
+    };
+    try {
+      const result = await addToCart(payload);
+      console.log(result.data.items);
+      dispatch(addItem(result.data.items));
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -42,6 +74,8 @@ const Anime = () => {
     }
     getAnimeProducts();
   }, [allProducts]);
+
+
 
   
 
@@ -155,21 +189,73 @@ const Anime = () => {
                             View Collections 
                           </button>
                         
-                          </div> ))}
+                          </div>
                         </div>                   
-                  </div>
               </div>
+              <div style={{ margin: "25px" }}>
+        <div className={style.product}>
+          <img
+            src={activeColor}
+            className={style.imagebox}
+            alt="product-image"
+          />
+          <div className={style.action}>
+            <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+            <h2 className={style.SampleProduct}>{curProduct.title}</h2>
+            {curProduct.category === "bestseller" && (
+              <a className={style.bestseller}>BEST SELLER</a>
+            )}
+            {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
+            <div>
+              <select
+                className={style.size}
+                value={size}
+                onChange={handleChange}
+              >
+                {sizes.map((size: any) => (
+                  <option value={size.value}>{size.label}</option>
+                ))}
+              </select>
+            </div>
+            <Button
+              className={style.addtocart}
+              style={{ backgroundColor: "#131313", color: "white" }}
+              onClick={handleAddToCart}
+              type="submit"
+            >
+              Add to Cart
+            </Button>
+            <PaymentButton amount="10" />
+          </div>
+        </div>
+        <div className={style.cards}>
+          {shoesColorData.map((color, index) => (
+            <ColorCard
+              key={index}
+              id={index}
+              color={color}
+              activeId={activeColorId || 0}
+              setActiveId={(id) => setActiveColorId(id)}
+              setImageSrc={handleImageSrcChange}
+            />
+          ))}
+        </div>
+        </div>
 
-
-
-            <div style={{ marginTop: "5%" }}>
-        
-      </div>
-      {animeProducts.map((product: any, index: number) => (
-        <div key={index}>
-          <ProductCard product={product} />
-        </div> 
-      ))}          
+              <div>
+                <h2>Our Collection</h2>
+                <p>
+                  lorem ispum lorem ispum
+                </p>
+              </div>
+              <div className={style.productlist}>
+              {animeProducts.map((product: any, index: number) => (
+                <div key={index} onClick={() => {setCurProduct(product); setShoesColorData(product.images);}}>
+                  <ProductCard product={product} />
+                </div> 
+              ))}
+              </div> 
+              </div>    
       </div>
     </div>
   );
