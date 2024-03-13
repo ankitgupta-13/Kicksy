@@ -4,6 +4,7 @@
 .Logo {
   padding: 0 25%;
   padding-bottom: 10px;
+  height: 60px;
 }
 .sectionButton {
   display: flex;

@@ -15,42 +15,34 @@ import Hallo from "../../assets/images/AnimePage/backdrop/Hallo.png"
 import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
 import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
 import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
-
-import ProductDesc from "../ProductDesc/ProductDesc";
 import { getAllProducts } from "../../api/user.api";
-
-
+import { ProductCard } from "../../components";
 
 
 
 const Anime = () => {
   const [explore, setExplore] = useState(false);
-  const [animeShoes, setAnimeShoes] = useState([]);
-  const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [animeProducts, setAnimeProducts] = useState([]);
 
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      const data = await getAllProducts();
+      setAllProducts(data.data.products);
+    };
+    fetchAllProducts();
+  }, []);
 
-  
-    //trying something above
+  useEffect(() => {
+    const getAnimeProducts = () => {
+      console.log(allProducts);
+      const animeProducts = allProducts.filter(product => product.category === 'anime');
+      setAnimeProducts(animeProducts);
+      console.log(animeProducts);
+    }
+    getAnimeProducts();
+  }, [allProducts]);
 
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await getAllProducts();
-        
-  //       const filteredProducts = response.data.products.filter(
-  //         (product) => product.category === "Anime"
-  //       ); 
-
-  //       setProducts(filteredProducts); 
-  //     } catch (error) {
-  //       console.error("Error fetching anime shoes:", error);
-  //     }
-  //   };
-
-  //   fetchProducts(); 
-  // }, []);
-
-  console.log(explore);
   
 
   return (
@@ -171,12 +163,13 @@ const Anime = () => {
 
 
             <div style={{ marginTop: "5%" }}>
-        {products.filter((product) => product.category === "anime").map((shoe) => (
-          <ProductDesc key={shoe._id} product={shoe} />
-        ))}
+        
       </div>
-
-
+      {animeProducts.map((product: any, index: number) => (
+        <div key={index}>
+          <ProductCard product={product} />
+        </div> 
+      ))}          
       </div>
     </div>
   );
