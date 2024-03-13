@@ -5,10 +5,10 @@ import { getRecentProducts, addToCart } from "../../api/user.api";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Button, PaymentButton } from "../../components/index";
 import { useSelector } from "react-redux";
-import { getProductById } from "../../api/user.api";
 import ColorCard from "../../components/colorCard/colorCard";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
+import { getProductById } from "../../api/product.api";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const ProductDesc = () => {
 
   return (
     <div>
-      <div style={{margin:"25px"}}>
+      <div style={{ margin: "25px" }}>
         <div className={style.product}>
           <img
             src={activeColor}

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import style from "./CartItem.module.css";
-import { getProductById } from "../../api/user.api";
+import { getProductById } from "../../api/product.api";
 
-const CartItem = ({productID,quantity}) => {
+const CartItem = ({ productID, quantity }) => {
   const [product, setProduct] = useState([]);
   const getProduct = async () => {
-      const payload = {
-        productID : productID,
-      }
-      const response = await getProductById(payload);
-        if (response.statusCode === 200)
-        {setProduct(response.data);
-          console.log(product);
-        }
-      }
-    
-    useEffect(() => {
-        getProduct();
+    const payload = {
+      productID: productID,
+    };
+    const response = await getProductById(payload);
+    if (response.statusCode === 200) {
+      setProduct(response.data);
+      console.log(product);
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
   }, []);
 
   return (

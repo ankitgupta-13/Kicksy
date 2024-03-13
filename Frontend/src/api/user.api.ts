@@ -9,6 +9,7 @@ export const getCurrentUser = async () => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
 export const addToCart = async (payload: {
   userID: string;
   productID: string;
