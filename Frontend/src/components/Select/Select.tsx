@@ -2,7 +2,7 @@ import React, { useId } from "react";
 import style from "./Select.module.css";
 
 const Select = (
-  { border, height, options, label, className = "", ...props },
+  { border, height, options, label, className = "", multiple, ...props },
   ref
 ) => {
   const id = useId();
@@ -19,6 +19,7 @@ const Select = (
         ref={ref}
         className={style.select}
         style={{ height: `${height}`, border: `${border}` }}
+        multiple
       >
         {options?.map((option) => (
           <option key={option} value={option}>

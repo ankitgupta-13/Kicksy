@@ -199,3 +199,12 @@ export const getProductRequests = async () => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const updateProduct = async (payload) => {
+  try {
+    const { data } = await api.post("/admin/update-product", payload);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
