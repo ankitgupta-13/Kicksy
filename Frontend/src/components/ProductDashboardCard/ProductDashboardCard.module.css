@@ -1,12 +1,13 @@
 .cardContainer {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
   align-items: center;
-  margin: 0 50px;
+  margin: 10px 0;
   padding: 0 20px;
-  height: 80px;
+  height: 140px;
   cursor: pointer;
+  text-transform: capitalize;
 }
 .cardContainer:hover {
   border: 2px solid #dad1d1;
@@ -21,8 +22,9 @@
 }
 .nameImage {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  align-items: flex-start;
+  margin-left: 20px;
+  flex-direction: column;
 }
 
 .title {
@@ -30,16 +32,34 @@
   font-weight: 600;
   color: #000;
 }
+
+.createdAt{
+  display: flex;
+  align-items: flex-start;
+  margin-left: 35px;
+  flex-direction: column;
+
+}
 .date {
   font-size: 1rem;
+ 
 }
 .time {
   font-size: 0.8rem;
   font-weight: 500;
   color: #363535;
 }
+
+.stock{
+  display: flex;
+  align-items: flex-start;
+  margin-left: 50px;
+  flex-direction: column;
+}
 .priceDelete {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+    gap: 1rem;
+    align-items: center;
+    margin-left: -10px;
+    justify-content: space-evenly;
 }

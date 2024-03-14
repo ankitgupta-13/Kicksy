@@ -18,6 +18,7 @@ const SellerDashboard = () => {
     >
       <Sidebar />
       <div className={style.right}>
+        <div className={style.Heading}>Vendor Dashboard</div>
         <Breadcrumb
           currentSection={currentSection}
           currentAction={currentAction}

@@ -2,22 +2,26 @@ import style from "./Breadcrumb.module.css";
 
 const Breadcrumb = ({ currentSection, currentAction }) => {
   return (
+    <>
     <div className={style.container}>
-      <div className={style.heading}>Dashboard</div>
+    <div className={style.currentSectionText}>Dashboard</div>
       {currentSection && (
         <div className={style.step}>
           <div className={style.circle}></div>
-          <div> {currentSection}</div>
+          <div className={style.currentSectionText}> {currentSection}</div>
         </div>
       )}
       {currentAction && (
         <div className={style.step}>
           <div className={style.circle}></div>
-          <div>{currentAction}</div>
+          <div className={style.currentSectionText}>{currentAction}</div>
         </div>
       )}
     </div>
+    </>
   );
 };
+
+
 
 export default Breadcrumb;
