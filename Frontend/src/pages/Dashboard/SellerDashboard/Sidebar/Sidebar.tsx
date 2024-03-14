@@ -19,14 +19,14 @@ const Sidebar = () => {
   const sections = [
     {
       product: {
-        actions: ["allProduct", "addProduct", "detailProduct"],
-        icon: <AccountBoxRoundedIcon style={{height:"28px", width:"28px",flexShrink:"0",marginRight:"16px"}} />,
+        actions: ["All Product", "Add Product", "Product Detail"],
+        icon: <AccountBoxRoundedIcon style={{height:"30px", width:"30px",flexShrink:"0",marginRight:"16px"}} />,
       },
     },
     {
       order: {
-        actions: ["allOrder"],
-        icon: <ShoppingCartRoundedIcon style={{height:"28px", width:"28px",flexShrink:"0",marginRight:"16px"}}/>,
+        actions: ["All Orders"],
+        icon: <ShoppingCartRoundedIcon style={{height:"30px", width:"30px",flexShrink:"0",marginRight:"16px"}}/>,
       },
     },
   ];
@@ -44,7 +44,7 @@ const Sidebar = () => {
         fontFamily: 'sans-serif',
       }}
     >
-      <img className={style.Logo} src={Logo} alt="" />
+      <div className={style.Logo}><Logo/></div>
       <div className={style.SideBarSections}>
         <h2 className={style.SideBarSectionsHeading}>Overview</h2>
         <button
