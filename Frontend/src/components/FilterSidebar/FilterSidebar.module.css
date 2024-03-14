@@ -47,7 +47,7 @@
 
 .Button {
   display: flex;
-  padding: 10px 120px;
+  padding: 8px 100px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -77,3 +77,4 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+

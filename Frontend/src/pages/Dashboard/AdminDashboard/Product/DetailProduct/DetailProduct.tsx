@@ -108,7 +108,6 @@ const DetailProduct = () => {
                 options={["Red", "Blue", "Cyan", "Green"]}
                 {...register("color", { required: true })}
               />
-
               <label>Gender</label>
               <input
                 type="radio"

@@ -20,32 +20,33 @@ const Sidebar = () => {
     {
       product: {
         actions: ["allProduct", "addProduct", "detailProduct"],
-        icon: <AccountBoxRoundedIcon />,
+        icon: <AccountBoxRoundedIcon style={{height:"28px", width:"28px",flexShrink:"0",marginRight:"16px"}} />,
       },
     },
     {
       order: {
         actions: ["allOrder"],
-        icon: <ShoppingCartRoundedIcon />,
+        icon: <ShoppingCartRoundedIcon style={{height:"28px", width:"28px",flexShrink:"0",marginRight:"16px"}}/>,
       },
     },
   ];
   return (
     <Container
       sx={{
-        width: "15%",
+        width: "20%",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        gap: "20px",
-        padding: "10px",
+        // gap: "20px",
+        padding: "20px",
         overflow: "auto",
-        borderRight: "1px solid #e0e0e0",
+        borderRight: "1px dashed rgba(145, 158, 171, 0.2)",
+        fontFamily: 'sans-serif',
       }}
     >
       <img className={style.Logo} src={Logo} alt="" />
-      <div>
-        <h2>Overview</h2>
+      <div className={style.SideBarSections}>
+        <h2 className={style.SideBarSectionsHeading}>Overview</h2>
         <button
           className={style.sectionButton}
           onClick={() => dispatch(closeSection())}
@@ -53,8 +54,8 @@ const Sidebar = () => {
           App
         </button>
       </div>
-      <div>
-        <h2>Management</h2>
+      <div className={style.SideBarSections}>
+        <h2 className={style.SideBarSectionsHeading}>Management</h2>
         {sections.map((section, index) => {
           const sectionName = Object.keys(section)[0];
           const actions = section[sectionName].actions;
@@ -66,7 +67,7 @@ const Sidebar = () => {
               >
                 <div className={style.sectionName}>
                   {section[sectionName].icon}
-                  <p>{sectionName}</p>
+                  <p className={style.SectionNameHeading}>{sectionName}</p>
                 </div>
                 <KeyboardArrowRightRoundedIcon
                   style={{
@@ -93,7 +94,7 @@ const Sidebar = () => {
                         }
                         className={style.actionButton}
                       >
-                        <p>{action}</p>
+                        <p className={style.SectionNameHeading}>{action}</p>
                       </div>
                     );
                   })}

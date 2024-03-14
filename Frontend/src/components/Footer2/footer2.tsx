@@ -1,8 +1,8 @@
-import React from 'react'
-import style from "./footer2.module.css"
+import style from './footer2.module.css'
 
-function footer2() {
+const footer2 = () => {
     return (
+        <>
         <div className={style.footer2}>
             <div className={style.UpperFooterSection}>
                 <div>
@@ -70,7 +70,9 @@ function footer2() {
 
             </div>
         </div>
+        </>
+        
     )
 }
 
-export default footer2
+export default footer2;
