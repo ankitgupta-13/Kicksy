@@ -49,6 +49,7 @@ const ListProduct = () => {
         <div className={style.sectionTitleText}>Create at</div>
         <div className={style.sectionTitleText}>Stock</div>
         <div className={style.sectionTitleText}>Price</div>
+        <div className={style.sectionTitleText}>Remove</div>
       </div>
       {products.map((product, index) => {
         return (

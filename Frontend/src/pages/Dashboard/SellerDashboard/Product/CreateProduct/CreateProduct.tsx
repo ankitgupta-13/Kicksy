@@ -31,67 +31,101 @@ const CreateProduct = () => {
 
   return (
     <Container>
-      <h1>Create a new product</h1>
+      <h1 className={style.containerHeading}>Create a new product</h1>
       <form onSubmit={handleSubmit(handleCreateProduct)} className={style.form}>
         <div className={style.section}>
-          <h1>Details</h1>
+          <div className={style.SectionContainer}>
+            <h1 className={style.sectionContainerHeading}>Details</h1>
+          </div>
+
           <div className={style.sub}>
-            <Input
-              label="Product Name"
-              type="text"
-              placeholder="Product Name"
-              {...register("title", { required: true })}
-            />
-            <Input
-              label="Description"
-              type="text"
-              placeholder="Product Description"
-              {...register("description", { required: true })}
-            />
-            <Input
-              label="Images"
-              type="file"
-              multiple
-              {...register("images", { required: true })}
-            />
+            <div className={style.inputBox}>
+              <Input
+                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                label="Product Name"
+                type="text"
+                placeholder="Product Name"
+                {...register("title", { required: true })}
+              />
+            </div>
+            <div className={style.inputBox}>
+              <Input
+              style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                label="Description"
+                type="text"
+                placeholder="Product Description"
+                {...register("description", { required: true })}
+              />
+            </div>
+            <div className={style.inputBox}>
+              <Input
+              style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+             
+                label="Images"
+                type="file"
+                multiple
+                {...register("images", { required: true })}
+              />
+            </div>
           </div>
         </div>
         <div className={style.section}>
-          <h1>Properties</h1>
-          <div className={style.sub}>
-            <Input
-              label="Product Code"
-              type="text"
-              placeholder="Product Code"
-              {...register("skuID", { required: true })}
-            />
-            <Input
-              label="Quantity"
-              type="number"
-              placeholder="Quantity"
-              {...register("stock", { required: true })}
-            />
+          <div className={style.SectionContainer}>
+            <h1 className={style.sectionContainerHeading}>Properties</h1>
+          </div>
 
-            <Select
+          <div className={style.sub}>
+            <div className={style.inputBox}>
+              <Input
+                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                label="Product Code"
+                type="text"
+                placeholder="Product Code"
+                {...register("skuID", { required: true })}
+              />
+            </div>
+            <div className={style.inputBox}>
+              <Input
+                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                label="Quantity"
+                type="number"
+                placeholder="Quantity"
+                {...register("stock", { required: true })}
+              />
+            </div>
+
+
+
+            <div className={style.inputBox}><Select
+              style={{ marginTop: "5px" }}
               label="Category"
               options={["boots", "sneakers"]}
               {...register("category", { required: true })}
-            />
-            <Select
-              label="Size"
-              options={["S", "M", "L", "XL", "XXL"]}
-              {...register("size", { required: true })}
-            />
-            <Select
-              label="Brand"
-              options={["Adidas", "Nike", "Puma", "Reebok", "Fila"]}
-              {...register("brand", { required: true })}
-            />
-            <Select
-              label="Color"
-              options={["Red", "Blue", "Cyan", "Green"]}
-              {...register("color", { required: true })}
-            />
+            /></div>
+            <div className={style.inputBox}>
+              <Select
+                style={{ marginTop: "5px" }}
+                label="Size"
+                options={["S", "M", "L", "XL", "XXL"]}
+                {...register("size", { required: true })}
+              />
+            </div>
+            <div className={style.inputBox}>
+              <Select
+                style={{ marginTop: "5px" }}
+                label="Brand"
+                options={["Adidas", "Nike", "Puma", "Reebok", "Fila"]}
+                {...register("brand", { required: true })}
+              />
+            </div>
+            <div className={style.inputBox}>
+              <Select
+                style={{ marginTop: "5px" }}
+                label="Color"
+                options={["Red", "Blue", "Cyan", "Green"]}
+                {...register("color", { required: true })}
+              />
+            </div>
 
             <label>Gender</label>
             <input
@@ -119,14 +153,20 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className={style.section}>
-          <h1>Price</h1>
+          <div className={style.SectionContainer}>
+            <h1 className={style.sectionContainerHeading}>Price</h1>
+          </div>
+
           <div className={style.sub}>
-            <Input
-              type="number"
-              label="Product Price"
-              placeholder="Product Price"
-              {...register("price", { required: true })}
-            />
+            <div className={style.inputBox}>
+              <Input
+                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                type="number"
+                label="Product Price"
+                placeholder="Product Price"
+                {...register("price", { required: true })}
+              />
+            </div>
           </div>
         </div>
         <Button type="submit">Create Product</Button>
