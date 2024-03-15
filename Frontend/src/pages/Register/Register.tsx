@@ -28,10 +28,17 @@ const Register = () => {
   const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+  // const [message , setMessage] = useState({
+  //   emailVerifyOtp:"",
+  //   mobileVerifyOtp:""
+  // })
 
   const handleEmailChange = (e) => {
     const email = e.target.value;
     const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+
+    if(!isEmailValid) return setError("Enter a valid email address");
+
     setIsEmailValid(isValidEmail);
   };
 
@@ -45,6 +52,7 @@ const Register = () => {
     const response = await sendEmailOtp({ email });
     if (response.statusCode === 200) {
       setEmailOtpSent(true);
+      
       alert("OTP sent to your email");
     } else setError(response.message);
   };

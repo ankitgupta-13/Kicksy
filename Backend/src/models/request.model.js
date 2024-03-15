@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const productRequestSchema = new mongoose.Schema({
-  productCode: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   skuID: {
     type: String,
     required: true,

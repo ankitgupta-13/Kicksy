@@ -173,7 +173,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email && !password) {
-      throw new ApiError(410, "All fields are required!");
+      return res.json(new ApiResponse(410, "All fields are required!"));
     }
     const user = await User.findOne({ email });
 

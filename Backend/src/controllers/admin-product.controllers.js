@@ -52,8 +52,7 @@ const addProductViaRequest = async (req, res) => {
   const { requestID } = req.body;
   try {
     const request = await ProductRequest.findOne({ _id: requestID });
-    if (!request)
-      return res.json(new ApiResponse(404, "product request not found"));
+    if (!request) return res.json(new ApiResponse(404, "product request not found"));
 
     const {
       productCode,
@@ -88,6 +87,8 @@ const addProductViaRequest = async (req, res) => {
       tags,
       images,
     });
+
+
 
     await product.save();
 
