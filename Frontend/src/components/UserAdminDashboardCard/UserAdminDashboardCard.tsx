@@ -1,6 +1,6 @@
-import style from "./UserDashboardCard.module.css";
+import style from "./UserAdminDashboardCard.module.css";
 
-const UserDashboardCard = ({ data }) => {
+const UserAdminDashboardCard = ({ data }) => {
   const { username, email, role, status, mobile } = data;
   return (
     <div className={style.cardContainer}>
@@ -15,4 +15,4 @@ const UserDashboardCard = ({ data }) => {
   );
 };
 
-export default UserDashboardCard;
+export default UserAdminDashboardCard;

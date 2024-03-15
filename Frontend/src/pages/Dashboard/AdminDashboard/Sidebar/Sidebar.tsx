@@ -12,8 +12,10 @@ import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { Container } from "@mui/material";
 import { RootState } from "../../../../redux/store/store";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { sectionsState } = useSelector(
     (state: RootState) => state.adminDashboard
@@ -36,8 +38,9 @@ const Sidebar = () => {
       product: {
         actions: [
           "allProduct",
-          "detailProduct",
           "addProduct",
+          "detailProduct",
+          "editProduct",
           "requestProducts",
         ],
         icon: <AccountBoxRoundedIcon />,
@@ -80,7 +83,9 @@ const Sidebar = () => {
         borderRight: "1px solid #e0e0e0",
       }}
     >
-      <img className={style.Logo} src={logo} alt="" />
+      <div onClick={() => navigate("/")}>
+        <img className={style.Logo} src={logo} alt="" />
+      </div>
       <div>
         <h2>Overview</h2>
         <button

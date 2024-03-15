@@ -8,6 +8,7 @@ import { Container, Button } from "../index";
 import style from "./RequestCard.module.css";
 
 const RequestCard = ({ type, id, name, logo }) => {
+  console.log(name);
   const handleAccept = async () => {
     if (type === "seller") {
       const response = await acceptSellerRequest({ requestID: id });

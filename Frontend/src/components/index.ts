@@ -11,7 +11,8 @@ import BlogUploadButton from "./Button/uploadButton";
 import colorCard from "./colorCard/colorCard.tsx";
 import ProductCard from "./ProductCard/ProductCard.tsx";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.tsx";
-import ProductDashboardCard from "./ProductDashboardCard/ProductDashboardCard.tsx";
+import ProductDashboardCard from "./ProductAdminDashboardCard/ProductAdminDashboardCard.tsx";
+import ImageSlider from "./ImageSlider/ImageSlider.tsx";
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   ProductCard,
   Breadcrumb,
   ProductDashboardCard,
+  ImageSlider,
 };

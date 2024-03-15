@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
 import style from "./ListUser.module.css";
-import UserDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
+import UserAdminDashboardCard from "../../../../../components/UserAdminDashboardCard/UserAdminDashboardCard";
 import { Pagination } from "@mui/material";
 
 const ListUser = () => {
@@ -42,7 +42,7 @@ const ListUser = () => {
       {users.map((user, index) => {
         return (
           <div key={index}>
-            <UserDashboardCard data={user} />
+            <UserAdminDashboardCard data={user} />
           </div>
         );
       })}

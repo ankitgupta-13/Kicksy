@@ -1,0 +1,22 @@
+.image {
+  width: 40rem;
+}
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.price {
+  display: flex;
+  align-items: center;
+}
+.color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.size {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

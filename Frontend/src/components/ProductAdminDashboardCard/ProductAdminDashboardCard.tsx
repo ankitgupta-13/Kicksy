@@ -3,10 +3,10 @@ import {
   selectAction,
   selectProduct,
 } from "../../redux/reducers/adminDashboardSlice";
-import style from "./ProductDashboardCard.module.css";
+import style from "./ProductAdminDashboardCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const ProductDashboardCard = ({ data, onDeleteProduct }) => {
+const ProductAdminDashboardCard = ({ data, onDeleteProduct }) => {
   const { _id, title, createdAt, stock, images, price } = data;
   const finalPrice =
     price.originalPrice - price.discountPercent * price.originalPrice * 0.01;
@@ -47,4 +47,4 @@ const ProductDashboardCard = ({ data, onDeleteProduct }) => {
   );
 };
 
-export default ProductDashboardCard;
+export default ProductAdminDashboardCard;

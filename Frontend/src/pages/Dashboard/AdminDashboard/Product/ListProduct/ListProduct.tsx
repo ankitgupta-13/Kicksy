@@ -5,7 +5,7 @@ import {
   totalProductsCount,
 } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
-import ProductDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
+import ProductDashboardCard from "../../../../../components/ProductAdminDashboardCard/ProductAdminDashboardCard";
 import { Pagination } from "@mui/material";
 
 const ListProduct = () => {

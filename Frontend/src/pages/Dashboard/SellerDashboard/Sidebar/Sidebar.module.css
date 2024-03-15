@@ -1,3 +1,8 @@
+.Logo {
+  width: 100%;
+  padding: 30px 10px;
+}
+
 .sidebarsection {
   margin-bottom: 10px;
 }
@@ -6,7 +11,7 @@
 
   box-sizing: border-box;
   list-style: none;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   font-weight: 700;
   line-height: 1.5;
@@ -20,23 +25,14 @@
   letter-spacing: 0.5px;
 }
 
-.Logo {
-  padding: 0 25%;
-  padding-bottom: 10px;
-  height: 60px;
-}
 
 .sectionButton {
-
-  background-color: transparent;
   margin: 0px 0px 4px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  text-decoration: none;
-  box-sizing: border-box;
   border: 0;
   text-align: left;
   border-radius: 8px;
@@ -58,14 +54,28 @@
   gap: 10px;
 }
 
+.actions {
+  width: 100%;
+}
 
 .actionButton {
   display: flex;
-  padding: 8px;
   gap: 1rem;
   background-color: white;
   border: none;
   cursor: pointer;
+  align-items: center;
+  position: relative;
+  color: rgb(99, 115, 129);
+  padding: 16px 20px;
+  min-height: 36px;
+}
+
+.actionButton::before {
+  content: "\2022";
+  color: rgb(99, 115, 129);
+  width: 10px;
+  margin: 0 20px 0 0;
 }
 
 .actionButton:hover {

@@ -11,20 +11,20 @@ const MainContent = ({ currentSection, currentAction }) => {
   switch (currentSection) {
     case "product":
       switch (currentAction) {
-        case "addProduct":
+        case "Add Product":
           content = <CreateProduct />;
           break;
-        case "detailProduct":
+        case "Product Detail":
           content = <DetailProduct />;
           break;
-        case "allProduct":
+        case "All Product":
           content = <ListProduct />;
           break;
       }
       break;
     case "order":
       switch (currentAction) {
-        case "allOrder":
+        case "All Orders":
           content = <ListOrder />;
           break;
       }
