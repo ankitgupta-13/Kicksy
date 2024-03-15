@@ -10,6 +10,18 @@ export const getCurrentUser = async () => {
   }
 };
 
+export const findByEmail = async (payload:{
+  email:String
+}) => {
+  try {
+    const { data } = await api.post("/user/fetch-by-email" , payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const addToCart = async (payload: {
   userID: string;
   productID: string;

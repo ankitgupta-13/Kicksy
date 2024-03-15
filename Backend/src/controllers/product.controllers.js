@@ -249,7 +249,7 @@ const correctionInProducts = async (req, res) => {
     products.forEach(async (product, index) => {
 
       product.category = 'anime';
-      product.skuID = "A00"+index;
+      product.skuID = "A00" + index;
       await product.save();
 
     })
@@ -262,32 +262,39 @@ const correctionInProducts = async (req, res) => {
   }
 }
 
-const fetchOffers = async(req,res)=>{
-  try{
-    const {productID} = req.body;
+const fetchOffers = async (req, res) => {
+  try {
+    const { productID } = req.body;
 
-    const product = await Product.findOne({_id:productID});
+    const product = await Product.findOne({ _id: productID });
 
-    if(!product) return res.json(new ApiResponse(404 , "No product found with this id."))
+    if (!product) return res.json(new ApiResponse(404, "No product found with this id."))
 
     let offerArray = []
 
     const offers = product.offers
 
-    const sellerOffer = offers.map(async(offer)=>{
-      const sellerOffer = await Offer.findOne({_id:offer})
-      return sellerOffer
+    const sellerOffer = offers.map(async (offer) => {
+      const sellerOffer = await Offer.findOne({ _id: offer })
+      if (sellerOffer.status === "Accepted") {
+        return sellerOffer
+      }
+      else {
+        return
+      }
     })
-    
+
     offerArray = await Promise.all(sellerOffer)
 
-    if(offerArray.length === 0) return res.json(new ApiResponse(404 , "No offers currently in this product"));
+    const newArray = offerArray.filter(offer=> offer!==null)
 
-    return res.json(new ApiResponse(200 , offerArray , "Offers Fetched successfully"));
+    if (offerArray.length === 0) return res.json(new ApiResponse(404, "No offers currently in this product"));
+
+    return res.json(new ApiResponse(200, newArray, "Offers Fetched successfully"));
 
   }
-  catch(err){
-    return handleErr(res,err);
+  catch (err) {
+    return handleErr(res, err);
   }
 }
 

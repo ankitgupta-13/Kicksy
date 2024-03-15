@@ -10,6 +10,7 @@ import {
   verifyMobileOtp,
   sendEmailOtp,
   findByID,
+  findByEmail,
 } from "../controllers/user.controllers.js";
 
 import {
@@ -42,6 +43,7 @@ router.route("/send-mobile-otp").post(sendMobileOtp);
 router.route("/verify-mobile-otp").post(verifyMobileOtp);
 router.route("/login").post(loginUser);
 router.route("/fetch-by-id").post(findByID);
+router.route("/fetch-by-email").post(findByEmail);
 router.route("/add-to-cart").post(addToCart);
 router.route("/remove-from-cart").post(removeFromCart);
 router.route("/get-user-cart").post(getCartByUser);
@@ -59,5 +61,6 @@ router.route("/update-category").get(correctionInProducts);
 router.route("/search-products").post(searchBarProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/fetch-blog-by-id").post(fetchBlogById);
+
 
 export default router;

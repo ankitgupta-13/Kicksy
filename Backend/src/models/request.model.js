@@ -63,6 +63,10 @@ const productRequestSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// const offerRequestSchema = new mongoose.Schema({
+
+// })
+
 const sellerRequestSchema = new mongoose.Schema({
   whatsappNumber: {
     type: String,
@@ -103,6 +107,8 @@ const sellerRequestSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+
 
 const ProductRequest = new mongoose.model("ProductRequest", productRequestSchema);
 const SellerRequest = new mongoose.model("SellerRequest", sellerRequestSchema);

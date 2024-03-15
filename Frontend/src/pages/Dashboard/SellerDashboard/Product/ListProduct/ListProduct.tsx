@@ -46,7 +46,7 @@ const ListProduct = () => {
     <div className={style.container}>
       <div className={style.sectionTitle}>
         <div className={style.sectionTitleText}>Product</div>
-        <div className={style.sectionTitleText}>Create at</div>
+        <div className={style.sectionTitleText} style={{margin:"0 5px"}}>Created at</div>
         <div className={style.sectionTitleText}>Stock</div>
         <div className={style.sectionTitleText}>Price</div>
         <div className={style.sectionTitleText}>Remove</div>

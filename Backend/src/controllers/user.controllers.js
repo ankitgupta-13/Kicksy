@@ -1,6 +1,6 @@
 import { User } from "../models/user.models.js";
 import { Otp } from "../models/otp.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
 import bcrypt from "bcrypt";
@@ -263,12 +263,28 @@ const findByID = async (req, res) => {
   }
 }
 
+const findByEmail = async(req,res)=>{
+  try{
+    const {email} = req.body;
+    const user = await User.findOne({email});
+
+    if(!user) return res.json(new ApiResponse(404 , "user not found")) 
+    
+    return res.json(new ApiResponse(200 , {data:user, status:"found"} , "user found"))
+  
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
+}
+
 export {
   registerUser,
   loginUser,
   getCurrentUser,
   logoutUser,
   findByID,
+  findByEmail,
   sendEmailOtp,
   verifyEmailOtp,
   sendMobileOtp,
