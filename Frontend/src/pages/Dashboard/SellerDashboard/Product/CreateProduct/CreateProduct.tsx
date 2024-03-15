@@ -41,7 +41,7 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
                 label="Product Name"
                 type="text"
                 placeholder="Product Name"
@@ -50,7 +50,7 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-              style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
                 label="Description"
                 type="text"
                 placeholder="Product Description"
@@ -59,8 +59,8 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-              style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
-             
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+
                 label="Images"
                 type="file"
                 multiple
@@ -77,7 +77,7 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
                 label="Product Code"
                 type="text"
                 placeholder="Product Code"
@@ -86,7 +86,7 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
                 label="Quantity"
                 type="number"
                 placeholder="Quantity"
@@ -96,12 +96,13 @@ const CreateProduct = () => {
 
 
 
-            <div className={style.inputBox}><Select
-              style={{ marginTop: "5px" }}
-              label="Category"
-              options={["boots", "sneakers"]}
-              {...register("category", { required: true })}
-            /></div>
+            <div className={style.inputBox}>
+              <Select
+
+                label="Category"
+                options={["boots", "sneakers"]}
+                {...register("category", { required: true })}
+              /></div>
             <div className={style.inputBox}>
               <Select
                 style={{ marginTop: "5px" }}
@@ -127,29 +128,47 @@ const CreateProduct = () => {
               />
             </div>
 
-            <label>Gender</label>
-            <input
-              type="radio"
-              value="M"
-              id="M"
-              {...register("gender", { required: true })}
-            />
-            <label htmlFor="M">Men</label>
-            <input
-              type="radio"
-              value="F"
-              id="F"
-              {...register("gender", { required: true })}
-            />
-            <label htmlFor="F">Women</label>
+            <label className={style.GenderHeading}>Gender</label>
 
-            <input
-              type="radio"
-              value="K"
-              id="K"
-              {...register("gender", { required: true })}
-            />
-            <label htmlFor="K">Kids</label>
+            <div className={style.RadioDiv}>
+              <label htmlFor="M">Men</label>
+              <input
+                className={style.InputRadio}
+                type="radio"
+                value="M"
+                id="M"
+                {...register("gender", { required: true })}
+              />
+            </div>
+
+
+
+            <div className={style.RadioDiv}>
+              <label htmlFor="F">Women</label>
+              <input
+                className={style.InputRadio}
+                type="radio"
+                value="F"
+                id="F"
+                {...register("gender", { required: true })}
+              />
+            </div>
+
+
+
+            <div className={style.RadioDiv}>
+              <label htmlFor="K">Kids</label>
+              <input
+                className={style.InputRadio}
+                type="radio"
+                value="K"
+                id="K"
+                {...register("gender", { required: true })}
+              />
+            </div>
+
+
+
           </div>
         </div>
         <div className={style.section}>
@@ -160,7 +179,7 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none" , borderBottom : "1px solid #adadad", backgroundColor: "rgb(249, 249, 249)"}}
+                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
                 type="number"
                 label="Product Price"
                 placeholder="Product Price"
@@ -169,7 +188,10 @@ const CreateProduct = () => {
             </div>
           </div>
         </div>
-        <Button type="submit">Create Product</Button>
+        <div className={style.ButtonDiv}>
+        <Button className={style.Button} type="submit">Create Product</Button>
+        </div>
+       
       </form>
     </Container>
   );

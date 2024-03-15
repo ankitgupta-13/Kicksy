@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  
+
 }
 
 .right {
@@ -8,17 +8,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;  
+  flex: 1;
   padding: 30px 10px;
 }
 
-.Heading{
+.Heading {
   font-size: 28px;
-  font-family:"Public Sans", sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-weight: bold;
   letter-spacing: 0.5px;
   word-spacing: 1px;
   color: rgb(135, 140, 144);
   text-transform: capitalize;
-margin: 18px;
+  margin: 18px;
 }
