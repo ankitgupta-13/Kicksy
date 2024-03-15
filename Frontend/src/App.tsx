@@ -1,12 +1,7 @@
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store/store.ts";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
 import Register from "./pages/Register/Register.tsx";
 import Login from "./pages/Login/Login.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";

@@ -3,15 +3,25 @@ import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
 import { getAllProducts } from "../../api/user.api";
 import style from "./Shop.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { useLocation } from 'react-router-dom';
+import banner from "../../assets/menbanner.png";
+
+
 
 const Shop: React.FC = () => {
+  const location = useLocation();
+  const cleanstring = location.search.substring(1);
+  const [key, value] = cleanstring.split('=');
   const [filters, setFilters] = useState({});
-
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
+      {value && setFilters((prevFilters) => ({
+        ...prevFilters,
+        [key]: [value],
+      }));}
       const data = await getAllProducts();
       setAllProducts(data.data.products);
     };
@@ -23,7 +33,6 @@ const Shop: React.FC = () => {
       let filteredResult = [...allProducts];
       Object.keys(filters).forEach((filterName) => {
         const filterValues = filters[filterName];
-
         if (filterValues && filterValues.length > 0) {
           filteredResult = filteredResult.filter((product) => {
             const productValues = product[filterName] || [];
@@ -33,10 +42,8 @@ const Shop: React.FC = () => {
           });
         }
       });
-
       setFilteredProducts(filteredResult);
     };
-
     filterProducts();
   }, [filters, allProducts]);
 
@@ -48,6 +55,11 @@ const Shop: React.FC = () => {
   };
 
   return (
+    <>
+    {/* {value && 
+    <div>
+    <img src={banner} alt="banner"/>
+    </div>} */}
     <div className={style.shoppage}>
       <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
       <div className={style.productlist}>
@@ -58,6 +70,7 @@ const Shop: React.FC = () => {
       ))}
       </div>
     </div>
+    </>
   );
 };
 

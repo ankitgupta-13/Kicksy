@@ -28,13 +28,13 @@ const Sidebar = () => {
       },
     },
     {
-      seller: {
+      Seller: {
         actions: ["All Seller", "Profile Seller", "Seller Request"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
-      product: {
+      Product: {
         actions: [
           "All Product",
           "Product Detail",
@@ -45,13 +45,13 @@ const Sidebar = () => {
       },
     },
     {
-      order: {
+      Order: {
         actions: ["All Order", "Edit Order", "Delete Order"],
         icon: <ShoppingCartRoundedIcon />,
       },
     },
     {
-      blog: {
+      Blog: {
         actions: ["Add Blog", "Blogs List"],
         icon: <NoteAltRoundedIcon />,
       },
