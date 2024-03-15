@@ -31,20 +31,22 @@ const Sidebar = () => {
     },
   ];
   return (
+    <>
+    <div className={style.sidebarBody}>
+    <div className={style.Logo}><Logo/></div>
     <Container
       sx={{
-        width: "20%",
+        width: "100%",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        // gap: "20px",
-        padding: "20px",
+        padding: "10px 30px",
         overflow: "auto",
         borderRight: "1px dashed rgba(145, 158, 171, 0.2)",
         fontFamily: 'sans-serif',
       }}
     >
-      <div className={style.Logo}><Logo/></div>
+      
       <div className={style.SideBarSections}>
         <h2 className={style.SideBarSectionsHeading}>Overview</h2>
         <button
@@ -105,6 +107,8 @@ const Sidebar = () => {
         })}
       </div>
     </Container>
+    </div>
+    </>
   );
 };
 

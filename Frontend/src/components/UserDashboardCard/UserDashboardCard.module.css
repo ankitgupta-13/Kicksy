@@ -1,15 +1,25 @@
 .cardContainer {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 10px;
-  align-items: center;
-  margin: 0 50px;
-  padding: 0 20px;
-  height: 80px;
-  cursor: pointer;
+  display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid #cbcbcb;
+    height: 80px;
+    background-color: #f4f6f8;
+    font-size: 17px;
 }
 .cardContainer:hover {
   border: 2px solid #dad1d1;
   box-shadow: 0 0 10px #f1ebeb;
   transition: 0.3s;
+}
+
+.nameEmail,.phone,.role,.status{
+  width: 25%;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+}
+.nameEmail{
+  flex-direction: column;
 }

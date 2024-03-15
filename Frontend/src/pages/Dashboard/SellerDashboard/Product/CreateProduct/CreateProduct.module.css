@@ -36,7 +36,7 @@
 .inputBox select {
   padding: 10px 20px;
   border: none;
-  border-bottom: 1px solid var(--Border-2, #CCC);
+  border-bottom: 1px solid ;
   margin-top: 5px;
   background-color: rgb(249, 249, 249);
   color: #757575;

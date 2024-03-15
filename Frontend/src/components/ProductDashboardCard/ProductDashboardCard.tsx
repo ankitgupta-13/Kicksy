@@ -42,7 +42,8 @@ const ProductDashboardCard = ({ data, onDeleteProduct }) => {
       <div className={style.priceDelete}>
         <div>₹{finalPrice}</div>
       </div>
-      <div className={style.Delete}><DeleteIcon onClick={() => handleDeleteProduct(_id)} /></div>
+      <div className={style.Delete}>
+        <DeleteIcon onClick={() => handleDeleteProduct(_id)} /></div>
     </div>
   );
 };

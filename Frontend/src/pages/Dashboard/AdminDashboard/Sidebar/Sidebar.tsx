@@ -12,6 +12,7 @@ import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { Container } from "@mui/material";
 import { RootState } from "../../../../redux/store/store";
+import { Logo } from "../../../../components";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -21,37 +22,37 @@ const Sidebar = () => {
 
   const sections = [
     {
-      user: {
-        actions: ["allUser", "profileUser", "editUser"],
+      User: {
+        actions: ["All User", "Profile User", "Edit User"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       seller: {
-        actions: ["allSeller", "profileSeller", "requestSellers"],
+        actions: ["All Seller", "Profile Seller", "Seller Request"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       product: {
         actions: [
-          "allProduct",
-          "detailProduct",
-          "addProduct",
-          "requestProducts",
+          "All Product",
+          "Product Detail",
+          "Add Product",
+          "Product Request",
         ],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       order: {
-        actions: ["allOrder", "editOrder", "deleteOrder"],
+        actions: ["All Order", "Edit Order", "Delete Order"],
         icon: <ShoppingCartRoundedIcon />,
       },
     },
     {
       blog: {
-        actions: ["addblog", "listblogs"],
+        actions: ["Add Blog", "Blogs List"],
         icon: <NoteAltRoundedIcon />,
       },
     },
@@ -68,9 +69,12 @@ const Sidebar = () => {
   };
 
   return (
+    <>
+<div className={style.sidebarBody}>
+    <div className={style.Logo}><Logo/></div>
     <Container
       sx={{
-        width: "15%",
+        width: "100%",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -80,9 +84,8 @@ const Sidebar = () => {
         borderRight: "1px solid #e0e0e0",
       }}
     >
-      <img className={style.Logo} src={logo} alt="" />
       <div>
-        <h2>Overview</h2>
+        <h2 className={style.SideBarSectionsHeading}>Overview</h2>
         <button
           className={style.sectionButton}
           onClick={() => dispatch(closeSection())}
@@ -91,7 +94,7 @@ const Sidebar = () => {
         </button>
       </div>
       <div>
-        <h2>Management</h2>
+        <h2 className={style.SideBarSectionsHeading}>Management</h2>
         {sections.map((section, index) => {
           const sectionName = Object.keys(section)[0];
           const actions = section[sectionName].actions;
@@ -134,6 +137,8 @@ const Sidebar = () => {
         })}
       </div>
     </Container>
+</div>
+    </>
   );
 };
 
