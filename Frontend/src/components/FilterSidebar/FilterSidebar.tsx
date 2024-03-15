@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import style from './FilterSidebar.module.css';
 import { Button, Input } from '../index';
 
 
 const FilterSidebar = ({ filters, onFilterChange }) => {
-  const [mActive, setMActive] = useState(false);
-  const [wActive, setWActive] = useState(false);
+  const [mActive, setMActive] = useState();
+  const [wActive, setWActive] = useState();
 
   const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
   const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
@@ -16,7 +16,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
     const currentFilters = filters[filterName] || [];
 
     if (currentFilters.includes(value)) {
-      const updatedFilters = currentFilters.filter((filter) => filter !== value);
+      const updatedFilters = currentFilters.filter((filter: string) => filter !== value);
       onFilterChange(filterName, updatedFilters);
     } else {
       const updatedFilters = [...currentFilters, value];
@@ -39,9 +39,8 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
     <div className={style.filtersidebar}>
       <div className={style.CurrentFiltersContainer}>
         <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
+
       </div>
-
-
       <div className={style.BodyTypeContainer}>
         <label className={style.BodyType}>Body Type:</label>
         <div className={style.buttons}>
@@ -77,7 +76,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
                 key={option}
                 padding="5px"
                 margin="5px"
-                style={{ height: '20px', width: '20px', marginRight: '10px'}}
+                style={{ height: '20px', width: '20px', marginRight: '10px',}}
                 type="checkbox"
                 labelcheckbox={option}
                 onChange={() => handleCheckboxChange(filterName, option)}
