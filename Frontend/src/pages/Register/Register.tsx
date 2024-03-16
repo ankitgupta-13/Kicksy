@@ -314,8 +314,9 @@ const Register = () => {
           </div>
           <div className={style.mobile}>
             <Select
+
               border="1px solid var(--Border-2, #CCC)"
-              height="56px"
+              height="100%"
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
               {...register("countryCode", { required: true })}
             />

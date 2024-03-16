@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import style from "./Login.module.css";
-import { Alert } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
-  
+
 
   const handleLogin = async (data: any) => {
     setError("");
@@ -41,8 +41,14 @@ const Login = () => {
   };
 
   return (
-    
-    <div className={style.Body}>
+
+
+    <Container
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex"
+      }}>
       <div className={style.CenterBody}>
         <div className={style.logo}>
           <Logo />
@@ -72,7 +78,7 @@ const Login = () => {
 
           <div className={style.Input}>
             <Input
-              style={{ marginTop: "5px"}}
+              style={{ marginTop: "5px" }}
               label="Password"
               type="password"
               placeholder="Enter your password"
@@ -88,12 +94,14 @@ const Login = () => {
             Login
           </Button>
         </form>
-      {
-      error?
-      <Alert style={{margin:"20px 0 0 0"}} severity="error">{error}</Alert>:""
-      }
+        {
+          error ?
+            <Alert style={{ margin: "20px 0 0 0" }} severity="error">{error}</Alert> : ""
+        }
       </div>
-    </div>
+    </Container>
+
+
   );
 };
 

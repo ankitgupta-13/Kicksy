@@ -27,11 +27,7 @@ const Select = (
         id={id}
         ref={ref}
         className={style.select}
-        style={{
-          padding: `${padding}`,
-          margin: `${margin}`,
-          border: `${border}`,
-        }}
+        style={{padding: `${padding}`,height: `${height}`, margin: `${margin}`, border: `${border}`}}
       >
         {options?.map((option) => (
           <option key={option} value={option}>
