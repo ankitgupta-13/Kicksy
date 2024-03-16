@@ -21,39 +21,22 @@ const RequestProduct = () => {
         setRequestList(response.data.requests);
         setPage(response.data.page);
       }
-      const response1 = await getAcceptedProducts();
-      if (response1.statusCode === 200) {
-        setAcceptedProducts(response1.data);
-      }
     })();
   }, []);
 
   return (
     <div>
-      {requestList.map((request, index) => {
-        return (
-          <div key={index}>
-            <RequestCard
-              type="product"
-              id={request._id}
-              name={request.title}
-              logo={request.images[0]}
-            />
-            <div className={style.acceptedProducts}>
-              {acceptedProducts.map((acceptedProduct, index) => {
-                return (
-                  <div key={index}>
-                    <ProductAdminDashboardCard
-                      data={acceptedProduct}
-                      // onDelete="delete"
-                    />
-                  </div>
-                );
-              })}
+      {requestList.length === 0 ? (
+        <div>No Request Found</div>
+      ) : (
+        requestList.map((request, index) => {
+          return (
+            <div key={index}>
+              <ProductAdminDashboardCard data={request} type="request" />
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   );
 };

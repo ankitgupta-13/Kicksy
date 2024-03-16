@@ -5,8 +5,8 @@ import {
   totalProductsCount,
 } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
-import ProductDashboardCard from "../../../../../components/ProductAdminDashboardCard/ProductAdminDashboardCard";
 import { Pagination } from "@mui/material";
+import { ProductAdminDashboardCard } from "../../../../../components";
 
 const ListProduct = () => {
   const [page, setPage] = useState(1);
@@ -53,7 +53,7 @@ const ListProduct = () => {
       {products.map((product, index) => {
         return (
           <div key={index}>
-            <ProductDashboardCard
+            <ProductAdminDashboardCard
               data={product}
               onDeleteProduct={handleDeleteProduct}
               page={page}

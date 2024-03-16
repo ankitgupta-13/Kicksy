@@ -6,7 +6,7 @@ import {
 import style from "./ProductAdminDashboardCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const ProductAdminDashboardCard = ({ data, onDeleteProduct }) => {
+const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
   const { _id, title, createdAt, stock, images, price } = data;
   const finalPrice =
     price.originalPrice - price.discountPercent * price.originalPrice * 0.01;
@@ -22,8 +22,8 @@ const ProductAdminDashboardCard = ({ data, onDeleteProduct }) => {
     dispatch(selectProduct(_id)),
       dispatch(
         selectAction({
-          selectedSection: "product",
-          selectedAction: "detailProduct",
+          selectedSection: "Product",
+          selectedAction: "Details",
         })
       );
   };
@@ -43,7 +43,8 @@ const ProductAdminDashboardCard = ({ data, onDeleteProduct }) => {
         <div>₹{finalPrice}</div>
       </div>
       <div className={style.Delete}>
-        <DeleteIcon onClick={() => handleDeleteProduct(_id)} /></div>
+        <DeleteIcon onClick={() => handleDeleteProduct(_id)} />
+      </div>
     </div>
   );
 };

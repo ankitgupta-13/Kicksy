@@ -12,6 +12,8 @@ const Input = (
     type = "text",
     placeholder = "text",
     className = "",
+    defaultValue,
+    onChange,
     ...props
   }: any,
   ref

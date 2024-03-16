@@ -13,6 +13,7 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import { Container } from "@mui/material";
 import { RootState } from "../../../../redux/store/store";
 import { Logo } from "../../../../components";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -24,36 +25,31 @@ const Sidebar = () => {
   const sections = [
     {
       User: {
-        actions: ["All User", "Profile User", "Edit User"],
+        actions: ["List"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       Seller: {
-        actions: ["All Seller", "Profile Seller", "Seller Request"],
+        actions: ["List", "Requests"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       Product: {
-        actions: [
-          "All Product",
-          "Product Detail",
-          "Add Product",
-          "Product Request",
-        ],
+        actions: ["Create", "List", "Requests"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       Order: {
-        actions: ["All Order", "Edit Order", "Delete Order"],
+        actions: ["List"],
         icon: <ShoppingCartRoundedIcon />,
       },
     },
     {
       Blog: {
-        actions: ["Add Blog", "Blogs List"],
+        actions: ["Create", "List"],
         icon: <NoteAltRoundedIcon />,
       },
     },

@@ -28,8 +28,9 @@ const DetailProduct = () => {
     (async () => {
       try {
         const response = await getProductById({ productID });
+        console.log(response);
         setProduct(response.data);
-        setImageUrls(response.data.images);
+        // setImageUrls(response.data.images);
         setProductPrice(response.data.price.originalPrice);
         console.log(response.data);
       } catch (error) {

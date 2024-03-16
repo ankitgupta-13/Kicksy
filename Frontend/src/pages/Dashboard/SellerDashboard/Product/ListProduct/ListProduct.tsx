@@ -6,7 +6,7 @@ import {
 } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import { Pagination } from "@mui/material";
-import { ProductDashboardCard } from "../../../../../components";
+import { ProductAdminDashboardCard } from "../../../../../components";
 
 const ListProduct = () => {
   const [page, setPage] = useState(1);
@@ -46,7 +46,9 @@ const ListProduct = () => {
     <div className={style.container}>
       <div className={style.sectionTitle}>
         <div className={style.sectionTitleText}>Product</div>
-        <div className={style.sectionTitleText} style={{margin:"0 5px"}}>Created at</div>
+        <div className={style.sectionTitleText} style={{ margin: "0 5px" }}>
+          Created at
+        </div>
         <div className={style.sectionTitleText}>Stock</div>
         <div className={style.sectionTitleText}>Price</div>
         <div className={style.sectionTitleText}>Remove</div>
@@ -54,7 +56,7 @@ const ListProduct = () => {
       {products.map((product, index) => {
         return (
           <div key={index}>
-            <ProductDashboardCard
+            <ProductAdminDashboardCard
               data={product}
               onDeleteProduct={handleDeleteProduct}
               page={page}
