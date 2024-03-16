@@ -27,11 +27,11 @@ const ProductCard = ({ product }) => {
       <div className={style.shoes__bestseller}>
         <div className={style.shoes__bestseller_text}>BestSeller</div>
       </div>
-        <img
-          src={activeColor}
-          className={style.shoes__image}
-          onClick={() => navigate(`/product/${product._id}`)}
-        />
+      <img
+        src={activeColor}
+        className={style.shoes__image}
+        onClick={() => navigate(`/product/${product._id}`)}
+      />
       <div className={style.shoes__color}>
         {shoesColorData.map((color, index) => (
           <ColorCard
@@ -50,17 +50,11 @@ const ProductCard = ({ product }) => {
       >
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
-          <div className={style.shoes__price}>
-            {product.price.originalPrice}
-          </div>
+          <div className={style.shoes__price}>{product.price}</div>
         </div>
         <p className={style.shoes__tags}>{product.category}</p>
-        <div className={style.mobile__shoes_price}>
-          INR {product.price.originalPrice}
-        </div>
-        <div className={style.mobile__expected_price}>
-          {product.price.originalPrice}
-        </div>
+        <div className={style.mobile__shoes_price}>INR {product.price}</div>
+        <div className={style.mobile__expected_price}>{product.price}</div>
         <p className={style.shoes__tagline}>{product.description}</p>
       </div>
     </div>
