@@ -87,4 +87,19 @@ const declineSellerRequest = async (req, res) => {
   }
 };
 
-export { getSellerRequests, acceptSellerRequest, declineSellerRequest };
+const getSellerRequestById = async(req,res)=>{
+  try{
+    const {requestID} = req.body;
+    const request = await SellerRequest.findById(requestID);
+    
+    if(!request) return res.json(new ApiResponse(404 , "Seller Request not found"));
+
+    return res.json(new ApiResponse(200 , request , 'request fetched successfully'));
+  
+  }
+  catch(err){
+    return handleErr(res , err)
+  }
+}
+
+export { getSellerRequests, getSellerRequestById , acceptSellerRequest, declineSellerRequest };

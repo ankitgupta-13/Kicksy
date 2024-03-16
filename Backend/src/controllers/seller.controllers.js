@@ -5,7 +5,7 @@ import { SellerRequest } from "../models/request.model.js";
 import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse, message } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
 import fs from "fs";
@@ -133,8 +133,6 @@ const addOfferToProduct = async (req, res) => {
     const product = await Product.findOne({ _id: productID });
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
-    
-
     const offer = new Offer({
       productID,
       sellerID,
@@ -165,6 +163,25 @@ const addOfferToProduct = async (req, res) => {
     return res.json(new ApiError(400, error.message));
   }
 };
+
+const getSellerOffers = async(req,res)=>{
+  const {sellerID} = req.body;
+  try{
+    const seller = await Seller.findOne({_id:sellerID});
+    
+    if(!seller) return res.json(new ApiResponse(404 , "seller not found"));
+
+    const offers = seller.offers;
+
+    offers.map()
+  
+  }
+  catch(err){
+    return handleErr(res,err)
+  }
+}
+
+
 
 export {
   sellerRequest,
