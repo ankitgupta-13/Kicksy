@@ -17,6 +17,11 @@ const offerSchema = new mongoose.Schema({
     },
     quantity:{
         type:Number
+    },
+    status:{
+        type:String,
+        default:"Pending",
+        enum:["Pending" , "Accepted"]
     }
 })
 

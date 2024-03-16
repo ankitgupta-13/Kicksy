@@ -133,20 +133,7 @@ const addOfferToProduct = async (req, res) => {
     const product = await Product.findOne({ _id: productID });
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
-    // const sellerFound = false;
-
-    // product.offers.forEach(async (offer, index) => {
-    //   const sellerOffer = await Offer.findOne({ _id: offer });
-
-    //   if (sellerOffer.sellerID.equals(sellerID)) {
-    //     sellerFound = true;
-    //   } 
-
-    // })
-
-    // if (sellerFound) {
-    //   return res.json(new ApiResponse(422, "This seller already have an offer in this product."))
-    // }
+    
 
     const offer = new Offer({
       productID,
@@ -168,11 +155,11 @@ const addOfferToProduct = async (req, res) => {
 
   } 
   catch (error) {
-
+    
     if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
       // Handle duplicate key error for sellerID
       return res.json(new ApiResponse(422 , "This seller already have an offer in this product."))
-      
+
     }
 
     return res.json(new ApiError(400, error.message));

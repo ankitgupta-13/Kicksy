@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const productRequestSchema = new mongoose.Schema(
   {
-    productCode: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     skuID: {
       type: String,
       required: true,
@@ -93,6 +88,22 @@ const sellerRequestSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
       required: true,
+    },
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    gstNumber: {
+      type: String,
+      validate: {
+        validator: function (value) {
+          // Check if the GST number has exactly 15 characters
+          return value.length === 15;
+        },
+        message: (props) =>
+          `${props.value} is not a valid GST number. It should have exactly 15 characters.`,
+      },
     },
     userID: {
       type: mongoose.Schema.Types.ObjectId,

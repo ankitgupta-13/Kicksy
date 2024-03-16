@@ -13,6 +13,8 @@ import style from "./Register.module.css";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import { Alert } from "@mui/material";
+import { findByEmail } from "../../api/user.api.ts";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -28,18 +30,79 @@ const Register = () => {
   const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
-  // const [message , setMessage] = useState({
-  //   emailVerifyOtp:"",
-  //   mobileVerifyOtp:""
-  // })
+
+  const [messages, setMessage] = useState({
+    email: "",
+    mobile:""
+  });
+
+  const onEmailAlertClose = ()=>{
+    setMessage((prevState) => ({
+      ...prevState,
+      email: "",
+    }));
+  }
+  const onMobileAlertClose = ()=>{
+    setMessage((prevState) => ({
+      ...prevState,
+      mobile: "",
+    }));
+  }
+
+  const showPasswordError = (mssg:String)=>{
+    return <Alert
+    onClose={() => {setPasswordError("")}}
+    style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
+    severity="error"
+  >
+    {mssg}
+  </Alert>
+  }
+
+  const [EmailAlertType, setEmailAlertType] = useState("");
+  const [mobileAlertType, setMobileAlertType] = useState("");
+
+  const showEmailMessage = (mssg: String, type: any) => {
+    return (
+      <Alert
+        onClose={() => {onEmailAlertClose()}}
+        style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
+        severity={type}
+      >
+        {mssg}
+      </Alert>
+    );
+  };
+
+  const showMobileMessage = (mssg: String, type: any) => {
+    return (
+      <Alert
+        onClose={() => {onMobileAlertClose()}}
+        style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
+        severity={type}
+      >
+        {mssg}
+      </Alert>
+    );
+  };
 
   const handleEmailChange = (e) => {
-    const email = e.target.value;
+    const email = e.target.value ;
     const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
 
-    if(!isEmailValid) return setError("Enter a valid email address");
-
+    if (!isEmailValid) {return setError("Enter a valid email address")}
+    else{
+      return isEmailValid
+    }
     setIsEmailValid(isValidEmail);
+  };
+  
+  const handleEmail = (e) => {
+    const email =  e.email;
+    const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+
+    if(isValidEmail) return isValidEmail
+   
   };
 
   const handlePhoneChange = (e) => {
@@ -49,16 +112,64 @@ const Register = () => {
   };
 
   const handleSendEmailOtp = async (email: String) => {
+    if (!email) {
+      setMessage((prevState) => ({
+        ...prevState,
+        email: "cannot send otp to empty email",
+      }));
+      setEmailAlertType("error")
+      return;
+    }
+
+    if(!handleEmail({email})){
+      setMessage((prevState) => ({
+        ...prevState,
+        email: "enter a valid email",
+      }));
+      setEmailAlertType("error")
+      return
+    }
+
+    const user = await findByEmail({ email });
+
+    console.log(user)
+
+    
+
+    if (user.statusCode!==404) {
+      setMessage((prevState) => ({
+        ...prevState,
+        email: "user with this email already exists!",
+      }));
+      setEmailAlertType("error")
+      return;
+    }
+    
+
     const response = await sendEmailOtp({ email });
     if (response.statusCode === 200) {
       setEmailOtpSent(true);
-      
-      alert("OTP sent to your email");
-    } else setError(response.message);
+      setMessage((prevState) => ({
+        ...prevState,
+        email: "OTP sent to your email",
+      }));
+      setEmailAlertType("info");
+    }
+    else setError(response.message);
   };
 
   const handleVerifyEmailOtp = async (email: String, otp: String) => {
     const response = await verifyEmailOtp({ email, otp });
+    console.log(response)
+
+    if(Math.floor(response.statusCode/100) === 4){
+      setMessage((prevState) => ({
+        ...prevState,
+        email:response.data,
+      }));
+      setEmailAlertType("error");
+    }
+
     if (response.statusCode === 200) {
       setEmailOtpVerified(true);
       alert("Email Verified");
@@ -66,10 +177,40 @@ const Register = () => {
   };
 
   const handleSendPhoneOtp = async (mobile, countryCode) => {
+    
+
+    if(!mobile.match(/^[0-9]{10}$/g)){
+      setMessage((prevState) => ({
+        ...prevState,
+        mobile:"Enter a valid mobile number",
+      }))
+      setMobileAlertType("error")
+      return
+    }
+
     const response = await sendMobileOtp({ mobile, countryCode });
+    console.log(response)
+
+    if(Math.floor(response.statusCode/100) === 4){
+      setMessage((prevState) => ({
+        ...prevState,
+        mobile:response.data || response.message,
+      }))
+      setMobileAlertType("error")
+
+      return
+    }
+
+
     if (response.statusCode === 200) {
+      
       setPhoneOtpSent(true);
-      alert("OTP sent to your mobile");
+      setMessage((prevState) => ({
+        ...prevState,
+        mobile:"OTP sent to your mobile number",
+      }))
+      setMobileAlertType("info")
+
     } else setError(response.message);
   };
 
@@ -89,6 +230,8 @@ const Register = () => {
         setError("Please verify your email and phone");
         return;
       }
+
+
       const response = await authRegister(data);
       if (response.statusCode === 201) {
         navigate("/login");
@@ -166,6 +309,8 @@ const Register = () => {
                 </div>
               )
             ) : null}
+            {messages.email ? showEmailMessage(messages.email, EmailAlertType) : ""}
+
           </div>
           <div className={style.mobile}>
             <Select
@@ -224,6 +369,7 @@ const Register = () => {
               </div>
             )
           ) : null}
+          {messages.mobile?showMobileMessage(messages.mobile , mobileAlertType):""}
           <div className={style.Input}>
             <div style={{ position: "relative" }}>
               <Input
@@ -273,7 +419,7 @@ const Register = () => {
                 },
               })}
             />
-            {passwordError && <p className={style.error}>{passwordError}</p>}
+            {passwordError && showPasswordError(passwordError)}
           </div>
 
           <Button
