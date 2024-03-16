@@ -2,7 +2,10 @@ import { useSelector } from "react-redux";
 import style from "./DetailProduct.module.css";
 import { RootState } from "../../../../../redux/store/store";
 import { useEffect, useState } from "react";
-import { getProductById } from "../../../../../api/product.api";
+import {
+  getProductById,
+  getProductRequestById,
+} from "../../../../../api/product.api";
 import {
   getProductRequests,
   updateProduct,
@@ -37,11 +40,12 @@ const DetailProduct = () => {
         if (productID) {
           response = await getProductById({ productID });
         } else {
-          response = await getProductRequests(productRequestID);
+          response = await getProductRequestById({
+            requestID: productRequestID,
+          });
         }
-        console.log(response);
         setProduct(response.data);
-        // setImageUrls(response.data.images);
+        setImageUrls(response.data.images);
         setProductPrice(response.data.price);
       } catch (error) {
         console.log(error);

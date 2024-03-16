@@ -209,19 +209,10 @@ export const updateProduct = async (payload) => {
     console.log(error);
   }
 };
-// export const getAcceptedProducts = async () => {
-//   try {
-//     const { data } = await api.get("/admin/get-accepted-products");
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 export const getUserById = async (payload: string) => {
   try {
     const { data } = await api.post("/user/fetch-by-id", payload);
-    console.log(data);
     return data;
   } catch (error: any) {
     console.log(error);

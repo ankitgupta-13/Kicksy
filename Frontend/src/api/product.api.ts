@@ -11,9 +11,12 @@ export const getProductById = async (payload: { productID: string }) => {
   }
 };
 
-export const getProductRequestById = async (payload: { productID: string }) => {
+export const getProductRequestById = async (payload) => {
   try {
-    const { data } = await api.post("/admin/get-product-by-id", payload);
+    const { data } = await api.post(
+      "/admin/requests/product/get-by-id",
+      payload
+    );
     return data;
   } catch (error: any) {
     console.log(error);
