@@ -148,8 +148,34 @@ const deleteProductRequestImage = async (req, res) => {
   }
 };
 
+
+const getProductRequestById = async(req,res)=>{
+  try{
+    const {requestID} = req.body;
+    const request = await ProductRequest.findById(requestID);
+    
+    if(!request) return res.json(new ApiResponse(404 , "Product Request not found"));
+
+    return res.json(new ApiResponse(200 , request , 'request fetched successfully'));
+  
+  }
+  catch(err){
+    return handleErr(res , err)
+  }
+}
+
+const handleChangeInProduct = async(req,res)=>{
+  try{
+
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
+}
+
 export {
   getProductRequests,
+  getProductRequestById,
   addProductViaRequest,
   editProductRequest,
   deleteProductRequestImage,
