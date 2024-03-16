@@ -52,7 +52,7 @@ const sendEmailOtp = async (req, res) => {
     return res.status(200).json(new ApiResponse(200, "Otp sent successfully"));
   } catch (err) {
     console.log(err);
-    return res.json(new ApiError(400 , err.message));
+    return res.json(new ApiError(400, err.message));
   }
 };
 
@@ -73,15 +73,16 @@ const verifyEmailOtp = async (req, res) => {
     }
     const { createdAt } = hashedOtp;
     if (createdAt < Date.now() - 600000) {
-      return res.json(new ApiResponse(422 , "Otp has expired , please request again"));
+      return res.json(
+        new ApiResponse(422, "Otp has expired , please request again")
+      );
     }
     const verify = bcrypt.compareSync(otp, hashedOtp.otp);
 
     if (verify) {
       await Otp.deleteOne({ email });
       return res.json(new ApiResponse(200, "Email verified successfully"));
-    } 
-    else {
+    } else {
       return res.json(new ApiResponse(400, "Otp entered is wrong"));
     }
   } catch (err) {
@@ -106,12 +107,10 @@ const sendMobileOtp = async (req, res) => {
         to: `${countryCode}${mobile}`,
         channel: "sms",
       });
-    
-      return res.json(new ApiResponse(200, otpResponse, "Mobile otp sent"));
 
-    } 
-  catch (error) {
-    return res.json(new ApiError(400, "Error sending mobile otp ", error))
+    return res.json(new ApiResponse(200, otpResponse, "Mobile otp sent"));
+  } catch (error) {
+    return res.json(new ApiError(400, "Error sending mobile otp ", error));
   }
 };
 
@@ -252,31 +251,30 @@ const logoutUser = async (req, res) => {
 const findByID = async (req, res) => {
   const { userID } = req.body;
   try {
-    const user = await User.findOne({ _id: userID })
+    const user = await User.findOne({ _id: userID });
     if (!user) {
-      return res.json(new ApiResponse(404, "user not found"))
+      return res.json(new ApiResponse(404, "user not found"));
     }
     res.json(new ApiResponse(200, user, "User Found"));
+  } catch (err) {
+    res.json(new ApiError(400, err.message));
   }
-  catch (err) {
-    res.json(new ApiError(400 , err.message));
-  }
-}
+};
 
-const findByEmail = async(req,res)=>{
-  try{
-    const {email} = req.body;
-    const user = await User.findOne({email});
+const findByEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
 
-    if(!user) return res.json(new ApiResponse(404 , "user not found")) 
-    
-    return res.json(new ApiResponse(200 , {data:user, status:"found"} , "user found"))
-  
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
+
+    return res.json(
+      new ApiResponse(200, { data: user, status: "found" }, "user found")
+    );
+  } catch (err) {
+    return handleErr(res, err);
   }
-  catch(err){
-    return handleErr(res,err);
-  }
-}
+};
 
 export {
   registerUser,

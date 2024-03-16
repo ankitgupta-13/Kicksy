@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import {
   selectAction,
   selectProduct,
+  selectProductRequest,
 } from "../../redux/reducers/adminDashboardSlice";
 import style from "./ProductAdminDashboardCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,7 +20,9 @@ const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
   };
 
   const handleShowProduct = () => {
-    dispatch(selectProduct(_id)),
+    type === "request"
+      ? dispatch(selectProductRequest(_id))
+      : dispatch(selectProduct(_id)),
       dispatch(
         selectAction({
           selectedSection: "Product",

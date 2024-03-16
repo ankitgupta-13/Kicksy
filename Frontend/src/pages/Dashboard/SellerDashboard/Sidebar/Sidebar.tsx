@@ -20,8 +20,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const sections = [
     {
-      product: {
-        actions: ["All Product", "Add Product", "Product Detail"],
+      Product: {
+        actions: ["List", "Create", "Offers", "Requests"],
         icon: (
           <AccountBoxRoundedIcon
             style={{
@@ -35,8 +35,8 @@ const Sidebar = () => {
       },
     },
     {
-      order: {
-        actions: ["All Orders"],
+      Order: {
+        actions: ["List"],
         icon: (
           <ShoppingCartRoundedIcon
             style={{

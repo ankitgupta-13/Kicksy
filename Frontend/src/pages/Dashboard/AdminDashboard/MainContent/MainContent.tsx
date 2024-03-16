@@ -10,12 +10,13 @@ import ListProduct from "../Product/ListProduct/ListProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import ListSeller from "../Seller/ListSeller/ListSeller";
 import RequestSeller from "../Seller/RequestSeller/RequestSeller";
+import DetailUser from "../User/DetailUser/DetailUser";
+import EditUser from "../User/EditUser/EditUser";
 import ListUser from "../User/ListUser/ListUser";
 import style from "./MainContent.module.css";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
-  console.log(currentAction, currentSection);
   switch (currentSection) {
     case "Product":
       switch (currentAction) {
@@ -39,34 +40,40 @@ const MainContent = ({ currentSection, currentAction }) => {
       break;
     case "Order":
       switch (currentAction) {
-        case "All Order":
+        case "List":
           content = <ListOrder />;
           break;
       }
       break;
     case "User":
       switch (currentAction) {
-        case "All User":
+        case "List":
           content = <ListUser />;
+          break;
+        case "Details":
+          content = <DetailUser />;
+          break;
+        case "Edit":
+          content = <EditUser />;
           break;
       }
       break;
     case "Seller":
       switch (currentAction) {
-        case "All Seller":
+        case "List":
           content = <ListSeller />;
           break;
-        case "Seller Request":
+        case "Requests":
           content = <RequestSeller />;
           break;
       }
       break;
     case "Blog":
       switch (currentAction) {
-        case "Add Blog":
+        case "Create":
           content = <AddBlog />;
           break;
-        case "Blogs List":
+        case "List":
           content = <ListBlogs />;
           break;
       }

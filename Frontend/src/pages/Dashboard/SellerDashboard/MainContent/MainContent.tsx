@@ -5,26 +5,34 @@ import ListOrder from "../Order/ListOrder/ListOrder";
 import Analytics from "../Analytics/Analytics";
 import { Container } from "../../../../components";
 import DetailProduct from "../Product/DetailProduct/DetailProduct";
+import OfferProduct from "../Product/OfferProduct/OfferProduct";
+import RequestProduct from "../Product/RequestProduct/RequestProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
   switch (currentSection) {
-    case "product":
+    case "Product":
       switch (currentAction) {
-        case "Add Product":
+        case "Create":
           content = <CreateProduct />;
           break;
-        case "Product Detail":
+        case "Details":
           content = <DetailProduct />;
           break;
-        case "All Product":
+        case "List":
           content = <ListProduct />;
+          break;
+        case "Offers":
+          content = <OfferProduct />;
+          break;
+        case "Requests":
+          content = <RequestProduct />;
           break;
       }
       break;
-    case "order":
+    case "Order":
       switch (currentAction) {
-        case "All Orders":
+        case "List":
           content = <ListOrder />;
           break;
       }

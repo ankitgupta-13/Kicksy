@@ -10,7 +10,9 @@ const initialState = {
   currentSection: null,
   currentAction: null,
   currentProduct: null,
+  currentProductRequest: null,
   currentOrder: null,
+  currentUser: null,
 };
 
 const adminDashboardSlice = createSlice({
@@ -36,12 +38,26 @@ const adminDashboardSlice = createSlice({
       state.currentAction = null;
     },
     selectProduct: (state, action) => {
+      state.currentProductRequest = null;
       state.currentProduct = action.payload;
+    },
+    selectProductRequest: (state, action) => {
+      state.currentProduct = null;
+      state.currentProductRequest = action.payload;
+    },
+    selectUser: (state, action) => {
+      state.currentUser = action.payload;
     },
   },
 });
 
-export const { toggleSection, selectAction, closeSection, selectProduct } =
-  adminDashboardSlice.actions;
+export const {
+  toggleSection,
+  selectAction,
+  closeSection,
+  selectProduct,
+  selectProductRequest,
+  selectUser,
+} = adminDashboardSlice.actions;
 
 export default adminDashboardSlice.reducer;

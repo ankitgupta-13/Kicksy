@@ -217,3 +217,15 @@ export const updateProduct = async (payload) => {
 //     console.log(error);
 //   }
 // };
+
+export const getUserById = async (payload: string) => {
+  try {
+    const { data } = await api.post("/user/fetch-by-id", payload);
+    console.log(data);
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

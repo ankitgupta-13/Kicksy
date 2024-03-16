@@ -3,13 +3,19 @@ import style from "./DetailProduct.module.css";
 import { RootState } from "../../../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getProductById } from "../../../../../api/product.api";
-import { updateProduct } from "../../../../../api/admin.api";
+import {
+  getProductRequests,
+  updateProduct,
+} from "../../../../../api/admin.api";
 import { Container, ImageSlider } from "../../../../../components";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const DetailProduct = () => {
   const productID = useSelector(
     (state: RootState) => state.adminDashboard.currentProduct
+  );
+  const productRequestID = useSelector(
+    (state: RootState) => state.adminDashboard.currentProductRequest
   );
   const [product, setProduct] = useState({});
   const [imageUrls, setImageUrls] = useState();
@@ -27,12 +33,16 @@ const DetailProduct = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await getProductById({ productID });
+        let response;
+        if (productID) {
+          response = await getProductById({ productID });
+        } else {
+          response = await getProductRequests(productRequestID);
+        }
         console.log(response);
         setProduct(response.data);
         // setImageUrls(response.data.images);
-        setProductPrice(response.data.price.originalPrice);
-        console.log(response.data);
+        setProductPrice(response.data.price);
       } catch (error) {
         console.log(error);
       }
