@@ -1,4 +1,6 @@
 import { Address } from "../models/address.model.js";
+import { Offer } from "../models/offer.model.js";
+import { Product } from "../models/product.models.js";
 import { SellerRequest } from "../models/request.model.js";
 import { ProductRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
@@ -7,6 +9,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse, message } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
 import fs from "fs";
+
 
 const sellerRequest = async (req, res) => {
   try {
@@ -128,8 +131,22 @@ const addOfferToProduct = async (req, res) => {
 
   try {
     const product = await Product.findOne({ _id: productID });
-
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
+
+    // const sellerFound = false;
+
+    // product.offers.forEach(async (offer, index) => {
+    //   const sellerOffer = await Offer.findOne({ _id: offer });
+
+    //   if (sellerOffer.sellerID.equals(sellerID)) {
+    //     sellerFound = true;
+    //   } 
+
+    // })
+
+    // if (sellerFound) {
+    //   return res.json(new ApiResponse(422, "This seller already have an offer in this product."))
+    // }
 
     const offer = new Offer({
       productID,
@@ -139,7 +156,6 @@ const addOfferToProduct = async (req, res) => {
     });
 
     await offer.save();
-
     console.log(offer._id);
 
     await Product.findByIdAndUpdate(productID, {
@@ -149,9 +165,17 @@ const addOfferToProduct = async (req, res) => {
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
-  } catch (err) {
-    console.log(err);
-    return res.json(new ApiError(400, err.message));
+
+  } 
+  catch (error) {
+
+    if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
+      // Handle duplicate key error for sellerID
+      return res.json(new ApiResponse(422 , "This seller already have an offer in this product."))
+      
+    }
+
+    return res.json(new ApiError(400, error.message));
   }
 };
 

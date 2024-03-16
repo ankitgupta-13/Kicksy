@@ -18,7 +18,9 @@ label {
   line-height: 22px;
   letter-spacing: 0.56px;
 }
-
+input[type='checkbox'] {
+  accent-color: black;
+}
 .inputBox {
   display: flex;
   align-items: center;

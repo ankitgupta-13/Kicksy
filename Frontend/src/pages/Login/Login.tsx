@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import style from "./Login.module.css";
+import { Alert } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,12 +14,22 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
+  
+
   const handleLogin = async (data: any) => {
     setError("");
     try {
+
+      console.log(data)
+
       const response = await authLogin(data);
-      console.log(response);
-      if (response.statusCode === 401) return setError(response.data.message);
+
+      if (Math.floor(response.statusCode / 100) === 4) {
+        return setError(response.message)
+      };
+
+
+
       const userData = response.data;
       if (userData) {
         dispatch(login({ userData }));
@@ -30,6 +41,7 @@ const Login = () => {
   };
 
   return (
+    
     <div className={style.Body}>
       <div className={style.CenterBody}>
         <div className={style.logo}>
@@ -39,7 +51,6 @@ const Login = () => {
         <p className={style.content2}>
           Don't have any account?
           <Link to="/register">Sign up</Link>
-          {error && <p>{error}</p>}
         </p>
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className={style.Input}>
@@ -77,6 +88,10 @@ const Login = () => {
             Login
           </Button>
         </form>
+      {
+      error?
+      <Alert style={{margin:"20px 0 0 0"}} severity="error">{error}</Alert>:""
+      }
       </div>
     </div>
   );

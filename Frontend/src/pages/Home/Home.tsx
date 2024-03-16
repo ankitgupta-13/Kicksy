@@ -36,55 +36,55 @@ const Home = () => {
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img src={GirlPic1} alt="" />
+            <img src={GirlPic1} alt="" onClick={() => navigate(`/shop?gender=F`)}/>
           </div>
           <div className={style.GenderBoxTitle}>Women</div>
         </div>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img src={MenPic1} alt="" />
+            <img src={MenPic1} alt="" onClick={() => navigate(`/shop?gender=M`)}/>
           </div>
-          <div className={style.GenderBoxTitle}>Men</div>
+          <div className={style.GenderBoxTitle} >Men</div>
         </div>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img src={KidPic1} alt="" />
+            <img src={KidPic1} alt="" onClick={() => navigate(`/shop?gender=K`)}/>
           </div>
           <div className={style.GenderBoxTitle}>Kids</div>
         </div>
         <div className={style.SaleBox}>
           <div className={style.Box}>
-            <span className={style.SaleBoxContent}>Sale</span>
+            <span className={style.SaleBoxContent} onClick={() => navigate(`/shop?category=sale`)}>Sale</span>
           </div>
         </div>
       </div>
 
       <div className={style.CompanyContainer}>
-        <div className={style.CompanyItemBox}>
+        <div className={style.CompanyItemBox} onClick={() => navigate(`/shop?brand=jordan`)}>
           <div className={style.CompanyItem}>
             <img src={JordanLogo} alt="" />
           </div>
           <div className={style.CompanyItemTitle}>Jordan</div>
         </div>
-        <div className={style.CompanyItemBox}>
+        <div className={style.CompanyItemBox} onClick={() => navigate(`/shop?brand=jordan`)}>
           <div className={style.CompanyItem}>
             <img src={NikeLogo} alt="" />
           </div>
           <div className={style.CompanyItemTitle}>Jordan</div>
         </div>
-        <div className={style.CompanyItemBox}>
+        <div className={style.CompanyItemBox} onClick={() => navigate(`/shop?brand=jordan`)}>
           <div className={style.CompanyItem}>
             <img src={AdidasLogo} alt="" />
           </div>
           <div className={style.CompanyItemTitle}>Jordan</div>
         </div>
-        <div className={style.CompanyItemBox}>
+        <div className={style.CompanyItemBox} onClick={() => navigate(`/shop?brand=nike`)}>
           <div className={style.CompanyItem}>
             <img src={NikeLogo} alt="" />
           </div>
           <div className={style.CompanyItemTitle}>Jordan</div>
         </div>
-        <div className={style.CompanyItemBox}>
+        <div className={style.CompanyItemBox} onClick={() => navigate(`/shop?category=anime`)}>
           <img src={CustomNike} alt="" />
         </div>
       </div>

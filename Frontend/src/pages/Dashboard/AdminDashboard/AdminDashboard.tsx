@@ -18,6 +18,7 @@ const AdminDashboard = () => {
     >
       <Sidebar />
       <div className={style.right}>
+      <div className={style.Heading}>Admin Dashboard</div>
         <Breadcrumb
           currentSection={currentSection}
           currentAction={currentAction}

@@ -12,7 +12,7 @@ import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { Container } from "@mui/material";
 import { RootState } from "../../../../redux/store/store";
-import { useNavigate } from "react-router-dom";
+import { Logo } from "../../../../components";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -23,38 +23,37 @@ const Sidebar = () => {
 
   const sections = [
     {
-      user: {
-        actions: ["allUser", "profileUser", "editUser"],
+      User: {
+        actions: ["All User", "Profile User", "Edit User"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       seller: {
-        actions: ["allSeller", "profileSeller", "requestSellers"],
+        actions: ["All Seller", "Profile Seller", "Seller Request"],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       product: {
         actions: [
-          "allProduct",
-          "addProduct",
-          "detailProduct",
-          "editProduct",
-          "requestProducts",
+          "All Product",
+          "Product Detail",
+          "Add Product",
+          "Product Request",
         ],
         icon: <AccountBoxRoundedIcon />,
       },
     },
     {
       order: {
-        actions: ["allOrder", "editOrder", "deleteOrder"],
+        actions: ["All Order", "Edit Order", "Delete Order"],
         icon: <ShoppingCartRoundedIcon />,
       },
     },
     {
       blog: {
-        actions: ["addblog", "listblogs"],
+        actions: ["Add Blog", "Blogs List"],
         icon: <NoteAltRoundedIcon />,
       },
     },
@@ -71,74 +70,83 @@ const Sidebar = () => {
   };
 
   return (
-    <Container
-      sx={{
-        width: "15%",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-        padding: "10px",
-        overflow: "auto",
-        borderRight: "1px solid #e0e0e0",
-      }}
-    >
-      <div onClick={() => navigate("/")}>
-        <img className={style.Logo} src={logo} alt="" />
-      </div>
-      <div>
-        <h2>Overview</h2>
-        <button
-          className={style.sectionButton}
-          onClick={() => dispatch(closeSection())}
+    <>
+      <div className={style.sidebarBody}>
+        <div className={style.Logo}>
+          <Logo />
+        </div>
+        <Container
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            padding: "10px",
+            overflow: "auto",
+            borderRight: "1px solid #e0e0e0",
+          }}
         >
-          App
-        </button>
-      </div>
-      <div>
-        <h2>Management</h2>
-        {sections.map((section, index) => {
-          const sectionName = Object.keys(section)[0];
-          const actions = section[sectionName].actions;
-          return (
-            <div key={index} className={style.section}>
-              <div
-                onClick={() => handleSectionClick(sectionName)}
-                className={style.sectionButton}
-              >
-                <div className={style.sectionName}>
-                  {section[sectionName].icon}
-                  <p>{sectionName}</p>
+          <div onClick={() => navigate("/")}>
+            <img className={style.Logo} src={logo} alt="" />
+          </div>
+          <div>
+            <h2 className={style.SideBarSectionsHeading}>Overview</h2>
+            <button
+              className={style.sectionButton}
+              onClick={() => dispatch(closeSection())}
+            >
+              App
+            </button>
+          </div>
+          <div>
+            <h2 className={style.SideBarSectionsHeading}>Management</h2>
+            {sections.map((section, index) => {
+              const sectionName = Object.keys(section)[0];
+              const actions = section[sectionName].actions;
+              return (
+                <div key={index} className={style.section}>
+                  <div
+                    onClick={() => handleSectionClick(sectionName)}
+                    className={style.sectionButton}
+                  >
+                    <div className={style.sectionName}>
+                      {section[sectionName].icon}
+                      <p>{sectionName}</p>
+                    </div>
+                    <KeyboardArrowRightRoundedIcon
+                      style={{
+                        transform: sectionsState[sectionName]
+                          ? "rotate(90deg)"
+                          : "rotate(0deg)",
+                        transition: "transform 0.3s ease",
+                      }}
+                    />
+                  </div>
+                  {sectionsState[sectionName] && (
+                    <div className={style.actions}>
+                      {actions.map((action, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={() =>
+                              handleActionClick(sectionName, action)
+                            }
+                            className={style.actionButton}
+                          >
+                            <p>{action}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-                <KeyboardArrowRightRoundedIcon
-                  style={{
-                    transform: sectionsState[sectionName]
-                      ? "rotate(90deg)"
-                      : "rotate(0deg)",
-                    transition: "transform 0.3s ease",
-                  }}
-                />
-              </div>
-              {sectionsState[sectionName] && (
-                <div className={style.actions}>
-                  {actions.map((action, index) => {
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => handleActionClick(sectionName, action)}
-                        className={style.actionButton}
-                      >
-                        <p>{action}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        </Container>
       </div>
-    </Container>
+    </>
   );
 };
 

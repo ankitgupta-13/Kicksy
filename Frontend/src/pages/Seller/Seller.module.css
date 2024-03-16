@@ -50,12 +50,11 @@
   border-radius: 2px;
   cursor: pointer;
   text-transform: uppercase;
-
+  border: none;
   color: var(--Primary-Text, #fff);
   text-align: center;
   font-family: ProximaNova Medium;
   font-size: 16px;
-  line-height: 24px;
   letter-spacing: 0.8px;
 }
 
@@ -68,9 +67,6 @@
   padding: 5px;
 }
 
-.inputBox input[type="file"] {
- 
-}
 
 .inputBox label {
   margin-right: 8px;

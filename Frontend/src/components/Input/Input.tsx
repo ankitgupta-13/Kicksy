@@ -4,15 +4,14 @@ import style from "./Input.module.css";
 const Input = (
   {
     margin,
+    border,
     padding,
     width,
     label,
-    defaultValue,
     labelcheckbox,
     type = "text",
     placeholder = "text",
     className = "",
-    onChange,
     ...props
   }: any,
   ref
@@ -23,7 +22,11 @@ const Input = (
       {label && <label htmlFor={id}>{label}</label>}
       <div
         className={style.inputBox}
-        style={{ padding: `${padding}`, margin: `${margin}` }}
+        style={{
+          padding: `${padding}`,
+          margin: `${margin}`,
+          border: `${border}`,
+        }}
       >
         <input
           className={className}

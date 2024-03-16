@@ -54,10 +54,10 @@
   cursor: pointer;
   text-transform: uppercase;
   margin: 2px;
-
+  border: 1px solid #767676;
   color: var(--Primary-Text, #fff);
   text-align: center;
-  font-family: "Proxima Nova";
+  font-family: "Noir Pro";
   font-size: 15px;
   line-height: 24px;
   letter-spacing: 1px;

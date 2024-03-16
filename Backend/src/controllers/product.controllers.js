@@ -1,9 +1,10 @@
 import { Product } from "../models/product.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { deleteFromAws, uploadOnAws } from "../utils/aws.js";
 import pluralize from "pluralize";
 import fs from "fs";
+import { Offer } from "../models/offer.model.js";
 
 const addProductImage = async (req, res) => {
   const productImageUrl = await uploadOnAws(req.files[0].path);
@@ -72,18 +73,18 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const { _id, images } = req.body;
-    const product = await Product.findOne({_id})
-    
-    if(!product) return res.json(new ApiResponse(404 , 'product not found'));
+    const product = await Product.findOne({ _id })
 
-    product.images.forEach(async(image)=>{
-      
+    if (!product) return res.json(new ApiResponse(404, 'product not found'));
+
+    product.images.forEach(async (image) => {
+
       const split = image.split('/')
 
-      await deleteFromAws(split[split.length-1]);
+      await deleteFromAws(split[split.length - 1]);
 
     })
-    
+
     const deleted_product = await Product.findByIdAndDelete({ _id });
     if (!deleted_product) {
       throw new ApiError("invalid product id");
@@ -96,22 +97,22 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const deleteProductImage = async(req,res)=>{
-  const {imageurl , productID} = req.body
-  try{
-    const product = await Product.findOne({_id:productID})
-    
-    product.images.filter((img)=>{
+const deleteProductImage = async (req, res) => {
+  const { imageurl, productID } = req.body
+  try {
+    const product = await Product.findOne({ _id: productID })
+
+    product.images.filter((img) => {
       return img !== imageurl
     })
 
     await product.save();
 
     const split = imageurl.split('/')
-    await deleteFromAws(split[split.length-1]);
+    await deleteFromAws(split[split.length - 1]);
   }
-  catch(err){
-    return res.json(new ApiError(400 , err.message))
+  catch (err) {
+    return res.json(new ApiError(400, err.message))
   }
 }
 
@@ -147,14 +148,18 @@ const getProductById = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  // const page = parseInt(req.query.page) || 1;
+  // const limit = parseInt(req.query.limit) || 10;
   try {
-    const products = await Product.find()
-      .skip((page - 1) * limit)
-      .limit(limit);
+    const products = await Product.find({})
+    // .skip((page - 1) * limit)
+    // .limit(limit);
+
+    console.log(products)
+
+
     res.json(
-      new ApiResponse(200, { products, page }, "Products fetched successfully")
+      new ApiResponse(200, { products }, "Products fetched successfully")
     );
   } catch (err) {
     console.log(err);
@@ -236,8 +241,59 @@ const searchBarProducts = async (req, res) => {
   }
 };
 
+const correctionInProducts = async (req, res) => {
+  try {
+    const products = await Product.find({})
+
+    const length = products.length
+    products.forEach(async (product, index) => {
+
+      product.category = 'anime';
+      product.skuID = "A00"+index;
+      await product.save();
+
+    })
+
+    return res.json(new ApiResponse(200, 'category updated'))
+
+  }
+  catch (err) {
+
+  }
+}
+
+const fetchOffers = async(req,res)=>{
+  try{
+    const {productID} = req.body;
+
+    const product = await Product.findOne({_id:productID});
+
+    if(!product) return res.json(new ApiResponse(404 , "No product found with this id."))
+
+    let offerArray = []
+
+    const offers = product.offers
+
+    const sellerOffer = offers.map(async(offer)=>{
+      const sellerOffer = await Offer.findOne({_id:offer})
+      return sellerOffer
+    })
+    
+    offerArray = await Promise.all(sellerOffer)
+
+    if(offerArray.length === 0) return res.json(new ApiResponse(404 , "No offers currently in this product"));
+
+    return res.json(new ApiResponse(200 , offerArray , "Offers Fetched successfully"));
+
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
+}
+
 export {
   addProduct,
+  correctionInProducts,
   updateProduct,
   deleteProduct,
   deleteProductImage,
@@ -248,4 +304,5 @@ export {
   getProducts,
   getProductsCount,
   searchBarProducts,
+  fetchOffers
 };

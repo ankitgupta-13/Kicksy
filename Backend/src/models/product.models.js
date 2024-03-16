@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema(
     },
     skuID: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
     },
     offers: [

@@ -15,57 +15,58 @@ import style from "./MainContent.module.css";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
+  console.log(currentAction, currentSection);
   switch (currentSection) {
-    case "product":
+    case "Product":
       switch (currentAction) {
-        case "addProduct":
+        case "Add Product":
           content = <CreateProduct />;
           break;
-        case "detailProduct":
+        case "Product Detail":
           content = <DetailProduct />;
           break;
-        case "editProduct":
+        case "Edit Product":
           content = <EditProduct />;
           break;
-        case "allProduct":
+        case "All Product":
           content = <ListProduct />;
           break;
-        case "requestProducts":
+        case "Product Request":
           content = <RequestProduct />;
           break;
       }
 
       break;
-    case "order":
+    case "Order":
       switch (currentAction) {
-        case "allOrder":
+        case "All Order":
           content = <ListOrder />;
           break;
       }
       break;
-    case "user":
+    case "User":
       switch (currentAction) {
-        case "allUser":
+        case "All User":
           content = <ListUser />;
           break;
       }
       break;
-    case "seller":
+    case "Seller":
       switch (currentAction) {
-        case "allSeller":
+        case "All Seller":
           content = <ListSeller />;
           break;
-        case "requestSellers":
+        case "Seller Request":
           content = <RequestSeller />;
           break;
       }
       break;
-    case "blog":
+    case "Blog":
       switch (currentAction) {
-        case "addblog":
+        case "Add blog":
           content = <AddBlog />;
           break;
-        case "listblogs":
+        case "Blogs List":
           content = <ListBlogs />;
           break;
       }
