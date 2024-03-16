@@ -127,16 +127,18 @@ const productAddRequest = async (req, res) => {
 
 /* this api is for adding offer to the existing product */
 const addOfferToProduct = async (req, res) => {
-  const { productID, sellerID, price, quantity } = req.body;
+  const { productID, sellerID, productPrice, quantity } = req.body;
 
   try {
-    const product = await Product.findOne({ _id: productID });
+    const product = await Product.findOne({ _id: productID }).populate("offers");
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
+
+    
 
     const offer = new Offer({
       productID,
       sellerID,
-      price,
+      price:productPrice,
       quantity,
     });
 
@@ -147,16 +149,28 @@ const addOfferToProduct = async (req, res) => {
       $push: { offers: offer._id },
     });
 
+    let price = []
+    product.offers.forEach((offer)=>{
+      price.push(offer.price)
+    })
+
+    price.sort((a,b)=>a-b);
+    console.log(price[0])
+    product.price = price[0];
+    await product.save()
+
+
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
 
-  } 
+  }
   catch (error) {
-    
+    console.log(error)
+
     if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
       // Handle duplicate key error for sellerID
-      return res.json(new ApiResponse(422 , "This seller already have an offer in this product."))
+      return res.json(new ApiResponse(422, "This seller already have an offer in this product."))
 
     }
 
@@ -164,20 +178,20 @@ const addOfferToProduct = async (req, res) => {
   }
 };
 
-const getSellerOffers = async(req,res)=>{
-  const {sellerID} = req.body;
-  try{
-    const seller = await Seller.findOne({_id:sellerID});
-    
-    if(!seller) return res.json(new ApiResponse(404 , "seller not found"));
+const getSellerOffers = async (req, res) => {
+  const { sellerID } = req.body;
+  try {
+    const seller = await Seller.findOne({ _id: sellerID });
+
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
     const offers = seller.offers;
 
-    offers.map()
-  
+    // offers.map()
+
   }
-  catch(err){
-    return handleErr(res,err)
+  catch (err) {
+    return handleErr(res, err)
   }
 }
 

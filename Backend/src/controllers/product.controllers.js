@@ -5,6 +5,7 @@ import { deleteFromAws, uploadOnAws } from "../utils/aws.js";
 import pluralize from "pluralize";
 import fs from "fs";
 import { Offer } from "../models/offer.model.js";
+import { Seller } from "../models/seller.model.js";
 
 const addProductImage = async (req, res) => {
   const productImageUrl = await uploadOnAws(req.files[0].path);
@@ -148,21 +149,22 @@ const getProductById = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  // const page = parseInt(req.query.page) || 1;
-  // const limit = parseInt(req.query.limit) || 10;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
     const products = await Product.find({})
-    // .skip((page - 1) * limit)
-    // .limit(limit);
+    .skip((page - 1) * limit)
+    .limit(limit);
 
     console.log(products)
 
 
     res.json(
-      new ApiResponse(200, { products }, "Products fetched successfully")
+      new ApiResponse(200, { products , page}, "Products fetched successfully")
     );
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    return res.json(new ApiError(400 , err.message))
   }
 };
 
@@ -241,26 +243,7 @@ const searchBarProducts = async (req, res) => {
   }
 };
 
-const correctionInProducts = async (req, res) => {
-  try {
-    const products = await Product.find({})
 
-    const length = products.length
-    products.forEach(async (product, index) => {
-
-      product.category = 'anime';
-      product.skuID = "A00" + index;
-      await product.save();
-
-    })
-
-    return res.json(new ApiResponse(200, 'category updated'))
-
-  }
-  catch (err) {
-
-  }
-}
 
 const fetchOffers = async (req, res) => {
   try {
@@ -276,12 +259,14 @@ const fetchOffers = async (req, res) => {
 
     const sellerOffer = offers.map(async (offer) => {
       const sellerOffer = await Offer.findOne({ _id: offer })
-      if (sellerOffer.status === "Accepted") {
-        return sellerOffer
+      const seller = await Seller.findOne({_id:sellerOffer.sellerID})
+      return {
+        price:sellerOffer.price,
+        quantity:sellerOffer.quantity,
+        storeName:seller.storeName,
+        storeLogo:seller.storeLogo
       }
-      else {
-        return
-      }
+
     })
 
     offerArray = await Promise.all(sellerOffer)
@@ -300,7 +285,6 @@ const fetchOffers = async (req, res) => {
 
 export {
   addProduct,
-  correctionInProducts,
   updateProduct,
   deleteProduct,
   deleteProductImage,

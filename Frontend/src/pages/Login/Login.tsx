@@ -17,10 +17,11 @@ const Login = () => {
   
 
   const handleLogin = async (data: any) => {
-    setError("");
-    try {
+    setError(""); 
 
-      console.log(data)
+    try {
+      
+      
 
       const response = await authLogin(data);
 
@@ -90,7 +91,9 @@ const Login = () => {
         </form>
       {
       error?
-      <Alert style={{margin:"20px 0 0 0"}} severity="error">{error}</Alert>:""
+      <Alert onClose={()=>{
+        setError("")
+      }} style={{margin:"20px 0 0 0"}} severity="error">{error}</Alert>:""
       }
       </div>
     </div>

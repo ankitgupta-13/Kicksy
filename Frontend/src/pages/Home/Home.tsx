@@ -26,6 +26,9 @@ const Home = () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);
   };
+
+
+
   useEffect(() => {
     getProducts();
   }, []);

@@ -23,12 +23,14 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    price:{
+      type:Number
+    },
     offers: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:"Offer",
-        unique:true
+        ref:"Offer"
       }
     ],
     title: {
