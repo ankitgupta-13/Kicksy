@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  deleteProduct,
-  getProducts,
-  totalProductsCount,
-} from "../../../../../api/admin.api";
+import { getProducts, totalProductsCount } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import { Pagination } from "@mui/material";
-import { ProductAdminDashboardCard } from "../../../../../components";
+import { ProductDashboardCard } from "../../../../../components";
 
 const ListProduct = () => {
   const [page, setPage] = useState(1);
@@ -23,15 +19,6 @@ const ListProduct = () => {
   const countProducts = async () => {
     const response = await totalProductsCount();
     setProductsCount(response.data);
-  };
-
-  const handleDeleteProduct = async (_id: Number, images: []) => {
-    try {
-      await deleteProduct({ _id, images });
-      getLimitedProducts(page);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {
@@ -51,16 +38,11 @@ const ListProduct = () => {
         </div>
         <div className={style.sectionTitleText}>Stock</div>
         <div className={style.sectionTitleText}>Price</div>
-        <div className={style.sectionTitleText}>Remove</div>
       </div>
       {products.map((product, index) => {
         return (
           <div key={index}>
-            <ProductAdminDashboardCard
-              data={product}
-              onDeleteProduct={handleDeleteProduct}
-              page={page}
-            />
+            <ProductDashboardCard data={product} page={page} />
           </div>
         );
       })}
@@ -68,7 +50,7 @@ const ListProduct = () => {
         <Pagination
           count={Math.ceil(productsCount / 10)}
           page={page}
-          onChange={(e, value) => setPage(value)}
+          onChange={(value) => setPage(value)}
         />
       </div>
     </div>

@@ -1,30 +1,37 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  selectAction,
-  selectProduct,
-  selectProductRequest,
+  selectAdminAction,
+  selectAdminProduct,
+  selectAdminProductRequest,
 } from "../../redux/reducers/adminDashboardSlice";
-import style from "./ProductAdminDashboardCard.module.css";
-import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  selectSellerAction,
+  selectSellerProduct,
+} from "../../redux/reducers/sellerDashboardSlice";
+import style from "./ProductDashboardCard.module.css";
+import { RootState } from "../../redux/store/store";
 
-const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
+const ProductDashboardCard = ({ data, type }) => {
   const { _id, title, createdAt, stock, images, price } = data;
-  const finalPrice =
-    price.originalPrice - price.discountPercent * price.originalPrice * 0.01;
   const createdDate = createdAt.split("T")[0];
   const createdTime = createdAt.split("T")[1].split(".")[0];
   const dispatch = useDispatch();
-
-  const handleDeleteProduct = async (_id: Number) => {
-    onDeleteProduct(_id, images);
-  };
+  const userRole = useSelector((state: RootState) => state.auth.userData.role);
 
   const handleShowProduct = () => {
-    type === "request"
-      ? dispatch(selectProductRequest(_id))
-      : dispatch(selectProduct(_id)),
+    userRole === "admin"
+      ? (type === "request"
+          ? dispatch(selectAdminProductRequest(_id))
+          : dispatch(selectAdminProduct(_id)),
+        dispatch(
+          selectAdminAction({
+            selectedSection: "Product",
+            selectedAction: "Details",
+          })
+        ))
+      : dispatch(selectSellerProduct(_id)),
       dispatch(
-        selectAction({
+        selectSellerAction({
           selectedSection: "Product",
           selectedAction: "Details",
         })
@@ -43,13 +50,10 @@ const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
       </div>
       <div className={style.stock}>{stock}</div>
       <div className={style.priceDelete}>
-        <div>₹{finalPrice}</div>
-      </div>
-      <div className={style.Delete}>
-        <DeleteIcon onClick={() => handleDeleteProduct(_id)} />
+        <div>₹{price}</div>
       </div>
     </div>
   );
 };
 
-export default ProductAdminDashboardCard;
+export default ProductDashboardCard;

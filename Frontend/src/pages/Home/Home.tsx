@@ -3,7 +3,7 @@ import { getRecentProducts } from "../../api/user.api";
 import style from "./Home.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SliderCard from "../../components/SliderCard/SliderCard";
-import { Button, Container } from "../../components";
+import { Button } from "../../components";
 import HeroSection from "../../components/HeroSection/HeroSection";
 
 //Importing Images
@@ -13,7 +13,7 @@ import KidPic1 from "../../assets/images/KidPic1.png";
 import JordanLogo from "../../assets/images/JordanLogo.png";
 import NikeLogo from "../../assets/images/NikeLogo.png";
 import AdidasLogo from "../../assets/images/AdidasLogo.png";
-import AnimeShoe1 from "../../assets/images/AnimeShoe1.png";
+// import AnimeShoe1 from "../../assets/images/AnimeShoe1.png";
 import CustomNike from "../../assets/images/CustomNike.png";
 
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <div className={style.Body}>
       <SliderCard />
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
@@ -144,7 +144,7 @@ const Home = () => {
         </div>
       </div>
       <div className={style.BestSellerSlider}>
-        <h1 className={style.BestSellerSliderHeading}>Best Seller</h1>
+        <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
           <div className={style.cards}>
             {products.map((product: Object, index: number) => {
@@ -158,7 +158,7 @@ const Home = () => {
         </div>
       </div>
       <HeroSection />
-    </Container>
+    </div>
   );
 };
 

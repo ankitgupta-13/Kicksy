@@ -4,13 +4,14 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import style from "./Sidebar.module.css";
 import {
   closeSection,
-  selectAction,
+  selectSellerAction,
   toggleSection,
 } from "../../../../redux/reducers/sellerDashboardSlice";
 import { Container, Logo } from "../../../../components";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../../assets/Krisksy.svg";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -53,9 +54,6 @@ const Sidebar = () => {
   return (
     <>
       <div className={style.sidebarBody}>
-        <div className={style.Logo}>
-          <Logo />
-        </div>
         <Container
           sx={{
             width: "100%",
@@ -68,8 +66,8 @@ const Sidebar = () => {
             fontFamily: "sans-serif",
           }}
         >
-          <div className={style.Logo} onClick={() => navigate("/")}>
-            <Logo />
+          <div onClick={() => navigate("/")}>
+            <img className={style.Logo} src={logo} alt="" />
           </div>
           <div className={style.SideBarSections}>
             <h2 className={style.SideBarSectionsHeading}>Overview</h2>
@@ -112,7 +110,7 @@ const Sidebar = () => {
                             key={index}
                             onClick={() =>
                               dispatch(
-                                selectAction({
+                                selectSellerAction({
                                   selectedSection: sectionName,
                                   selectedAction: action,
                                 })

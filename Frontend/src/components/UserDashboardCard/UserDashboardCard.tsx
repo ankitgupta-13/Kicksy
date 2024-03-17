@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
-import style from "./UserAdminDashboardCard.module.css";
+import style from "./UserDashboardCard.module.css";
 import {
-  selectAction,
-  selectUser,
+  selectAdminAction,
+  selectAdminUser,
 } from "../../redux/reducers/adminDashboardSlice";
 
-const UserAdminDashboardCard = ({ data }) => {
+const UserDashboardCard = ({ data }) => {
   const { username, email, role, status, mobile, _id } = data;
   const dispatch = useDispatch();
   const handleShowUser = () => {
-    dispatch(selectUser(_id)),
+    dispatch(selectAdminUser(_id)),
       dispatch(
-        selectAction({
+        selectAdminAction({
           selectedSection: "User",
           selectedAction: "Details",
         })
@@ -30,4 +30,4 @@ const UserAdminDashboardCard = ({ data }) => {
   );
 };
 
-export default UserAdminDashboardCard;
+export default UserDashboardCard;

@@ -1,30 +1,48 @@
 import { useEffect, useState } from "react";
 import { getSellers } from "../../../../../api/admin.api";
+import Pagination from "../../../../../components/Pagination/Pagination";
+import style from "./ListSeller.module.css";
+import { UserDashboardCard } from "../../../../../components";
 
 const ListSeller = () => {
   const [sellerList, setSellerList] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState();
+  const [sellerCount, setSellerCount] = useState(0);
 
   useEffect(() => {
     (async () => {
       const response = await getSellers();
       if (response.statusCode === 200) {
         setSellerList(response.data.sellers);
-        setPage(response.data.page);
+        setPage(response.data.currentPage);
       }
     })();
   }, []);
 
   return (
     <div>
-      {sellerList.map((seller, index) => {
-        return (
-          <div key={index}>
-            <div>{seller.storeName}</div>
-          </div>
-        );
-      })}
-      {page}
+      <div className={style.container}>
+        <div className={style.sectionTitle}>
+          <div className={style.name}>Name</div>
+          <div className={style.phone}>Phone Number</div>
+          <div className={style.role}>Role</div>
+          <div className={style.status}>Status</div>
+        </div>
+        {sellerList.map((seller, index) => {
+          return (
+            <div key={index}>
+              <UserDashboardCard data={seller} />
+            </div>
+          );
+        })}
+        <div className={style.pagination}>
+          <Pagination
+            count={Math.ceil(sellerCount / 10)}
+            page={page}
+            onChange={(value) => setPage(value)}
+          />
+        </div>
+      </div>
     </div>
   );
 };

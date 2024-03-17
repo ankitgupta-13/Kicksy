@@ -23,7 +23,7 @@ const adminDashboardSlice = createSlice({
       const sectionName = action.payload;
       state.sectionsState[sectionName] = !state.sectionsState[sectionName];
     },
-    selectAction: (state, action) => {
+    selectAdminAction: (state, action) => {
       const { selectedSection, selectedAction } = action.payload;
       state.currentSection = selectedSection;
       state.currentAction = selectedAction;
@@ -37,15 +37,15 @@ const adminDashboardSlice = createSlice({
       state.currentSection = null;
       state.currentAction = null;
     },
-    selectProduct: (state, action) => {
+    selectAdminProduct: (state, action) => {
       state.currentProductRequest = null;
       state.currentProduct = action.payload;
     },
-    selectProductRequest: (state, action) => {
+    selectAdminProductRequest: (state, action) => {
       state.currentProduct = null;
       state.currentProductRequest = action.payload;
     },
-    selectUser: (state, action) => {
+    selectAdminUser: (state, action) => {
       state.currentUser = action.payload;
     },
   },
@@ -53,11 +53,11 @@ const adminDashboardSlice = createSlice({
 
 export const {
   toggleSection,
-  selectAction,
+  selectAdminAction,
   closeSection,
-  selectProduct,
-  selectProductRequest,
-  selectUser,
+  selectAdminProduct,
+  selectAdminProductRequest,
+  selectAdminUser,
 } = adminDashboardSlice.actions;
 
 export default adminDashboardSlice.reducer;

@@ -10,7 +10,6 @@ import { ApiResponse, message } from "../utils/ApiResponse.js";
 import { uploadOnAws } from "../utils/aws.js";
 import fs from "fs";
 
-
 const sellerRequest = async (req, res) => {
   try {
     const {
@@ -163,15 +162,15 @@ const addOfferToProduct = async (req, res) => {
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
-
-  }
-  catch (error) {
-    console.log(error)
-
+  } catch (error) {
     if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
       // Handle duplicate key error for sellerID
-      return res.json(new ApiResponse(422, "This seller already have an offer in this product."))
-
+      return res.json(
+        new ApiResponse(
+          422,
+          "This seller already have an offer in this product."
+        )
+      );
     }
 
     return res.json(new ApiError(400, error.message));

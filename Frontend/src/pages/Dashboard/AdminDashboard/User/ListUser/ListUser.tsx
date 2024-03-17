@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
 import style from "./ListUser.module.css";
-import UserAdminDashboardCard from "../../../../../components/UserAdminDashboardCard/UserAdminDashboardCard";
+import UserAdminDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
 import { Pagination } from "@mui/material";
 
 const ListUser = () => {
