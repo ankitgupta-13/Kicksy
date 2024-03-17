@@ -8,9 +8,7 @@ import style from "./ProductAdminDashboardCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
-  const { _id, title, createdAt, stock, images, price } = data;
-  const finalPrice =
-    price.originalPrice - price.discountPercent * price.originalPrice * 0.01;
+  const { _id, title, createdAt, stock, images } = data;
   const createdDate = createdAt.split("T")[0];
   const createdTime = createdAt.split("T")[1].split(".")[0];
   const dispatch = useDispatch();
@@ -42,9 +40,6 @@ const ProductAdminDashboardCard = ({ data, onDeleteProduct, type }) => {
         <div className={style.time}>{createdTime}</div>
       </div>
       <div className={style.stock}>{stock}</div>
-      <div className={style.priceDelete}>
-        <div>₹{finalPrice}</div>
-      </div>
       <div className={style.Delete}>
         <DeleteIcon onClick={() => handleDeleteProduct(_id)} />
       </div>

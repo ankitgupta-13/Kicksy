@@ -1,20 +1,26 @@
-.bloghead {
+.topbar{
     display: flex;
-    height: 200px;
     flex-direction: column;
-    background-color: brown;
-    justify-content: space-evenly;
-}
-
-.blogtitle {
-    font-size: 40px;
-    align-self: center;
-}
-
-.blogsub {
+    width: 100%;
+    height: 200px;
+    /* font-weight: 100; */
+    font-size: 35px;
+    align-items: center;
+    gap: 0.5rem;
     display: flex;
-    justify-content: space-between;
-    margin: 0px 60px;
+    justify-content: center;
+    font-family: 'Bebas Neue';
+    color: #fff;
+    /* background-color: rgb(132, 33, 33); */
+    background: url('../../assets/images/blog_banner.jpg');
+    text-transform: uppercase;
+}
+.topbar__subheading {
+  font-size: 1rem;
+  word-spacing: 0.5rem;
+}
+.topbar__subheading span {
+    word-spacing: 0.1rem;
 }
 
 .blogsection {
@@ -29,5 +35,26 @@
 }
 
 .blogcontent {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
 
+.recent_blogs {
+    color: white;
+    line-height: 2rem;
+    background-color: brown;
+    background: url('../../assets/post_banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 850px;
+    padding: 50px;
+    font-family: 'Bebas Neue';
+}
+.recent_blogs_title {
+    font-size: 0.8rem;
+}
+.recent__blogs_container {
+    padding: 20px;
 }

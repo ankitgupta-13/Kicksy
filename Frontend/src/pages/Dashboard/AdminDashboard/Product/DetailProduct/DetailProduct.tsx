@@ -10,8 +10,8 @@ import {
   getProductRequests,
   updateProduct,
 } from "../../../../../api/admin.api";
-import { Container, ImageSlider } from "../../../../../components";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { Container, ImageSlider} from "../../../../../components";
+
 
 const DetailProduct = () => {
   const productID = useSelector(
@@ -21,13 +21,12 @@ const DetailProduct = () => {
     (state: RootState) => state.adminDashboard.currentProductRequest
   );
   const [product, setProduct] = useState({});
-  const [imageUrls, setImageUrls] = useState();
-  const [productPrice, setProductPrice] = useState();
+  const [imageUrls, setImageUrls] = useState([]);
 
-  const handleUpdateProduct = (data) => {
+  const handleUpdateProduct = (updatedProduct) => {
     try {
-      data = { ...data };
-      const response = updateProduct({ data });
+      const response = updateProduct(updatedProduct);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -46,12 +45,23 @@ const DetailProduct = () => {
         }
         setProduct(response.data);
         setImageUrls(response.data.images);
-        setProductPrice(response.data.price);
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    handleUpdateProduct(product);
+  };
 
   return (
     <div>
@@ -59,31 +69,101 @@ const DetailProduct = () => {
         <Container
           sx={{
             flexDirection: "row",
+            padding : '20px',
             gap: "2rem",
           }}
         >
           <ImageSlider imageUrls={imageUrls} />
           <div className={style.productDetails}>
-            <div>{product.title}</div>
-            <div className={style.price}>
-              <CurrencyRupeeIcon
-                sx={{
-                  width: "15px",
-                }}
+            <span className={style.heading}>Product Details</span>
+            <div className={style.form}>
+            <label className={style.label}>Title</label>
+            <div className={style.outerdiv}>
+              <input
+                className={style.input}
+                type="text"
+                name="title"
+                value={product.title || ""}
+                onChange={handleInputChange}
               />
-              {productPrice}
+              </div>
+            <div>
+            <label className={style.label}>Description</label>
+            <div className={style.outerdiv}>
+              <input
+                className={style.input}
+                style={{height: '130px'}}
+                type="text"
+                name="description"
+                value={product.description || ""}
+                onChange={handleInputChange}
+              />
+              </div>
+              </div>
+              <div>
+                <label className={style.label}>Brand</label>
+                <div className={style.outerdiv}>
+                <input
+                  className={style.input}
+                  type="text"
+                  name="brand"
+                  value={product.brand || ""}
+                  onChange={handleInputChange}
+                />
+                </div>
+              </div>
+              <div>
+                <label className={style.label}>Color</label>
+                <div className={style.outerdiv}>
+                <input
+                  className={style.input}
+                  type="text"
+                  name="color"
+                  value={product.color || ""}
+                  onChange={handleInputChange}
+                />
+                </div>
+                </div>
+              <div>
+                <label className={style.label}>Sizes</label>
+                <div className={style.outerdiv}>
+                <input
+                  className={style.input}
+                  type="text"
+                  name="size"
+                  value={product.size || ""}
+                  onChange={handleInputChange}
+                />
+                </div>
+                </div>
+              <div>
+                <label className={style.label}>Gender</label>
+                <div className={style.outerdiv}>
+                <input
+                  className={style.input}
+                  type="text"
+                  name="gender"
+                  value={product.gender || ""}
+                  onChange={handleInputChange}
+                />
+                </div>
+              </div>
+              <div>
+                <label className={style.label}>Category</label>
+                <div className={style.outerdiv}>
+                <input
+                  className={style.input}
+                  type="text"
+                  name="category"
+                  value={product.category || ""}
+                  onChange={handleInputChange}
+                />
+                </div>
+              </div>
+              <div className={style.buttoncontainer}>
+            <button className={style.savebutton} onClick={handleSave}>Save</button>
             </div>
-            <div>{product.description}</div>
-            <div className={style.color}>
-              <h3>Color</h3>
-              {product.color}
             </div>
-            <div className={style.size}>
-              <h3>Size</h3>
-              {product.size}
-            </div>
-            <div>{product.stock}</div>
-            <div>{product.gender}</div>
           </div>
         </Container>
       ) : (
