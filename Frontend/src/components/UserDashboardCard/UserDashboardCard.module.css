@@ -26,3 +26,9 @@
 .nameEmail {
   flex-direction: column;
 }
+.store {
+  display: flex;
+}
+.storeLogo {
+  width: 40px;
+}

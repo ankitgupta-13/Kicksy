@@ -36,7 +36,7 @@ const ListUser = () => {
       <div className={style.sectionTitle}>
         <div className={style.name}>Name</div>
         <div className={style.phone}>Phone Number</div>
-        <div className={style.role}>Role</div>
+        <div className={style.role}>Email</div>
         <div className={style.status}>Status</div>
       </div>
       {users.map((user, index) => {

@@ -65,6 +65,7 @@ const getSellers = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   try {
     const sellers = await Seller.find({})
+      .populate("userID")
       .skip((page - 1) * limit)
       .limit(limit);
 
