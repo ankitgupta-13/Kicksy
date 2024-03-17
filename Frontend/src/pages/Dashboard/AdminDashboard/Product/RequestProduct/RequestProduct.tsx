@@ -6,7 +6,7 @@ import {
 } from "../../../../../api/admin.api";
 import RequestCard from "../../../../../components/RequestCard/RequestCard";
 import style from "./RequestProduct.module.css";
-import ProductAdminDashboardCard from "../../../../../components/ProductAdminDashboardCard/ProductAdminDashboardCard";
+import ProductAdminDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
 
 const RequestProduct = () => {
   const [requestList, setRequestList] = useState([]);

@@ -6,7 +6,7 @@ import {
 } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import { Pagination } from "@mui/material";
-import { ProductAdminDashboardCard } from "../../../../../components";
+import { ProductDashboardCard } from "../../../../../components";
 
 const ListProduct = () => {
   const [page, setPage] = useState(1);
@@ -25,14 +25,14 @@ const ListProduct = () => {
     setProductsCount(response.data);
   };
 
-  const handleDeleteProduct = async (_id: Number, images: []) => {
-    try {
-      await deleteProduct({ _id, images });
-      getLimitedProducts(page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDeleteProduct = async (_id: Number, images: []) => {
+  //   try {
+  //     await deleteProduct({ _id, images });
+  //     getLimitedProducts(page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     getLimitedProducts(page);
@@ -48,16 +48,11 @@ const ListProduct = () => {
         <div>Product</div>
         <div>Create at</div>
         <div>Stock</div>
-        <div>Price</div>
       </div>
       {products.map((product, index) => {
         return (
           <div key={index}>
-            <ProductAdminDashboardCard
-              data={product}
-              onDeleteProduct={handleDeleteProduct}
-              page={page}
-            />
+            <ProductDashboardCard data={product} page={page} />
           </div>
         );
       })}

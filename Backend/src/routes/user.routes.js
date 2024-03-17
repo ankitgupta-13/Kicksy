@@ -25,7 +25,6 @@ import {
 } from "../controllers/cart.controllers.js";
 
 import {
-  correctionInProducts,
   getProductById,
   getProducts,
   getRecentProducts,
@@ -48,7 +47,7 @@ router.route("/add-to-cart").post(addToCart);
 router.route("/remove-from-cart").post(removeFromCart);
 router.route("/get-user-cart").post(getCartByUser);
 router.route("/delete-from-cart").post(deleteFromCart);
-router.route("/add-list-name").post(addListName);
+router.route("/add-list-name").post(addListName); 
 router.route("/add-to-list").post(addToList);
 router.route("/remove-list").post(removeList);
 router.route("/remove-product-from-list").post(removeFromList);
@@ -57,7 +56,6 @@ router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/get-recent-products").get(getRecentProducts);
 router.route("/get-product-by-id").post(getProductById);
 router.route("/get-products").get(getProducts);
-router.route("/update-category").get(correctionInProducts);
 router.route("/search-products").post(searchBarProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/fetch-blog-by-id").post(fetchBlogById);

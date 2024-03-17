@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
 import style from "./ListUser.module.css";
-import UserAdminDashboardCard from "../../../../../components/UserAdminDashboardCard/UserAdminDashboardCard";
+import UserAdminDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
 import { Pagination } from "@mui/material";
 
 const ListUser = () => {
@@ -36,7 +36,7 @@ const ListUser = () => {
       <div className={style.sectionTitle}>
         <div className={style.name}>Name</div>
         <div className={style.phone}>Phone Number</div>
-        <div className={style.role}>Role</div>
+        <div className={style.role}>Email</div>
         <div className={style.status}>Status</div>
       </div>
       {users.map((user, index) => {

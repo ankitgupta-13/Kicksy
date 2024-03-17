@@ -255,11 +255,12 @@ const findByID = async (req, res) => {
     if (!user) {
       return res.json(new ApiResponse(404, "user not found"));
     }
-    res.json(new ApiResponse(200, user, "User Found"));
-  } catch (err) {
-    res.json(new ApiError(400, err.message));
+    return res.json(new ApiResponse(200, user, "User Found"));
   }
-};
+  catch (err) {
+    return res.json(new ApiError(400 , err.message));
+  }
+}
 
 const findByEmail = async (req, res) => {
   try {

@@ -30,6 +30,7 @@ import {
   getUsers,
   fetchAdmins,
   getUsersCount,
+  getSellers,
 } from "../controllers/admin.controllers.js";
 
 import {
@@ -56,7 +57,7 @@ router.route("/update-stock").post(handleProductStock);
 router.route("/update-product").post(updateProduct);
 router.route("/delete-product").post(deleteProduct);
 router.route("/delete-product-image").post(deleteProductImage);
-router.route("/add-blog").post(upload.single("image") , addBlog);
+router.route("/add-blog").post(upload.single("image"), addBlog);
 router.route("/edit-blog-image").post(upload.single("image"), editBlogImage);
 router.route("/edit-blog-body").post(editBlogBody);
 router.route("/attach-product-to-blog").post(attachProductToBlog);
@@ -64,6 +65,7 @@ router.route("/delete-blog").post(deleteBlog);
 router.route("/fetch-blog/id").post(fetchBlogById);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/get-users").get(getUsers);
+router.route("/get-sellers").get(getSellers);
 router.route("/get-products").get(getProducts);
 router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);

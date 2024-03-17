@@ -3,7 +3,6 @@ import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Seller } from "../models/seller.model.js";
-import { SellerRequest } from "../models/request.model.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -57,6 +56,33 @@ const getUsers = async (req, res) => {
     );
   } catch (error) {
     throw new ApiError(400, "Error getting users ", error);
+  }
+};
+
+const getSellers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  try {
+    const sellers = await Seller.find({})
+      .populate({
+        path: "userID",
+        select: "-password -refreshToken",
+      })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return res.json(
+      new ApiResponse(
+        200,
+        {
+          sellers,
+          currentPage: page,
+        },
+        "Sellers retrieved successfully!"
+      )
+    );
+  } catch (error) {
+    throw new ApiError(400, "Error getting sellers ", error);
   }
 };
 
@@ -119,6 +145,7 @@ export {
   createAdmin,
   checkAdmin,
   getUsers,
+  getSellers,
   changeUserState,
   getActiveUsersCount,
   fetchAdmins,
