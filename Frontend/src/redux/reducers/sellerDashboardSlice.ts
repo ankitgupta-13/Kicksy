@@ -7,6 +7,7 @@ const initialState = {
   },
   currentSection: null,
   currentAction: null,
+  currentProduct: null,
 };
 
 const sellerDashboardSlice = createSlice({
@@ -17,7 +18,7 @@ const sellerDashboardSlice = createSlice({
       const sectionName = action.payload;
       state.sectionsState[sectionName] = !state.sectionsState[sectionName];
     },
-    selectAction: (state, action) => {
+    selectSellerAction: (state, action) => {
       const { selectedSection, selectedAction } = action.payload;
       state.currentSection = selectedSection;
       state.currentAction = selectedAction;
@@ -31,10 +32,17 @@ const sellerDashboardSlice = createSlice({
       state.currentSection = null;
       state.currentAction = null;
     },
+    selectSellerProduct: (state, action) => {
+      state.currentProduct = action.payload;
+    },
   },
 });
 
-export const { toggleSection, selectAction, closeSection } =
-  sellerDashboardSlice.actions;
+export const {
+  toggleSection,
+  selectSellerAction,
+  closeSection,
+  selectSellerProduct,
+} = sellerDashboardSlice.actions;
 
 export default sellerDashboardSlice.reducer;
