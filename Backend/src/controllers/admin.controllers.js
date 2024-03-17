@@ -3,7 +3,6 @@ import { User } from "../models/user.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Seller } from "../models/seller.model.js";
-import { SellerRequest } from "../models/request.model.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -65,7 +64,10 @@ const getSellers = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   try {
     const sellers = await Seller.find({})
-      .populate("userID")
+      .populate({
+        path: "userID",
+        select: "-password -refreshToken",
+      })
       .skip((page - 1) * limit)
       .limit(limit);
 

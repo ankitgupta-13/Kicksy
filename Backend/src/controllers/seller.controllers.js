@@ -126,16 +126,18 @@ const productAddRequest = async (req, res) => {
 
 /* this api is for adding offer to the existing product */
 const addOfferToProduct = async (req, res) => {
-  const { productID, sellerID, price, quantity } = req.body;
+  const { productID, sellerID, productPrice, quantity } = req.body;
 
   try {
-    const product = await Product.findOne({ _id: productID });
+    const product = await Product.findOne({ _id: productID }).populate("offers");
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
+
+    
 
     const offer = new Offer({
       productID,
       sellerID,
-      price,
+      price:productPrice,
       quantity,
     });
 
@@ -145,6 +147,17 @@ const addOfferToProduct = async (req, res) => {
     await Product.findByIdAndUpdate(productID, {
       $push: { offers: offer._id },
     });
+
+    let price = []
+    product.offers.forEach((offer)=>{
+      price.push(offer.price)
+    })
+
+    price.sort((a,b)=>a-b);
+    console.log(price[0])
+    product.price = price[0];
+    await product.save()
+
 
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
@@ -173,11 +186,15 @@ const getSellerOffers = async (req, res) => {
 
     const offers = seller.offers;
 
-    offers.map();
-  } catch (err) {
-    return handleErr(res, err);
+    // offers.map()
+
   }
-};
+  catch (err) {
+    return handleErr(res, err)
+  }
+}
+
+
 
 export {
   sellerRequest,
