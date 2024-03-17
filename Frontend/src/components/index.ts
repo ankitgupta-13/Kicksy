@@ -12,6 +12,7 @@ import colorCard from "./colorCard/colorCard.tsx";
 import ProductCard from "./ProductCard/ProductCard.tsx";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.tsx";
 import ProductDashboardCard from "./ProductDashboardCard/ProductDashboardCard.tsx";
+import UserDashboardCard from "./UserDashboardCard/UserDashboardCard.tsx";
 import ImageSlider from "./ImageSlider/ImageSlider.tsx";
 
 export {
@@ -29,5 +30,6 @@ export {
   ProductCard,
   Breadcrumb,
   ProductDashboardCard,
+  UserDashboardCard,
   ImageSlider,
 };

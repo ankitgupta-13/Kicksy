@@ -131,6 +131,7 @@ export const deleteProduct = async (payload: Object) => {
 export const getSellers = async () => {
   try {
     const { data } = await api.get("/admin/get-sellers");
+    console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;

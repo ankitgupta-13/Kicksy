@@ -60,6 +60,29 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getSellers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  try {
+    const sellers = await Seller.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return res.json(
+      new ApiResponse(
+        200,
+        {
+          sellers,
+          currentPage: page,
+        },
+        "Sellers retrieved successfully!"
+      )
+    );
+  } catch (error) {
+    throw new ApiError(400, "Error getting sellers ", error);
+  }
+};
+
 const getActiveUsersCount = async (req, res) => {
   try {
     const count = await User.countDocuments({ status: "active" });
@@ -119,6 +142,7 @@ export {
   createAdmin,
   checkAdmin,
   getUsers,
+  getSellers,
   changeUserState,
   getActiveUsersCount,
   fetchAdmins,

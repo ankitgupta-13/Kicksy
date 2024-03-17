@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   closeSection,
-  selectAction,
+  selectAdminAction,
   toggleSection,
 } from "../../../../redux/reducers/adminDashboardSlice";
 import logo from "../../../../assets/Krisksy.svg";
@@ -61,7 +61,10 @@ const Sidebar = () => {
 
   const handleActionClick = (sectionName, actionName) => {
     dispatch(
-      selectAction({ selectedSection: sectionName, selectedAction: actionName })
+      selectAdminAction({
+        selectedSection: sectionName,
+        selectedAction: actionName,
+      })
     );
   };
 
