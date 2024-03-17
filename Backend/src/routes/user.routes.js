@@ -32,6 +32,8 @@ import {
 } from "../controllers/product.controllers.js";
 
 import { fetchAllBlog, fetchBlogById } from "../controllers/blog.controllers.js";
+import { sellerRequest } from "../controllers/seller.controllers.js";
+import { upload } from "../middlewares/multer.middlewares.js";
 
 const router = Router();
 
@@ -60,5 +62,9 @@ router.route("/search-products").post(searchBarProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/fetch-blog-by-id").post(fetchBlogById);
 
+/* Seller creation requests */
+router
+  .route("/create-request/seller")
+  .post(upload.single("storeLogo"), sellerRequest);
 
 export default router;

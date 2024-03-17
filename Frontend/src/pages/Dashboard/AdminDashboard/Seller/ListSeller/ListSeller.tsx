@@ -23,10 +23,10 @@ const ListSeller = () => {
     <div>
       <div className={style.container}>
         <div className={style.sectionTitle}>
+          <div className={style.status}>Store Name</div>
           <div className={style.name}>Name</div>
           <div className={style.phone}>Phone Number</div>
           <div className={style.role}>Email</div>
-          <div className={style.status}>Store Name</div>
         </div>
         {sellerList.map((seller, index) => {
           return (

@@ -99,6 +99,7 @@
 }
 
 
+
 .NewArrivalsSliderTitle {
     color: #000;
     font-family: "Noir Pro";
@@ -178,4 +179,5 @@
     font-weight: 800;
     letter-spacing: 0.8px;
     text-transform: uppercase;
+    padding: 10px 20px;
 }

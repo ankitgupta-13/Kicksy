@@ -163,6 +163,7 @@ const addOfferToProduct = async (req, res) => {
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
   } catch (error) {
+    console.log(error)
     if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
       // Handle duplicate key error for sellerID
       return res.json(

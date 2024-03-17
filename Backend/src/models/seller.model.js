@@ -24,6 +24,7 @@ const sellerSchema = new mongoose.Schema({
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
+    unique:true,
     ref: "User",
     required: true,
   },
@@ -32,12 +33,10 @@ const sellerSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
-  offers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
+  offers:{
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Offer",
     },
-  ],
   website: String,
   instagram: String,
   notes: String,

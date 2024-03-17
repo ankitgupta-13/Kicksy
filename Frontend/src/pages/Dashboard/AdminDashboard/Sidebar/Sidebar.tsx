@@ -71,6 +71,9 @@ const Sidebar = () => {
   return (
     <>
       <div className={style.sidebarBody}>
+        {/* <div className={style.Logo}>
+          <Logo />
+        </div> */}
         <Container
           sx={{
             width: "100%",

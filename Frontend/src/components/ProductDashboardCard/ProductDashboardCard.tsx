@@ -12,7 +12,6 @@ import style from "./ProductDashboardCard.module.css";
 import { RootState } from "../../redux/store/store";
 
 const ProductDashboardCard = ({ data, type }) => {
-  console.log(data);
   const { _id, title, createdAt, stock, images, price, brand, skuID } = data;
   const createdDate = createdAt.split("T")[0];
   const createdTime = createdAt.split("T")[1].split(".")[0];

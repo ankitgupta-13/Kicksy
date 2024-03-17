@@ -172,7 +172,10 @@ export const declineSellerRequest = async (payload: Object) => {
 
 export const acceptProductRequest = async (payload: Object) => {
   try {
-    const { data } = await api.post("/admin/accept-product-request", payload);
+    const { data } = await api.post(
+      "/admin/requests/product/accept-request",
+      payload
+    );
     console.log(data);
     return data;
   } catch (error) {
@@ -183,7 +186,11 @@ export const acceptProductRequest = async (payload: Object) => {
 
 export const declineProductRequest = async (payload: Object) => {
   try {
-    const { data } = await api.post("/admin/decline-product-request", payload);
+    const { data } = await api.post(
+      "/admin/requests/product/decline-request",
+      payload
+    );
+    console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;

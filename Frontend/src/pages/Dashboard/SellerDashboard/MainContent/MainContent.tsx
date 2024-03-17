@@ -7,6 +7,7 @@ import { Container } from "../../../../components";
 import DetailProduct from "../Product/DetailProduct/DetailProduct";
 import OfferProduct from "../Product/OfferProduct/OfferProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
+import EditProduct from "../Product/EditProduct/EditProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
@@ -27,6 +28,9 @@ const MainContent = ({ currentSection, currentAction }) => {
           break;
         case "Requests":
           content = <RequestProduct />;
+          break;
+        case "Edit":
+          content = <EditProduct />;
           break;
       }
       break;

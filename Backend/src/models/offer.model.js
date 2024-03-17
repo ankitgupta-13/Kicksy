@@ -9,7 +9,8 @@ const offerSchema = new mongoose.Schema({
     sellerID:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:"Seller"
+        ref:"Seller",
+        unique:false
     },
     price:{
         type:Number,
@@ -19,6 +20,8 @@ const offerSchema = new mongoose.Schema({
         type:Number
     }
 })
+
+offerSchema.index({ sellerID: 1, productID: 1 }, { unique: false });
 
 const Offer = new mongoose.model('Offer' , offerSchema);
 

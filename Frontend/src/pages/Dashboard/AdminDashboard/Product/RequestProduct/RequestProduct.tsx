@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  getAcceptedProducts,
-  getProductRequests,
-  getSellerRequests,
-} from "../../../../../api/admin.api";
-import RequestCard from "../../../../../components/RequestCard/RequestCard";
+import { getProductRequests } from "../../../../../api/admin.api";
 import style from "./RequestProduct.module.css";
-import ProductAdminDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
+import ProductDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
 
 const RequestProduct = () => {
   const [requestList, setRequestList] = useState([]);
@@ -32,7 +27,7 @@ const RequestProduct = () => {
         requestList.map((request, index) => {
           return (
             <div key={index}>
-              <ProductAdminDashboardCard data={request} type="request" />
+              <ProductDashboardCard data={request} type="request" />
             </div>
           );
         })

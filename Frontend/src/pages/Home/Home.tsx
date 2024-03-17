@@ -96,7 +96,7 @@ const Home = () => {
           <div className={style.CompanyItem}>
             <img src={NikeLogo} alt="" />
           </div>
-          <div className={style.CompanyItemTitle}>Jordan</div>
+          <div className={style.CompanyItemTitle}>Nike</div>
         </div>
         <div
           className={style.CompanyItemBox}
@@ -105,7 +105,7 @@ const Home = () => {
           <div className={style.CompanyItem}>
             <img src={AdidasLogo} alt="" />
           </div>
-          <div className={style.CompanyItemTitle}>Jordan</div>
+          <div className={style.CompanyItemTitle}>Adidas</div>
         </div>
         <div
           className={style.CompanyItemBox}
@@ -114,7 +114,7 @@ const Home = () => {
           <div className={style.CompanyItem}>
             <img src={NikeLogo} alt="" />
           </div>
-          <div className={style.CompanyItemTitle}>Jordan</div>
+          <div className={style.CompanyItemTitle}>Nike</div>
         </div>
         <div
           className={style.CompanyItemBox}

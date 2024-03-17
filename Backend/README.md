@@ -24,3 +24,18 @@ use:takes in userID , productID and listID as input and then adds the id of the 
 <!-- Seller can add a offer on all products,add a product request -->
 
 <!-- Order status should be updated by sellers -->
+
+
+
+
+<!-- Seller Dashboard -->
+
+1. delete offer            ❌ 
+2. add offer               ✅
+3. raise product request   ✅ 
+4. delete product request  ❌ 
+
+
+<!-- admin dashboard -->
+
+1. 

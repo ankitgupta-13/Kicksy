@@ -1,6 +1,6 @@
 import { api } from "./auth.api";
 
-export const getProductById = async (payload: { productID: string }) => {
+export const getProductById = async (payload: Object) => {
   try {
     const { data } = await api.post("/user/get-product-by-id", payload);
     return data;

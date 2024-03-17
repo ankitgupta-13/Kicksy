@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./DetailProduct.module.css";
 import { RootState } from "../../../../../redux/store/store";
 import { useEffect, useState } from "react";
@@ -7,19 +7,31 @@ import {
   getProductRequestById,
 } from "../../../../../api/product.api";
 import {
-  getProductRequests,
+  acceptProductRequest,
+  declineProductRequest,
   updateProduct,
 } from "../../../../../api/admin.api";
-import { Container, ImageSlider} from "../../../../../components";
-
+import { ProductDescription } from "../../../../../components";
+import { Button } from "@mui/material";
+import { selectAdminAction } from "../../../../../redux/reducers/adminDashboardSlice";
 
 const DetailProduct = () => {
-  const productID = useSelector(
-    (state: RootState) => state.adminDashboard.currentProduct
+  const isAdmin = useSelector(
+    (state: RootState) => state.auth.userData.role === "admin"
   );
+  let productID;
+  isAdmin
+    ? (productID = useSelector(
+        (state: RootState) => state.adminDashboard.currentProduct
+      ))
+    : (productID = useSelector(
+        (state: RootState) => state.sellerDashboard.currentProduct
+      ));
+
   const productRequestID = useSelector(
     (state: RootState) => state.adminDashboard.currentProductRequest
   );
+  const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -30,6 +42,15 @@ const DetailProduct = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleShowEditProduct = () => {
+    dispatch(
+      selectAdminAction({
+        selectedSection: "Product",
+        selectedAction: "Edit",
+      })
+    );
   };
 
   useEffect(() => {
@@ -51,121 +72,36 @@ const DetailProduct = () => {
     })();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
-  };
-
-  const handleSave = () => {
-    handleUpdateProduct(product);
-  };
-
   return (
     <div>
       {product ? (
-        <Container
-          sx={{
-            flexDirection: "row",
-            padding : '20px',
-            gap: "2rem",
-          }}
-        >
-          <ImageSlider imageUrls={imageUrls} />
-          <div className={style.productDetails}>
-            <span className={style.heading}>Product Details</span>
-            <div className={style.form}>
-            <label className={style.label}>Title</label>
-            <div className={style.outerdiv}>
-              <input
-                className={style.input}
-                type="text"
-                name="title"
-                value={product.title || ""}
-                onChange={handleInputChange}
-              />
-              </div>
+        <div>
+          <ProductDescription data={product} />
+          {productRequestID ? (
             <div>
-            <label className={style.label}>Description</label>
-            <div className={style.outerdiv}>
-              <input
-                className={style.input}
-                style={{height: '130px'}}
-                type="text"
-                name="description"
-                value={product.description || ""}
-                onChange={handleInputChange}
-              />
-              </div>
-              </div>
-              <div>
-                <label className={style.label}>Brand</label>
-                <div className={style.outerdiv}>
-                <input
-                  className={style.input}
-                  type="text"
-                  name="brand"
-                  value={product.brand || ""}
-                  onChange={handleInputChange}
-                />
-                </div>
-              </div>
-              <div>
-                <label className={style.label}>Color</label>
-                <div className={style.outerdiv}>
-                <input
-                  className={style.input}
-                  type="text"
-                  name="color"
-                  value={product.color || ""}
-                  onChange={handleInputChange}
-                />
-                </div>
-                </div>
-              <div>
-                <label className={style.label}>Sizes</label>
-                <div className={style.outerdiv}>
-                <input
-                  className={style.input}
-                  type="text"
-                  name="size"
-                  value={product.size || ""}
-                  onChange={handleInputChange}
-                />
-                </div>
-                </div>
-              <div>
-                <label className={style.label}>Gender</label>
-                <div className={style.outerdiv}>
-                <input
-                  className={style.input}
-                  type="text"
-                  name="gender"
-                  value={product.gender || ""}
-                  onChange={handleInputChange}
-                />
-                </div>
-              </div>
-              <div>
-                <label className={style.label}>Category</label>
-                <div className={style.outerdiv}>
-                <input
-                  className={style.input}
-                  type="text"
-                  name="category"
-                  value={product.category || ""}
-                  onChange={handleInputChange}
-                />
-                </div>
-              </div>
-              <div className={style.buttoncontainer}>
-            <button className={style.savebutton} onClick={handleSave}>Save</button>
+              <Button
+                onClick={() => acceptProductRequest({ requestID: product._id })}
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={() =>
+                  declineProductRequest({ requestID: product._id })
+                }
+              >
+                Decline
+              </Button>
             </div>
+          ) : isAdmin ? (
+            <div>
+              <Button onClick={handleShowEditProduct}>Edit</Button>
             </div>
-          </div>
-        </Container>
+          ) : (
+            <div>
+              <Button>Offer</Button>
+            </div>
+          )}
+        </div>
       ) : (
         <div>No Product Selected</div>
       )}

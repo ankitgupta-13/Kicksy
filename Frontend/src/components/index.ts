@@ -14,6 +14,7 @@ import Breadcrumb from "./Breadcrumb/Breadcrumb.tsx";
 import ProductDashboardCard from "./ProductDashboardCard/ProductDashboardCard.tsx";
 import UserDashboardCard from "./UserDashboardCard/UserDashboardCard.tsx";
 import ImageSlider from "./ImageSlider/ImageSlider.tsx";
+import ProductDescription from "./ProductDescription/ProductDescription.tsx";
 
 export {
   Header,
@@ -32,4 +33,5 @@ export {
   ProductDashboardCard,
   UserDashboardCard,
   ImageSlider,
+  ProductDescription,
 };

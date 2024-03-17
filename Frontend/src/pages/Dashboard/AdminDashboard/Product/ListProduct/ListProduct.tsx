@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  deleteProduct,
-  getProducts,
-  totalProductsCount,
-} from "../../../../../api/admin.api";
+import { getProducts, totalProductsCount } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import { Pagination } from "@mui/material";
 import { ProductDashboardCard } from "../../../../../components";
@@ -45,9 +41,9 @@ const ListProduct = () => {
   return (
     <div className={style.container}>
       <div className={style.sectionTitle}>
-        <div>Product</div>
-        <div>Create at</div>
-        <div>Stock</div>
+        <div className={style.text}>Product</div>
+        <div className={style.text}>Create at</div>
+        <div className={style.text}>Stock</div>
       </div>
       {products.map((product, index) => {
         return (

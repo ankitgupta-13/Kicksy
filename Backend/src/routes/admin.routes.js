@@ -41,6 +41,7 @@ import {
 } from "../controllers/admin-seller.controllers.js";
 import {
   addProductViaRequest,
+  declineProductRequest,
   editProductRequest,
   getProductRequestById,
   getProductRequests,
@@ -83,4 +84,5 @@ router.route("/requests/product/getAll").get(getProductRequests);
 router.route("/requests/product/get-by-id").post(getProductRequestById);
 router.route("/requests/product/edit").post(editProductRequest);
 router.route("/requests/product/accept-request").post(addProductViaRequest);
+router.route("/requests/product/decline-request").post(declineProductRequest);
 export default router;
