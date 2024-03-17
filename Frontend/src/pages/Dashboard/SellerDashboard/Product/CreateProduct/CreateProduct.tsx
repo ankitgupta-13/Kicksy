@@ -189,7 +189,7 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className={style.ButtonDiv}>
-        <Button className={style.Button} type="submit">Create Product</Button>
+        <Button className={style.Button} type="submit">Create Request</Button>
         </div>
        
       </form>

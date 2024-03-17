@@ -2,7 +2,7 @@ import { api, imageApi } from "./auth.api";
 
 export const registerSeller = async (payload) => {
   try {
-    const { data } = await imageApi.post("/seller/request-seller", payload);
+    const { data } = await imageApi.post("/user/create-request/seller", payload);
     return data;
   } catch (error) {
     if (error.response) return error.response;

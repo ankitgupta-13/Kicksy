@@ -69,8 +69,6 @@ const productSchema = new mongoose.Schema(
     },
     stock: {
       type: Number,
-      required: true,
-      default: 1,
     },
     reviews: [
       {
