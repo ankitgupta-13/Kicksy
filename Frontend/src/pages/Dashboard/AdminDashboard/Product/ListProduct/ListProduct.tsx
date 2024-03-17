@@ -48,7 +48,6 @@ const ListProduct = () => {
         <div>Product</div>
         <div>Create at</div>
         <div>Stock</div>
-        <div>Price</div>
       </div>
       {products.map((product, index) => {
         return (

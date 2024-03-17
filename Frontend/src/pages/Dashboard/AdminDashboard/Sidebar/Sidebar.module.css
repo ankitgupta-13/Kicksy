@@ -1,59 +1,8 @@
-/* .sidebarsection {
-  margin-bottom: 10px;
-}
-.Logo {
-  padding: 0 25%;
-  padding-bottom: 10px;
-  height: 60px;
-}
-.sectionButton {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  gap: 1rem;
-  border: none;
-  cursor: pointer;
-}
-.sectionButton:hover {
-  background-color: rgb(216, 216, 216);
-}
-.sectionName {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-.actionButton {
-  display: flex;
-  padding: 8px;
-  gap: 1rem;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-}
-.actionButton:hover {
-  background-color: rgb(248, 237, 237);
-}
 
-.subButton {
-  width: 100%;
-  padding: 4px;
-  background-color: rgb(216, 216, 216);
-  border: none;
-  cursor: pointer;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  cursor: pointer;
-} */
 
 .sidebarBody{
   width: 20%;
+  font-family: sans-serif;
 }
 .Logo {
   width: 100%;
