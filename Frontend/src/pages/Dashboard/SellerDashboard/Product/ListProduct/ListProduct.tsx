@@ -34,9 +34,9 @@ const ListProduct = () => {
       <div className={style.sectionTitle}>
         <div className={style.sectionTitleText}>Product</div>
         <div className={style.sectionTitleText} style={{ margin: "0 5px" }}>
-          Created at
+          SKUID
         </div>
-        <div className={style.sectionTitleText}>Stock</div>
+        <div className={style.sectionTitleText}>Brand</div>
         <div className={style.sectionTitleText}>Price</div>
       </div>
       {products.map((product, index) => {

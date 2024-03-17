@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSellerRequests } from "../../../../../api/admin.api";
 import RequestCard from "../../../../../components/RequestCard/RequestCard";
+import { UserDashboardCard } from "../../../../../components";
 
 const RequestSeller = () => {
   const [requestList, setRequestList] = useState([]);
@@ -18,18 +19,17 @@ const RequestSeller = () => {
 
   return (
     <div>
-      {requestList.map((request, index) => {
-        return (
-          <div key={index}>
-            <RequestCard
-              type="seller"
-              id={request._id}
-              name={request.storeName}
-              logo={request.storeLogo}
-            />
-          </div>
-        );
-      })}
+      {requestList.length === 0 ? (
+        <div>No request found!</div>
+      ) : (
+        requestList.map((request, index) => {
+          return (
+            <div key={index}>
+              <UserDashboardCard data={request} />
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };
