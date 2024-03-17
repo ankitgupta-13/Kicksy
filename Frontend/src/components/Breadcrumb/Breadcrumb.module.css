@@ -29,8 +29,8 @@
 }
 
 .currentSectionText{
-  font-size: 16px;
+  line-height: 1.571429;
+  font-size: 0.875rem;
   font-family: "Public Sans", sans-serif;
- 
-  text-transform: capitalize;
+  font-weight: 400;
 }

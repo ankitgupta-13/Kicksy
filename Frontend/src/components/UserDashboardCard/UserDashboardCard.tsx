@@ -23,22 +23,23 @@ const UserDashboardCard = ({ data }) => {
       );
   };
   return (
-    <div className={style.cardContainer} onClick={handleShowUser}>
+    <div className={style.Container} onClick={handleShowUser}>
       {currentSection === "User" ? (
         <div className={style.cardContainer}>
-          <div className={style.username}>{username}</div>
-          <div className={style.phone}>{mobile.number}</div>
-          <div className={style.email}>{email}</div>
-          <div className={style.status}>{status?.toUpperCase()}</div>
+          <div className={style.text}>{username}</div>
+          <div className={style.text}>{mobile.number}</div>
+          <div className={style.text}>{email}</div>
+          <div className={style.text}>{status?.toUpperCase()}</div>
         </div>
       ) : (
         <div className={style.cardContainer}>
-          <div className={style.username}>{data.userID?.username}</div>
-          <div className={style.phone}>{data.whatsappNumber}</div>
           <div className={style.store}>
-            <div className={style.storeName}>{data.storeName}</div>
             <img src={data.storeLogo} alt="" className={style.storeLogo} />
+            <div className={style.store}>{data.storeName}</div>
           </div>
+          <div className={style.text}>{data.userID?.username}</div>
+          <div className={style.text}>{data.whatsappNumber}</div>
+          <div className={style.text}>{data.userID?.email}</div>
         </div>
       )}
     </div>

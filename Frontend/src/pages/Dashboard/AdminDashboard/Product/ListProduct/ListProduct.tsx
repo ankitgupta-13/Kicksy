@@ -45,9 +45,9 @@ const ListProduct = () => {
   return (
     <div className={style.container}>
       <div className={style.sectionTitle}>
-        <div>Product</div>
-        <div>Create at</div>
-        <div>Stock</div>
+        <div className={style.text}>Product</div>
+        <div className={style.text}>Create at</div>
+        <div className={style.text}>Stock</div>
       </div>
       {products.map((product, index) => {
         return (
