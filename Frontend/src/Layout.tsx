@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Profile from "./components/Profile/Profile";
+import Footer2 from "./components/Footer2/footer2";
 
 const Layout = ({ loading }) => {
   return (
@@ -16,7 +17,7 @@ const Layout = ({ loading }) => {
           <Cart />
           <Wishlist />
           <Profile />
-          <Footer />
+          <Footer2/>
          
 
           
