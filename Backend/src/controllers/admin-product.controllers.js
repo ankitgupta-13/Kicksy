@@ -77,25 +77,35 @@ const addProductViaRequest = async (req, res) => {
       gender,
       description,
       title,
-      price,
       brand,
       size,
       category,
       color,
-      stock,
       seller,
       tags,
       images,
     });
-
-
-
     await product.save();
+
+    const offer = new Offer({
+      price,
+      quantity:stock,
+      sellerID:request.seller,
+      productID:product._id
+    })
+
+    await offer.save();
+
+    console.log(product._id)
+    await Product.findByIdAndUpdate(product._id , {$push:{offers:offer._id}});
+    product.price = price;
+    await product.save()
 
     await ProductRequest.findByIdAndDelete(requestID);
 
     return res.json(200, product, "product added successfully!");
   } catch (err) {
+    console.log(err)
     return handleErr(res, err);
   }
 };
