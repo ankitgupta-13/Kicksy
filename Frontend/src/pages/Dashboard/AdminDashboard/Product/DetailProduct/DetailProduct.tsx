@@ -64,6 +64,7 @@ const DetailProduct = () => {
             requestID: productRequestID,
           });
         }
+        console.log(response.data);
         setProduct(response.data);
         setImageUrls(response.data.images);
       } catch (error) {

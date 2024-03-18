@@ -7,12 +7,35 @@ type ImageSliderProps = {
 };
 const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
   const [imageIndex, setImageIndex] = useState(0);
-  return ( 
-    <div style={{position: 'relative', width: '400px', height:'400px', borderColor: '#DADADA', borderStyle: 'solid', borderRadius: '25px'}}>
-      <img src={imageUrls}  style={{ padding: '20px', width:'100%', height: '100%', objectFit: 'contain', verticalAlign:'bottom'}} alt="" />
-      <div style={{position:'absolute',bottom: '10px', right: '10px'}}>
-      <ArrowBackIosNewIcon />
-      <ArrowForwardIosIcon />
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "400px",
+        height: "400px",
+        borderColor: "#DADADA",
+        borderStyle: "solid",
+        borderRadius: "25px",
+      }}
+    >
+      {imageUrls.map((image) => (
+        <img
+          key={image}
+          src={image}
+          style={{
+            padding: "20px",
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            verticalAlign: "bottom",
+          }}
+          alt=""
+        />
+      ))}
+
+      <div style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+        <ArrowBackIosNewIcon />
+        <ArrowForwardIosIcon />
       </div>
     </div>
   );

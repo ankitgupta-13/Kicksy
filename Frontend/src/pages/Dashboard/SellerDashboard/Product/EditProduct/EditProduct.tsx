@@ -7,7 +7,7 @@ import {
   getProductRequestById,
 } from "../../../../../api/product.api";
 import { updateProduct } from "../../../../../api/admin.api";
-import { Container, ImageSlider } from "../../../../../components";
+import { Button, Container, ImageSlider } from "../../../../../components";
 
 const EditProduct = () => {
   const productID = useSelector(
@@ -56,7 +56,7 @@ const EditProduct = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleCreateOffer = () => {
     handleUpdateProduct(product);
   };
 
@@ -158,9 +158,7 @@ const EditProduct = () => {
                 </div>
               </div>
               <div className={style.buttoncontainer}>
-                <button className={style.savebutton} onClick={handleSave}>
-                  Save
-                </button>
+                <Button onClick={handleCreateOffer}>Create Offer</Button>
               </div>
             </div>
           </div>
