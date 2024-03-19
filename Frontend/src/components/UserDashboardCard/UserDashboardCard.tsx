@@ -14,7 +14,6 @@ const UserDashboardCard = ({ data }) => {
   );
   const dispatch = useDispatch();
   const handleShowUser = () => {
-    console.log(data);
     dispatch(selectAdminUser(_id)),
       dispatch(
         selectAdminAction({

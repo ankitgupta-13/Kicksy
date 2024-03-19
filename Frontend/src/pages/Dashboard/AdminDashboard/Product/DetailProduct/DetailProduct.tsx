@@ -76,30 +76,24 @@ const DetailProduct = () => {
   return (
     <div>
       {product ? (
-        <div>
+        <div style={{marginTop: "20px"}}>
           <ProductDescription data={product} />
           {productRequestID ? (
-            <div>
-              <Button
-                onClick={() => acceptProductRequest({ requestID: product._id })}
-              >
-                Accept
+            <div style={{position: "absolute", display: "flex",flexDirection: "column", gap: "20px" , top: "30%", right: " 10%"}}>
+              <Button className={style.accept} onClick={() => acceptProductRequest({ requestID: product._id })}>
+              <span className={style.accept}>Accept</span>
               </Button>
-              <Button
-                onClick={() =>
-                  declineProductRequest({ requestID: product._id })
-                }
-              >
-                Decline
+              <Button className={style.decline} onClick={() =>declineProductRequest({ requestID: product._id })}>
+                <span className={style.decline}>Decline</span>
               </Button>
             </div>
           ) : isAdmin ? (
-            <div>
-              <Button onClick={handleShowEditProduct}>Edit</Button>
+            <div style={{position: "absolute", top: "30%", right: " 10%"}}>
+              <Button  onClick={handleShowEditProduct}><span className={style.edit}>Edit</span></Button>
             </div>
           ) : (
-            <div>
-              <Button>Offer</Button>
+            <div style={{position: "absolute", top: "30%", right: " 10%"}}>
+              <Button ><span className={style.edit}>Offer</span></Button>
             </div>
           )}
         </div>

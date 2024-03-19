@@ -5,7 +5,7 @@ const BlogCard = ({blog}) => {
   const navigate = useNavigate();
   return (
     <div className={style.card} onClick={() => navigate(`/blogpage?blog=${blog._id}`)}>
-        <img src={DummyImage}  className={style.image} alt="Blog image"/>
+        <img src={blog.imageurl}  className={style.image} alt="Blog image"/>
         <div className={style.card__info}>
              <a>Games</a>
              <span className={style.card__info_entity}>&#9679;</span>

@@ -33,12 +33,12 @@ const AddBlog = () => {
             {...register("blogTitle", { required: "Blog title is required" })}
           />
         </div>
-        <div className={style.content}>
-          <Input
-            label="Content"
-            type="text"
+        <div className={style.content} style={{ gridTemplateColumns: "repeat(2, 1fr)"}}>
+        <label className={style.label}>Content</label>
+          <textarea
+            className={style.input}
             placeholder="Blog Content"
-            style={{ height: "250px" }}
+            style={{ height: "250px", width: "100%"}}
             {...register("content", { required: "Content is required" })}
           />
         </div>

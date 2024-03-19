@@ -9,63 +9,50 @@ type ProductDescription = {
 };
 
 const ProductDescription = ({ data }: ProductDescription) => {
-  console.log(data);
   const dateString = data.createdAt;
   const date = new Date(dateString);
 
   const options = { month: "short", day: "2-digit", year: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
+    <Container>
+      <div className={style.flex}>
       <div className={style.left}>
         <ImageSlider imageUrls={data.images} />
-        <div className={style.productDetails}>
-          <h3>PRODUCT DETAILS</h3>
-          <div>{data.description}</div>
-          <div className={style.row}>
-            <div className={style.columns} >
-              <div>
-                <p>MANUFACTURES SKU</p>
-                <div>{data.skuID}</div>
-              </div>
-              <div>
-                <p>BRAND</p>
-                {data.brand}
-              </div>
-              <div>
-                <p>STOCK</p>
-                {data.stock}
-              </div>
-            </div>
-            <div className={style.columns} style={{borderTopWidth: '0px'}}>
-              <div>
-                <p>COLOR</p>
-                {data.color}
-              </div>
-              <div>
-                <p>GENDER</p>
-                {data.gender === "F" ? "Female" : "Male"}
-              </div>
-              <div>
-                <p>RELEASE DATE</p>
-                {formattedDate}
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div className={style.right}>
-        <div>{data.title}</div>
-        <div>
+        <h1 style={{color: "#656565"}}>{data.title}</h1>
+        <div style={{display: "flex", alignItems: "center", fontSize: "25px",color: "#656565"}}>
           <CurrencyRupeeIcon />
           {data.price}
         </div>
       </div>
+      </div>
+        <div className={style.description}>
+          <h1 className={style.productDescTitle}>Product Detail</h1>
+          <h3 className={style.productDesc}>{data.description}</h3>
+          <a>Read More</a>
+        </div>
+          <div className={style.table}>
+          <div className={style.column}>
+            <h5 style={{ color: "#656565" }}>MANUFACTURED SKU</h5>
+            <p >{data.skuID}</p>
+            <h5 style={{ color: "#656565" }}>COLORWAY</h5>
+            <p >{data.color}</p>
+          </div>
+          <div className={style.column}>
+            <h5 style={{ color: "#656565" }}>BRAND</h5>
+            <p >{data.brand}</p>
+            <h5 style={{ color: "#656565" }}>GENDER</h5>
+            <p >{data.gender === "F" ? "Female" : "Male"}</p>
+          </div>
+          <div className={style.column}>
+            <h5 style={{ color: "#656565" }}>STOCK</h5>
+            <p >{data.stock}</p>
+            <h5 style={{ color: "#656565" }}>RELEASE DATE</h5>
+            <p >{formattedDate}</p>
+          </div>
+        </div>
     </Container>
   );
 };
