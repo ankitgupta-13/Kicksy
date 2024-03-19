@@ -1,8 +1,12 @@
 .row {
   display: grid;
   gap: 2rem;
+  border-width: 0.5px;
+  border-radius: 10px;
+  border-style: solid;
 }
 .columns {
   display: grid;
+  padding: 10px;
   grid-template-columns: 1fr 1fr 1fr;
 }
