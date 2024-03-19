@@ -259,7 +259,7 @@ const EditProduct = () => {
                 </div>
               </div>
               <div className={style.buttoncontainer}>
-                <Button onClick={handleSave}>Save</Button>
+                <Button onClick={handleSave} className={style.savebutton}>Save</Button>
               </div>
             </div>
           </div>

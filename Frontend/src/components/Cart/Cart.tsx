@@ -45,9 +45,9 @@ const Cart = () => {
           <CartItem productID={item.product} quantity={item.qty} />
         ))}
       </div>
-      <div>
-        <div></div>
-        <Button onClick={() => navigate("/checkout")}>
+      <div className={style.ButtonContainer}>
+        
+        <Button className={style.button} onClick={() => navigate("/checkout")}>
           Checkout
           {/* <PaymentButton amount={100} /> */}
         </Button>

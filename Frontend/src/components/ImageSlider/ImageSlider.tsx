@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
@@ -7,6 +7,7 @@ type ImageSliderProps = {
 };
 const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
   const [imageIndex, setImageIndex] = useState(0);
+  console.log(imageIndex);
   return (
     <div
       style={{
@@ -18,12 +19,11 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
         borderRadius: "25px",
       }}
     >
-      {imageUrls?.map((image) => (
+      {imageUrls && (
         <img
-          key={image}
-          src={image}
+          key={imageIndex}
+          src={imageUrls[imageIndex]}
           style={{
-            padding: "20px",
             width: "100%",
             height: "100%",
             objectFit: "contain",
@@ -31,11 +31,33 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
           }}
           alt=""
         />
-      ))}
+      )}
 
-      <div style={{ position: "absolute", bottom: "10px", right: "10px" }}>
-        <ArrowBackIosNewIcon />
-        <ArrowForwardIosIcon />
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          bottom: "10px",
+          right: "10px",
+        }}
+      >
+        <div
+          onClick={() => {
+            setImageIndex(
+              imageIndex < imageUrls.length - 1 ? imageIndex + 1 : imageIndex
+            );
+          }}
+        >
+          <ArrowBackIosNewIcon />
+        </div>
+        <div
+          onClick={() => {
+            setImageIndex(imageIndex > 0 ? imageIndex - 1 : imageIndex);
+          }}
+        >
+          {" "}
+          <ArrowForwardIosIcon />
+        </div>
       </div>
     </div>
   );

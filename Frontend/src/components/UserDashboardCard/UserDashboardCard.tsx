@@ -5,6 +5,7 @@ import {
   selectAdminUser,
 } from "../../redux/reducers/adminDashboardSlice";
 import { RootState } from "../../redux/store/store";
+import avatar from '../../assets/avatar.jpg'
 
 const UserDashboardCard = ({ data }) => {
   const { username, email, role, status, mobile, _id } = data;
@@ -26,14 +27,17 @@ const UserDashboardCard = ({ data }) => {
     <div className={style.Container} onClick={handleShowUser}>
       {currentSection === "User" ? (
         <div className={style.cardContainer}>
-          <div className={style.text}>{username}</div>
+           <div className={style.text}>
+            <img src={avatar} alt="" className={style.storeLogo} />
+            <div className={style.store}>{username}</div>
+          </div>
           <div className={style.text}>{mobile.number}</div>
           <div className={style.text}>{email}</div>
           <div className={style.text}>{status?.toUpperCase()}</div>
         </div>
       ) : (
         <div className={style.cardContainer}>
-          <div className={style.store}>
+          <div className={style.text}>
             <img src={data.storeLogo} alt="" className={style.storeLogo} />
             <div className={style.store}>{data.storeName}</div>
           </div>
