@@ -44,16 +44,14 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
       >
         <div
           onClick={() => {
-            setImageIndex(
-              imageIndex < imageUrls.length - 1 ? imageIndex + 1 : imageIndex
-            );
+            setImageIndex(imageIndex > 0 ? imageIndex - 1 : imageUrls.length - 1);
           }}
         >
           <ArrowBackIosNewIcon />
         </div>
         <div
           onClick={() => {
-            setImageIndex(imageIndex > 0 ? imageIndex - 1 : imageIndex);
+            setImageIndex(imageIndex < imageUrls.length - 1 ? imageIndex + 1 : 0);
           }}
         >
           {" "}
