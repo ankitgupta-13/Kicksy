@@ -18,7 +18,7 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
         borderRadius: "25px",
       }}
     >
-      {imageUrls.map((image) => (
+      {imageUrls?.map((image) => (
         <img
           key={image}
           src={image}

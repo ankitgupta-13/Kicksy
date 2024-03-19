@@ -7,8 +7,7 @@ import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import DetailProduct from "../../AdminDashboard/Product/DetailProduct/DetailProduct";
 import ListProduct from "../../AdminDashboard/Product/ListProduct/ListProduct";
-import CreateProduct from "../Product/CreateProduct/CreateProduct";
-// import CreateProduct from "../../AdminDashboard/Product/CreateProduct/CreateProduct";
+import CreateProduct from "../../AdminDashboard/Product/CreateProduct/CreateProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
