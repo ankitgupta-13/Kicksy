@@ -18,9 +18,6 @@ const Layout = ({ loading }) => {
           <Wishlist />
           <Profile />
           <Footer2/>
-         
-
-          
         </div>
       )}
     </>

@@ -1,13 +1,14 @@
 import style from "./MainContent.module.css";
-import CreateProduct from "../Product/CreateProduct/CreateProduct";
-import ListProduct from "../Product/ListProduct/ListProduct";
 import ListOrder from "../Order/ListOrder/ListOrder";
 import Analytics from "../Analytics/Analytics";
 import { Container } from "../../../../components";
-import DetailProduct from "../Product/DetailProduct/DetailProduct";
 import OfferProduct from "../Product/OfferProduct/OfferProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
+import DetailProduct from "../../AdminDashboard/Product/DetailProduct/DetailProduct";
+import ListProduct from "../../AdminDashboard/Product/ListProduct/ListProduct";
+import CreateProduct from "../Product/CreateProduct/CreateProduct";
+// import CreateProduct from "../../AdminDashboard/Product/CreateProduct/CreateProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;

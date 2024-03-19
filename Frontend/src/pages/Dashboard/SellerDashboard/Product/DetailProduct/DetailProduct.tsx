@@ -32,7 +32,7 @@ const DetailProduct = () => {
           )
         }
       >
-        Edit
+        Add Offer
       </Button>
     </div>
   );

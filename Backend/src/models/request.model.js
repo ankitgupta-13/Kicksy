@@ -131,6 +131,9 @@ const sellerRequestSchema = new mongoose.Schema(
   }
 );
 
+productRequestSchema.index({ skuID: 1 }, { unique: true });
+
+
 const ProductRequest = new mongoose.model(
   "ProductRequest",
   productRequestSchema

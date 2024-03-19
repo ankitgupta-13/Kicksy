@@ -10,7 +10,6 @@ const offerSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:"Seller",
-        unique:false
     },
     price:{
         type:Number,

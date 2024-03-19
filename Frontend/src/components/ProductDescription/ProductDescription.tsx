@@ -2,14 +2,17 @@ import ImageSlider from "../ImageSlider/ImageSlider";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import style from "./ProductDescription.module.css";
 import { Container } from "@mui/material";
+import { useState } from "react";
 
 type ProductDescription = {
   data: Object;
 };
 
 const ProductDescription = ({ data }: ProductDescription) => {
+  console.log(data);
   const dateString = data.createdAt;
   const date = new Date(dateString);
+  const [imageUrls, setImageUrls] = useState(data.images);
   const options = { month: "short", day: "2-digit", year: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
   return (
@@ -20,7 +23,7 @@ const ProductDescription = ({ data }: ProductDescription) => {
       }}
     >
       <div className={style.left}>
-        <ImageSlider imageUrls={data.images} />
+        <ImageSlider imageUrls={imageUrls} />
         <div className={style.productDetails}>
           <h3>PRODUCT DETAILS</h3>
           <div>{data.description}</div>
