@@ -79,7 +79,7 @@
 
 .inputEmail {
     display: flex;
-    height: 39.75px;
+    height: 40px;
     align-items: center;
     background: var(--Primary-Text, #FFF);
 }
@@ -131,6 +131,8 @@
 
 .Links {
     padding-bottom: 15px;
+    font-weight: normal;
+    letter-spacing: normal;
 
 }
 
@@ -139,7 +141,7 @@
     justify-content: space-evenly;
     align-items: center;
     gap: 15px;
-    padding: 20px;
+    padding: 20px 60px;
 }
 
 .LowerFooterSection1 {
