@@ -26,6 +26,7 @@ const Anime = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [animeProducts, setAnimeProducts] = useState([]);
   const [curProduct, setCurProduct] = useState([]);
+  console.log(curProduct);
   const [shoesColorData, setShoesColorData] = useState([]);
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
@@ -192,56 +193,55 @@ const Anime = () => {
                           </div>
                         </div>                   
               </div>
-              <div style={{ margin: "25px" }}>
-        <div className={style.product}>
-          <img
-            src={activeColor}
-            className={style.imagebox}
-            alt="product-image"
-          />
-          <div className={style.action}>
-            <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
-            <h2 className={style.SampleProduct}>{curProduct.title}</h2>
-            {curProduct.category === "bestseller" && (
-              <a className={style.bestseller}>BEST SELLER</a>
-            )}
-            {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
-            <div>
-              <select
-                className={style.size}
-                value={size}
-                onChange={handleChange}
-              >
-                {sizes.map((size: any) => (
-                  <option value={size.value}>{size.label}</option>
-                ))}
-              </select>
+              {curProduct[0] && <div style={{ margin: "25px" }}>
+                <div className={style.product}>
+                  <img
+                    src={activeColor}
+                    className={style.imagebox}
+                    alt="product-image"
+                  />
+                  <div className={style.action}>
+                    <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+                    <h2 className={style.SampleProduct}>{curProduct.title}</h2>
+                    {curProduct.category === "bestseller" && (
+                      <a className={style.bestseller}>BEST SELLER</a>
+                    )}
+                    {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
+                    <div>
+                  <select
+                    className={style.size}
+                    value={size}
+                    onChange={handleChange}
+                  >
+                    {sizes.map((size: any) => (
+                      <option value={size.value}>{size.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <Button
+                  className={style.addtocart}
+                  style={{ backgroundColor: "#131313", color: "white" }}
+                  onClick={handleAddToCart}
+                  type="submit"
+                >
+                  Add to Cart
+                </Button>
+                <PaymentButton amount="10" />
+              </div>
             </div>
-            <Button
-              className={style.addtocart}
-              style={{ backgroundColor: "#131313", color: "white" }}
-              onClick={handleAddToCart}
-              type="submit"
-            >
-              Add to Cart
-            </Button>
-            <PaymentButton amount="10" />
-          </div>
-        </div>
-        <div className={style.cards}>
-          {shoesColorData.map((color, index) => (
-            <ColorCard
-              key={index}
-              id={index}
-              color={color}
-              activeId={activeColorId || 0}
-              setActiveId={(id) => setActiveColorId(id)}
-              setImageSrc={handleImageSrcChange}
-            />
-          ))}
-        </div>
-        </div>
-
+            <div className={style.cards}>
+              {shoesColorData.map((color, index) => (
+                <ColorCard
+                  key={index}
+                  id={index}
+                  color={color}
+                  activeId={activeColorId || 0}
+                  setActiveId={(id) => setActiveColorId(id)}
+                  setImageSrc={handleImageSrcChange}
+                />
+              ))}
+            </div>
+            </div>}
               <div>
                 <h2>Our Collection</h2>
                 <p>
