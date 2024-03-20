@@ -49,13 +49,10 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { productCode } = req.body;
-    const product = await Product.findOne({ productCode });
+    const { _id, ...updateData } = req.body.data;
     const updatedProduct = await Product.findByIdAndUpdate(
-      product._id,
-      {
-        $set: req.body,
-      },
+      _id,
+      { $set: updateData},
       { new: true }
     );
     if (!updatedProduct) {
