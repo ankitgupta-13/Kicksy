@@ -6,6 +6,7 @@ import PostCard from '../../components/PostCard/PostCard';
 
 const BlogPage = () => {
     const [blog, setBlog] = useState([]);
+    const createdDate = blog?.createdAt?.split("T")[0];
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("blog");
@@ -27,11 +28,12 @@ const BlogPage = () => {
     <div>
         <div className={style.topbar}>
           <span className={style.topbar__heading}>{blog.blogTitle}</span>
-          <span className={style.topbar__subheading}>Games - <span >{blog.createdAt}</span></span>
+          {blog.category && <span className={style.topbar__subheading}>{blog.category} - <span >{createdDate}</span></span>}
         </div>
         <div className={style.blogsection}>
         <img src={blog.imageurl} alt={blog.blogTitle} className={style.blogimage}></img>
         <p className={style.blogcontent}>{blog.content}</p>
+        </div> 
         <div className={style.recent_blogs}>
               <div className={style.recent_blogs_title} style={{
                 fontSize: "1rem",
@@ -44,9 +46,7 @@ const BlogPage = () => {
           <div className={style.recent__blogs_container}>
             <PostCard/>
             </div>
-
-          </div>
-        </div>    
+          </div>   
     </div>
   )
 }

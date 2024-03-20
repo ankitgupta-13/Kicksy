@@ -108,7 +108,6 @@ const Anime = () => {
                   height: "40px",
                   right: "150px",
                   bottom: "20px",
-                  // borderRadius: "10px",
                   backgroundColor: "white",
                   fontFamily: "Bevan",
                   letterSpacing: "1.5px",
