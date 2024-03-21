@@ -68,6 +68,19 @@ export const addBlog = async (payload: any) => {
   }
 };
 
+export const attachProductToBlog = async (productArray: any, blogID: any) => {
+  try {
+    const response = await api.post('/admin/attach-product-to-blog', {
+      productArray,
+      blogID,
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const getProducts = async (page: Number) => {
   try {
     const { data } = await api.get(`/admin/get-products?page=${page}?limit=10`);

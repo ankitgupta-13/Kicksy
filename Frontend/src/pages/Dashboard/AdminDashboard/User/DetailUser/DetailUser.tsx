@@ -16,7 +16,6 @@ const DetailUser = () => {
     (async () => {
       const response = await getUserById({ userID });
       if (response.statusCode === 200) {
-        console.log(response.data);
         setUserData(response.data);
         setMobile(response.data.mobile.number);
         setAddress(response.data.address)
@@ -34,20 +33,33 @@ const DetailUser = () => {
         <h4 className={style.status} >{userData?.status} {userData?.role}</h4>
         <button className={style.banbutton}>Ban User</button>
       </div>
-      <div className={style.detailsection}> 
+      {userData.role === "user" ?(<div className={style.detailsection}> 
       <span className={style.heading}>User Deatils</span>
-      <span className={style.subheading}>Name : {userData?.username}</span>
+      <span className={style.subheading}>Name : {userData?.userID?.username}</span>
+      <span className={style.subheading}>Email : {userData?.email}</span>
+      <span className={style.subheading}>Mobile : {mobile}</span>
+      <span className={style.subheading}>Store Address : {address}</span>
+      <span className={style.subheading}>Store State : {address}</span>
+      <span className={style.subheading}> City : {address}</span>
+      <span className={style.subheading}> Zip/Pincode : {address}</span>
+      </div>)
+      :(<div className={style.detailsection}> 
+      <span className={style.heading}>Seller Deatils</span>
+      <span className={style.subheading}>Store Name : {userData?.username}</span>
       <span className={style.subheading}>Email : {userData?.email}</span>
       <span className={style.subheading}>Mobile : {mobile}</span>
       <span className={style.subheading}> Address : {address}</span>
       <span className={style.subheading}> State : {address}</span>
       <span className={style.subheading}> City : {address}</span>
       <span className={style.subheading}> Zip/Pincode : {address}</span>
-      </div>
+      </div>)}
     </div>
-    <div className={style.orderhistory}>
+    {userData.role === "user" ?(<div className={style.orderhistory}>
       <span className={style.heading}>Order history</span>
-    </div>
+    </div>) :
+   (<div className={style.orderhistory}>
+      <span className={style.heading}>Sale history</span>
+    </div>)}
     </div>
   );
 };

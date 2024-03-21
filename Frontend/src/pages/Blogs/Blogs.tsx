@@ -6,27 +6,7 @@ import { getAllBlogs } from '../../api/user.api';
 
 
 const Blog = () => {
-  const [bloglist, setBloglist] = useState(
-      [
-        {
-        id: 1,
-      },
-        {
-        id: 2,
-      },
-        {
-        id: 3,
-      },
-        {
-        id: 4,
-      },
-        {
-        id: 5,
-      },
-        {
-        id: 6,
-      },
-  ]);
+  const [bloglist, setBloglist] = useState([]);
 
   const getBlogs = async () => {
     const response = await getAllBlogs();

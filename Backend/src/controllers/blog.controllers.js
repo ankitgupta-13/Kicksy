@@ -39,9 +39,7 @@ const fetchAllBlog = async (req, res) => {
 
 const addBlog = async (req, res) => {
   const { content, blogTitle, image , category } = req.body;
-  // console.log(req.file);
   try {
-
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       fs.unlinkSync(req.file.path);
@@ -75,7 +73,6 @@ const addBlog = async (req, res) => {
 
   }
   catch (err) {
-    // console.log(err);
     return res.json(new ApiError(400, err.message))
   }
 }
@@ -87,7 +84,6 @@ const editBlogImage = async (req, res) => {
     const blog = await Blog.findOne({ _id: blogID })
     const imageUrl = blog.imageurl;
     const split = imageUrl.split("/")
-    // console.log(split);
     const deletedImage = await deleteFromAws(split[split.length - 1]);
     if(!deletedImage) return res.json(new ApiResponse(422 , "unable to delete image"));
     
@@ -100,7 +96,6 @@ const editBlogImage = async (req, res) => {
       blog.imageurl = blogImageUrl;
       await Blog.findByIdAndUpdate({ _id: blogID }, { $set: { imageurl: blogImageUrl } }, { new: true });
       fs.unlinkSync(req.file.path)
-      // const updated = await blog.save();
       res.json(new ApiResponse(200, { deletedImage, updatedImage: blogImageUrl }))
     }
   }

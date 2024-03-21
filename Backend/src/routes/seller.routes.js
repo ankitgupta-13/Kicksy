@@ -10,11 +10,6 @@ import {
 
 const router = Router();
 
-/* Seller creation requests */
-router
-  .route("/create-request/seller")
-  .post(upload.single("storeLogo"), sellerRequest);
-
 /* product request */
 router.route("/create-request/product").post(productAddRequest); // raise a request to add a product.
 router
