@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRecentProducts } from "../../api/user.api";
 import style from "./Home.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -21,12 +21,33 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const arrivaltab1 = useRef("");
+  const arrivaltab2 = useRef("");
+  const arrivaltab3 = useRef("");
 
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);
   };
 
+
+  function arrClick1(){
+    arrivaltab1.current.classList.add(style.Active);
+    arrivaltab2.current.classList.remove(style.Active);
+    arrivaltab3.current.classList.remove(style.Active);
+  }
+
+  function arrClick2(){
+    arrivaltab1.current.classList.remove(style.Active);
+    arrivaltab2.current.classList.add(style.Active);
+    arrivaltab3.current.classList.remove(style.Active);
+  }
+
+  function arrClick3(){
+    arrivaltab1.current.classList.remove(style.Active);
+    arrivaltab2.current.classList.remove(style.Active);
+    arrivaltab3.current.classList.add(style.Active);
+  }
 
 
   useEffect(() => {
@@ -124,7 +145,11 @@ const Home = () => {
         </div>
       </div>
       <div className={style.NewArrivals}>
-        <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
+        <div className={style.NewArrivalsTabs}>
+          <h1 onClick={() => arrClick1()} ref={arrivaltab1} className={`${style.NewArrivalsSliderTitle} ${style.Active}`}>New Arrivals</h1>
+          <h1 onClick={() => arrClick2()} ref={arrivaltab2} className={style.NewArrivalsSliderTitle}>What's New</h1>
+          <h1 onClick={() => arrClick3()} ref={arrivaltab3} className={style.NewArrivalsSliderTitle}>For You</h1>
+        </div>
         <div className={style.Slider}>
           <div className={style.cards}>
             {products.map((product: Object, index: number) => {
