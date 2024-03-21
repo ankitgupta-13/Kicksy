@@ -126,16 +126,17 @@ const getRecentProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { productID } = req.body;
-    const product = await Product.findOne({ _id: productID }).populate(
-      "offers"
-    );
-
+    const product = await Product.findOne({ _id: productID }).populate({
+      path: "offers",
+      populate: {
+        path: "sellerID",
+      },
+    });
     if (!product) {
       return res.json(
         new ApiError(404, "Invalid product id , product not found")
       );
     }
-
     return res.json(
       new ApiResponse(200, product, "product fetched successfully.")
     );
@@ -152,13 +153,10 @@ const getProducts = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(limit);
 
-    console.log(products);
-
     res.json(
       new ApiResponse(200, { products, page }, "Products fetched successfully")
     );
   } catch (err) {
-    // console.log(err);
     return res.json(new ApiError(400, err.message));
   }
 };
@@ -206,7 +204,6 @@ const searchBarProducts = async (req, res) => {
       return res.json(new ApiResponse(422, "Enter Search String First"));
     const products = await Product.find({});
     const search_array = search_string.split(/[ ,.]+/);
-    // console.log(search_array)
     const products_array = [];
     products.forEach((product) => {
       // const toBeSearched = []
@@ -227,7 +224,6 @@ const searchBarProducts = async (req, res) => {
         variation.includes(tag.toLowerCase())
       );
 
-      // console.log(hasCommon);
       if (hasCommon) {
         products_array.push(product);
       }

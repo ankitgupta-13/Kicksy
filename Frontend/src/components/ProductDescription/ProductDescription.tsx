@@ -2,7 +2,7 @@ import ImageSlider from "../ImageSlider/ImageSlider";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import style from "./ProductDescription.module.css";
 import { Container } from "@mui/material";
-import { useState } from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 type ProductDescription = {
   data: Object;
@@ -11,6 +11,7 @@ type ProductDescription = {
 const ProductDescription = ({ data }: ProductDescription) => {
   const dateString = data.createdAt;
   const date = new Date(dateString);
+  const { offers: sellers } = data;
 
   const options = { month: "short", day: "2-digit", year: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
@@ -32,6 +33,23 @@ const ProductDescription = ({ data }: ProductDescription) => {
           >
             <CurrencyRupeeIcon />
             {data.price}
+          </div>
+          <h3>Sellers</h3>
+          <div className={style.sellers}>
+            {sellers?.map((seller) => (
+              <div className={style.sellerCard}>
+                <img
+                  src={seller.sellerID.storeLogo}
+                  alt=""
+                  className={style.storeLogo}
+                />
+                <p>{seller?.sellerID?.storeName}</p>
+                <div className={style.priceButton}>
+                  <h1>{seller?.price}</h1>
+                  <ShoppingCartIcon />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

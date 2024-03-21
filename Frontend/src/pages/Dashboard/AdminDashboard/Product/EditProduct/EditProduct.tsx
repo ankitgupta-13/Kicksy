@@ -19,11 +19,12 @@ const EditProduct = () => {
   );
   const [product, setProduct] = useState({});
   const [productPrice, setProductPrice] = useState();
+  const [imageUrls, setImageUrls] = useState();
 
-  const handleUpdateProduct = (data) => {
+  const handleUpdateProduct = (product) => {
     try {
-      data = { ...data };
-      const response = updateProduct(data);
+      product = { ...product };
+      const response = updateProduct(product);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +37,6 @@ const EditProduct = () => {
         setProduct(response.data);
         setImageUrls(response.data.images);
         setProductPrice(response.data.price.originalPrice);
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -51,10 +51,9 @@ const EditProduct = () => {
     }));
   };
 
-  const handleSave = () => {
-    handleUpdateProduct(product);
-    console.log(product);
-  };
+  // const handleSave = () => {
+  //   handleUpdateProduct(product);
+  // };
 
   return (
     <div>
@@ -82,10 +81,14 @@ const EditProduct = () => {
               </div>
               <div>
                 <label className={style.label}>Description</label>
-                <div className={style.outerdiv} >
+                <div className={style.outerdiv}>
                   <textarea
                     className={style.input}
-                    style={{ height: "130px", padding: "16.5px 0px 0px 14px", fontWeight: "400"}}
+                    style={{
+                      height: "130px",
+                      padding: "16.5px 0px 0px 14px",
+                      fontWeight: "400",
+                    }}
                     name="description"
                     value={product.description || ""}
                     onChange={handleInputChange}
@@ -153,7 +156,10 @@ const EditProduct = () => {
                 </div>
               </div>
               <div className={style.buttoncontainer}>
-                <Button onClick={handleSave} className={style.savebutton}>
+                <Button
+                  onClick={handleUpdateProduct}
+                  className={style.savebutton}
+                >
                   Save
                 </Button>
               </div>
