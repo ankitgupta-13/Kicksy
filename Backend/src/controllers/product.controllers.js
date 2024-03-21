@@ -129,13 +129,15 @@ const getRecentProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { productID } = req.body;
-    const product = await Product.findOne({ _id: productID });
+    const product = await Product.findOne({ _id: productID }).populate("offers");
 
     if (!product) {
       return res.json(
         new ApiError(404, "Invalid product id , product not found")
       );
     }
+
+
 
     return res.json(
       new ApiResponse(200, product, "product fetched successfully.")
@@ -242,43 +244,7 @@ const searchBarProducts = async (req, res) => {
 
 
 
-const fetchOffers = async (req, res) => {
-  try {
-    const { productID } = req.body;
 
-    const product = await Product.findOne({ _id: productID });
-
-    if (!product) return res.json(new ApiResponse(404, "No product found with this id."))
-
-    let offerArray = []
-
-    const offers = product.offers
-
-    const sellerOffer = offers.map(async (offer) => {
-      const sellerOffer = await Offer.findOne({ _id: offer })
-      const seller = await Seller.findOne({_id:sellerOffer.sellerID})
-      return {
-        price:sellerOffer.price,
-        quantity:sellerOffer.quantity,
-        storeName:seller.storeName,
-        storeLogo:seller.storeLogo
-      }
-
-    })
-
-    offerArray = await Promise.all(sellerOffer)
-
-    const newArray = offerArray.filter(offer=> offer!==null)
-
-    if (offerArray.length === 0) return res.json(new ApiResponse(404, "No offers currently in this product"));
-
-    return res.json(new ApiResponse(200, newArray, "Offers Fetched successfully"));
-
-  }
-  catch (err) {
-    return handleErr(res, err);
-  }
-}
 
 export {
   addProduct,
@@ -291,6 +257,5 @@ export {
   getProductById,
   getProducts,
   getProductsCount,
-  searchBarProducts,
-  fetchOffers
+  searchBarProducts
 };
