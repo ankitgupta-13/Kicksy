@@ -9,7 +9,6 @@ type ProductDescription = {
 };
 
 const ProductDescription = ({ data }: ProductDescription) => {
-  console.log(data);
   const dateString = data.createdAt;
   const date = new Date(dateString);
 
@@ -28,7 +27,7 @@ const ProductDescription = ({ data }: ProductDescription) => {
           <h3>PRODUCT DETAILS</h3>
           <div>{data.description}</div>
           <div className={style.row}>
-            <div className={style.columns} >
+            <div className={style.columns}>
               <div>
                 <p>MANUFACTURES SKU</p>
                 <div>{data.skuID}</div>
@@ -42,7 +41,7 @@ const ProductDescription = ({ data }: ProductDescription) => {
                 {data.stock}
               </div>
             </div>
-            <div className={style.columns} style={{borderTopWidth: '0px'}}>
+            <div className={style.columns} style={{ borderTopWidth: "0px" }}>
               <div>
                 <p>COLOR</p>
                 {data.color}

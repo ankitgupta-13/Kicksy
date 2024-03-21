@@ -14,22 +14,15 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
-
-
   const handleLogin = async (data: any) => {
-    setError(""); 
+    setError("");
 
     try {
-      
-      
-
       const response = await authLogin(data);
 
       if (Math.floor(response.statusCode / 100) === 4) {
-        return setError(response.message)
-      };
-
-
+        return setError(response.message);
+      }
 
       const userData = response.data;
       if (userData) {
@@ -42,14 +35,13 @@ const Login = () => {
   };
 
   return (
-
-
     <Container
       sx={{
         justifyContent: "center",
         alignItems: "center",
-        display: "flex"
-      }}>
+        display: "flex",
+      }}
+    >
       <div className={style.CenterBody}>
         <div className={style.logo}>
           <Logo />
@@ -95,16 +87,21 @@ const Login = () => {
             Login
           </Button>
         </form>
-      {
-      error?
-      <Alert onClose={()=>{
-        setError("")
-      }} style={{margin:"20px 0 0 0"}} severity="error">{error}</Alert>:""
-      }
+        {error ? (
+          <Alert
+            onClose={() => {
+              setError("");
+            }}
+            style={{ margin: "20px 0 0 0" }}
+            severity="error"
+          >
+            {error}
+          </Alert>
+        ) : (
+          ""
+        )}
       </div>
     </Container>
-
-
   );
 };
 

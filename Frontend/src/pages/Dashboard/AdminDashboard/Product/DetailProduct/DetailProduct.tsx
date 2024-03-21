@@ -38,7 +38,6 @@ const DetailProduct = () => {
   const handleUpdateProduct = (updatedProduct) => {
     try {
       const response = updateProduct(updatedProduct);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +63,6 @@ const DetailProduct = () => {
             requestID: productRequestID,
           });
         }
-        console.log(response.data);
         setProduct(response.data);
         setImageUrls(response.data.images);
       } catch (error) {

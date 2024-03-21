@@ -49,12 +49,12 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { productCode } = req.body;
-    const product = await Product.findOne({ productCode });
     const updatedProduct = await Product.findByIdAndUpdate(
-      product._id,
+      req.body._id,
       {
-        $set: req.body,
+        $set: {
+          ...req.body,
+        },
       },
       { new: true }
     );
@@ -64,7 +64,7 @@ const updateProduct = async (req, res) => {
     return res
       .status(200)
       .json(
-        new ApiResponse(200, { updatedProduct }, "Product updated successfully")
+        new ApiResponse(200, updatedProduct, "Product updated successfully")
       );
   } catch (error) {
     throw new ApiError(409, "Product Updation failed");
@@ -74,17 +74,15 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const { _id, images } = req.body;
-    const product = await Product.findOne({ _id })
+    const product = await Product.findOne({ _id });
 
-    if (!product) return res.json(new ApiResponse(404, 'product not found'));
+    if (!product) return res.json(new ApiResponse(404, "product not found"));
 
     product.images.forEach(async (image) => {
-
-      const split = image.split('/')
+      const split = image.split("/");
 
       await deleteFromAws(split[split.length - 1]);
-
-    })
+    });
 
     const deleted_product = await Product.findByIdAndDelete({ _id });
     if (!deleted_product) {
@@ -99,23 +97,22 @@ const deleteProduct = async (req, res) => {
 };
 
 const deleteProductImage = async (req, res) => {
-  const { imageurl, productID } = req.body
+  const { imageurl, productID } = req.body;
   try {
-    const product = await Product.findOne({ _id: productID })
+    const product = await Product.findOne({ _id: productID });
 
     product.images.filter((img) => {
-      return img !== imageurl
-    })
+      return img !== imageurl;
+    });
 
     await product.save();
 
-    const split = imageurl.split('/')
+    const split = imageurl.split("/");
     await deleteFromAws(split[split.length - 1]);
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
   }
-  catch (err) {
-    return res.json(new ApiError(400, err.message))
-  }
-}
+};
 
 const getRecentProducts = async (req, res) => {
   try {
@@ -153,18 +150,17 @@ const getProducts = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   try {
     const products = await Product.find({})
-    .skip((page - 1) * limit)
-    .limit(limit);
+      .skip((page - 1) * limit)
+      .limit(limit);
 
-    console.log(products)
-
+    console.log(products);
 
     res.json(
-      new ApiResponse(200, { products , page}, "Products fetched successfully")
+      new ApiResponse(200, { products, page }, "Products fetched successfully")
     );
   } catch (err) {
     // console.log(err);
-    return res.json(new ApiError(400 , err.message))
+    return res.json(new ApiError(400, err.message));
   }
 };
 
@@ -243,45 +239,46 @@ const searchBarProducts = async (req, res) => {
   }
 };
 
-
-
 const fetchOffers = async (req, res) => {
   try {
     const { productID } = req.body;
 
     const product = await Product.findOne({ _id: productID });
 
-    if (!product) return res.json(new ApiResponse(404, "No product found with this id."))
+    if (!product)
+      return res.json(new ApiResponse(404, "No product found with this id."));
 
-    let offerArray = []
+    let offerArray = [];
 
-    const offers = product.offers
+    const offers = product.offers;
 
     const sellerOffer = offers.map(async (offer) => {
-      const sellerOffer = await Offer.findOne({ _id: offer })
-      const seller = await Seller.findOne({_id:sellerOffer.sellerID})
+      const sellerOffer = await Offer.findOne({ _id: offer });
+      const seller = await Seller.findOne({ _id: sellerOffer.sellerID });
       return {
-        price:sellerOffer.price,
-        quantity:sellerOffer.quantity,
-        storeName:seller.storeName,
-        storeLogo:seller.storeLogo
-      }
+        price: sellerOffer.price,
+        quantity: sellerOffer.quantity,
+        storeName: seller.storeName,
+        storeLogo: seller.storeLogo,
+      };
+    });
 
-    })
+    offerArray = await Promise.all(sellerOffer);
 
-    offerArray = await Promise.all(sellerOffer)
+    const newArray = offerArray.filter((offer) => offer !== null);
 
-    const newArray = offerArray.filter(offer=> offer!==null)
+    if (offerArray.length === 0)
+      return res.json(
+        new ApiResponse(404, "No offers currently in this product")
+      );
 
-    if (offerArray.length === 0) return res.json(new ApiResponse(404, "No offers currently in this product"));
-
-    return res.json(new ApiResponse(200, newArray, "Offers Fetched successfully"));
-
-  }
-  catch (err) {
+    return res.json(
+      new ApiResponse(200, newArray, "Offers Fetched successfully")
+    );
+  } catch (err) {
     return handleErr(res, err);
   }
-}
+};
 
 export {
   addProduct,
@@ -295,5 +292,5 @@ export {
   getProducts,
   getProductsCount,
   searchBarProducts,
-  fetchOffers
+  fetchOffers,
 };

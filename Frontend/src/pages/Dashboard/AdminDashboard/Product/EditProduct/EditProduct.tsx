@@ -25,7 +25,7 @@ const EditProduct = () => {
   const handleUpdateProduct = (data) => {
     try {
       data = { ...data };
-      const response = updateProduct({ data });
+      const response = updateProduct(data);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +36,7 @@ const EditProduct = () => {
       try {
         const response = await getProductById({ productID });
         setProduct(response.data);
-        setImageUrls(response.data.images[0]);
+        setImageUrls(response.data.images);
         setProductPrice(response.data.price.originalPrice);
         console.log(response.data);
       } catch (error) {
@@ -55,6 +55,7 @@ const EditProduct = () => {
 
   const handleSave = () => {
     handleUpdateProduct(product);
+    console.log(product);
   };
 
   return (
@@ -259,7 +260,9 @@ const EditProduct = () => {
                 </div>
               </div>
               <div className={style.buttoncontainer}>
-                <Button onClick={handleSave} className={style.savebutton}>Save</Button>
+                <Button onClick={handleSave} className={style.savebutton}>
+                  Save
+                </Button>
               </div>
             </div>
           </div>

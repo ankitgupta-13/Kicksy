@@ -14,24 +14,20 @@ const priceSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema(
   {
-    productCode: {
-      type: String,
-      unique: true,
-    },
     skuID: {
       type: String,
       required: true,
       unique: true,
     },
-    price:{
-      type:Number
+    price: {
+      type: Number,
     },
     offers: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:"Offer"
-      }
+        required: true,
+        ref: "Offer",
+      },
     ],
     title: {
       type: String,
@@ -55,7 +51,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['anime', 'boots', 'sneakers', 'sandals'],
+      enum: ["anime", "boots", "sneakers", "sandals"],
       required: true,
     },
     color: {
@@ -104,4 +100,4 @@ const productSchema = new mongoose.Schema(
 );
 const Product = mongoose.model("Product", productSchema);
 
-export { Product }
+export { Product };

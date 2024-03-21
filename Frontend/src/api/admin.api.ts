@@ -201,6 +201,7 @@ export const declineProductRequest = async (payload: Object) => {
 export const getProductRequests = async () => {
   try {
     const { data } = await api.get("/admin/requests/product/getAll");
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -212,6 +213,7 @@ export const getProductRequests = async () => {
 export const updateProduct = async (payload) => {
   try {
     const { data } = await api.post("/admin/update-product", payload);
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

@@ -8,7 +8,6 @@ type ImageSliderProps = {
 
 const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
   const [imageIndex, setImageIndex] = useState(0);
-  console.log(imageIndex);
   return (
     <div
       style={{

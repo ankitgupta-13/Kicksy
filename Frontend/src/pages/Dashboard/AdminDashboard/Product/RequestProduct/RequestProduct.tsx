@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getProductRequests } from "../../../../../api/admin.api";
 import style from "./RequestProduct.module.css";
 import ProductDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
+import { Pagination } from "@mui/material";
 
 const RequestProduct = () => {
   const [requestList, setRequestList] = useState([]);

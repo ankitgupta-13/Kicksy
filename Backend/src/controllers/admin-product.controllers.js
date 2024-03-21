@@ -52,7 +52,8 @@ const addProductViaRequest = async (req, res) => {
   const { requestID } = req.body;
   try {
     const request = await ProductRequest.findOne({ _id: requestID });
-    if (!request) return res.json(new ApiResponse(404, "product request not found"));
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
 
     const {
       productCode,
@@ -89,23 +90,24 @@ const addProductViaRequest = async (req, res) => {
 
     const offer = new Offer({
       price,
-      quantity:stock,
-      sellerID:request.seller,
-      productID:product._id
-    })
+      quantity: stock,
+      sellerID: request.seller,
+      productID: product._id,
+    });
 
     await offer.save();
 
-    console.log(product._id)
-    await Product.findByIdAndUpdate(product._id , {$push:{offers:offer._id}});
+    await Product.findByIdAndUpdate(product._id, {
+      $push: { offers: offer._id },
+    });
     product.price = price;
-    await product.save()
+    await product.save();
 
     await ProductRequest.findByIdAndDelete(requestID);
 
     return res.json(200, product, "product added successfully!");
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return handleErr(res, err);
   }
 };
@@ -158,30 +160,28 @@ const deleteProductRequestImage = async (req, res) => {
   }
 };
 
-
-const getProductRequestById = async(req,res)=>{
-  try{
-    const {requestID} = req.body;
+const getProductRequestById = async (req, res) => {
+  try {
+    const { requestID } = req.body;
     const request = await ProductRequest.findById(requestID);
-    
-    if(!request) return res.json(new ApiResponse(404 , "Product Request not found"));
 
-    return res.json(new ApiResponse(200 , request , 'request fetched successfully'));
-  
-  }
-  catch(err){
-    return handleErr(res , err)
-  }
-}
+    if (!request)
+      return res.json(new ApiResponse(404, "Product Request not found"));
 
-const handleChangeInProduct = async(req,res)=>{
-  try{
+    return res.json(
+      new ApiResponse(200, request, "request fetched successfully")
+    );
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
 
+const handleChangeInProduct = async (req, res) => {
+  try {
+  } catch (err) {
+    return handleErr(res, err);
   }
-  catch(err){
-    return handleErr(res,err);
-  }
-}
+};
 
 export {
   getProductRequests,
