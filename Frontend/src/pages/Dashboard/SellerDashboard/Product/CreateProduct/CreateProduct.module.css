@@ -20,6 +20,8 @@
 .containerHeading {
   text-transform: capitalize;
   font-size: 30px;
+  font-family: "Noir Pro";
+    margin-top: 20px;
 }
 
 .sectionContainerHeading {

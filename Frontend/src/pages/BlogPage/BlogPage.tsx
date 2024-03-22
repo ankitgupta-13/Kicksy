@@ -31,7 +31,10 @@ const BlogPage = () => {
           {blog.category && <span className={style.topbar__subheading}>{blog.category} - <span >{createdDate}</span></span>}
         </div>
         <div className={style.blogsection}>
-        <img src={blog.imageurl} alt={blog.blogTitle} className={style.blogimage}></img>
+          <div className={style.BlogImgSection}>
+          <img src={blog.imageurl} alt={blog.blogTitle} className={style.blogimage}></img>
+          </div>
+        
         <p className={style.blogcontent}>{blog.content}</p>
         </div> 
         <div className={style.recent_blogs}>

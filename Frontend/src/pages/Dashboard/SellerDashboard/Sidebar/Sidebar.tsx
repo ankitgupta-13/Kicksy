@@ -12,6 +12,7 @@ import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/Krisksy.svg";
+import SpeedIcon from '@mui/icons-material/Speed';
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -75,7 +76,11 @@ const Sidebar = () => {
               className={style.sectionButton}
               onClick={() => dispatch(closeSection())}
             >
-              App
+              <span className={style.AppIcon}><SpeedIcon/></span>
+              <span className={style.AppText}> App</span>
+
+             
+             
             </button>
           </div>
           <div className={style.SideBarSections}>
