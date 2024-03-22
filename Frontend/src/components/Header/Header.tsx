@@ -16,6 +16,13 @@ import { toggleWishlistVisibility } from "../../redux/reducers/wishlistSlice";
 import { toggleProfileVisibility } from "../../redux/reducers/authSlice";
 import Searchbar from "../Searchbar/Searchbar";
 
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import PinDropOutlinedIcon from '@mui/icons-material/PinDropOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -125,16 +132,17 @@ const Header = () => {
         <Logo width="100px" />
         <div className={sidebar ? style.sidenav : style.closeSidenav}>
           <a className={style.closebtn} onClick={() => setSidebar(!sidebar)}>
-            &times;
+            {/* &times; */}
+            <CloseOutlinedIcon/>
           </a>
-          <h1>Menu</h1>
-          <a href="#">My Profile</a>
-          <a href="#">Orders</a>
-          <a href="#">My Wishlist</a>
-          <a href="#">Delivery Address</a>
-          <a href="/blogs">Blogs</a>
+          <h1 style={{marginBottom: "24px"}}>MENU</h1>
+          <a href="#"><AccountCircleOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> My Profile</a>
+          <a href="#"><ShoppingBagOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Orders</a>
+          <a href="#"><FavoriteBorderOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> My Wishlist</a>
+          <a href="#"><PinDropOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Delivery Address</a>
+          <a href="/blogs"><MenuBookOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Blogs</a>
           <div className={style.buttons}>
-            <LogoutBtn />
+            <LogoutBtn wid="100%" />
           </div>
         </div>
       </div>
