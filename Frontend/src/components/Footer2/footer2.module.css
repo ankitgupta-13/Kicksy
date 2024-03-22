@@ -176,3 +176,9 @@
     width: 50px;
     margin: 10px;
 }
+
+@media (max-width: 430px){
+    .footer2{
+        display: none !important;
+    }
+}
