@@ -70,7 +70,7 @@ export const addBlog = async (payload: any) => {
 
 export const attachProductToBlog = async (productArray: any, blogID: any) => {
   try {
-    const response = await api.post('/admin/attach-product-to-blog', {
+    const response = await api.post("/admin/attach-product-to-blog", {
       productArray,
       blogID,
     });
@@ -225,6 +225,7 @@ export const getProductRequests = async () => {
 
 export const updateProduct = async (payload) => {
   try {
+    console.log(payload);
     const { data } = await api.post("/admin/update-product", payload);
     console.log(data);
     return data;

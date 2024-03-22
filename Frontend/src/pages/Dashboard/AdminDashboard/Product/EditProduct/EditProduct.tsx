@@ -21,10 +21,11 @@ const EditProduct = () => {
   const [productPrice, setProductPrice] = useState();
   const [imageUrls, setImageUrls] = useState();
 
-  const handleUpdateProduct = (product) => {
+  const handleUpdateProduct = async (product) => {
     try {
       product = { ...product };
-      const response = updateProduct(product);
+      const response = await updateProduct(product);
+      if (response.statusCode === 200) alert(response.message);
     } catch (error) {
       console.log(error);
     }
@@ -50,10 +51,6 @@ const EditProduct = () => {
       [name]: value,
     }));
   };
-
-  // const handleSave = () => {
-  //   handleUpdateProduct(product);
-  // };
 
   return (
     <div>
@@ -157,7 +154,7 @@ const EditProduct = () => {
               </div>
               <div className={style.buttoncontainer}>
                 <Button
-                  onClick={handleUpdateProduct}
+                  onClick={() => handleUpdateProduct(product)}
                   className={style.savebutton}
                 >
                   Save

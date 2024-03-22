@@ -49,7 +49,7 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { _id, ...updateData } = req.body.data;
+    const { _id, ...updateData } = req.body;
     const updatedProduct = await Product.findByIdAndUpdate(
       _id,
       { $set: updateData },
