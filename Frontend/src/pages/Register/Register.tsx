@@ -8,7 +8,7 @@ import {
 } from "../../api/auth.api";
 import { Input, Button, Select, Container } from "../../components/index.ts";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -30,6 +30,7 @@ const Register = () => {
   const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+
 
   const [messages, setMessage] = useState({
     email: "",
@@ -251,7 +252,10 @@ const Register = () => {
       }}
     >
       <div className={style.CenterBody}>
-        <h2 className={style.heading}>REGISTER</h2>
+        <div className={style.logoalt}>REGISTER</div>
+        <div className={style.loginbtn}>
+          <Link to="/login">LOGIN</Link>
+        </div>
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
           <div className={style.Input}>
             <Input

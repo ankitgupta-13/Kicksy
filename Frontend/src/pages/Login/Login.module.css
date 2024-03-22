@@ -81,10 +81,10 @@
   }
 
   .CenterBody {
-    /* border: 1px solid black; */
+    border: none;
     padding: 10px 20px;
-    width: 80vw;
-    margin: 40px;
+    width: 90vw;
+    margin: 10px;
     margin-top: 70px !important;
     display: flex;
     flex-direction: column;
@@ -120,8 +120,15 @@
     width: 100%;
     padding: 10px;
   }
-  .content2 Link{
+  .content2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .content2 a{
     text-align: center;
-    width: 100%;
+    /* width: 100%; */
+    display: block;
   }
 }
