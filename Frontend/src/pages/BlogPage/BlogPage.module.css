@@ -26,6 +26,12 @@
 .blogsection {
     margin: 50px;
 }
+.BlogImgSection{
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
 
 .blogimage {
     display: flex;

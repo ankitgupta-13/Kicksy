@@ -65,7 +65,7 @@
 
   color: var(--Primary-Text, #fff);
   text-align: center;
-  font-family: "Proxima Nova";
+  font-family: ProximaNova Medium;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.8px;
