@@ -145,6 +145,7 @@ const Home = () => {
           <img src={CustomNike} alt="" />
         </div>
       </div>
+      
       <div className={style.NewArrivals}>
         <div className={style.NewArrivalsTabs}>
           <h1 onClick={() => arrClick1()} ref={arrivaltab1} className={`${style.NewArrivalsSliderTitle} ${style.Active}`}>New Arrivals</h1>
