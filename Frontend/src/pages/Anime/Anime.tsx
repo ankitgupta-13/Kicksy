@@ -1,9 +1,32 @@
+import { useState, useEffect, useDispatch } from "react";
+import ProductDesc from "../ProductDesc/ProductDesc";
+import { getAllProducts } from "../../api/user.api";
+
 import style from "./Anime.module.css";
-import { useState, useEffect } from "react";
-// import img3 from "../../assets/images/Animepage/animeBackdrop.png"
+import img from "../../assets/images/AnimePage/bakugoS.png";
+import img2 from "../../assets/images/AnimePage/spideyS.png";
+
 
 import aiz from "../../assets/images/AnimePage/aizawa.png"
 import panel from "../../assets/images/AnimePage/picture.png"
+
+/*images*/
+import d1 from "../../assets/images/AnimePage/panels/D1.jpg"
+import d2 from "../../assets/images/AnimePage/panels/D2.jpg"
+import d5 from "../../assets/images/AnimePage/panels/D5.jpg"
+import d7 from "../../assets/images/AnimePage/panels/D7.jpg"
+import m10 from "../../assets/images/AnimePage/panels/M10.jpg"
+import n2 from "../../assets/images/AnimePage/panels/N2.jpg"
+import n3 from "../../assets/images/AnimePage/panels/N3.jpg"
+import n4 from "../../assets/images/AnimePage/panels/N4.jpg"
+import n6 from "../../assets/images/AnimePage/panels/N6.jpg"
+import n8 from "../../assets/images/AnimePage/panels/N8.jpg"
+import n9 from "../../assets/images/AnimePage/panels/N9.jpg"
+import n12 from "../../assets/images/AnimePage/panels/N12.jpg"
+
+
+
+
 import yeah from "../../assets/images/AnimePage/backdrop/Yeah.png"
 import bang from "../../assets/images/AnimePage/backdrop/Bang.png"
 import bg from "../../assets/images/AnimePage/backdrop/bg.png"
@@ -12,16 +35,14 @@ import Hallo from "../../assets/images/AnimePage/backdrop/Hallo.png"
 import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
 import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
 import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
-import { addToCart, getAllProducts } from "../../api/user.api";
-import { Button, PaymentButton, ProductCard } from "../../components";
-import ColorCard from "../../components/colorCard/colorCard";
-import { addItem } from "../../redux/reducers/cartSlice";
-import { useDispatch } from "react-redux";
+
+
+
 
 
 
 const Anime = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [explore, setExplore] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [animeProducts, setAnimeProducts] = useState([]);
@@ -85,21 +106,75 @@ const Anime = () => {
       <div>
       <div className={explore ? style.exploresec : ""}>
         <div style={{display:"flex", flexDirection: "column"}}>
-          <div className={style.Container_first}>
+          
+          
+          <div className={style.gridding}>
             
+            <img className={'${style.characterImg} ${style.col1}'} src={d5}></img>
             
-            <div style={{display:"flex", flexDirection: "column"}}>
-              <img className={style.characterImg} src={aiz}></img>
-              <div className={style.Content}>
-              Explore our customized anime sneakers
+            <div className={style.box1}>
+              <div className={style.boxHead}>
+                The one-stop for custom anime shoes.  
+              </div> 
+              <div className={style.boxContent}>
+                  We've crafted a fusion like no other, blending your passion for iconic
+                  anime characters with the comfort and style of premium sneakers.
+                  Here, every pair tells a story, merging the dynamic worlds of anime creativity and sneaker fashion 
+                  into one breathtaking masterpiece.
               </div>
-              <img className={style.picture} src={panel}></img>
-              
             </div>
+            
+            <img className={'${style.characterImg} ${style.col3}'} src={n12}></img>
+            
+            <img className={'${style.characterImg} ${style.col4}'} src={n8}></img>
+            <img className={'${style.characterImg} ${style.col2}'} src={n9}></img>
+
+            <div className={style.ItemCol1}> LOL</div>
+            
+            <div className={style.box2}>
+              <div className={style.boxHead}>
+              We Value Your Choices
+              </div>
+              <div className={style.boxContent}>
+              We've picked out sneakers just for you, blending quality with cool anime designs.
+               Each pair is like a blank page, ready for the colorful and detailed art of your 
+               favorite anime characters. When you wear them, you'll stand out with your own 
+               style and personality. 
+              </div>
+
+
+              <div style={{width: "100%", height: "0px", border: '2px black dotted', marginTop: "3%", marginBottom: "3%"}}></div>
+
+              
+              <div className={style.boxHead}> 
+                The Product
+              </div>
+              <div className={style.boxContent}>
+               These sneakers are special because they combine good quality with awesome anime designs.
+               You can think of each shoe as a blank canvas where you can put your favorite anime characters 
+               in vibrant colors and details. When you wear these sneakers, it shows off your unique style
+               and who you are.
+              </div>
+            </div>
+            <div className={style.ItemCol4}> LOL</div>
+             
+            <img className={'${style.characterImg} ${style.col1}'} src={m10}></img>
+            
+            <img className={'${style.characterImg} ${style.col4}'} src={d2}></img>
+            <img className={'${style.characterImg} ${style.col4}'} src={n6}></img>
+            <img className={'${style.characterImg} ${style.col3}'} src={d1}></img>
+            <img className={'${style.characterImg} ${style.col1}'} src={n4}></img>
+            <img className={'${style.characterImg} ${style.col2}'} src={n2}></img>
+            
+            <div className={style.ItemCol3}> LOL</div>
+            
+            <img className={'${style.characterImg} ${style.col3}'} src={d7}></img>
+            <img className={'${style.characterImg} ${style.col2}'} src={n3}></img>
             
 
 
           </div>
+
           <div style={{margin:"5%", justifyContent: "center", }}>
               <button
                 style={{
@@ -122,46 +197,7 @@ const Anime = () => {
               </button>
               </div>
 
-          {/* <div className={style.Container_first}>
-            <div className={style.Card2}>
-              <div className={style.head}>
-                {" "}
-                Sneaker Culture + Anime Artistry
-              </div>
-              <div className={style.Content}>
-                We understand your love for both quality footwear and
-                captivating anime designs. That's why we've meticulously curated
-                a collection that not only meets but exceeds your expectations.
-                Each sneaker is a canvas, waiting to be adorned with the vibrant
-                hues and intricate details of your favorite anime characters,
-                ensuring that every step you take is a testament to your uniq ue
-                style and personality.
-              </div>
-              <button
-                style={{
-                  position: "absolute",
-                  width: "200px",
-                  height: "40px",
-                  right: "150px",
-                  bottom: "100px",
-                  borderRadius: "10px",
-                  backgroundColor: "white",
-                  fontFamily: "Bevan",
-                  letterSpacing: "1.5px",
-                  justifyContent: "center",
-                  color: "black",
-                  left:"42%",
-                  zIndex: "5",
-                }}
-                onClick={() => setExplore(true)}
-              >
-                Explore
-              </button>
-              <div className={style.Circle2}>
-                <img className={style.image2} src={img2}></img>
-              </div>
-            </div>
-          </div> */}
+
         </div>
       </div>
       
@@ -247,15 +283,27 @@ const Anime = () => {
                   lorem ispum lorem ispum
                 </p>
               </div>
-              <div className={style.productlist}>
-              {animeProducts.map((product: any, index: number) => (
-                <div key={index} onClick={() => {setCurProduct(product); setShoesColorData(product.images);}}>
-                  <ProductCard product={product} />
-                </div> 
-              ))}
-              </div> 
-              </div>    
+
+
+
+            {/* <div style={{ marginTop: "5%" }}>
+        {products.filter((product) => product.category === "anime").map((shoe) => (
+          <ProductDesc key={shoe._id} product={shoe} />
+        ))}
+      </div> */}
+
+          {/*             
+            <div style={{display:"flex", flexDirection: "column"}}>
+              <img className={style.characterImg} src={aiz}></img>
+              <div className={style.Content}>
+              Explore our customized anime sneakers
+              </div>
+              <img className={style.picture} src={panel}></img>
+              
+            </div> */}
+
       </div>
+    </div>
     </div>
   );
 };
