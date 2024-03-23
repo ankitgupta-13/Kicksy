@@ -56,7 +56,6 @@ const addProductViaRequest = async (req, res) => {
       return res.json(new ApiResponse(404, "product request not found"));
 
     const {
-      productCode,
       skuID,
       gender,
       description,
@@ -73,7 +72,6 @@ const addProductViaRequest = async (req, res) => {
     } = request;
 
     const product = new Product({
-      productCode,
       skuID,
       gender,
       description,
@@ -100,6 +98,11 @@ const addProductViaRequest = async (req, res) => {
     await Product.findByIdAndUpdate(product._id, {
       $push: { offers: offer._id },
     });
+
+    await Seller.findByIdAndUpdate(seller , {
+      $push:{offers:offer._id}
+    })
+
     product.price = price;
     await product.save();
 

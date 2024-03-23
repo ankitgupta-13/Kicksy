@@ -50,6 +50,11 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
     },
+    searchTags:[
+      {
+        type:String
+      }
+    ]
   },
   {
     timestamps: true,
