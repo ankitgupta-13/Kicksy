@@ -195,6 +195,18 @@ const getSellerOffers = async (req, res) => {
   }
 }
 
+const fetchRequestById = async(req,res)=>{
+  const {sellerID , requestID} = req.body;
+  try{
+    
+    const seller = await Seller.findOne({_id:sellerID});
+    
+  }
+  catch(err){
+    return handleErr(res, err);
+  }
+}
+
 
 
 export {

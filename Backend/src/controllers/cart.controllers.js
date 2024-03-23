@@ -15,6 +15,14 @@ const addToCart = async (req, res) => {
         user: userID,
         items: [{ product: productID }],
       });
+
+      const user = await User.findOne({_id:userID});
+      
+      if(!user) return res.json(new ApiResponse(404 , 'user not found'));
+
+      user.cart = newCart._id
+      await user.save()
+
       await newCart.save();
       return res.json(new ApiResponse(200, newCart, "Product added to cart"));
     }

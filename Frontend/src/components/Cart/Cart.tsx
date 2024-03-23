@@ -18,7 +18,7 @@ const Cart = () => {
   const isCartOpen = useSelector((state) => state.cart.isOpen);
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
-
+  // console.log((cartItems)
   const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
   };

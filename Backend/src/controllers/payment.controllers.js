@@ -40,7 +40,17 @@ const verifyPayment = async (req, res) => {
     userID,
     orderDetails,
   } = req.body;
+
+  console.log(req.body)
+
+  // sample orderDetails
+  /*
+
+
+  */ 
+
   try {
+
     const userCart = await Cart.findOne({ user: userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
@@ -58,6 +68,10 @@ const verifyPayment = async (req, res) => {
       await order.save();
 
       user.orders.push(order._id);
+
+
+
+
     } else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }

@@ -33,13 +33,10 @@ class ApiError extends Error {
 }
 
 
-const err_message = (res , status_code , message)=>{
-  return res.json(new ApiError(status_code , message))
-}
 
 const handleErr = (res, err) => {
-  console.log(err);
+  // console.log(err);
   return res.json(new ApiError(400, err.message));
 };
 
-export { ApiError  , err_message , handleErr};
+export { ApiError   , handleErr};
