@@ -8,6 +8,9 @@ import { useDispatch } from "react-redux";
 import style from "./Login.module.css";
 import { Alert, Container } from "@mui/material";
 
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,12 +49,15 @@ const Login = () => {
         <div className={style.logo}>
           <Logo />
         </div>
+        <div className={style.logoalt}>
+          LOGIN
+        </div>
         <h2 className={style.content}>Sign in to your account</h2>
         <p className={style.content2}>
           Don't have any account?
           <Link to="/register">Sign up</Link>
         </p>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <form className={style.form} onSubmit={handleSubmit(handleLogin)}>
           <div className={style.Input}>
             <Input
               style={{ marginTop: "5px" }}
@@ -78,14 +84,16 @@ const Login = () => {
               {...register("password", { required: true })}
             />
           </div>
+          <div className={style.buttondiv}>
+            <Button
+              className={style.button}
+              style={{ backgroundColor: "#131313", color: "white" }}
+              type="submit"
+            >
+              Login
+            </Button>
+          </div>
 
-          <Button
-            className={style.button}
-            style={{ backgroundColor: "#131313", color: "white" }}
-            type="submit"
-          >
-            Login
-          </Button>
         </form>
         {error ? (
           <Alert

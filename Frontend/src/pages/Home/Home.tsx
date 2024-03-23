@@ -15,6 +15,7 @@ import NikeLogo from "../../assets/images/NikeLogo.png";
 import AdidasLogo from "../../assets/images/AdidasLogo.png";
 // import AnimeShoe1 from "../../assets/images/AnimeShoe1.png";
 import CustomNike from "../../assets/images/CustomNike.png";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import { useNavigate } from "react-router-dom";
 
@@ -150,11 +151,14 @@ const Home = () => {
           <h1 onClick={() => arrClick2()} ref={arrivaltab2} className={style.NewArrivalsSliderTitle}>What's New</h1>
           <h1 onClick={() => arrClick3()} ref={arrivaltab3} className={style.NewArrivalsSliderTitle}>For You</h1>
         </div>
+        <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
           <div className={style.cards}>
             {products.map((product: Object, index: number) => {
               return (
                 <div key={index} className={style.container}>
+                  
+                  <div className={style.shoes__addIcon}><AddOutlinedIcon /></div>
                   <img
                     src={product.images[0]}
                     className={style.shoes__image}
@@ -174,7 +178,7 @@ const Home = () => {
           <div className={style.cards}>
             {products.map((product: Object, index: number) => {
               return (
-                <div key={index}>
+                <div className={style.BestSellerCard} key={index}>
                   <ProductCard product={product} />
                 </div>
               );

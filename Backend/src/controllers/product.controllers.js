@@ -126,12 +126,15 @@ const getRecentProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { productID } = req.body;
-    const product = await Product.findOne({ _id: productID }).populate({
-      path: "offers",
-      populate: {
-        path: "sellerID",
-      },
-    });
+    
+    const product = await Product.findOne({ _id: productID })
+    .populate({
+      path:"offers",
+      populate:{
+        path:"sellerID"
+      }
+    })
+
     if (!product) {
       return res.json(
         new ApiError(404, "Invalid product id , product not found")

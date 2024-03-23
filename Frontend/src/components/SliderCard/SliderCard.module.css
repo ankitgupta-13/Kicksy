@@ -67,3 +67,27 @@
     display: flex;
     flex-direction: column;
 }
+
+@media (max-width: 430px){
+    .container__backgroudtext{
+        display: none;
+    }
+    .container__shoesname{
+        font-size: 3rem;
+        top: 30%;
+    }
+    .container{
+        height: 200px;
+    }
+    .container__shopbtn{
+        display: none;
+    }
+    .container__shoesimage{
+        max-height: 10rem;
+        max-width: 15rem;
+        position: absolute;
+        top: 100px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

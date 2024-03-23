@@ -1,6 +1,7 @@
-.sidebarBody{
+.sidebarBody {
   width: 20%;
 }
+
 .Logo {
   width: 90%;
   padding: 30px 10px;
@@ -25,10 +26,21 @@
   padding: 16px 8px 8px 12px;
   transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   letter-spacing: 0.5px;
+
 }
 
+.AppIcon {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-right: 16px;
+}
+
+.AppText {}
 
 .sectionButton {
+  background: white;
   margin: 0px 0px 4px;
   cursor: pointer;
   display: flex;

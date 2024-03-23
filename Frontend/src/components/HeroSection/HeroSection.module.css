@@ -75,3 +75,8 @@
 
 }
 
+@media (max-width: 430px) {
+  .container{
+    display: none;
+  }
+}

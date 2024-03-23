@@ -20,6 +20,8 @@
 .containerHeading {
   text-transform: capitalize;
   font-size: 30px;
+  margin-top: 20px;
+  font-family: "Noir Pro";
 }
 
 .sectionContainerHeading {
@@ -27,6 +29,7 @@
   display: inline;
   border-bottom: 2px solid #adadad;
   padding-bottom: 3px;
+  font-family: "Noir Pro";
 }
 
 .inputBox {

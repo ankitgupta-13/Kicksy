@@ -42,6 +42,7 @@ const verifyPayment = async (req, res) => {
     razorpay_signature,
     orderDetails,
   } = req.body;
+
   try {
     const userCart = await Cart.findOne({ user: orderDetails.userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;

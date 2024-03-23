@@ -11,6 +11,11 @@
   transition: 0.5s;
 }
 
+.itemlist{
+font-family: "Noir Pro";
+letter-spacing: 0.5px;
+}
+
 .sidenav.open {
   width: 300px;
 }

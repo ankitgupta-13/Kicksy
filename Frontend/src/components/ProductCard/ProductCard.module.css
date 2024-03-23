@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   height: 30rem;
-  width: 25rem;
+  width: 20rem;
   border: 1px solid #dfe0e1;
   padding: 20px;
   box-sizing: border-box;
@@ -21,6 +21,7 @@
   align-items: center;
   object-fit: contain;
   aspect-ratio: 3/2;
+  padding: 10px !important;
 }
 
 .shoes__bestseller {
@@ -181,5 +182,14 @@
     font-family: "Noir Pro";
     color: #656565;
     text-decoration: line-through;
+  }
+
+  .HeroSectionB{
+    display: none !important;
+  }
+
+  .container{
+    background-color: #f6f6f6;
+    color: #000000;
   }
 }

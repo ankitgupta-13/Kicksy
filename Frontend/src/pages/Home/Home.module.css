@@ -1,7 +1,8 @@
-.Body{
+.Body {
     width: 100%;
     overflow: hidden;
 }
+
 .Gender {
     display: flex;
     justify-content: space-evenly;
@@ -51,8 +52,8 @@
 
 .GenderBox:hover,
 .SaleBox:hover {
-  box-shadow: 0 0px 8px rgba(137, 137, 137, 0.801);
-  transition: box-shadow 0.3s ease;
+    box-shadow: 0 0px 8px rgba(137, 137, 137, 0.801);
+    transition: box-shadow 0.3s ease;
 }
 
 
@@ -128,22 +129,23 @@
     -ms-overflow-style: none;
     width: 100%;
 }
+
 .container {
     display: flex;
     flex-direction: column;
     height: 15rem;
     width: 15rem;
-    gap: 1rem;
-  }
+    gap: .5rem;
+}
 
-  .shoes__image {
+.shoes__image {
     position: relative;
     display: flex;
     object-fit: contain;
     border-bottom: 1px solid #dfe0e1;
     aspect-ratio: 3/2;
     padding: 40px;
-  }
+}
 
 .Slider::-webkit-scrollbar {
     display: none;
@@ -184,7 +186,7 @@
     padding: 10px 20px;
 }
 
-.NewArrivalsTabs{
+.NewArrivalsTabs {
     display: flex;
     gap: 40px;
     /* padding: 10px 20px; */
@@ -192,14 +194,99 @@
     border-bottom: 1px solid #D9D9D9;
 }
 
-.Active{
+.PopularShoes {
+    display: none;
+}
+
+.Active {
     border-bottom: 2px solid #000;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
     .sidebar {
         width: 100%;
         height: 100%;
         padding: 20px;
+    }
+
+    .Body .Gender {
+        display: none;
+    }
+
+    .CompanyContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .CompanyItem {
+        height: 60px;
+    }
+
+    .CompanyItem img {
+        height: 100%;
+    }
+
+    .NewArrivalsTabs {
+        display: none;
+    }
+
+    .PopularShoes {
+        display: block;
+        cursor: pointer;
+        color: #000;
+        border-bottom: 1px solid #000;
+        width: 90%;
+        font-family: "Noir Pro";
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 10px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cards .container {
+        height: 10rem;
+        width: 9rem;
+        font-family: "Noir Pro";
+        border: 1px solid #dfe0e1;
+        padding: 5px 10px; 
+    }
+    .cards .container .shoes__addIcon{
+        position: absolute;
+        width: inherit;
+        text-align: right;
+        padding-right: 15px;
+    }
+    .cards .container .shoes__image{
+        height: 100%;
+        padding: 10px !important;
+        border: none;
+    }
+    .cards .container .title {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .Slider, .BestSellerSlider{
+        z-index: -1;
+    }
+
+    .BestSellerSlider{
+        background-color: #000;
+        color: #fff;
+    }
+    .BestSellerSliderHeading{
+        font-size: 20px;
+        font-weight: 900;
+        padding: 10px 0px;
+        color: #fff;
+    }
+
+    .Slider .cards{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .BestSellerCard .container{
+        width: 1rem !important;
+        padding-bottom: 30px;
     }
 }

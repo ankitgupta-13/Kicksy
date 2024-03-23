@@ -1,3 +1,10 @@
+/*
+
+  1. Tags field not provided in frontend
+  2. Single Size option provided in frontend , multiple required 
+
+*/
+
 import mongoose from "mongoose";
 
 const productRequestSchema = new mongoose.Schema(
@@ -59,12 +66,8 @@ const productRequestSchema = new mongoose.Schema(
       {
         type: String,
       },
-    ],
-    status: {
-      type: String,
-      enum: ["pending", "approved"],
-      default: "pending",
-    },
+    ]
+    
   },
   {
     timestamps: true,
