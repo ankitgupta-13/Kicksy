@@ -6,7 +6,7 @@ import { Button, Input } from '../index';
 const FilterSidebar = ({ filters, onFilterChange }) => {
   const [mActive, setMActive] = useState();
   const [wActive, setWActive] = useState();
-
+  
   const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
   const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
   const sizeOptions = ['S', 'M', 'L'];
