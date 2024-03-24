@@ -251,16 +251,17 @@ const logoutUser = async (req, res) => {
 const findByID = async (req, res) => {
   const { userID } = req.body;
   try {
-    const user = await User.findOne({ _id: userID });
+    const user = await User.findOne({ _id: userID })
+      .select("-password -refreshToken")
+      .populate("address");
     if (!user) {
       return res.json(new ApiResponse(404, "user not found"));
     }
     return res.json(new ApiResponse(200, user, "User Found"));
+  } catch (err) {
+    return res.json(new ApiError(400, err.message));
   }
-  catch (err) {
-    return res.json(new ApiError(400 , err.message));
-  }
-}
+};
 
 const findByEmail = async (req, res) => {
   try {

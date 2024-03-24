@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store/store";
 import {
-  acceptProductRequest,
   acceptSellerRequest,
   declineSellerRequest,
+  getSellerById,
   getSellerRequestById,
   getUserById,
+  banUser,
+  removeBanUser,
 } from "../../../../../api/admin.api";
 import avatar from "./../../../../../assets/avatar.jpg";
 import style from "./DetailUser.module.css";
@@ -18,9 +20,10 @@ const DetailUser = () => {
   const currentSection = useSelector(
     (state: RootState) => state.adminDashboard.currentSection
   );
+  const action = useSelector(
+    (state: RootState) => state.adminDashboard.previousAction
+  );
   const [userData, setUserData] = useState({});
-  const [mobile, setMobile] = useState();
-  const [address, setAddress] = useState();
 
   const handleAcceptSellerRequest = async () => {
     const response = await acceptSellerRequest({ requestID: userID });
@@ -31,16 +34,26 @@ const DetailUser = () => {
     console.log(response);
   };
 
+  const handleBanSeller = async () => {};
+
+  const handleBanUser = async () => {
+    let response;
+    userData?.status === "active"
+      ? (response = await banUser({ userID }))
+      : (response = await removeBanUser({ userID }));
+    console.log(response);
+  };
+
   useEffect(() => {
     (async () => {
       let response;
       currentSection === "User"
         ? (response = await getUserById({ userID }))
+        : action === "List"
+        ? (response = await getSellerById({ sellerID: userID }))
         : (response = await getSellerRequestById({ requestID: userID }));
       if (response.statusCode === 200) {
         setUserData(response.data);
-        setMobile(response.data.mobile.number);
-        setAddress(response.data.address);
       }
     })();
   }, []);
@@ -48,64 +61,135 @@ const DetailUser = () => {
   return (
     <div>
       <div className={style.container}>
-        <div className={style.imagesection}>
-          <div className={style.imagecircle}>
-            <img src={userData.storeLogo} className={style.avatar} />
-          </div>
-          <button
-            className={style.banbutton}
-            onClick={handleAcceptSellerRequest}
-          >
-            Accept
-          </button>
-          <button
-            className={style.banbutton}
-            onClick={handleDeclineSellerRequest}
-          >
-            Decline
-          </button>
-        </div>
-        {userData.role === "user" ? (
-          <div className={style.detailsection}>
-            <span className={style.heading}>User Deatils</span>
-            <span className={style.subheading}>
-              Name : {userData?.userID?.username}
-            </span>
-            <span className={style.subheading}>Email : {userData?.email}</span>
-            <span className={style.subheading}>Mobile : {mobile}</span>
-            <span className={style.subheading}>Store Address : {address}</span>
-            <span className={style.subheading}>Store State : {address}</span>
+        {currentSection === "User" ? (
+          <div className={style.container}>
+            <div className={style.imagesection}>
+              <div className={style.imagecircle}>
+                <img src={avatar} className={style.avatar} />
+              </div>
+              <button
+                className={style.banbutton}
+                onClick={handleAcceptSellerRequest}
+              >
+                {userData?.status?.toUpperCase()}
+              </button>
+              <button className={style.banbutton} onClick={handleBanUser}>
+                {userData.status === "active" ? "Ban User" : "Activate User"}
+              </button>
+            </div>
+            <div className={style.detailsection}>
+              <span className={style.heading}>User Deatils</span>
+              <span className={style.subheading}>
+                Name : {userData?.username}
+              </span>
+              <span className={style.subheading}>
+                Email : {userData?.email}
+              </span>
+              <span className={style.subheading}>
+                Mobile :{userData?.mobile?.countryCode}
+                {userData?.mobile?.number}
+              </span>
+              {/* <span className={style.subheading}>Address : {address}</span>
+            <span className={style.subheading}>State : {address}</span>
             <span className={style.subheading}> City : {address}</span>
-            <span className={style.subheading}> Zip/Pincode : {address}</span>
+            <span className={style.subheading}> Zip/Pincode : {address}</span> */}
+            </div>
+          </div>
+        ) : action === "List" ? (
+          <div>
+            <div className={style.imagesection}>
+              <div className={style.imagecircle}>
+                <img src={userData.storeLogo} className={style.avatar} />
+              </div>
+              <button
+                className={style.banbutton}
+                onClick={handleAcceptSellerRequest}
+              >
+                Active Seller
+              </button>
+              <button className={style.banbutton} onClick={handleBanSeller}>
+                BanSeller
+              </button>
+            </div>
+            <div className={style.detailsection}>
+              <span className={style.heading}>Seller Deatils</span>
+              <span className={style.subheading}>
+                Store Name : {userData?.storeName}
+              </span>
+              <span className={style.subheading}>
+                GST Number : {userData?.gstNumber}
+              </span>
+              <span className={style.subheading}>
+                Whatsapp : {userData?.whatsappNumber}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                Address : {userData?.storeAddress?.street}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                State : {userData?.storeAddress?.state.toUpperCase()}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                City : {userData?.storeAddress?.city.toUpperCase()}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                Zip/Pincode : {userData?.storeAddress?.pincode}
+              </span>
+            </div>
+            <div className={style.orderhistory}>
+              <span className={style.heading}>Sale history</span>
+            </div>
           </div>
         ) : (
-          <div className={style.detailsection}>
-            <span className={style.heading}>Seller Deatils</span>
-            <span className={style.subheading}>
-              Store Name : {userData?.storeName}
-            </span>
-            <span className={style.subheading}>
-              GST Number : {userData?.gstNumber}
-            </span>
-            <span className={style.subheading}>
-              Whatsapp : {userData?.whatsappNumber}
-            </span>
-            <span className={style.subheading}>
-              {" "}
-              Address : {userData?.storeAddress?.street}
-            </span>
-            <span className={style.subheading}>
-              {" "}
-              State : {userData?.storeAddress?.state.toUpperCase()}
-            </span>
-            <span className={style.subheading}>
-              {" "}
-              City : {userData?.storeAddress?.city.toUpperCase()}
-            </span>
-            <span className={style.subheading}>
-              {" "}
-              Zip/Pincode : {userData?.storeAddress?.pincode}
-            </span>
+          <div>
+            <div className={style.imagesection}>
+              <div className={style.imagecircle}>
+                <img src={userData.storeLogo} className={style.avatar} />
+              </div>
+              <button
+                className={style.banbutton}
+                onClick={handleAcceptSellerRequest}
+              >
+                Accept
+              </button>
+              <button
+                className={style.banbutton}
+                onClick={handleDeclineSellerRequest}
+              >
+                Decline
+              </button>
+            </div>
+            <div className={style.detailsection}>
+              <span className={style.heading}>Seller Deatils</span>
+              <span className={style.subheading}>
+                Store Name : {userData?.storeName}
+              </span>
+              <span className={style.subheading}>
+                GST Number : {userData?.gstNumber}
+              </span>
+              <span className={style.subheading}>
+                Whatsapp : {userData?.whatsappNumber}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                Address : {userData?.storeAddress?.street}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                State : {userData?.storeAddress?.state.toUpperCase()}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                City : {userData?.storeAddress?.city.toUpperCase()}
+              </span>
+              <span className={style.subheading}>
+                {" "}
+                Zip/Pincode : {userData?.storeAddress?.pincode}
+              </span>
+            </div>
           </div>
         )}
       </div>
@@ -114,9 +198,7 @@ const DetailUser = () => {
           <span className={style.heading}>Order history</span>
         </div>
       ) : (
-        <div className={style.orderhistory}>
-          <span className={style.heading}>Sale history</span>
-        </div>
+        <div></div>
       )}
     </div>
   );

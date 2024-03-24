@@ -3,11 +3,16 @@ import { getSellers } from "../../../../../api/admin.api";
 import Pagination from "../../../../../components/Pagination/Pagination";
 import style from "./ListSeller.module.css";
 import { UserDashboardCard } from "../../../../../components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store/store";
 
 const ListSeller = () => {
   const [sellerList, setSellerList] = useState([]);
   const [page, setPage] = useState();
   const [sellerCount, setSellerCount] = useState(0);
+  const currentAction = useSelector(
+    (state: RootState) => state.adminDashboard.currentAction
+  );
 
   useEffect(() => {
     (async () => {
@@ -32,7 +37,7 @@ const ListSeller = () => {
         {sellerList.map((seller, index) => {
           return (
             <div key={index}>
-              <UserDashboardCard data={seller} />
+              <UserDashboardCard data={seller} type={currentAction} />
             </div>
           );
         })}

@@ -135,39 +135,35 @@ const fetchAdmins = async (req, res) => {
   }
 };
 
-const banUser = async(req,res)=>{
-  try{
-    const {userID} = req.body;
-    const user = await User.findOne({_id:userID});
-    if(!user) return res.json(new ApiResponse(404 , 'user not found'));
-    
-    user.status = 'banned'
+const banUser = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
+
+    user.status = "banned";
 
     await user.save();
-    res.json(new ApiResponse(200 , user.status , 'user banned successfully'));
+    res.json(new ApiResponse(200, user.status, "user banned successfully"));
+  } catch (err) {
+    return handleErr(res, err);
   }
-  catch(err){
-    return handleErr(res,err);
-  }
+};
 
-}
+const removeBanUser = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    if (!user) return res.json(new ApiResponse(404, "user not found"));
 
-const removeBan = async(req,res)=>{
-  try{
-    const {userID} = req.body;
-    const user = await User.findOne({_id:userID});
-    if(!user) return res.json(new ApiResponse(404 , 'user not found'));
-    
-    user.status = 'active'
+    user.status = "active";
 
     await user.save();
-    res.json(new ApiResponse(200 , user.status , 'user restored successfully'));
+    res.json(new ApiResponse(200, user.status, "user restored successfully"));
+  } catch (err) {
+    return handleErr(res, err);
   }
-  catch(err){
-    return handleErr(res,err);
-  }
-}
-
+};
 
 export {
   createAdmin,
@@ -179,5 +175,5 @@ export {
   fetchAdmins,
   getUsersCount,
   banUser,
-  removeBan
+  removeBanUser,
 };

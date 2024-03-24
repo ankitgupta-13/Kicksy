@@ -9,6 +9,7 @@ const initialState = {
   },
   currentSection: null,
   currentAction: null,
+  previousAction: null,
   currentProduct: null,
   currentProductRequest: null,
   currentOrder: null,
@@ -24,9 +25,11 @@ const adminDashboardSlice = createSlice({
       state.sectionsState[sectionName] = !state.sectionsState[sectionName];
     },
     selectAdminAction: (state, action) => {
-      const { selectedSection, selectedAction } = action.payload;
+      const { selectedSection, selectedAction, previousAction } =
+        action.payload;
       state.currentSection = selectedSection;
       state.currentAction = selectedAction;
+      state.previousAction = previousAction;
       Object.keys(state.sectionsState).forEach((key) => {
         if (key !== selectedSection) {
           state.sectionsState[key] = false;

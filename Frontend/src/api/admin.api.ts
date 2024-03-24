@@ -152,6 +152,17 @@ export const getSellers = async () => {
   }
 };
 
+export const getSellerById = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/get-seller/id", payload);
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const getSellerRequests = async () => {
   try {
     const { data } = await api.get("/admin/requests/seller/getAll");
@@ -243,6 +254,7 @@ export const updateProduct = async (payload) => {
 export const getUserById = async (payload: Object) => {
   try {
     const { data } = await api.post("/user/fetch-by-id", payload);
+    console.log(data);
     return data;
   } catch (error: any) {
     console.log(error);
@@ -262,6 +274,28 @@ export const getSellerRequestById = async (payload: Object) => {
     return data;
   } catch (error) {
     console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const banUser = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/ban-user", payload);
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const removeBanUser = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/remove-ban-user", payload);
+    console.log(data);
+    return data;
+  } catch (error) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }

@@ -277,6 +277,22 @@ const fetchOrderById = async (req, res) => {
   }
 };
 
+const getSellerById = async (req, res) => {
+  try {
+    const { sellerID } = req.body;
+    if (!sellerID) return res.json(new ApiResponse(422, "sellerID required!"));
+
+    const seller = await Seller.findById(sellerID).populate("storeAddress");
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+
+    return res.json(
+      new ApiResponse(200, seller, "seller fetched successfully")
+    );
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
 export {
   sellerRequest,
   productAddRequest,
@@ -288,4 +304,5 @@ export {
   fetchOffers,
   fetchOrders,
   fetchOrderById,
+  getSellerById,
 };
