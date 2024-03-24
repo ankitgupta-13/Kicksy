@@ -278,3 +278,25 @@ export const getSellerRequestById = async (payload: Object) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const banUser = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/ban-user", payload);
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const removeBanUser = async (payload: Object) => {
+  try {
+    const { data } = await api.post("/admin/remove-ban-user", payload);
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

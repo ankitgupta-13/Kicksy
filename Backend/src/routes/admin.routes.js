@@ -31,6 +31,8 @@ import {
   fetchAdmins,
   getUsersCount,
   getSellers,
+  banUser,
+  removeBanUser,
 } from "../controllers/admin.controllers.js";
 
 import {
@@ -74,6 +76,8 @@ router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
 router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
+router.route("/ban-user").post(banUser);
+router.route("/remove-ban-user").post(removeBanUser);
 
 // routes for handling seller requests
 router.route("/requests/seller/getAll").get(getSellerRequests);

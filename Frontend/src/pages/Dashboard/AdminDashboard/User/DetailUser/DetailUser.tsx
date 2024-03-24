@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store/store";
 import {
-  acceptProductRequest,
   acceptSellerRequest,
   declineSellerRequest,
   getSellerById,
   getSellerRequestById,
   getUserById,
+  banUser,
+  removeBanUser,
 } from "../../../../../api/admin.api";
 import avatar from "./../../../../../assets/avatar.jpg";
 import style from "./DetailUser.module.css";
@@ -23,8 +24,6 @@ const DetailUser = () => {
     (state: RootState) => state.adminDashboard.previousAction
   );
   const [userData, setUserData] = useState({});
-  const [mobile, setMobile] = useState();
-  const [address, setAddress] = useState();
 
   const handleAcceptSellerRequest = async () => {
     const response = await acceptSellerRequest({ requestID: userID });
@@ -37,6 +36,14 @@ const DetailUser = () => {
 
   const handleBanSeller = async () => {};
 
+  const handleBanUser = async () => {
+    let response;
+    userData?.status === "active"
+      ? (response = await banUser({ userID }))
+      : (response = await removeBanUser({ userID }));
+    console.log(response);
+  };
+
   useEffect(() => {
     (async () => {
       let response;
@@ -47,8 +54,6 @@ const DetailUser = () => {
         : (response = await getSellerRequestById({ requestID: userID }));
       if (response.statusCode === 200) {
         setUserData(response.data);
-        setMobile(response.data.mobile.number);
-        setAddress(response.data.address);
       }
     })();
   }, []);
@@ -66,10 +71,10 @@ const DetailUser = () => {
                 className={style.banbutton}
                 onClick={handleAcceptSellerRequest}
               >
-                {userData.status?.toUpperCase()}
+                {userData?.status?.toUpperCase()}
               </button>
-              <button className={style.banbutton} onClick={handleBanSeller}>
-                Ban User
+              <button className={style.banbutton} onClick={handleBanUser}>
+                {userData.status === "active" ? "Ban User" : "Activate User"}
               </button>
             </div>
             <div className={style.detailsection}>
