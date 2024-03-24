@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { getSellerRequests } from "../../../../../api/admin.api";
 import { UserDashboardCard } from "../../../../../components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store/store";
 
 const RequestSeller = () => {
   const [requestList, setRequestList] = useState([]);
   const [page, setPage] = useState(1);
+
+  const currentAction = useSelector(
+    (state: RootState) => state.adminDashboard.currentAction
+  );
 
   useEffect(() => {
     (async () => {
@@ -24,7 +30,7 @@ const RequestSeller = () => {
         requestList.map((request, index) => {
           return (
             <div key={index}>
-              <UserDashboardCard data={request} />
+              <UserDashboardCard data={request} type={currentAction} />
             </div>
           );
         })

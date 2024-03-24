@@ -7,10 +7,13 @@ import {
 import { RootState } from "../../redux/store/store";
 import avatar from "../../assets/avatar.jpg";
 
-const UserDashboardCard = ({ data }) => {
+const UserDashboardCard = ({ data, type }) => {
   const { username, email, status, mobile, _id } = data;
   const currentSection = useSelector(
     (state: RootState) => state.adminDashboard.currentSection
+  );
+  const currentAction = useSelector(
+    (state: RootState) => state.adminDashboard.currentAction
   );
   const dispatch = useDispatch();
   const handleShowUser = () => {
@@ -19,6 +22,7 @@ const UserDashboardCard = ({ data }) => {
         selectAdminAction({
           selectedSection: currentSection === "User" ? "User" : "Seller",
           selectedAction: "Details",
+          previousAction: type,
         })
       );
   };

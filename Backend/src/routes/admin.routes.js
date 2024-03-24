@@ -46,6 +46,7 @@ import {
   getProductRequestById,
   getProductRequests,
 } from "../controllers/admin-product.controllers.js";
+import { getSellerById } from "../controllers/seller.controllers.js";
 
 const router = Router();
 
@@ -67,6 +68,7 @@ router.route("/fetch-blog/id").post(fetchBlogById);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/get-users").get(getUsers);
 router.route("/get-sellers").get(getSellers);
+router.route("/get-seller/id").post(getSellerById);
 router.route("/get-products").get(getProducts);
 router.route("/change-user-state").post(changeUserState);
 router.route("/total-active-users").get(getActiveUsersCount);
