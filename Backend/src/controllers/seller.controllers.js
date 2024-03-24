@@ -212,10 +212,11 @@ const fetchOffers = async (req, res) => {
   try {
     const { sellerID } = req.body;
 
-    const seller = await Seller.findOne({ _id: sellerID }).populate({
-      path: "offers",
-      populate: "productID",
-    });
+    const seller = await Seller.findOne({ _id: sellerID })
+      .populate({
+        path:"offers",
+        populate:"productID"
+      });
 
     if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
@@ -231,7 +232,7 @@ const fetchOfferByID = async (req, res) => {
   try {
     const { offerID } = req.body;
 
-    const offer = await Offer.findById(offerID);
+    const offer = await Offer.findById(offerID).populate("productID");
 
     if (!offer)
       return res.json(new ApiResponse(404, "No offer with this id found. "));
