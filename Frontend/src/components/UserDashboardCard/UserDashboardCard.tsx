@@ -5,10 +5,10 @@ import {
   selectAdminUser,
 } from "../../redux/reducers/adminDashboardSlice";
 import { RootState } from "../../redux/store/store";
-import avatar from '../../assets/avatar.jpg'
+import avatar from "../../assets/avatar.jpg";
 
 const UserDashboardCard = ({ data }) => {
-  const { username, email, role, status, mobile, _id } = data;
+  const { username, email, status, mobile, _id } = data;
   const currentSection = useSelector(
     (state: RootState) => state.adminDashboard.currentSection
   );
@@ -17,7 +17,7 @@ const UserDashboardCard = ({ data }) => {
     dispatch(selectAdminUser(_id)),
       dispatch(
         selectAdminAction({
-          selectedSection: "User",
+          selectedSection: currentSection === "User" ? "User" : "Seller",
           selectedAction: "Details",
         })
       );
@@ -26,7 +26,7 @@ const UserDashboardCard = ({ data }) => {
     <div className={style.Container} onClick={handleShowUser}>
       {currentSection === "User" ? (
         <div className={style.cardContainer}>
-           <div className={style.text}>
+          <div className={style.text}>
             <img src={avatar} alt="" className={style.storeLogo} />
             <div className={style.store}>{username}</div>
           </div>

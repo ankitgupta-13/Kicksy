@@ -1,7 +1,7 @@
 import { SellerRequest } from "../models/request.model.js";
 import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { deleteFromAws } from "../utils/aws.js";
 
@@ -26,7 +26,9 @@ const acceptSellerRequest = async (req, res) => {
   const { requestID } = req.body;
 
   try {
-    const sellerRequest = await SellerRequest.findOne({ _id: requestID });
+    const sellerRequest = await SellerRequest.findOne({
+      _id: requestID,
+    });
     if (!sellerRequest)
       return res.json(new ApiResponse(404, "request not found"));
 
@@ -87,19 +89,25 @@ const declineSellerRequest = async (req, res) => {
   }
 };
 
-const getSellerRequestById = async(req,res)=>{
-  try{
-    const {requestID} = req.body;
-    const request = await SellerRequest.findById(requestID);
-    
-    if(!request) return res.json(new ApiResponse(404 , "Seller Request not found"));
+const getSellerRequestById = async (req, res) => {
+  try {
+    const { requestID } = req.body;
+    const request =
+      await SellerRequest.findById(requestID).populate("storeAddress");
+    if (!request)
+      return res.json(new ApiResponse(404, "Seller Request not found"));
 
-    return res.json(new ApiResponse(200 , request , 'request fetched successfully'));
-  
+    return res.json(
+      new ApiResponse(200, request, "request fetched successfully")
+    );
+  } catch (err) {
+    return handleErr(res, err);
   }
-  catch(err){
-    return handleErr(res , err)
-  }
-}
+};
 
-export { getSellerRequests, getSellerRequestById , acceptSellerRequest, declineSellerRequest };
+export {
+  getSellerRequests,
+  getSellerRequestById,
+  acceptSellerRequest,
+  declineSellerRequest,
+};

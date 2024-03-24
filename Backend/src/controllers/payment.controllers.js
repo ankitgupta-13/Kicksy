@@ -18,13 +18,15 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  let { amount, userID } = req.body;
+  let { amount, userID, productIDs } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
       currency: "INR",
     };
     const order = await rpayInstance.orders.create(options);
+    order.userID = userID;
+    order.productIDs = productIDs;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -33,25 +35,16 @@ const makePayment = async (req, res) => {
 };
 
 const verifyPayment = async (req, res) => {
+  console.log(req.body);
   const {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
-    userID,
     orderDetails,
   } = req.body;
 
-  console.log(req.body)
-
-  // sample orderDetails
-  /*
-
-
-  */ 
-
   try {
-
-    const userCart = await Cart.findOne({ user: userID });
+    const userCart = await Cart.findOne({ user: orderDetails.userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RPAY_KEY_SECRET)
@@ -68,10 +61,6 @@ const verifyPayment = async (req, res) => {
       await order.save();
 
       user.orders.push(order._id);
-
-
-
-
     } else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }

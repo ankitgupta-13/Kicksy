@@ -75,7 +75,7 @@ router.route("/total-users-count").get(getUsersCount);
 
 // routes for handling seller requests
 router.route("/requests/seller/getAll").get(getSellerRequests);
-router.route("/requests/seller/get-by-id").get(getSellerRequestById);
+router.route("/requests/seller/get-by-id").post(getSellerRequestById);
 router.route("/requests/seller/accept-request").post(acceptSellerRequest);
 router.route("/requests/seller/decline-request").post(declineSellerRequest);
 

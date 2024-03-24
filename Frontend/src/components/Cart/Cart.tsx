@@ -10,11 +10,12 @@ import CartItem from "../CartItem/CartItem";
 import { Button, PaymentButton } from "..";
 import { getUserCartItems } from "../../api/user.api";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/store/store";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   const isCartOpen = useSelector((state) => state.cart.isOpen);
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
@@ -33,26 +34,26 @@ const Cart = () => {
   }, []);
 
   return (
-    <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
-      <div className={style.head}>
-        <h2>Cart</h2>
-        <a className={style.closebtn} onClick={handleToggleCartVisibility}>
-          &times;
-        </a>
-      </div>
-      <div className={style.itemlist}>
-        {cartItems?.map((item) => (
-          <CartItem productID={item.product} quantity={item.qty} />
-        ))}
-      </div>
-      <div className={style.ButtonContainer}>
-        
-        <Button className={style.button} onClick={() => navigate("/checkout")}>
-          Checkout
-          {/* <PaymentButton amount={100} /> */}
-        </Button>
-      </div>
-    </div>
+    // <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
+    //   <div className={style.head}>
+    //     <h2>Cart</h2>
+    //     <a className={style.closebtn} onClick={handleToggleCartVisibility}>
+    //       &times;
+    //     </a>
+    //   </div>
+    //   <div className={style.itemlist}>
+    //     {cartItems?.map((item) => (
+    //       <CartItem productID={item.product} quantity={item.qty} />
+    //     ))}
+    //   </div>
+    //   <div className={style.ButtonContainer}>
+    //     <Button className={style.button} onClick={() => navigate("/checkout")}>
+    //       Checkout
+    //       {/* <PaymentButton amount={100} /> */}
+    //     </Button>
+    //   </div>
+    // </div>
+    <div></div>
   );
 };
 

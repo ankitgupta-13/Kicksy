@@ -9,6 +9,7 @@ import ColorCard from "../../components/colorCard/colorCard";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,6 @@ const ProductDesc = () => {
     };
     const response = await getProductById(payload);
     if (response.statusCode === 200) {
-      console.log(response);
       setCurProduct(response.data);
       setShoesColorData(response.data.images);
     }
@@ -86,6 +86,7 @@ const ProductDesc = () => {
               <a className={style.bestseller}>BEST SELLER</a>
             )}
             {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
+
             <div>
               <select
                 className={style.size}
@@ -105,7 +106,27 @@ const ProductDesc = () => {
             >
               Add to Cart
             </Button>
-            <PaymentButton amount="10" />
+            <PaymentButton
+              amount="10"
+              title="Buy Now"
+              productID={curProduct._id}
+            />
+            <div className={style.sellers}>
+              {curProduct?.offers?.map((seller) => (
+                <div className={style.sellerCard}>
+                  <img
+                    src={seller.sellerID.storeLogo}
+                    alt=""
+                    className={style.storeLogo}
+                  />
+                  <p>{seller?.sellerID?.storeName}</p>
+                  <div className={style.priceButton}>
+                    <h1>{seller?.price}</h1>
+                    <ShoppingCartIcon />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className={style.cards}>

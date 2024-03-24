@@ -1,16 +1,14 @@
 import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
-import { baseURL } from "../../api/auth.api";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
   const amount = props.amount * 100;
-  console.log(amount);
+  const productIDs = [props.productID];
   const checkOutHandler = async () => {
     const key = await getKey();
-    const order = await makePayment({ amount, userID });
+    const order = await makePayment({ amount, userID, productIDs });
     const options = {
       key,
       amount: order.amount,
@@ -59,7 +57,7 @@ const PaymentButton = (props) => {
       }}
       onClick={checkOutHandler}
     >
-      Buy Now
+      {props.title}
     </button>
   );
 };
