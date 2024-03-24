@@ -1,5 +1,6 @@
 import { Address } from "../models/address.model.js";
 import { Offer } from "../models/offer.model.js";
+import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
 import { SellerRequest } from "../models/request.model.js";
 import { ProductRequest } from "../models/request.model.js";
@@ -129,15 +130,15 @@ const addOfferToProduct = async (req, res) => {
   const { productID, sellerID, productPrice, quantity } = req.body;
 
   try {
-    const product = await Product.findOne({ _id: productID }).populate("offers");
+    const product = await Product.findOne({ _id: productID }).populate(
+      "offers"
+    );
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
-
-    
 
     const offer = new Offer({
       productID,
       sellerID,
-      price:productPrice,
+      price: productPrice,
       quantity,
     });
 
@@ -148,22 +149,21 @@ const addOfferToProduct = async (req, res) => {
       $push: { offers: offer._id },
     });
 
-    let price = []
-    product.offers.forEach((offer)=>{
-      price.push(offer.price)
-    })
+    let price = [];
+    product.offers.forEach((offer) => {
+      price.push(offer.price);
+    });
 
-    price.sort((a,b)=>a-b);
-    console.log(price[0])
+    price.sort((a, b) => a - b);
+    console.log(price[0]);
     product.price = price[0];
-    await product.save()
-
+    await product.save();
 
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
 
     return res.json(new ApiResponse(200, offer, "offer added successfully"));
   } catch (error) {
-    console.log(error)
+    console.log(error);
     if (error.code === 11000 && error.keyPattern && error.keyPattern.sellerID) {
       // Handle duplicate key error for sellerID
       return res.json(
@@ -178,40 +178,113 @@ const addOfferToProduct = async (req, res) => {
   }
 };
 
-const getSellerOffers = async (req, res) => {
+const fetchRequests = async (req, res) => {
   const { sellerID } = req.body;
   try {
-    const seller = await Seller.findOne({ _id: sellerID });
+    const requests = await ProductRequest.find({ seller: sellerID });
+
+    if (!requests || requests.length === 0)
+      return new ApiResponse(404, "no requests found");
+
+    return res.json(
+      new ApiResponse(200, requests, `${requests.length} requests found.`)
+    );
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+const fetchRequestById = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+    if (!requestID) return res.json(new ApiResponse(422, "requestID needed"));
+
+    const request = await ProductRequest.findOne({ _id: requestID });
+
+    if (!request)
+      return res.json(new ApiResponse(404, "product request not found"));
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+const fetchOffers = async (req, res) => {
+  try {
+    const { sellerID } = req.body;
+
+    const seller = await Seller.findOne({ _id: sellerID }).populate({
+      path: "offers",
+      populate: "productID",
+    });
 
     if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
-    const offers = seller.offers;
-
-    // offers.map()
-
-  }
-  catch (err) {
-    return handleErr(res, err)
-  }
-}
-
-const fetchRequestById = async(req,res)=>{
-  const {sellerID , requestID} = req.body;
-  try{
-    
-    const seller = await Seller.findOne({_id:sellerID});
-    
-  }
-  catch(err){
+    return res.json(
+      new ApiResponse(200, seller.offers, "offers fetched successfully")
+    );
+  } catch (err) {
     return handleErr(res, err);
   }
-}
+};
 
+const fetchOfferByID = async (req, res) => {
+  try {
+    const { offerID } = req.body;
 
+    const offer = await Offer.findById(offerID);
+
+    if (!offer)
+      return res.json(new ApiResponse(404, "No offer with this id found. "));
+
+    return res.json(new ApiResponse(200, offer));
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+const fetchOrders = async (req, res) => {
+  try {
+    const { sellerID } = req.body;
+    if (!sellerID) return res.json(new ApiResponse(422, "sellerID required!"));
+
+    const seller = await Seller.findById(sellerID).populate("orders");
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+
+    return res.json(
+      new ApiResponse(
+        200,
+        seller.orders,
+        `${seller.orders.length} orders fetched`
+      )
+    );
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
+
+const fetchOrderById = async (req, res) => {
+  try {
+    const { orderID } = req.body;
+    if (!orderID) return res.json(new ApiResponse(422, "orderID required!"));
+
+    const order = await Order.findById(orderID);
+    if (!order) return res.json(new ApiResponse(404, "order not found"));
+
+    return res.json(new ApiResponse(200, order, "order fetched successfully"));
+  } catch (err) {
+    return handleErr(res, err);
+  }
+};
 
 export {
   sellerRequest,
   productAddRequest,
   addImagesToProductRequest,
   addOfferToProduct,
+  fetchRequestById,
+  fetchRequests,
+  fetchOfferByID,
+  fetchOffers,
+  fetchOrders,
+  fetchOrderById,
 };

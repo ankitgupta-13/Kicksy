@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getSellerRequests } from "../../../../../api/admin.api";
-import RequestCard from "../../../../../components/RequestCard/RequestCard";
 import { UserDashboardCard } from "../../../../../components";
 
 const RequestSeller = () => {

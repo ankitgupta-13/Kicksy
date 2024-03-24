@@ -7,6 +7,9 @@ import {
 } from "../../../../../api/seller.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store/store";
+import { Chip } from "@mui/material";
+import MultipleSelectChip from "../../../../../components/Input/multipleSelect";
+
 
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();
@@ -104,12 +107,15 @@ const CreateProduct = () => {
                 {...register("category", { required: true })}
               /></div>
             <div className={style.inputBox}>
-              <Select
+              {/* <Select
                 style={{ marginTop: "5px" }}
                 label="Size"
                 options={["S", "M", "L", "XL", "XXL"]}
                 {...register("size", { required: true })}
-              />
+              /> */}
+
+              {/* <Chip label="Size"/> */}
+              <MultipleSelectChip label="Size" names={['3','4','5','6','7','8','9']} />
             </div>
             <div className={style.inputBox}>
               <Select
@@ -198,3 +204,4 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
+

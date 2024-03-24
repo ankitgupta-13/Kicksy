@@ -1,4 +1,4 @@
-import style from "./footer2.module.css";
+import style from "./Footer2.module.css";
 import logo from "../../assets/Krisksy.svg";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";

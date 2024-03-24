@@ -8,6 +8,7 @@ import DetailProduct from "../Product/DetailProduct/DetailProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
+import DetailSeller from "../Seller/DetailSeller/DetailSeller";
 import ListSeller from "../Seller/ListSeller/ListSeller";
 import RequestSeller from "../Seller/RequestSeller/RequestSeller";
 import DetailUser from "../User/DetailUser/DetailUser";
@@ -65,6 +66,9 @@ const MainContent = ({ currentSection, currentAction }) => {
           break;
         case "Requests":
           content = <RequestSeller />;
+          break;
+        case "Details":
+          content = <DetailUser />;
           break;
       }
       break;

@@ -165,7 +165,10 @@ export const getSellerRequests = async () => {
 
 export const acceptSellerRequest = async (payload: Object) => {
   try {
-    const { data } = await api.post("/admin/accept-seller-request", payload);
+    const { data } = await api.post(
+      "/admin/requests/seller/accept-request",
+      payload
+    );
     return data;
   } catch (error) {
     if (error.response) return error.response;
@@ -175,7 +178,10 @@ export const acceptSellerRequest = async (payload: Object) => {
 
 export const declineSellerRequest = async (payload: Object) => {
   try {
-    const { data } = await api.post("/admin/decline-seller-request", payload);
+    const { data } = await api.post(
+      "/admin/requests/seller/decline-request",
+      payload
+    );
     return data;
   } catch (error) {
     if (error.response) return error.response;
@@ -234,11 +240,27 @@ export const updateProduct = async (payload) => {
   }
 };
 
-export const getUserById = async (payload: string) => {
+export const getUserById = async (payload: Object) => {
   try {
     const { data } = await api.post("/user/fetch-by-id", payload);
     return data;
   } catch (error: any) {
+    console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const getSellerRequestById = async (payload: Object) => {
+  try {
+    // console.log(payload);
+    const { data } = await api.post(
+      "/admin/requests/seller/get-by-id",
+      payload
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
     console.log(error);
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));

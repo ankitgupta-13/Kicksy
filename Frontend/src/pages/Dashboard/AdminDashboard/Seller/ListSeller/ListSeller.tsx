@@ -13,6 +13,7 @@ const ListSeller = () => {
     (async () => {
       const response = await getSellers();
       if (response.statusCode === 200) {
+        console.log(response);
         setSellerList(response.data.sellers);
         setPage(response.data.currentPage);
       }

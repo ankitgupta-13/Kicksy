@@ -33,12 +33,6 @@ const sellerSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
-  requests:[
-    {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"ProductRequest"
-    }
-  ],
   offers:{
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Offer",
