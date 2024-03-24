@@ -9,12 +9,13 @@ import { Button } from "@mui/material";
 
 import TuneIcon from '@mui/icons-material/Tune';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import MediaQuery from "react-responsive";
 
 
 const Shop: React.FC = () => {
   const [mActives, setmActives] = useState();
   const [wActives, setwActives] = useState();
-  const [sidebarOpen, serSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const location = useLocation();
   const cleanstring = location.search.substring(1);
@@ -56,6 +57,18 @@ const Shop: React.FC = () => {
     filterProducts();
   }, [filters, allProducts]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 430) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+  }, []);
+
   const handleFilterChange = (filterName: string, value: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -75,7 +88,7 @@ const Shop: React.FC = () => {
   };
 
   const handleFilterSidebar = () => {
-    serSidebarOpen(!sidebarOpen);
+    setSidebarOpen(!sidebarOpen);
   }
 
   return (
@@ -85,7 +98,7 @@ const Shop: React.FC = () => {
     <img src={banner} alt="banner"/>
     </div>} */}
       <div className={style.shoppage}>
-        <div style={{display: sidebarOpen? "block" : "none", zIndex: ""}}>
+        <div className={style.filtersidebar} style={{ display: sidebarOpen ? "block" : "none" }}>
           <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
         </div>
         <div className={style.filterbar}>
@@ -109,7 +122,7 @@ const Shop: React.FC = () => {
               style={{ backgroundColor: '#f0f0f0', color: 'black', width: '80px' }}
               onClick={() => handleFilterSidebar()}
             >
-              { sidebarOpen? <CloseOutlinedIcon/> : <TuneIcon/>}
+              {sidebarOpen ? <CloseOutlinedIcon /> : <TuneIcon />}
             </Button>
           </div>
         </div>
