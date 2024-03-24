@@ -38,13 +38,34 @@ const fetchAllBlog = async (req, res) => {
 }
 
 const addBlog = async (req, res) => {
-  const { content, blogTitle, image , category } = req.body;
+  const { content, blogTitle, image , category , products} = req.body;
+  
+  // variable products will be containing an array of skuIDs.
+  
   try {
+
+    const products = []
+    let c = [];
+    products.forEach(async(skuID)=>{
+      const product = await Product.findOne({skuID});
+      
+      if(!product) c.push({skuID, invalid:true});
+      
+      products.push(product._id);
+
+    });
+
+    if(c.length!==0 ){
+      return res.json(new ApiResponse(400 , c , "Invalid skuID"))
+    }
+
     const blogImageUrl = await uploadOnAws(req.file.path);
     if (!blogImageUrl) {
       fs.unlinkSync(req.file.path);
       return res.json(new ApiResponse(400, "Unable to upload"));
     }
+
+
     else {
       fs.unlinkSync(req.file.path);
       const blogs = await Blog.find({})
@@ -55,7 +76,8 @@ const addBlog = async (req, res) => {
           blogTitle: `Blog ${length + 1}`,
           content,
           category:category,
-          imageurl: blogImageUrl
+          imageurl: blogImageUrl,
+          productID:products
         })
         await blog.save();
       }
@@ -64,7 +86,8 @@ const addBlog = async (req, res) => {
           blogTitle,
           content,
           category:category,
-          imageurl: blogImageUrl
+          imageurl: blogImageUrl,
+          productID:products
         })
         await blog.save();
       }
