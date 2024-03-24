@@ -5,7 +5,7 @@ import Add from "../../assets/images/add.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, wid }) => {
+const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
@@ -17,7 +17,7 @@ const ProductCard = ({ product, wid }) => {
   };
 
   return (
-    <div className={style.container} style={{width: wid}}>
+    <div className={style.container} >
       <div className={style.container__header}>
         <div className={style.container__hotitem}>
           <img src={Fire} alt="error" />

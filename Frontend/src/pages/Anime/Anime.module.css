@@ -1,6 +1,7 @@
+/* <<<<<<< HEAD */
 .mainBody {}
 
-.button {
+/* .button {
     width: 200px;
     height: 20px;
     background-color: #fff;
@@ -15,6 +16,9 @@
 }
 
 .gridding{
+=======
+.Body{
+>>>>>>> f7f991aad4bb5bc67cd36053f57d246daebe5458
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 10px;
@@ -22,6 +26,257 @@
     padding: 5px;
 }
 
+<<<<<<< HEAD
+.col1{
+    grid-column: span 1;
+    grid-row: span 4;
+    border: 2px solid #fff700;
+    margin-top: 10px;
+}
+
+.col2{
+    grid-column: span 1;
+    grid-row: span 4;
+    border: 2px solid #0fd7ff;
+    
+}
+
+.col3{
+    grid-column: span 1;
+    grid-row: span 4;
+    border: 2px solid #803cff;
+}
+
+.col4{
+    grid-column: span 1;
+    grid-row: span 4;
+    border: 2px solid #03ff21;
+}
+
+    
+.characterImg{
+    height: 100%;
+    width: 100%; 
+ }
+
+
+.box1{
+    width: 100%;
+    height: auto;
+    border: 2px solid #000;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 3%;
+    grid-column: span 1;
+    grid-row: span 3;
+}
+
+.boxHead{
+    color: #000;
+    font-family: "NoirPro SemiBold";
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; 
+}
+
+.boxContent{
+    color: #000;
+    font-family: "Noir Pro";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; 
+    margin-top: 2%;
+}
+
+.ItemCol1{
+    border: 2px solid #000;
+    border: 2px solid #fff700;
+    background-color: rgb(48, 48, 48);
+    grid-column: span 1;
+    grid-row: span 3; 
+}
+.ItemCol4{
+    border: 2px solid #000;
+    background-color: rgb(37, 36, 36);
+    grid-column: span 1;
+    border: 2px solid #03ff21;
+    grid-row: span 2; 
+}
+.ItemCol3{
+    border: 2px solid #000;
+    background-color: rgb(48, 48, 48);
+    grid-column: span 1;
+    border: 2px solid #803cff;
+    grid-row: span 3; 
+}
+.box2{
+    width: 100%;
+    height: auto;
+    border: 2px solid #000;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 3%;
+    grid-column: span 1;
+    grid-row: span 3;
+}
+
+.heading{
+
+}
+.picture{
+    height: 100%;
+    width:100%;
+    top: 0;
+    position: absolute;
+    
+}
+.exploresec {
+    display: none;
+}
+
+.head {
+    display: flex;
+    font-family: "Bevan";
+    font-weight: 300;
+    font-size: 30px;
+    margin-top: 30px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.Content {
+    display: flex;
+    font-family: "Bebas Neue";
+    font-weight: 400;
+    text-align: center;
+    margin-top: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 24px;
+    color: #fff;
+    width: 100%;
+    height: 80%;
+    letter-spacing: 1.4px;
+    word-wrap: break-word;
+    line-height: 150%;
+    text-transform: lowercase;
+    justify-content: flex-start;
+}
+
+
+
+.animeBackdrop {
+    width: 100%;
+    height: 800px;
+    background-color: #FFC800;
+    /* margin-bottom: 1%; */ /*
+}
+
+.back {
+    width: 100%;
+    height: 800px;
+    position: absolute;
+}
+
+.yeah {
+    height: auto;
+    width: auto;
+    right: 20%;
+    top: 10%;
+    position: absolute;
+}
+
+.bang {
+    height: auto;
+    width: auto;
+    right: 20%;
+    bottom: 14%;
+    position: absolute;
+}
+
+.blastic {
+    width: auto;
+    height: auto;
+}
+
+.hallo {
+    width: auto;
+    height: auto;
+    top: 65%;
+    left: 20%;
+    position: absolute;
+}
+
+.rCorner {
+    width: auto;
+    height: auto;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+}
+
+.lCorner {
+    width: auto;
+    height: auto;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+}
+
+.hi {
+    width: auto;
+    height: auto;
+    left: 22%;
+    top: 10%;
+    position: absolute;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: 400;
+    color: white;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-family: "Comic Hero";
+}
+
+.subTitle {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #fff;
+    position: relative;
+    font-family: "Bebas Neue";
+    margin-bottom: 10px;
+
+}
+
+.red {
+    width: 150px;
+    height: 40px;
+    position: relative;
+    outline: none;
+    border: none;
+    background-color: #D61B1B;
+    border-radius: 5px;
+    color: white;
+    letter-spacing: 2px;
+    font-family: "Bebas Neue";
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.header {
+=======
 .Col1,.Col2,.Col3,.Col4{
     display: flex;
     flex-direction: column;
@@ -29,14 +284,19 @@
 
 .Col1row2{
     width: 100%;
+<<<<<<< HEAD
+
+    position: absolute;
+    top: 40%;
+} */
+/* =======
     height: 176px;
 }
-
+>>>>>>> f7f991aad4bb5bc67cd36053f57d246daebe5458 */
+/* 
 .Col1row5{
     width: 100%;
-    height: 800px;
-    background-color: #FFC800;
-    /* margin-bottom: 1%; */
+    height: 360px;
 }
 
 .Col1row1,.Col1row3,.Col1row4{
@@ -45,21 +305,88 @@
     flex-shrink: 0;
 }
 
+<<<<<<< HEAD
+.Circle2 {
+    position: absolute;
+    left: -10px;
+    bottom: -60px;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: ;
+} */
+
+/* New */
+
+.animepage{
+    padding-top: 4vh;
+    /* padding: 2rem 10rem; */
+    height: 200vh;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
+.ani1{
+    border: 2px solid #000;
+    width: 48vw;
+    height: 70vh;
+    position: absolute;
+    left: 10vw;
+}
+.cont1{
+    width: 29vw;
+    height: 70vh;
+    border: 2px solid #000;
+    transform: translate(-50%, 0);
+    position: absolute;
+    top: 35vh;
+    left: 50%;
+    z-index: 2;
+    background-color: #fff;
+
+    font-family: "Noir Pro";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4rem;
+}
+.ani2{
+    border: 2px solid #000;
+    width: 28vw;
+    height: 70vh;
+    position: absolute;
+    left: 55vw;
+    top: 55vh;
+}
+.ani3{
+    border: 2px solid #000;
+    width: 48vw;
+    height: 70vh;
+    position: absolute;
+    top: 109vh;
+    left: 10.5vw;
+}
+.cont2{
+    border: 2px solid #000;
+    width: 24vw;
+    height: 53vh;
+    position: absolute;
+    top: 126vh;
+    left: 59vw;
+    background-color: #fff;
+    font-family: "Noir Pro";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4rem;
+}
+/* =======
 
 .Col2row1{
     width: 100%;
-
-    position: absolute;
-    top: 40%;
-}
-
-
-/* .image1 {
-    height: 320px;
-    width: 180px;
-    right: 50px;
-    bottom: 40px;
-    position: absolute;
+height: 223px;
 }
 
 .Col2row2,.Col2row3,.Col2row6{
@@ -72,13 +399,7 @@
     height: 281px;
 }
 
-.Circle2 {
-    position: absolute;
-    left: -10px;
-    bottom: -60px;
-    height: 250px;
-    width: 250px;
-    border-radius: 50%;
-    background-color: #fff;
-    z-index: ;
+.Col2row5{
+    height: 253px;
+>>>>>>> f7f991aad4bb5bc67cd36053f57d246daebe5458
 } */
