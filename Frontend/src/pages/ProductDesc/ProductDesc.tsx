@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { StyledEngineProvider } from "@mui/material";
+import MediaQuery from "react-responsive";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -72,13 +74,27 @@ const ProductDesc = () => {
 
   return (
     <div>
-      <div style={{ margin: "25px" }}>
+      <div className={style.main} >
         <div className={style.product}>
           <img
             src={activeColor}
             className={style.imagebox}
             alt="product-image"
           />
+          <MediaQuery maxWidth={430}>
+            <div className={`${style.cards} ${style.carouselCards}`}>
+              {shoesColorData.map((color, index) => (
+                <ColorCard
+                  key={index}
+                  id={index}
+                  color={color}
+                  activeId={activeColorId || 0}
+                  setActiveId={(id) => setActiveColorId(id)}
+                  setImageSrc={handleImageSrcChange}
+                />
+              ))}
+            </div>
+          </MediaQuery>
           <div className={style.action}>
             <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
             <h2 className={style.SampleProduct}>{curProduct.title}</h2>
@@ -106,41 +122,46 @@ const ProductDesc = () => {
             >
               Add to Cart
             </Button>
-            <PaymentButton
-              amount="10"
-              title="Buy Now"
-              productID={curProduct._id}
-            />
+
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
                 <div className={style.sellerCard}>
-                  <img
-                    src={seller.sellerID.storeLogo}
-                    alt=""
-                    className={style.storeLogo}
-                  />
-                  <p>{seller?.sellerID?.storeName}</p>
-                  <div className={style.priceButton}>
-                    <h1>{seller?.price}</h1>
-                    <ShoppingCartIcon />
+                  <div className={style.sLogoName}>
+                    <img
+                      src={seller.sellerID.storeLogo}
+                      alt=""
+                      className={style.storeLogo}
+                    />
+                    <p>{seller?.sellerID?.storeName}</p>
                   </div>
+                  <Button className={style.priceButton}>
+                    <h1>₹{seller?.price}</h1>
+                    <ShoppingCartIcon />
+                  </Button>
                 </div>
               ))}
+              <PaymentButton
+                amount="10"
+                title="Buy Now"
+                productID={curProduct._id}
+              />
             </div>
           </div>
         </div>
-        <div className={style.cards}>
-          {shoesColorData.map((color, index) => (
-            <ColorCard
-              key={index}
-              id={index}
-              color={color}
-              activeId={activeColorId || 0}
-              setActiveId={(id) => setActiveColorId(id)}
-              setImageSrc={handleImageSrcChange}
-            />
-          ))}
-        </div>
+        <MediaQuery minWidth={430}>
+          <div className={`${style.cards} ${style.carouselCards}`}>
+            {shoesColorData.map((color, index) => (
+              <ColorCard
+                key={index}
+                id={index}
+                color={color}
+                activeId={activeColorId || 0}
+                setActiveId={(id) => setActiveColorId(id)}
+                setImageSrc={handleImageSrcChange}
+              />
+            ))}
+          </div>
+        </MediaQuery>
 
         <div className={style.description}>
           <h1 className={style.productDescTitle}>Product Detail</h1>
@@ -170,18 +191,26 @@ const ProductDesc = () => {
         </div>
       </div>
       <div className={style.AlsoLikeSlider}>
-        <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
-        <div className={style.cards}>
-          {products.map((product: any, index: number) => {
-            return (
-              <div key={index}>
-                <ProductCard product={product} />
-              </div>
-            );
-          })}
+        <div className={style.AlsoLikeContainer}>
+          <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
+          <div className={style.cards}>
+            {products.map((product: any, index: number) => {
+              return (
+                <div key={index}>
+                  <ProductCard product={product} />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className={style.NewArrivalsSlider}></div>
-        <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
+        <MediaQuery minWidth={440}>
+          <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
+        </MediaQuery>
+        <MediaQuery maxWidth={430}>
+          <h1 className={style.NewArrivalsSliderTitle}>You Might Also Like</h1>
+
+        </MediaQuery>
         <div className={style.cards}>
           {products.map((product: any, index: number) => {
             return (
