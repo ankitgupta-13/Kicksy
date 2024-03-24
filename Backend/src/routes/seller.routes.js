@@ -37,5 +37,8 @@ router.route("/fetch-orders/all").post(fetchOrders) // fetch all orders of that 
 
 router.route("/fetch-orders/id").post(fetchOrderById) // fetch order using id
 
+router.route("/fetch-products/all").post(fetchOrderById) // fetch all products of that particular seller
+
+
 
 export default router;

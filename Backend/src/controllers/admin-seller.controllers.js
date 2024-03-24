@@ -73,9 +73,11 @@ const acceptSellerRequest = async (req, res) => {
 };
 
 const declineSellerRequest = async (req, res) => {
-  const { requestID } = req.body;
+  const { requestID , message} = req.body;
   try {
     const request = await SellerRequest.findByIdAndDelete({ _id: requestID });
+
+    
 
     await deleteFromAws(request.storeLogo);
 

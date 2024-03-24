@@ -1,6 +1,6 @@
 import { Admin } from "../models/admin.models.js";
 import { User } from "../models/user.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Seller } from "../models/seller.model.js";
 
@@ -135,11 +135,39 @@ const fetchAdmins = async (req, res) => {
   }
 };
 
-// -----------> HANDLING SELLER REQUESTS <--------------
+const banUser = async(req,res)=>{
+  try{
+    const {userID} = req.body;
+    const user = await User.findOne({_id:userID});
+    if(!user) return res.json(new ApiResponse(404 , 'user not found'));
+    
+    user.status = 'banned'
 
-const acceptSellerRequest = async (req, res) => {};
+    await user.save();
+    res.json(new ApiResponse(200 , user.status , 'user banned successfully'));
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
 
-const declineSellerRequest = async (req, res) => {};
+}
+
+const removeBan = async(req,res)=>{
+  try{
+    const {userID} = req.body;
+    const user = await User.findOne({_id:userID});
+    if(!user) return res.json(new ApiResponse(404 , 'user not found'));
+    
+    user.status = 'active'
+
+    await user.save();
+    res.json(new ApiResponse(200 , user.status , 'user restored successfully'));
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
+}
+
 
 export {
   createAdmin,
@@ -150,4 +178,6 @@ export {
   getActiveUsersCount,
   fetchAdmins,
   getUsersCount,
+  banUser,
+  removeBan
 };
