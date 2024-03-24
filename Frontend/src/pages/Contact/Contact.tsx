@@ -16,7 +16,7 @@ const Contact = () => {
                 <div className={style.LowerBody}>
                     <div className={style.Heading2}>Contact Us</div>
                     <ul>
-                        <li><span><MailOutlineIcon/></span><a href="">info@Krisksy.com</a></li>
+                        <li><span><MailOutlineIcon /></span><a href="">info@Krisksy.com</a></li>
                         <li>+91-83482 28342</li>
                         <li><a href="">@krisksy</a></li>
                         <li><a href="">@krisksy</a></li>

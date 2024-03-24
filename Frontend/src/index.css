@@ -55,5 +55,12 @@ body {
     font-family: Bebas Neue Light;
     src: url(../src/assets/fonts/BebasNeue-Light.otf);
 }
-
+@font-face {
+    font-family: NoirPro SemiBold;
+    src: url(../src/assets/fonts/Noir-pro/NoirPro-SemiBold.otf);
+}
+/* @font-face {
+    font-family: Noir Pro;
+    src: url(../src/assets/fonts/Noir-pro/);
+} */
 
