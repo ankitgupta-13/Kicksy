@@ -31,13 +31,16 @@ const Blog = () => {
       </div>
 
       <div className={style.recent_blogs}>
-        <div className={style.recent_blogs_title} style={{
-          fontSize: "1rem",
-        }}>Stay-up-to-date</div>
-        <h2 style={{
-          marginTop: "0.7rem",
-          fontSize: "2.5rem",
-        }}>RECENT POSTS</h2>
+        <div className={style.recent_blogs_top}>
+          <div className={style.recent_blogs_title} style={{
+            fontSize: "1rem",
+          }}>Stay-up-to-date</div>
+          <h2 style={{
+            marginTop: "0.7rem",
+            fontSize: "2.5rem",
+          }}>RECENT POSTS</h2>
+        </div>
+
         <div className={style.recent__blogs_container}>
           <PostCard />
         </div>
