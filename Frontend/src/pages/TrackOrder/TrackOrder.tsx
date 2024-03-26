@@ -23,12 +23,11 @@ const TrackOrder = () => {
             placeholder="Enter Order ID"
           />
         </div>
-
         <Button
           className={style.button}
           style={{ backgroundColor: "#131313", color: "white" }}
           type="submit"
-        >
+          >
           Track Order
         </Button>
       </div>
