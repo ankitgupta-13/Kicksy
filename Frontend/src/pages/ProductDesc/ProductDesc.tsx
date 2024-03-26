@@ -12,6 +12,10 @@ import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { StyledEngineProvider } from "@mui/material";
 import MediaQuery from "react-responsive";
+// import AccordionComp from "../../components/Accordion/AccordionComp";
+import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
+import { CloseOutlined } from "@mui/icons-material";
+import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -22,6 +26,7 @@ const ProductDesc = () => {
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
+  const [showSizeTable, setShowSizeTable] = useState(false);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
 
   const handleImageSrcChange = (src: string) => {
@@ -76,12 +81,17 @@ const ProductDesc = () => {
     <div>
       <div className={style.main} >
         <div className={style.product}>
-          <img
-            src={activeColor}
-            className={style.imagebox}
-            alt="product-image"
-          />
-          <MediaQuery maxWidth={430}>
+          <MediaQuery minWidth={431}>
+            <div className={style.product_imagediv} style={{ background: `url(${activeColor})`}}></div>
+          </MediaQuery>
+          <MediaQuery maxWidth={431}>
+            <img
+              src={activeColor}
+              className={style.imagebox}
+              alt="product-image"
+            />
+          </MediaQuery>
+          <MediaQuery maxWidth={431}>
             <div className={`${style.cards} ${style.carouselCards}`}>
               {shoesColorData.map((color, index) => (
                 <ColorCard
@@ -97,31 +107,67 @@ const ProductDesc = () => {
           </MediaQuery>
           <div className={style.action}>
             <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
-            <h2 className={style.SampleProduct}>{curProduct.title}</h2>
-            {curProduct.category === "bestseller" && (
-              <a className={style.bestseller}>BEST SELLER</a>
-            )}
-            {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
-
-            <div>
-              <select
-                className={style.size}
-                value={size}
-                onChange={handleChange}
-              >
-                {sizes.map((size: any) => (
-                  <option value={size.value}>{size.label}</option>
-                ))}
-              </select>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+            }}>
+              <h2 className={style.SampleProduct}>{curProduct.title}</h2>
+              {curProduct.category === "bestseller" && (
+                <a className={style.bestseller}>BEST SELLER</a>
+              )}
+              <h1>Rs. {curProduct?.price?.toLocaleString('en-IN')}</h1>
             </div>
-            <Button
-              className={style.addtocart}
-              style={{ backgroundColor: "#131313", color: "white" }}
-              onClick={handleAddToCart}
-              type="submit"
-            >
-              Add to Cart
-            </Button>
+
+            <div className={style.action_sz_add}>
+              <div>
+                <MediaQuery minWidth={431}>
+                  <div className={style.sizechart_bg} style={{ display: showSizeTable ? "block" : "none" }}>
+                    <span onClick={() => setShowSizeTable(false)} style={{ cursor: "pointer", color: "#fff", position: "absolute", top: "10px", right: "2rem", border: "3px solid white", borderRadius: "50px", padding: "3px", width: "30px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "40px", zIndex: "10" }}><CloseOutlined /></span>
+                    <div className={style.sizechart_table}>
+                      <ShoeSizeTable />
+                    </div>
+                  </div>
+                  <div className={style.sizechart}>
+                    <span className={style.sizechart1}>
+                      Browse Sizes
+                      <span>* All basic sizes are shown</span>
+                    </span>
+                    <span
+                      className={style.sizechart2}
+                      onClick={() => setShowSizeTable(true)}
+                      style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        gap: "5px",
+                        alignItems: "center"
+                      }}
+                    >
+                      <StraightenOutlinedIcon style={{ transform: "rotate(127deg)", fontSize: "18px" }} /> Size Chart
+                    </span>
+                  </div>
+                </MediaQuery>
+              </div>
+              <div>
+                <select
+                  className={style.size}
+                  value={size}
+                  onChange={handleChange}
+                >
+                  {sizes.map((size: any) => (
+                    <option value={size.value}>{size.label}</option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                className={style.addtocart}
+                style={{ backgroundColor: "#131313", color: "white" }}
+                onClick={handleAddToCart}
+                type="submit"
+              >
+                Add to Cart
+              </Button>
+            </div>
+
 
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
@@ -135,20 +181,20 @@ const ProductDesc = () => {
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
                   <Button className={style.priceButton}>
-                    <h1>₹{seller?.price}</h1>
+                    <h1>₹{seller?.price?.toLocaleString('en-IN')}</h1>
                     <ShoppingCartIcon />
                   </Button>
                 </div>
               ))}
-              <PaymentButton
+              {/* <PaymentButton
                 amount="10"
                 title="Buy Now"
                 productID={curProduct._id}
-              />
+              /> */}
             </div>
           </div>
         </div>
-        <MediaQuery minWidth={430}>
+        <MediaQuery minWidth={431}>
           <div className={`${style.cards} ${style.carouselCards}`}>
             {shoesColorData.map((color, index) => (
               <ColorCard
