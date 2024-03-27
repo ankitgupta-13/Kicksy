@@ -127,9 +127,15 @@ const productAddRequest = async (req, res) => {
 
 /* this api is for adding offer to the existing product */
 const addOfferToProduct = async (req, res) => {
-  const { productID, sellerID, productPrice, quantity } = req.body;
+  // userID
+  // with the help of userID we will fetch sellerID
+  console.log(req.body);
+  const { productID, userID, productPrice, quantity } = req.body;
 
   try {
+    const seller = await Seller.findOne({ userID });
+    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+    const sellerID = seller._id;
     const product = await Product.findOne({ _id: productID }).populate(
       "offers"
     );
@@ -212,11 +218,10 @@ const fetchOffers = async (req, res) => {
   try {
     const { sellerID } = req.body;
 
-    const seller = await Seller.findOne({ _id: sellerID })
-      .populate({
-        path:"offers",
-        populate:"productID"
-      });
+    const seller = await Seller.findOne({ _id: sellerID }).populate({
+      path: "offers",
+      populate: "productID",
+    });
 
     if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 

@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 
 // sellerSchema
 const priceSchema = new mongoose.Schema({
-  originalPrice: {
+  price: {
     type: Number,
     required: true,
   },
-  discountPercent: {
-    type: Number,
-    default: 0,
+  sellerID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Seller",
+    required: true,
   },
 });
 
@@ -20,7 +21,7 @@ const productSchema = new mongoose.Schema(
       unique: true,
     },
     price: {
-      type: Number
+      type: Number,
     },
     offers: [
       {

@@ -3,6 +3,7 @@ import style from "./DetailProduct.module.css";
 import { RootState } from "../../../../../redux/store/store";
 import { useEffect, useState } from "react";
 import {
+  addProductOffer,
   getProductById,
   getProductRequestById,
 } from "../../../../../api/product.api";
@@ -11,8 +12,7 @@ import {
   declineProductRequest,
   updateProduct,
 } from "../../../../../api/admin.api";
-import { ProductDescription } from "../../../../../components";
-import { Button } from "@mui/material";
+import { Button, Input, ProductDescription } from "../../../../../components";
 import { selectAdminAction } from "../../../../../redux/reducers/adminDashboardSlice";
 
 const DetailProduct = () => {
@@ -31,9 +31,14 @@ const DetailProduct = () => {
   const productRequestID = useSelector(
     (state: RootState) => state.adminDashboard.currentProductRequest
   );
+
+  const userID = useSelector((state: RootState) => state.auth.userData._id);
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
+  const [showOffer, setShowOffer] = useState(false);
+  const [quantity, setQuantity] = useState();
+  const [price, setPrice] = useState();
 
   const handleUpdateProduct = (updatedProduct) => {
     try {
@@ -50,6 +55,20 @@ const DetailProduct = () => {
         selectedAction: "Edit",
       })
     );
+  };
+
+  const handleAddOffer = async () => {
+    try {
+      const response = await addProductOffer({
+        productID,
+        userID,
+        productPrice: price,
+        quantity,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -74,24 +93,65 @@ const DetailProduct = () => {
   return (
     <div>
       {product ? (
-        <div style={{marginTop: "20px"}}>
+        <div style={{ marginTop: "20px" }}>
           <ProductDescription data={product} />
           {productRequestID ? (
-            <div style={{position: "absolute", display: "flex",flexDirection: "column", gap: "20px" , top: "30%", right: " 10%"}}>
-              <Button className={style.accept} onClick={() => acceptProductRequest({ requestID: product._id })}>
-              <span className={style.accept}>Accept</span>
+            <div
+              style={{
+                position: "absolute",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                top: "30%",
+                right: " 10%",
+              }}
+            >
+              <Button
+                className={style.accept}
+                onClick={() => acceptProductRequest({ requestID: product._id })}
+              >
+                <span className={style.accept}>Accept</span>
               </Button>
-              <Button className={style.decline} onClick={() =>declineProductRequest({ requestID: product._id })}>
+              <Button
+                className={style.decline}
+                onClick={() =>
+                  declineProductRequest({ requestID: product._id })
+                }
+              >
                 <span className={style.decline}>Decline</span>
               </Button>
             </div>
           ) : isAdmin ? (
-            <div style={{position: "absolute", top: "30%", right: " 10%"}}>
-              <Button  onClick={handleShowEditProduct}><span className={style.edit}>Edit</span></Button>
+            <div style={{ position: "absolute", top: "30%", right: " 10%" }}>
+              <Button onClick={handleShowEditProduct}>
+                <span className={style.edit}>Edit</span>
+              </Button>
             </div>
           ) : (
-            <div style={{position: "absolute", top: "30%", right: " 10%"}}>
-              <Button ><span className={style.edit}>Offer</span></Button>
+            <div style={{ position: "absolute", top: "30%", right: " 10%" }}>
+              {!showOffer ? (
+                <Button onClick={() => setShowOffer(!showOffer)}>
+                  <span className={style.edit}>Add Offer</span>
+                </Button>
+              ) : (
+                <div>
+                  <form>
+                    <input
+                      label="Add Price"
+                      type="Number"
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <Input
+                      label="Quantity"
+                      type="Number"
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                    <Button type="submit" onClick={handleAddOffer}>
+                      Add
+                    </Button>
+                  </form>
+                </div>
+              )}
             </div>
           )}
         </div>
