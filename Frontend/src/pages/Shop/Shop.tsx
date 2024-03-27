@@ -119,7 +119,7 @@ const Shop: React.FC = () => {
             </Button>
             <Button
               className={style.Button}
-              style={{ backgroundColor: '#f0f0f0', color: 'black', width: '80px' }}
+              style={{ backgroundColor: sidebarOpen ? 'white' : '#f0f0f0', color: 'black', width: '80px', border: sidebarOpen ? 'none' : '1px solid black', right: sidebarOpen ? '-11px' : ''}}
               onClick={() => handleFilterSidebar()}
             >
               {sidebarOpen ? <CloseOutlinedIcon /> : <TuneIcon />}

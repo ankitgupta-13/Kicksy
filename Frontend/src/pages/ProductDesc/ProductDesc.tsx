@@ -10,6 +10,13 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { StyledEngineProvider } from "@mui/material";
+import MediaQuery from "react-responsive";
+// import AccordionComp from "../../components/Accordion/AccordionComp";
+import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
+import { CloseOutlined } from "@mui/icons-material";
+import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
+import AccordionComp from "../../components/Accordion/AccordionComp";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -20,6 +27,8 @@ const ProductDesc = () => {
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
+  const [showSizeTable, setShowSizeTable] = useState(false);
+  const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
 
   const handleImageSrcChange = (src: string) => {
@@ -40,6 +49,15 @@ const ProductDesc = () => {
       setShoesColorData(response.data.images);
     }
   };
+  
+  const handleInStock = () => {
+    if (stock<=0) {
+      setInStock(false);
+    } else {
+      setInStock(true);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCurrentProduct();
@@ -72,75 +90,147 @@ const ProductDesc = () => {
 
   return (
     <div>
-      <div style={{ margin: "25px" }}>
+      <div className={style.main} >
         <div className={style.product}>
-          <img
-            src={activeColor}
-            className={style.imagebox}
-            alt="product-image"
-          />
+          <MediaQuery minWidth={431}>
+            <div className={style.product_imagediv} style={{ background: `url(${activeColor})`}}></div>
+          </MediaQuery>
+          <MediaQuery maxWidth={431}>
+            {/* <img
+              src={activeColor}
+              className={style.imagebox}
+              alt="product-image"
+            /> */}
+            <div className={style.product_imagediv_phone} style={{ background: `url(${activeColor})`}}></div>
+          </MediaQuery>
+          <MediaQuery maxWidth={431}>
+            <div className={`${style.cards} ${style.carouselCards}`}>
+              {shoesColorData.map((color, index) => (
+                <ColorCard
+                  key={index}
+                  id={index}
+                  color={color}
+                  activeId={activeColorId || 0}
+                  setActiveId={(id) => setActiveColorId(id)}
+                  setImageSrc={handleImageSrcChange}
+                />
+              ))}
+            </div>
+          </MediaQuery>
           <div className={style.action}>
             <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
-            <h2 className={style.SampleProduct}>{curProduct.title}</h2>
-            {curProduct.category === "bestseller" && (
-              <a className={style.bestseller}>BEST SELLER</a>
-            )}
-            {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */}
-
-            <div>
-              <select
-                className={style.size}
-                value={size}
-                onChange={handleChange}
-              >
-                {sizes.map((size: any) => (
-                  <option value={size.value}>{size.label}</option>
-                ))}
-              </select>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+            }}>
+              <h2 className={style.SampleProduct}>{curProduct.title}</h2>
+              {curProduct.category === "bestseller" && (
+                <a className={style.bestseller}>BEST SELLER</a>
+              )}
+              <h1>Rs. {curProduct?.price?.toLocaleString('en-IN')}</h1>
             </div>
-            <Button
-              className={style.addtocart}
-              style={{ backgroundColor: "#131313", color: "white" }}
-              onClick={handleAddToCart}
-              type="submit"
-            >
-              Add to Cart
-            </Button>
-            <PaymentButton
-              amount="10"
-              title="Buy Now"
-              productID={curProduct._id}
-            />
+
+            <div className={style.action_sz_add}>
+              <div>
+                <MediaQuery minWidth={431}>
+                  <div className={style.sizechart_bg} style={{ display: showSizeTable ? "block" : "none", zIndex: 3 }}>
+                    <span className={style.sizechart_close} onClick={() => setShowSizeTable(false)} style={{ cursor: "pointer", color: "#000", background: "white", position: "absolute", transform: "translate(-50%, -50%)", top: "87vh", left: "50vw", padding: "10px 20px", borderRadius: "50px", textTransform: "uppercase",letterSpacing: "1px", fontWeight: "600" }}>CLOSE</span>
+                    <div className={style.sizechart_table}>
+                      <ShoeSizeTable />
+                    </div>
+                  </div>
+                  <div className={style.sizechart}>
+                    <span className={style.sizechart1}>
+                      Browse Sizes
+                      <span>* All basic sizes are shown</span>
+                    </span>
+                    <span
+                      className={style.sizechart2}
+                      onClick={() => setShowSizeTable(true)}
+                      style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        gap: "5px",
+                        alignItems: "center"
+                      }}
+                    >
+                      <StraightenOutlinedIcon style={{ transform: "rotate(127deg)", fontSize: "18px" }} /> Size Chart
+                    </span>
+                  </div>
+                </MediaQuery>
+              </div>
+              <div>
+                <select
+                  className={style.size}
+                  value={size}
+                  onChange={handleChange}
+                >
+                  {sizes.map((size: any) => (
+                    <option value={size.value}>{size.label}</option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                className={style.addtocart}
+                style={{ backgroundColor: "#131313", color: "white" }}
+                onClick={handleAddToCart}
+                type="submit"
+              >
+                Add to Cart
+              </Button>
+            </div>
+
+
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
                 <div className={style.sellerCard}>
-                  <img
-                    src={seller.sellerID.storeLogo}
-                    alt=""
-                    className={style.storeLogo}
-                  />
-                  <p>{seller?.sellerID?.storeName}</p>
-                  <div className={style.priceButton}>
-                    <h1>{seller?.price}</h1>
-                    <ShoppingCartIcon />
+                  <div className={style.sLogoName}>
+                    <img
+                      src={seller.sellerID.storeLogo}
+                      alt=""
+                      className={style.storeLogo}
+                    />
+                    <p>{seller?.sellerID?.storeName}</p>
                   </div>
+                  <Button className={style.priceButton}>
+                    <h1>₹{seller?.price?.toLocaleString('en-IN')}</h1>
+                    <ShoppingCartIcon />
+                  </Button>
                 </div>
               ))}
+              {/* <PaymentButton
+                amount="10"
+                title="Buy Now"
+                productID={curProduct._id}
+              /> */}
             </div>
+            <MediaQuery minWidth={431}>
+            <div className={style.features}>
+              <AccordionComp isInStock={inStock} canReturn={true} />
+            </div>
+            </MediaQuery>
           </div>
         </div>
-        <div className={style.cards}>
-          {shoesColorData.map((color, index) => (
-            <ColorCard
-              key={index}
-              id={index}
-              color={color}
-              activeId={activeColorId || 0}
-              setActiveId={(id) => setActiveColorId(id)}
-              setImageSrc={handleImageSrcChange}
-            />
-          ))}
-        </div>
+        <MediaQuery minWidth={431}>
+          <div className={`${style.cards} ${style.carouselCards}`} style={{
+            position: "absolute",
+            transform: "translate(0, -50%)",
+            left: "2vw",
+            top: "650px",
+            width: "55vw",
+          }}>
+            {shoesColorData.map((color, index) => (
+              <ColorCard
+                key={index}
+                id={index}
+                color={color}
+                activeId={activeColorId || 0}
+                setActiveId={(id) => setActiveColorId(id)}
+                setImageSrc={handleImageSrcChange}
+              />
+            ))}
+          </div>
+        </MediaQuery>
 
         <div className={style.description}>
           <h1 className={style.productDescTitle}>Product Detail</h1>
@@ -170,19 +260,27 @@ const ProductDesc = () => {
         </div>
       </div>
       <div className={style.AlsoLikeSlider}>
-        <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
-        <div className={style.cards}>
-          {products.map((product: any, index: number) => {
-            return (
-              <div key={index}>
-                <ProductCard product={product} />
-              </div>
-            );
-          })}
+        <div className={style.AlsoLikeContainer}>
+          <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
+          <div className={style.cards}>
+            {products.map((product: any, index: number) => {
+              return (
+                <div key={index}>
+                  <ProductCard product={product} />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className={style.NewArrivalsSlider}></div>
-        <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
-        <div className={style.cards}>
+        <MediaQuery minWidth={440}>
+          <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
+        </MediaQuery>
+        <MediaQuery maxWidth={430}>
+          <h1 className={style.NewArrivalsSliderTitle}>You Might Also Like</h1>
+
+        </MediaQuery>
+        <div className={`${style.cards} ${style.alsoLikeCards}`}>
           {products.map((product: any, index: number) => {
             return (
               <div key={index}>

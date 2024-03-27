@@ -6,10 +6,10 @@
 }
 
 .container__header_image {
-  height: 450px;
-  width: 600px;
-
+    height: 450px;
+    width: 600px;
 }
+
 .block {
     display: flex;
     height: inherit;
@@ -31,20 +31,22 @@
 }
 
 .block__info_heading {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
 
+.block__info_circle {
+    font-size: 0.8rem;
 }
-.block__info_circle{
- font-size: 0.8rem;
-}
+
 .block__info_content {
     max-width: 19rem;
     line-height: 2.4rem;
     font-family: 'Bebas Neue';
-    font-size: 2rem;
+    font-size: clamp(18px, 5vw, 2rem);
 }
+
 .block__info_date {
     display: flex;
     flex-direction: column;
@@ -52,37 +54,82 @@
     font-size: 12px;
     color: #96999F;
 }
+
 .header__info {
     margin-top: 1rem;
     display: flex;
     gap: 5.5rem;
 }
+
 .header__container {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
 }
+
 .header__date {
-  margin: 1rem 0 0 2rem;
+    margin: 1rem 0 0 2rem;
     font-size: 50px;
 }
+
 .header__month {
     text-align: center;
     font-size: 16px;
 }
+
 .header__content {
     line-height: 2.8rem;
     font-size: 35px;
+    font-size: clamp(30px, 5vw, 2rem);
     max-width: 20rem;
 }
-.header__paragraph {
-line-height: 1.7rem;
- font-size: 17px;
- max-width: 29rem;
- font-family: "Roboto";
+
+.header__paragraph { 
+    line-height: 1.7rem;
+    font-size: 17px;
+    max-width: 29rem;
+    font-family: "Roboto";
 }
+
 .header__likes {
     font-family: 'Roboto';
     font-size: 13px;
     color: #96999F;
+}
+
+@media screen and (max-width: 431px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container__header_image {
+        height: auto;
+        width: 100%;
+    }
+
+    .header__info{
+        gap: 1rem;
+    }
+    
+    .header__date{
+        margin: 1rem 10px;
+    }
+
+    .header__paragraph{
+        max-width: 100%;
+        font-size: 15px;
+        line-height: 1rem;
+    }
+
+    .block__info_heading {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        align-items: flex-start;
+    }
+
+    .block__info_circle{
+        display: none;
+    }
 }

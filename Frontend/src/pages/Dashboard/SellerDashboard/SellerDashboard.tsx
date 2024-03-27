@@ -14,11 +14,11 @@ const SellerDashboard = () => {
       sx={{
         flexDirection: "row",
         gap: "20px",
-      }}
+      }} 
     >
       <Sidebar />
       <div className={style.right}>
-        <div className={style.Heading}>Vendor Dashboard</div>
+        {/* <div className={style.Heading}>Vendor Dashboard</div> */}
         <Breadcrumb
           currentSection={currentSection}
           currentAction={currentAction}

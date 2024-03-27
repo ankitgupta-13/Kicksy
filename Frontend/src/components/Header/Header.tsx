@@ -22,6 +22,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import PinDropOutlinedIcon from '@mui/icons-material/PinDropOutlined';
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -140,7 +141,7 @@ const Header = () => {
           <a href="#"><ShoppingBagOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Orders</a>
           <a href="#"><FavoriteBorderOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> My Wishlist</a>
           <a href="#"><PinDropOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Delivery Address</a>
-          <a href="/blogs"><MenuBookOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Blogs</a>
+          <a href="/blogs"><LibraryBooksOutlinedIcon style={{fontWeight: "light", color:"#1c1b1f", marginRight: "12px", fontSize: "24px"}}/> Blogs</a>
           <div className={style.buttons}>
             <LogoutBtn wid="100%" />
           </div>

@@ -106,7 +106,10 @@
     font-family: Inter;
     margin: 25px 0;
 }
-
+.Logo{
+    filter: invert(1);
+    margin-top: 2%;
+}
 .follow{
     display: flex;
     align-items: center;
