@@ -154,7 +154,7 @@ const Home = () => {
         </div>
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
-          <div className={style.cards}>
+          <div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: Object, index: number) => {
               return (
                 <div key={index} className={style.container}>

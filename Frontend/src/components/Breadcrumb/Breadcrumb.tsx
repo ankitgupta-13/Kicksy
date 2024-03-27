@@ -4,7 +4,7 @@ const Breadcrumb = ({ currentSection, currentAction }) => {
   return (
     <>
     <div className={style.container}>
-    <div className={style.currentSectionText}>Dashboard</div>
+    <div className={style.currentSectionText}>Hello, Welcome Back👋</div>
       {currentSection && (
         <div className={style.step}>
           <div className={style.circle}></div>

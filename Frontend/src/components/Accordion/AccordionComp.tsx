@@ -6,7 +6,12 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Fade from '@mui/material/Fade';
 
-export default function AccordionComp() {
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+
+import returnIcon from "../../assets/return-icon.png";
+
+export default function AccordionComp({ isInStock, canReturn }) {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpansion = () => {
@@ -30,7 +35,32 @@ export default function AccordionComp() {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    <Typography>Custom transition using Fade</Typography>
+                    <Typography sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        color: "#656565"
+                    }}><VerifiedUserOutlinedIcon /> Authenticity Guaranteed</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography sx={{color: "#656565"}}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{color: "#656565"}}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2-content"
+                    id="panel2-header"
+                >
+                    <Typography sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        fontFamily: "Noir Pro"
+                    }}><LocalShippingOutlinedIcon/> {isInStock ? `In Stock and Ready to ship` : `Out of Stock`}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -39,13 +69,17 @@ export default function AccordionComp() {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion sx={{color: "#656565"}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2-content"
                     id="panel2-header"
                 >
-                    <Typography>Default transition using Collapse</Typography>
+                    <Typography sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px'
+                    }}> <img style={{ width: '1.5rem', height: '1.5rem' }} src={returnIcon} /> {canReturn ? `Returns Accepted` : `Returns Not Accepted`}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>

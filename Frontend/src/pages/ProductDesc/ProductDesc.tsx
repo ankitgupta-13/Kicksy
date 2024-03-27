@@ -16,6 +16,7 @@ import MediaQuery from "react-responsive";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
 import { CloseOutlined } from "@mui/icons-material";
 import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
+import AccordionComp from "../../components/Accordion/AccordionComp";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const ProductDesc = () => {
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
   const [showSizeTable, setShowSizeTable] = useState(false);
+  const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
 
   const handleImageSrcChange = (src: string) => {
@@ -47,6 +49,15 @@ const ProductDesc = () => {
       setShoesColorData(response.data.images);
     }
   };
+  
+  const handleInStock = () => {
+    if (stock<=0) {
+      setInStock(false);
+    } else {
+      setInStock(true);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCurrentProduct();
@@ -85,11 +96,12 @@ const ProductDesc = () => {
             <div className={style.product_imagediv} style={{ background: `url(${activeColor})`}}></div>
           </MediaQuery>
           <MediaQuery maxWidth={431}>
-            <img
+            {/* <img
               src={activeColor}
               className={style.imagebox}
               alt="product-image"
-            />
+            /> */}
+            <div className={style.product_imagediv_phone} style={{ background: `url(${activeColor})`}}></div>
           </MediaQuery>
           <MediaQuery maxWidth={431}>
             <div className={`${style.cards} ${style.carouselCards}`}>
@@ -121,8 +133,8 @@ const ProductDesc = () => {
             <div className={style.action_sz_add}>
               <div>
                 <MediaQuery minWidth={431}>
-                  <div className={style.sizechart_bg} style={{ display: showSizeTable ? "block" : "none" }}>
-                    <span onClick={() => setShowSizeTable(false)} style={{ cursor: "pointer", color: "#fff", position: "absolute", top: "10px", right: "2rem", border: "3px solid white", borderRadius: "50px", padding: "3px", width: "30px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "40px", zIndex: "10" }}><CloseOutlined /></span>
+                  <div className={style.sizechart_bg} style={{ display: showSizeTable ? "block" : "none", zIndex: 3 }}>
+                    <span className={style.sizechart_close} onClick={() => setShowSizeTable(false)} style={{ cursor: "pointer", color: "#000", background: "white", position: "absolute", transform: "translate(-50%, -50%)", top: "87vh", left: "50vw", padding: "10px 20px", borderRadius: "50px", textTransform: "uppercase",letterSpacing: "1px", fontWeight: "600" }}>CLOSE</span>
                     <div className={style.sizechart_table}>
                       <ShoeSizeTable />
                     </div>
@@ -192,10 +204,21 @@ const ProductDesc = () => {
                 productID={curProduct._id}
               /> */}
             </div>
+            <MediaQuery minWidth={431}>
+            <div className={style.features}>
+              <AccordionComp isInStock={inStock} canReturn={true} />
+            </div>
+            </MediaQuery>
           </div>
         </div>
         <MediaQuery minWidth={431}>
-          <div className={`${style.cards} ${style.carouselCards}`}>
+          <div className={`${style.cards} ${style.carouselCards}`} style={{
+            position: "absolute",
+            transform: "translate(0, -50%)",
+            left: "2vw",
+            top: "650px",
+            width: "55vw",
+          }}>
             {shoesColorData.map((color, index) => (
               <ColorCard
                 key={index}
@@ -257,7 +280,7 @@ const ProductDesc = () => {
           <h1 className={style.NewArrivalsSliderTitle}>You Might Also Like</h1>
 
         </MediaQuery>
-        <div className={style.cards}>
+        <div className={`${style.cards} ${style.alsoLikeCards}`}>
           {products.map((product: any, index: number) => {
             return (
               <div key={index}>
