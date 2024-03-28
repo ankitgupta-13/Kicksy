@@ -96,6 +96,10 @@ const addImagesToProductRequest = async (req, res) => {
 };
 
 const productAddRequest = async (req, res) => {
+
+  // for duplicate key error in productCode field , 
+  // use this command db.productrequests.dropIndex("productCode_1") to get rid of it. 
+
   const { userID } = req.body;
   try {
     const { images } = req.body;
@@ -147,7 +151,7 @@ const addOfferToProduct = async (req, res) => {
       return item.sellerID.equals(sellerID)
     })
 
-    console.log(sellerCheck);
+    // console.log(sellerCheck);
 
     if(sellerCheck !== -1) return res.json(new ApiResponse(400 ,"Offer on this product, already exists!" ))
 
