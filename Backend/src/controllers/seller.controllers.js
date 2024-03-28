@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Address } from "../models/address.model.js";
 import { Offer } from "../models/offer.model.js";
 import { Order } from "../models/order.models.js";
@@ -141,6 +142,15 @@ const addOfferToProduct = async (req, res) => {
     );
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
+    const sellerCheck = product.offers.findIndex((item)=>{
+
+      return item.sellerID.equals(sellerID)
+    })
+
+    console.log(sellerCheck);
+
+    if(sellerCheck !== -1) return res.json(new ApiResponse(400 ,"Offer on this product, already exists!" ))
+
     const offer = new Offer({
       productID,
       sellerID,
@@ -161,7 +171,7 @@ const addOfferToProduct = async (req, res) => {
     });
 
     price.sort((a, b) => a - b);
-    console.log(price[0]);
+    // console.log(price[0]);
     product.price = price[0];
     await product.save();
 

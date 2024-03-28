@@ -7,6 +7,8 @@ import fetch from "node-fetch";
 import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
 import { Cart } from "../models/cart.models.js";
+import { Address } from "../models/address.model.js";
+import { User } from "../models/user.models.js";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -41,27 +43,56 @@ const verifyPayment = async (req, res) => {
     razorpay_payment_id,
     razorpay_signature,
     orderDetails,
+    addressDetails,
+    products
   } = req.body;
 
   try {
-    const userCart = await Cart.findOne({ user: orderDetails.userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-      .createHmac("sha256", process.env.RPAY_KEY_SECRET)
-      .update(body.toString())
-      .digest("hex");
+    .createHmac("sha256", process.env.RPAY_KEY_SECRET)
+    .update(body.toString())
+    .digest("hex");
     if (expectedSign === razorpay_signature) {
-      const order = new Order({
-        user: userID,
-        orderItems: userCart.items,
-        orderPrice: orderDetails.amount,
-        paymentStatus: true,
-        paymentMethod: "Razorpay",
-      });
-      await order.save();
+      // const userCart = await Cart.findOne({ user: orderDetails.userID });
+      
+      const address = new Address({
+        userId:orderDetails.userID,
+        ...addressDetails
+      })
+
+      await address.save()
+
+      if (products) {
+        const order = new Order({
+          user: orderDetails.userID,
+          orderItems: products,
+          orderPrice: orderDetails.amount,
+          paymentStatus: true,
+          paymentMethod: "Razorpay",
+          address:address._id
+        });
+
+        await User.findByIdAndUpdate(orderDetails.userID , {$push:{address:address._id}});
+
+        await order.save();
+      }
+      else {
+        // const order = new Order({
+        //   user: userID,
+        //   orderItems: userCart.items,
+        //   orderPrice: orderDetails.amount,
+        //   paymentStatus: true,
+        //   paymentMethod: "Razorpay",
+        // });
+        // await order.save();
+      }
+
+
 
       user.orders.push(order._id);
-    } else {
+    }
+    else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
@@ -69,6 +100,10 @@ const verifyPayment = async (req, res) => {
     return res.json(new ApiError(400, err));
   }
 };
+
+
+
+
 
 const fetchall = async (req, res) => {
   const payments = await fetch("https://api.razorpay.com/v1/payments/", {
