@@ -10,12 +10,9 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { StyledEngineProvider } from "@mui/material";
-import MediaQuery from "react-responsive";
 // import AccordionComp from "../../components/Accordion/AccordionComp";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
-import { CloseOutlined } from "@mui/icons-material";
-import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
+import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
 
 const ProductDesc = () => {
@@ -49,9 +46,9 @@ const ProductDesc = () => {
       setShoesColorData(response.data.images);
     }
   };
-  
+
   const handleInStock = () => {
-    if (stock<=0) {
+    if (stock <= 0) {
       setInStock(false);
     } else {
       setInStock(true);
@@ -90,10 +87,13 @@ const ProductDesc = () => {
 
   return (
     <div>
-      <div className={style.main} >
+      <div className={style.main}>
         <div className={style.product}>
           <MediaQuery minWidth={431}>
-            <div className={style.product_imagediv} style={{ background: `url(${activeColor})`}}></div>
+            <div
+              className={style.product_imagediv}
+              style={{ background: `url(${activeColor})` }}
+            ></div>
           </MediaQuery>
           <MediaQuery maxWidth={431}>
             {/* <img
@@ -101,7 +101,10 @@ const ProductDesc = () => {
               className={style.imagebox}
               alt="product-image"
             /> */}
-            <div className={style.product_imagediv_phone} style={{ background: `url(${activeColor})`}}></div>
+            <div
+              className={style.product_imagediv_phone}
+              style={{ background: `url(${activeColor})` }}
+            ></div>
           </MediaQuery>
           <MediaQuery maxWidth={431}>
             <div className={`${style.cards} ${style.carouselCards}`}>
@@ -119,22 +122,49 @@ const ProductDesc = () => {
           </MediaQuery>
           <div className={style.action}>
             <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
-            <div style={{
-              display: "flex",
-              flexDirection: "column",
-            }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <h2 className={style.SampleProduct}>{curProduct.title}</h2>
               {curProduct.category === "bestseller" && (
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
-              <h1>Rs. {curProduct?.price?.toLocaleString('en-IN')}</h1>
+              <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
             </div>
 
             <div className={style.action_sz_add}>
               <div>
                 <MediaQuery minWidth={431}>
-                  <div className={style.sizechart_bg} style={{ display: showSizeTable ? "block" : "none", zIndex: 3 }}>
-                    <span className={style.sizechart_close} onClick={() => setShowSizeTable(false)} style={{ cursor: "pointer", color: "#000", background: "white", position: "absolute", transform: "translate(-50%, -50%)", top: "87vh", left: "50vw", padding: "10px 20px", borderRadius: "50px", textTransform: "uppercase",letterSpacing: "1px", fontWeight: "600" }}>CLOSE</span>
+                  <div
+                    className={style.sizechart_bg}
+                    style={{
+                      display: showSizeTable ? "block" : "none",
+                      zIndex: 3,
+                    }}
+                  >
+                    <span
+                      className={style.sizechart_close}
+                      onClick={() => setShowSizeTable(false)}
+                      style={{
+                        cursor: "pointer",
+                        color: "#000",
+                        background: "white",
+                        position: "absolute",
+                        transform: "translate(-50%, -50%)",
+                        top: "87vh",
+                        left: "50vw",
+                        padding: "10px 20px",
+                        borderRadius: "50px",
+                        textTransform: "uppercase",
+                        letterSpacing: "1px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      CLOSE
+                    </span>
                     <div className={style.sizechart_table}>
                       <ShoeSizeTable />
                     </div>
@@ -151,10 +181,16 @@ const ProductDesc = () => {
                         cursor: "pointer",
                         display: "flex",
                         gap: "5px",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
-                      <StraightenOutlinedIcon style={{ transform: "rotate(127deg)", fontSize: "18px" }} /> Size Chart
+                      <StraightenOutlinedIcon
+                        style={{
+                          transform: "rotate(127deg)",
+                          fontSize: "18px",
+                        }}
+                      />{" "}
+                      Size Chart
                     </span>
                   </div>
                 </MediaQuery>
@@ -180,7 +216,6 @@ const ProductDesc = () => {
               </Button>
             </div>
 
-
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
                 <div className={style.sellerCard}>
@@ -193,7 +228,7 @@ const ProductDesc = () => {
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
                   <Button className={style.priceButton}>
-                    <h1>₹{seller?.price?.toLocaleString('en-IN')}</h1>
+                    <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
                     <ShoppingCartIcon />
                   </Button>
                 </div>
@@ -205,20 +240,23 @@ const ProductDesc = () => {
               /> */}
             </div>
             <MediaQuery minWidth={431}>
-            <div className={style.features}>
-              <AccordionComp isInStock={inStock} canReturn={true} />
-            </div>
+              <div className={style.features}>
+                <AccordionComp isInStock={inStock} canReturn={true} />
+              </div>
             </MediaQuery>
           </div>
         </div>
         <MediaQuery minWidth={431}>
-          <div className={`${style.cards} ${style.carouselCards}`} style={{
-            position: "absolute",
-            transform: "translate(0, -50%)",
-            left: "2vw",
-            top: "650px",
-            width: "55vw",
-          }}>
+          <div
+            className={`${style.cards} ${style.carouselCards}`}
+            style={{
+              position: "absolute",
+              transform: "translate(0, -50%)",
+              left: "2vw",
+              top: "650px",
+              width: "55vw",
+            }}
+          >
             {shoesColorData.map((color, index) => (
               <ColorCard
                 key={index}
@@ -278,7 +316,6 @@ const ProductDesc = () => {
         </MediaQuery>
         <MediaQuery maxWidth={430}>
           <h1 className={style.NewArrivalsSliderTitle}>You Might Also Like</h1>
-
         </MediaQuery>
         <div className={`${style.cards} ${style.alsoLikeCards}`}>
           {products.map((product: any, index: number) => {
