@@ -1,0 +1,42 @@
+.container{
+    padding: 20px;
+    font-family: "Noir Pro";
+}
+
+.analyticsOne_card{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+.card_container{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    gap: 1.2rem;
+    flex-direction: row;
+    width: max-content;
+    padding: 10px 25px;
+    width: 17vw;
+    height: 22vh;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.1);
+    .cardContent{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .cardTitle{
+        font-weight: 600;
+        font-size: 1rem;
+        color: #727272;
+    }
+    .cardValue{
+        font-weight: 600;
+        font-size: 2rem;
+    }
+    .cardIcon{
+        width: 4rem;
+        color: #727272;
+    }   
+}

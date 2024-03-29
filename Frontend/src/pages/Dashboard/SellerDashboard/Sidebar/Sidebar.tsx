@@ -76,11 +76,9 @@ const Sidebar = () => {
               className={style.sectionButton}
               onClick={() => dispatch(closeSection())}
             >
-              <span className={style.AppIcon}><SpeedIcon/></span>
+              <span className={style.AppIcon}><SpeedIcon /></span>
               <span className={style.AppText}> App</span>
 
-             
-             
             </button>
           </div>
           <div className={style.SideBarSections}>

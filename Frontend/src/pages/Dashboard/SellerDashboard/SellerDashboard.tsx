@@ -13,8 +13,8 @@ const SellerDashboard = () => {
     <Container
       sx={{
         flexDirection: "row",
-        gap: "20px",
-      }} 
+        gap: "0px",
+      }}
     >
       <Sidebar />
       <div className={style.right}>
