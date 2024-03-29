@@ -26,6 +26,7 @@ const CreateProduct = () => {
       imageUrls.push(response.data);
     }
     data = { ...data, images: imageUrls, userID: userID };
+    console.log(data)
     const response = await addProductRequest(data);
     if (response.statusCode === 200) {
       alert(response.message);

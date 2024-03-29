@@ -7,6 +7,8 @@ import fetch from "node-fetch";
 import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
 import { Cart } from "../models/cart.models.js";
+import { Address } from "../models/address.model.js";
+import { User } from "../models/user.models.js";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -35,40 +37,103 @@ const makePayment = async (req, res) => {
 };
 
 const verifyPayment = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
     orderDetails,
+    addressDetails,
+    products
   } = req.body;
 
+  /*
+  
+    SAMPLE orderDetails
+
+    orderDetails: {
+    id: 'order_NrhC7ziJiU1h9w',
+    entity: 'order',
+    amount: 500000,
+    amount_paid: 0,
+    amount_due: 500000,
+    currency: 'INR',
+    receipt: null,
+    offer_id: null,
+    status: 'created',
+    attempts: 0,
+    notes: [],
+    created_at: 1711611534,
+    userID: '65f0a8a37d96f0cf606f109a',
+    productIDs: [ null ]
+  }
+
+  */
+
   try {
-    const userCart = await Cart.findOne({ user: orderDetails.userID });
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-      .createHmac("sha256", process.env.RPAY_KEY_SECRET)
-      .update(body.toString())
-      .digest("hex");
+    .createHmac("sha256", process.env.RPAY_KEY_SECRET)
+    .update(body.toString())
+    .digest("hex");
     if (expectedSign === razorpay_signature) {
-      const order = new Order({
-        user: userID,
-        orderItems: userCart.items,
-        orderPrice: orderDetails.amount,
-        paymentStatus: true,
-        paymentMethod: "Razorpay",
-      });
-      await order.save();
+      // const userCart = await Cart.findOne({ user: orderDetails.userID });
+      
+      // console.log(orderDetails);
 
-      user.orders.push(order._id);
-    } else {
-      res.json(new ApiResponse(400, "Payment failed!"));
+      const address = new Address({
+        userId:orderDetails.userID,
+        ...addressDetails
+      })
+
+      await address.save()
+
+      if (products) {
+        const user = await User.findById(orderDetails.userID)
+        const tags = [user.username , user.email]
+
+        const order = new Order({
+          user: orderDetails.userID,
+          orderItems: products,
+          orderPrice: orderDetails.amount,
+          paymentStatus: true,
+          paymentMethod: "Razorpay",
+          address:address._id
+        });
+
+
+        await order.save();
+
+        await User.findByIdAndUpdate(orderDetails.userID , {$push:{address:address._id , orders:order._id}});
+
+      }
+      else {
+        // const order = new Order({
+        //   user: userID,
+        //   orderItems: userCart.items,
+        //   orderPrice: orderDetails.amount,
+        //   paymentStatus: true,
+        //   paymentMethod: "Razorpay",
+        // });
+        // await order.save();
+        return res.json(new ApiResponse(404 , "products not found"))
+      }
+
+
+      // user.orders.push(order._id);
+    }
+    else {
+      return res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
     console.log(err);
     return res.json(new ApiError(400, err));
   }
 };
+
+
+
+
 
 const fetchall = async (req, res) => {
   const payments = await fetch("https://api.razorpay.com/v1/payments/", {

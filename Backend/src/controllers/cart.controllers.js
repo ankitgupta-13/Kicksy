@@ -5,25 +5,25 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addToCart = async (req, res) => {
   try {
-    const { userID, productID } = req.body;
+    const { userID, productID, sellerID } = req.body;
     if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
-    
+
     const cart = await Cart.findOne({ user: userID });
     // If user does not have a cart, create a new cart and add the product to it
     if (!cart) {
       const newCart = new Cart({
         user: userID,
-        items: [{ product: productID }],
+        items: [{ product: productID, sellerID }],
       });
+      await newCart.save();
 
-      const user = await User.findOne({_id:userID});
-      
-      if(!user) return res.json(new ApiResponse(404 , 'user not found'));
+      const user = await User.findOne({ _id: userID });
+
+      if (!user) return res.json(new ApiResponse(404, 'user not found'));
 
       user.cart = newCart._id
       await user.save()
 
-      await newCart.save();
       return res.json(new ApiResponse(200, newCart, "Product added to cart"));
     }
     // If product is already present in the cart increase the quantity by one

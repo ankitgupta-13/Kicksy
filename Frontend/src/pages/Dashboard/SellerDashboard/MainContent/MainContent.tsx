@@ -6,8 +6,10 @@ import OfferProduct from "../Product/OfferProduct/OfferProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import DetailProduct from "../../AdminDashboard/Product/DetailProduct/DetailProduct";
-import ListProduct from "../../SellerDashboard/Product/ListProduct/ListProduct";
+// import ListProduct from "../../SellerDashboard/Product/ListProduct/ListProduct";
+
 import CreateProduct from "../../SellerDashboard/Product/CreateProduct/CreateProduct";
+import ListProduct from "../../AdminDashboard/Product/ListProduct/ListProduct";
 
 const MainContent = ({ currentSection, currentAction }) => {
   let content = null;
