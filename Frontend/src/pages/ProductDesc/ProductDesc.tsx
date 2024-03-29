@@ -14,6 +14,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
+import MediaQuery from "react-responsive";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
