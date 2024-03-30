@@ -22,6 +22,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -103,8 +104,11 @@ const Header = () => {
               </li>
               {authStatus && (
                 <>
+                  <li>
+                    <LocalMallIcon onClick={() => navigate("/checkout")} />
+                  </li>
                   <li className={style.iconListItems}>
-                    <ShoppingCartIcon onClick={() => navigate("/checkout")} />
+                    <ShoppingCartIcon onClick={handleToggleCartVisibility} />
                   </li>
                   <li
                     className={style.iconListItems}

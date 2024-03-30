@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [{}],
-  totalAmount: 0,
+  items: 0,
   isOpen: false,
 };
 
@@ -10,19 +9,14 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItemToCart: (state, action) => {
-      state.items = action.payload.items;
-      state.totalAmount += action.payload.amount;
+    addItemToCart: (state) => {
+      state.items = state.items + 1;
     },
     removeItemFromCart: (state, action) => {
-      state.items.filter((item) => item.id !== action.payload.id);
-      state.totalAmount -= action.payload.price;
+      state.items = state.items - 1;
     },
     toggleCartVisibility: (state) => {
       state.isOpen = !state.isOpen;
-    },
-    setInitialCartItems: (state, action) => {
-      state.items = action.payload;
     },
   },
 });

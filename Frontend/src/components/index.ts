@@ -15,6 +15,7 @@ import ProductDashboardCard from "./ProductDashboardCard/ProductDashboardCard.ts
 import UserDashboardCard from "./UserDashboardCard/UserDashboardCard.tsx";
 import ImageSlider from "./ImageSlider/ImageSlider.tsx";
 import ProductDescription from "./ProductDescription/ProductDescription.tsx";
+import CartItemCard from "./CartItemCard/CartItemCard.tsx";
 
 export {
   Header,
@@ -34,4 +35,5 @@ export {
   UserDashboardCard,
   ImageSlider,
   ProductDescription,
+  CartItemCard,
 };
