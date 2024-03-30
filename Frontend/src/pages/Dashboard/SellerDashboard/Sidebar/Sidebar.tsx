@@ -75,9 +75,10 @@ const Sidebar = () => {
             <button
               className={style.sectionButton}
               onClick={() => dispatch(closeSection())}
+              style={{ justifyContent: "flex-start"}}
             >
               <span className={style.AppIcon}><SpeedIcon /></span>
-              <span className={style.AppText}> App</span>
+              <span className={style.AppText} > Dashboard</span>
 
             </button>
           </div>
