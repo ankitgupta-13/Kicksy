@@ -11,8 +11,9 @@ const addToCart = async (req, res) => {
       return res.json(new ApiResponse(401, "Fields are required"));
 
     const cart = await Cart.findOne({ user: userID });
-    const offer = await Offer.findOne({ productID, sellerID })
-    cart.cartTotal +=  offer.price
+    const offer = await Offer.findOne({ productID, sellerID });
+    console.log(offer);
+    cart.cartTotal += offer.price;
 
     // If user does not have a cart, create a new cart and add the product to it
     if (!cart) {
@@ -21,8 +22,7 @@ const addToCart = async (req, res) => {
         items: [{ product: productID, sellerID }],
       });
 
-
-      newCart.cartTotal += offer.price 
+      newCart.cartTotal += offer.price;
 
       await newCart.save();
 
@@ -33,8 +33,6 @@ const addToCart = async (req, res) => {
       user.cart = newCart._id;
       await user.save();
 
-      
-
       return res.json(new ApiResponse(200, newCart, "Product added to cart"));
     }
     // If product is already present in the cart increase the quantity by one
@@ -42,9 +40,8 @@ const addToCart = async (req, res) => {
       return item["product"]["_id"].equals(productID);
     });
     if (index !== -1) {
-
       cart.items[index].quantity += 1;
-      // cart.cartTotal += offer.price 
+      // cart.cartTotal += offer.price
       await cart.save();
 
       return res.json(
@@ -59,9 +56,7 @@ const addToCart = async (req, res) => {
     cart.items = cart.items.concat({ product: productID, sellerID });
     await cart.save();
     return res.json(new ApiResponse(200, { cart }, "Product added to cart"));
-
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.json(new ApiError(400, "Error adding to cart ", err));
   }
@@ -81,25 +76,33 @@ const removeFromCart = async (req, res) => {
     if (!cart) {
       return res.json(new ApiResponse(404, "Cart not found"));
     }
-    
-    const userCart = await Cart.findByIdAndUpdate(cart._id , {$pull:{items:{product:productID}}} , {new:true})
-    
-    const index = cart.items.findIndex(item => item.product.equals(productID));
 
-    if(index!==-1){
-      const offer = await Offer.findOne({productID , sellerID:cart.items[index]["sellerID"]})
+    const userCart = await Cart.findByIdAndUpdate(
+      cart._id,
+      { $pull: { items: { product: productID } } },
+      { new: true }
+    );
+
+    const index = cart.items.findIndex((item) =>
+      item.product.equals(productID)
+    );
+
+    if (index !== -1) {
+      const offer = await Offer.findOne({
+        productID,
+        sellerID: cart.items[index]["sellerID"],
+      });
       console.log(offer);
 
       cart.cartTotal -= offer.price;
-
-    }
-    else{
-
+    } else {
     }
 
     await cart.save();
 
-    return res.json(new ApiResponse(200, "Product removed from cart", {cart, userCart}));
+    return res.json(
+      new ApiResponse(200, "Product removed from cart", { cart, userCart })
+    );
   } catch (error) {
     console.error("Error removing from cart:", error);
     return res.json(new ApiError(500, "Internal server error", error));

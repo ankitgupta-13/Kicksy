@@ -10,7 +10,6 @@ import { RootState } from "../../../../../redux/store/store";
 import { Chip } from "@mui/material";
 import MultipleSelectChip from "../../../../../components/Input/multipleSelect";
 
-
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();
   const userID = useSelector((state: RootState) => state.auth.userData._id);
@@ -26,7 +25,7 @@ const CreateProduct = () => {
       imageUrls.push(response.data);
     }
     data = { ...data, images: imageUrls, userID: userID };
-    console.log(data)
+    console.log(data);
     const response = await addProductRequest(data);
     if (response.statusCode === 200) {
       alert(response.message);
@@ -45,7 +44,12 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 label="Product Name"
                 type="text"
                 placeholder="Product Name"
@@ -54,7 +58,12 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 label="Description"
                 type="text"
                 placeholder="Product Description"
@@ -63,8 +72,12 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
-
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 label="Images"
                 type="file"
                 multiple
@@ -81,7 +94,12 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 label="Product Code"
                 type="text"
                 placeholder="Product Code"
@@ -90,7 +108,12 @@ const CreateProduct = () => {
             </div>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 label="Quantity"
                 type="number"
                 placeholder="Quantity"
@@ -98,25 +121,38 @@ const CreateProduct = () => {
               />
             </div>
 
-
-
             <div className={style.inputBox}>
               <Select
-
                 label="Category"
                 options={["boots", "sneakers"]}
                 {...register("category", { required: true })}
-              /></div>
+              />
+            </div>
             <div className={style.inputBox}>
-              {/* <Select
+              <Select
                 style={{ marginTop: "5px" }}
                 label="Size"
                 options={["S", "M", "L", "XL", "XXL"]}
                 {...register("size", { required: true })}
-              /> */}
+              />
 
-              {/* <Chip label="Size"/> */}
-              <MultipleSelectChip label="Size" names={['3','4','5','6','7','8','9']} />
+              <MultipleSelectChip
+                label="Size"
+                names={[
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "8",
+                  "9",
+                  "10",
+                  "11",
+                  "12",
+                ]}
+                {...register("size", { required: true })}
+              />
             </div>
             <div className={style.inputBox}>
               <Select
@@ -148,8 +184,6 @@ const CreateProduct = () => {
               />
             </div>
 
-
-
             <div className={style.RadioDiv}>
               <label htmlFor="F">Women</label>
               <input
@@ -161,8 +195,6 @@ const CreateProduct = () => {
               />
             </div>
 
-
-
             <div className={style.RadioDiv}>
               <label htmlFor="K">Kids</label>
               <input
@@ -173,9 +205,6 @@ const CreateProduct = () => {
                 {...register("gender", { required: true })}
               />
             </div>
-
-
-
           </div>
         </div>
         <div className={style.section}>
@@ -186,7 +215,12 @@ const CreateProduct = () => {
           <div className={style.sub}>
             <div className={style.inputBox}>
               <Input
-                style={{ marginTop: "5px", border: "none", borderBottom: "1px solid var(--Border-2, #CCC)", backgroundColor: "rgb(249, 249, 249)" }}
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
                 type="number"
                 label="Product Price"
                 placeholder="Product Price"
@@ -196,13 +230,13 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className={style.ButtonDiv}>
-        <Button className={style.Button} type="submit">Create Request</Button>
+          <Button className={style.Button} type="submit">
+            Create Request
+          </Button>
         </div>
-       
       </form>
     </Container>
   );
 };
 
 export default CreateProduct;
-
