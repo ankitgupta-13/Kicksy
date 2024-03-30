@@ -89,7 +89,7 @@ const addProductViaRequest = async (req, res) => {
     const offer = new Offer({
       price,
       quantity: stock,
-      sellerID: request.seller,
+      sellerID: seller,
       productID: product._id,
     });
 
@@ -103,13 +103,16 @@ const addProductViaRequest = async (req, res) => {
       $push:{offers:offer._id}
     })
 
-    product.price = price;
+    product.priceDetail.price = price;
+    product.priceDetail.price = seller;
     await product.save();
 
     await ProductRequest.findByIdAndDelete(requestID);
 
     return res.json(200, product, "product added successfully!");
-  } catch (err) {
+
+  } 
+  catch (err) {
     console.log(err);
     return handleErr(res, err);
   }

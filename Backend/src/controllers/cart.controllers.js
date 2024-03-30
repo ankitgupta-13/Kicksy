@@ -7,8 +7,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const addToCart = async (req, res) => {
   try {
     const { userID, productID, sellerID } = req.body;
-    if (!userID || !productID || !sellerID)
-      return res.json(new ApiResponse(401, "Fields are required"));
+    if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
 
     const cart = await Cart.findOne({ user: userID });
     const offer = await Offer.findOne({ productID, sellerID })
@@ -28,10 +27,10 @@ const addToCart = async (req, res) => {
 
       const user = await User.findOne({ _id: userID });
 
-      if (!user) return res.json(new ApiResponse(404, "user not found"));
+      if (!user) return res.json(new ApiResponse(404, 'user not found'));
 
-      user.cart = newCart._id;
-      await user.save();
+      user.cart = newCart._id
+      await user.save()
 
       
 
@@ -106,13 +105,26 @@ const removeFromCart = async (req, res) => {
   }
 };
 
+const addSubtractCartQuantity = async (req,res)=>{
+  try{
+    const {userID , productID , operator} = req.body;
+    if(!userID||!productID||!operator) return res.json(new ApiResponse(422 , "Insufficient IDs in the body sent to the backend "))
+    
+    if(operator !== "+"||operator !== "-") return res.json(new ApiResponse(422 , "Invalid Operator!"));
+  
+  }
+  catch(err){
+
+  }
+}
+
 const getCartByUser = async (req, res) => {
   try {
     const { userID } = req.body;
     if (!userID) {
       return res.json(new ApiResponse(400, "userID is required"));
     }
-    const cart = await Cart.findOne({ user: userID }).populate("items.product");
+    const cart = await Cart.findOne({ user: userID });
     if (!cart) {
       return res.json(new ApiResponse(404, "Cart not found"));
     }
