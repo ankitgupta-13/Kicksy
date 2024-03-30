@@ -40,7 +40,6 @@ export const addProductOffer = async (payload) => {
   try {
     console.log(payload);
     const { data } = await api.post("seller/add-offer-to-product", payload);
-    console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;

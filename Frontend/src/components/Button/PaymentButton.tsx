@@ -54,11 +54,11 @@ const PaymentButton = (props) => {
         width: "180px",
         height: "40px",
         color: "white",
-        border: "none"
+        border: "none",
       }}
       onClick={checkOutHandler}
     >
-      {props.title}
+      CHECKOUT
     </button>
   );
 };

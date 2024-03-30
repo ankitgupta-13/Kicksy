@@ -10,11 +10,11 @@ const cartItemSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
-  sellerID:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"Seller",
-    // required:true
-  }
+  sellerID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Seller",
+    required: true,
+  },
 });
 
 const cartSchema = new mongoose.Schema(
@@ -23,9 +23,13 @@ const cartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true
+      unique: true,
     },
     items: [cartItemSchema],
+    cartTotal: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

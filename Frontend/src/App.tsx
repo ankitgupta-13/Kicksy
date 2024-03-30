@@ -1,7 +1,12 @@
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store/store.ts";
-import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import Register from "./pages/Register/Register.tsx";
 import Login from "./pages/Login/Login.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
@@ -21,6 +26,7 @@ import { PaymentButton } from "./components/index.ts";
 import { setInitialCartItems } from "./redux/reducers/cartSlice.ts";
 import BlogPage from "./pages/BlogPage/BlogPage.tsx";
 import Seller from "./pages/Seller/Seller.tsx";
+import Checkout from "./pages/Checkout/Checkout.tsx";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -44,6 +50,7 @@ const App = () => {
           <Route path="/payments" element={<PaymentButton amount={5000} />} />
           <Route path="/seller" element={<Seller />} />
         </Route>
+        <Route path="/checkout" element={<Checkout />} />
         <Route
           element={
             <ProtectedRoutes userRole={userData?.role} status={status} />

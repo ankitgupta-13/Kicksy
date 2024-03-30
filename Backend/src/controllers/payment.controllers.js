@@ -43,25 +43,27 @@ const verifyPayment = async (req, res) => {
     razorpay_payment_id,
     razorpay_signature,
     orderDetails,
+    // Object of Address
     addressDetails,
-    products
+    products, // [{productID,quantity,sellerID}]
   } = req.body;
 
   try {
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-    .createHmac("sha256", process.env.RPAY_KEY_SECRET)
-    .update(body.toString())
-    .digest("hex");
+      .createHmac("sha256", process.env.RPAY_KEY_SECRET)
+      .update(body.toString())
+      .digest("hex");
     if (expectedSign === razorpay_signature) {
+      // add order to seller and user
       // const userCart = await Cart.findOne({ user: orderDetails.userID });
-      
-      const address = new Address({
-        userId:orderDetails.userID,
-        ...addressDetails
-      })
 
-      await address.save()
+      const address = new Address({
+        userId: orderDetails.userID,
+        ...addressDetails,
+      });
+
+      await address.save();
 
       if (products) {
         const order = new Order({
@@ -70,14 +72,15 @@ const verifyPayment = async (req, res) => {
           orderPrice: orderDetails.amount,
           paymentStatus: true,
           paymentMethod: "Razorpay",
-          address:address._id
+          address: address._id,
         });
 
-        await User.findByIdAndUpdate(orderDetails.userID , {$push:{address:address._id}});
+        await User.findByIdAndUpdate(orderDetails.userID, {
+          $push: { address: address._id },
+        });
 
         await order.save();
-      }
-      else {
+      } else {
         // const order = new Order({
         //   user: userID,
         //   orderItems: userCart.items,
@@ -88,11 +91,8 @@ const verifyPayment = async (req, res) => {
         // await order.save();
       }
 
-
-
       user.orders.push(order._id);
-    }
-    else {
+    } else {
       res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
@@ -100,10 +100,6 @@ const verifyPayment = async (req, res) => {
     return res.json(new ApiError(400, err));
   }
 };
-
-
-
-
 
 const fetchall = async (req, res) => {
   const payments = await fetch("https://api.razorpay.com/v1/payments/", {

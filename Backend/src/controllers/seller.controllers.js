@@ -142,14 +142,16 @@ const addOfferToProduct = async (req, res) => {
     );
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
-    const sellerCheck = product.offers.findIndex((item)=>{
+    const sellerCheck = product.offers.findIndex((item) => {
+      return item.sellerID.equals(sellerID);
+    });
 
-      return item.sellerID.equals(sellerID)
-    })
+    // console.log(sellerCheck);
 
-    console.log(sellerCheck);
-
-    if(sellerCheck !== -1) return res.json(new ApiResponse(400 ,"Offer on this product, already exists!" ))
+    if (sellerCheck !== -1)
+      return res.json(
+        new ApiResponse(400, "Offer on this product, already exists!")
+      );
 
     const offer = new Offer({
       productID,
