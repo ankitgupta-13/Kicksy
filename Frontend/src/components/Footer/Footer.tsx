@@ -7,12 +7,21 @@ import ptIcon from "../../assets/pt-icon.png"
 import verifiedIcon from "../../assets/verified-icon.png"
 import replacementIcon from "../../assets/replacement-icon.png"
 import ytIcon from "../../assets/yt-icon.png"
+import Footer2 from "../Footer2/Footer2";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 
 const Footer = () => {
+  const path = useLocation();
+  const location = path.pathname;
+
+
   return (
     <>
-    <div className={style.Footer}>
+    {(location === "/blogpage" || location === "/blogs" || location === "/anime") 
+    ?<Footer2/>
+    :<div className={style.Footer}>
       <div className={style.footerTop}>
         <div className={style.section1}>
           <img className={style.footerTopIcons} src={customerSupportIcon} />
@@ -71,6 +80,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
+    }
   </>
   );
 };
