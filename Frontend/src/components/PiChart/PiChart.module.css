@@ -1,0 +1,4 @@
+.cell:hover {
+    cursor: pointer;
+    opacity: .9;
+}

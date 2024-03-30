@@ -3,12 +3,15 @@ import style from "./analytics.module.css";
 import React, { useEffect, useRef } from "react";
 
 import Chart from "../../../../components/Chart/Chart.tsx";
+import PiChart from "../../../../components/PiChart/PiChart.tsx";
 import { Bar, Line } from 'react-chartjs-2';
 import icon1 from "../../../../assets/salesDbI.png";
 import icon2 from "../../../../assets/teamworkDbI.png";
 import icon3 from "../../../../assets/trolleyDbI.png";
 import icon4 from "../../../../assets/returnDbI.png";
 
+
+//SAMPLE DATA
 const oneCards = [
   {
     "title": "Sales",
@@ -31,7 +34,29 @@ const oneCards = [
     "icon": icon4
   }
 ]
-
+// SAMPLE DATA
+const recentOrders = [
+  {
+    "title": "Air Max",
+    "value": "2555",
+    "icon": icon1
+  },
+  {
+    "title": "Air Jordan",
+    "value": "19999",
+    "icon": icon1
+  },
+  {
+    "title": "Adidas",
+    "value": "4555",
+    "icon": icon1
+  },
+  {
+    "title": "Air Jordan",
+    "value": "19999",
+    "icon": icon1
+  }
+]
 
 
 const Analytics = () => {
@@ -55,10 +80,28 @@ const Analytics = () => {
 
     <div className={style.analyticsTwo}>
       <div className={style.mixChart}>
+        <span style={{ fontSize: "1.2rem", fontWeight: 600 }}>Website Visits</span>
         <Chart/>
       </div>
       <div className={style.analyticsTwo_recentOrders}>
-        <span>Recent Orders</span>
+        <span style={{ fontSize: "1.2rem", fontWeight: 600 }}>Recent Orders</span>
+        <PiChart/>
+      </div>
+    </div>
+    <div className={style.analyticsThree}>
+      <span style={{ fontSize: "1.2rem", fontWeight: 600 }}>Recent Orders</span>
+      <div className={style.analyticsThree_recentOrders}>
+        {recentOrders.map((order, index) => {
+          return (
+            <div className={style.card_container} key={index} style={{width: "90%", marginTop: "1.2rem"}}>
+              <img src={order.icon} alt="icon" className={style.cardIcon} />
+              <div className={style.cardContent}>
+                <div className={style.cardValue}>{order.value}</div>
+                <div className={style.cardTitle}>{order.title}</div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   </div>

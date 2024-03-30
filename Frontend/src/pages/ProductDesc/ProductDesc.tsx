@@ -97,7 +97,7 @@ const ProductDesc = () => {
               className={style.product_imagediv}
             // style={{ background: `url(${activeColor})` }}
             >
-              <span className={style.product_path}>{curProduct.category} | {curProduct.brand} | {curProduct.title}</span>
+              <span className={style.product_path}><span style={{opacity: ".8"}}>{curProduct.category} | {curProduct.brand} |</span> <span style={{ fontWeight: "600" }}>{curProduct.title}</span></span>
               <ImageSliderProdDesc imageUrls={shoesColorData} />
             </div>
           </MediaQuery>
@@ -206,6 +206,7 @@ const ProductDesc = () => {
                 Add to Cart
               </Button> */}
               <Button
+                className={style.BuyNowBtn}
                 style={{
                   backgroundColor: "black",
                   padding: "0.5rem 1rem",
@@ -219,6 +220,7 @@ const ProductDesc = () => {
                   fontSize: "1rem",
                   textTransform: "uppercase",
                   fontFamily: "Noir Pro",
+                  cursor: "pointer"
                 }}
                 price={curProduct?.price?.toLocaleString("en-IN")}
                 productID={curProduct._id}

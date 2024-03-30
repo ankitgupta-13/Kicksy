@@ -68,7 +68,7 @@ export default class Chart extends PureComponent {
                     height={400}
                     data={data}
                     margin={{
-                        top: 20,
+                        top: 40,
                         right: 20,
                         bottom: 20,
                         left: 20,

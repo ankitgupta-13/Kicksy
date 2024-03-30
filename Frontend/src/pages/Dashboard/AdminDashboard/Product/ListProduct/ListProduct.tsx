@@ -47,15 +47,19 @@ const ListProduct = () => {
       {userRole === "admin" ?
         <div className={style.sectionTitle}>
           <div className={style.text}>Product</div>
-          <div className={style.text}>Create at</div>
-          <div className={style.text}>Stock</div>
+          <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
+            <div className={style.text}>Create at</div>
+            <div className={style.text}>Stock</div>
+          </div>
         </div>
         :
         <div className={style.sectionTitle}>
           <div className={style.text}>Product</div>
-          <div className={style.text}>Product ID</div>
-          <div className={style.text}>Brand</div>
-          <div className={style.text}>Price</div>
+          <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+            <div className={style.text} style={{paddingLeft: "2%"}}>Product ID</div>
+            <div className={style.text}>Brand</div>
+            <div className={style.text}>Price</div>
+          </div>
         </div>
       }
       {products.map((product, index) => {
