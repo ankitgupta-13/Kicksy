@@ -3,11 +3,15 @@ import { getProducts, totalProductsCount } from "../../../../../api/admin.api";
 import style from "./ListProduct.module.css";
 import { Pagination } from "@mui/material";
 import { ProductDashboardCard } from "../../../../../components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store/store";
 
 const ListProduct = () => {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [productsCount, setProductsCount] = useState(0);
+
+  const userRole = useSelector((state: RootState) => state.auth.userData.role);
 
   const getLimitedProducts = async (page) => {
     const response = await getProducts(page);
@@ -40,11 +44,20 @@ const ListProduct = () => {
 
   return (
     <div className={style.container}>
-      <div className={style.sectionTitle}>
-        <div className={style.text}>Product</div>
-        <div className={style.text}>Create at</div>
-        <div className={style.text}>Stock</div>
-      </div>
+      {userRole === "admin" ?
+        <div className={style.sectionTitle}>
+          <div className={style.text}>Product</div>
+          <div className={style.text}>Create at</div>
+          <div className={style.text}>Stock</div>
+        </div>
+        :
+        <div className={style.sectionTitle}>
+          <div className={style.text}>Product</div>
+          <div className={style.text}>Product ID</div>
+          <div className={style.text}>Brand</div>
+          <div className={style.text}>Price</div>
+        </div>
+      }
       {products.map((product, index) => {
         return (
           <div key={index}>

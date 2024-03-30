@@ -13,6 +13,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
+import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
 import MediaQuery from "react-responsive";
 
 const ProductDesc = () => {
@@ -28,6 +29,7 @@ const ProductDesc = () => {
   const [showSizeTable, setShowSizeTable] = useState(false);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
 
+  const buyNow = "Buy Now";
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
@@ -72,15 +74,9 @@ const ProductDesc = () => {
     try {
       const response = await addToCart(payload);
       if (response.statusCode === 200) {
-        dispatch(
-          addItemToCart({
-            items: response.data.items,
-            totalAmount: response.data.totalAmount,
-          })
-        );
+        dispatch(addItemToCart());
         navigate("/checkout");
       }
-      // dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -93,32 +89,20 @@ const ProductDesc = () => {
           <MediaQuery minWidth={431}>
             <div
               className={style.product_imagediv}
-              style={{ background: `url(${activeColor})` }}
-            ></div>
+              // style={{ background: `url(${activeColor})` }}
+            >
+              <span className={style.product_path}>
+                {curProduct.category} | {curProduct.brand} | {curProduct.title}
+              </span>
+              <ImageSliderProdDesc imageUrls={shoesColorData} />
+            </div>
           </MediaQuery>
           <MediaQuery maxWidth={431}>
-            {/* <img
-              src={activeColor}
-              className={style.imagebox}
-              alt="product-image"
-            /> */}
             <div
               className={style.product_imagediv_phone}
-              style={{ background: `url(${activeColor})` }}
-            ></div>
-          </MediaQuery>
-          <MediaQuery maxWidth={431}>
-            <div className={`${style.cards} ${style.carouselCards}`}>
-              {shoesColorData.map((color, index) => (
-                <ColorCard
-                  key={index}
-                  id={index}
-                  color={color}
-                  activeId={activeColorId || 0}
-                  setActiveId={(id) => setActiveColorId(id)}
-                  setImageSrc={handleImageSrcChange}
-                />
-              ))}
+              style={{ border: "none" }}
+            >
+              <ImageSliderProdDesc imageUrls={shoesColorData} />
             </div>
           </MediaQuery>
           <div className={style.action}>
@@ -133,15 +117,7 @@ const ProductDesc = () => {
               {curProduct.category === "bestseller" && (
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
-              <Button
-                className={style.addtocart}
-                style={{ backgroundColor: "#131313", color: "white" }}
-                onClick={handleAddToCart}
-                type="submit"
-              >
-                <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
-                BUY NOW
-              </Button>
+              <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
             </div>
 
             <div className={style.action_sz_add}>
@@ -215,6 +191,51 @@ const ProductDesc = () => {
                   ))}
                 </select>
               </div>
+
+              <Button
+                style={{
+                  backgroundColor: "black",
+                  padding: "0.5rem 1rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  height: "3rem",
+                  color: "white",
+                  border: "none",
+                  fontSize: "1rem",
+                  textTransform: "uppercase",
+                  fontFamily: "Noir Pro",
+                }}
+                onClick={handleAddToCart}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "20%",
+                  }}
+                >
+                  <span style={{ fontSize: "10px", width: "100%" }}>
+                    Best Price
+                  </span>
+                  <span>₹{curProduct?.price?.toLocaleString("en-IN")}</span>
+                </span>
+                <span
+                  style={{
+                    display: "flex",
+                    width: "inherit",
+                    height: "inherit",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingRight: "13%",
+                    fontWeight: 600,
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Buy Now
+                </span>
+              </Button>
             </div>
 
             <div className={style.sellers}>
@@ -245,29 +266,6 @@ const ProductDesc = () => {
             </MediaQuery>
           </div>
         </div>
-        <MediaQuery minWidth={431}>
-          <div
-            className={`${style.cards} ${style.carouselCards}`}
-            style={{
-              position: "absolute",
-              transform: "translate(0, -50%)",
-              left: "2vw",
-              top: "650px",
-              width: "55vw",
-            }}
-          >
-            {shoesColorData.map((color, index) => (
-              <ColorCard
-                key={index}
-                id={index}
-                color={color}
-                activeId={activeColorId || 0}
-                setActiveId={(id) => setActiveColorId(id)}
-                setImageSrc={handleImageSrcChange}
-              />
-            ))}
-          </div>
-        </MediaQuery>
 
         <div className={style.description}>
           <h1 className={style.productDescTitle}>Product Detail</h1>

@@ -101,6 +101,47 @@
 
 
 
+.CompanyItemBoxTitle {
+    position: absolute;
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-family: "Noir Pro";
+    font-weight: 900;
+    opacity: 0;
+}
+
+.CompanyItemBox:hover .CompanyItemBoxTitle {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    letter-spacing: 3px;
+    color: #fff;
+}
+
+.CompanyItem {
+    transition-duration: .3s;
+}
+
+.CompanyItem {
+    background: linear-gradient( transparent, transparent, transparent, transparent, transparent, transparent, #000, #000, #000, #000, #000) repeat-y;
+    background-size: 100% 200%;
+    animation: slide 3s linear infinite;
+}
+
+.CompanyItemBox:hover {
+    .CompanyItemBoxImg{
+        filter: invert(1);
+        opacity: .3;
+        height: 90%;
+    }
+    .CompanyItem {
+        animation: companyItemBox 1s ease both;
+    }
+    .CompanyItemTitle {
+        opacity: 0;
+    }
+}
+
+
 .NewArrivalsSliderTitle {
     cursor: pointer;
     color: #000;
@@ -200,6 +241,21 @@
 
 .Active {
     border-bottom: 2px solid #000;
+}
+
+
+@keyframes companyItemBox {
+    from {
+        background-position: 190% 0;
+        
+    }
+    65%{
+        background-color: #fff;
+    }
+    to {
+        background-position: 0 100%;
+        background-color: #000;
+    }
 }
 
 @media (max-width: 430px) {

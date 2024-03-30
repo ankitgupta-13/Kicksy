@@ -5,6 +5,7 @@ import { Breadcrumb, Container } from "../../../components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 
+
 const SellerDashboard = () => {
   const { currentSection, currentAction } = useSelector(
     (state: RootState) => state.sellerDashboard
@@ -13,8 +14,8 @@ const SellerDashboard = () => {
     <Container
       sx={{
         flexDirection: "row",
-        gap: "20px",
-      }} 
+        gap: "0px",
+      }}
     >
       <Sidebar />
       <div className={style.right}>

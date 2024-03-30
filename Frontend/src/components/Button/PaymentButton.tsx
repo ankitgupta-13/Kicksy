@@ -51,6 +51,8 @@ const PaymentButton = (props) => {
     <button
       style={{
         backgroundColor: "black",
+        display: "flex",
+        alignItems: "center",
         width: "180px",
         height: "40px",
         color: "white",

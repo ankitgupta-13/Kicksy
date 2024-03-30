@@ -10,7 +10,6 @@
 .sectionTitle {
   width: 100%;
   display: flex;
-  gap: 20px;
   align-items: center;
   padding: 0px 20px;
   border-bottom: 2px solid #cbcbcb;
@@ -30,13 +29,13 @@
 
 .text{
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  padding-left: 2rem;
   width: 25%;
-  line-height: 1.5rem;
-  font-family: "Public Sans", sans-serif;
+  font-family: "Noir Pro", sans-serif;
+  font-weight: 600;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   color: rgb(99, 115, 129);
   font-weight: 600;
 }
