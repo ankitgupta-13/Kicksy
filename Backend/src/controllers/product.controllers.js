@@ -8,6 +8,7 @@ import { Offer } from "../models/offer.model.js";
 import { Seller } from "../models/seller.model.js";
 
 const addProductImage = async (req, res) => {
+  console.log(req.body);
   const productImageUrl = await uploadOnAws(req.files[0].path);
   if (!productImageUrl) {
     return res.send(new ApiError(500, "Upload Failed"));
@@ -17,7 +18,6 @@ const addProductImage = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const { productCode } = req.body;
   const { images } = req.body;
   if (!images || images.length === 0) {
     return res.status(409).send("Please add images");
@@ -126,14 +126,13 @@ const getRecentProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { productID } = req.body;
-    
-    const product = await Product.findOne({ _id: productID })
-    .populate({
-      path:"offers",
-      populate:{
-        path:"sellerID"
-      }
-    })
+
+    const product = await Product.findOne({ _id: productID }).populate({
+      path: "offers",
+      populate: {
+        path: "sellerID",
+      },
+    });
 
     if (!product) {
       return res.json(

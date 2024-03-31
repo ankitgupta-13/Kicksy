@@ -15,8 +15,7 @@ const productRequestSchema = new mongoose.Schema(
       unique: true,
     },
     gender: {
-      type: String,
-      enum: ["M", "F", "K"],
+      type: [String],
       required: true,
     },
     description: {
@@ -66,8 +65,7 @@ const productRequestSchema = new mongoose.Schema(
       {
         type: String,
       },
-    ]
-    
+    ],
   },
   {
     timestamps: true,
@@ -135,7 +133,6 @@ const sellerRequestSchema = new mongoose.Schema(
 );
 
 productRequestSchema.index({ skuID: 1 }, { unique: true });
-
 
 const ProductRequest = new mongoose.model(
   "ProductRequest",

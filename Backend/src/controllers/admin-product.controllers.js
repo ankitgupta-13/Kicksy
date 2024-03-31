@@ -99,9 +99,9 @@ const addProductViaRequest = async (req, res) => {
       $push: { offers: offer._id },
     });
 
-    await Seller.findByIdAndUpdate(seller , {
-      $push:{offers:offer._id}
-    })
+    await Seller.findByIdAndUpdate(seller, {
+      $push: { offers: offer._id },
+    });
 
     product.priceDetail.price = price;
     product.priceDetail.price = seller;
@@ -110,14 +110,11 @@ const addProductViaRequest = async (req, res) => {
     await ProductRequest.findByIdAndDelete(requestID);
 
     return res.json(200, product, "product added successfully!");
-
-  } 
-  catch (err) {
+  } catch (err) {
     console.log(err);
     return handleErr(res, err);
   }
 };
-
 
 /* this api is for declining the product request */
 const declineProductRequest = async (req, res) => {

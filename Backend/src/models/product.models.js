@@ -60,8 +60,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     gender: {
-      type: String,
-      enum: ["M", "F", "K"],
+      type: [String],
       required: true,
     },
     stock: {
