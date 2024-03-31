@@ -17,7 +17,7 @@ const Layout = ({ loading }) => {
           <Cart />
           <Wishlist />
           <Profile />
-          <Footer2/>
+          <Footer/>
         </div>
       )}
     </>
