@@ -128,7 +128,7 @@ const Shop: React.FC = () => {
         </div>
         <div className={style.productlist}>
           {filteredProducts.map((product: any, index: number) => (
-            <div className={style.listitem} key={index}>
+            <div className={style.listitem} key={index} style={{ width: "25vw"}}>
               <ProductCard product={product} />
             </div>
           ))}

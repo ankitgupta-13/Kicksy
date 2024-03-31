@@ -50,7 +50,8 @@
     align-self: center;
     height: 3rem;
     width: 9rem;
-    background: #000000;
+    background-color: #000;
+    background-size: 0% 100%;
     outline: none;
     border: 1px solid #000000;
     color: #FFFFFF;
@@ -58,7 +59,14 @@
     font-size: 1rem;
     font-family: 'Noir Pro', sans-serif;
     cursor: pointer;
-
+    
+}
+.container__shopbtn:hover {
+    background-color: #1a1a1a;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .7) 100%);
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    transition: background-size .6s, background-color .3s;
 }
 
 .container__info {

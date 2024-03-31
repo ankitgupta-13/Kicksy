@@ -1,12 +1,14 @@
 .arrows {
     transition: all .3s;
     cursor: pointer;
-    font-size: 3rem;
-    color: #aaa;
+    font-size: 4rem;
+    color: #777;
     padding: .6rem;
     border-radius: 5rem;
 }
 
 .arrows:hover {
-    background-color: #898989;
+    background-color: #777;
+    opacity: .4;
+    color: #fff;
 }

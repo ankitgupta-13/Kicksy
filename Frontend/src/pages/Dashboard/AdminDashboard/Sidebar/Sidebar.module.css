@@ -3,6 +3,8 @@
 .sidebarBody{
   width: 20%;
   font-family: sans-serif;
+  position: fixed;
+  background-color: #000;
 }
 .Logo {
   width: 90%;
@@ -31,8 +33,22 @@
   letter-spacing: 0.5px;
 }
 
+.AppIcon {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-right: 16px;
+}
+
+.AppText, .AppIcon {
+  color: black;
+  font-family: 'Noir Pro';
+}
 
 .sectionButton {
+  width: 100%;
+  background: white;
   margin: 0px 0px 4px;
   cursor: pointer;
   display: flex;
@@ -58,13 +74,17 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  color: black;
+  font-family: 'Noir Pro';
 }
 
 .actions {
   width: 100%;
+  border-radius: 15px !important;
 }
 
 .actionButton {
+  font-family: 'noir pro';
   display: flex;
   gap: 1rem;
   background-color: white;
@@ -88,6 +108,15 @@
   background-color: rgb(248, 237, 237);
 }
 
+.actionButton:last-child {
+  margin-bottom: 10px;
+  border-radius: 0px 0px 8px 8px;
+}
+.actionButton:first-child {
+  margin-top: -11px;
+}
+
+
 .subButton {
   width: 100%;
   padding: 4px;
@@ -103,4 +132,15 @@ ul {
 
 li {
   cursor: pointer;
+}
+
+@media screen and (max-width: 430px) {
+  .Logo{
+    width: 80%;
+  }
+
+  .sidebarBody{
+    width: 100vw;
+    z-index: 1;
+  }
 }

@@ -48,6 +48,7 @@
 
 .iconList {
   display: flex;
+  justify-content: space-around;
 }
 
 .iconListItems {

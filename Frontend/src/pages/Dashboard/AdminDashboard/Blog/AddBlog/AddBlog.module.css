@@ -22,9 +22,12 @@
 .containerHeading {
   text-transform: capitalize;
   font-size: 30px;
+  margin: 1rem;
+  font-family: "Noir Pro";
 }
 
 .sectionContainerHeading {
+  font-family: "Noir Pro";
   font-size: 28px;
   display: inline;
   border-bottom: 2px solid #adadad;

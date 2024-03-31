@@ -104,7 +104,7 @@ const Header = () => {
               </li>
               {authStatus && (
                 <>
-                  <li>
+                  <li className={style.iconListItems}>
                     <LocalMallIcon onClick={() => navigate("/checkout")} />
                   </li>
                   <li className={style.iconListItems}>

@@ -6,12 +6,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 30rem;
-  width: 20rem;
   border: 1px solid #dfe0e1;
   padding: 20px;
   box-sizing: border-box;
   gap: 0.6rem;
+  width: 27vw;
 }
 
 .shoes__image {
@@ -25,10 +24,11 @@
 }
 
 .shoes__bestseller {
+
   position: relative;
   z-index: 1;
-  top: 4%;
-  left: 74%;
+  top: 1%;
+  left: 68%;
   display: flex;
   text-align: end;
 }
@@ -68,6 +68,10 @@
   justify-content: space-between;
   font-family: "Noir Pro";
   text-transform: capitalize;
+
+  .shoes__name{
+    cursor: pointer;
+  }
 }
 
 .shoes__tags {
@@ -81,6 +85,7 @@
   color: #727373;
   font-size: 0.75rem;
   font-weight: 300;
+  max-height: 1rem;
   max-width: 90%;
   line-height: 1rem;
   font-family: "Noir Pro", Regular;
@@ -151,7 +156,9 @@
   }
 
   .shoes__price {
-    display: none;
+    display: block;
+    font-size: 1rem;
+    color: #000000;
   }
 
   .shoes__tags {

@@ -1,15 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import style from "./ProductDesc.module.css";
 import { useEffect, useState } from "react";
 import { getRecentProducts, addToCart } from "../../api/user.api";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { Button } from "../../components/index";
+import { Button, PaymentButton } from "../../components/index";
 import { useSelector } from "react-redux";
 import ColorCard from "../../components/colorCard/colorCard";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+// import AccordionComp from "../../components/Accordion/AccordionComp";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
@@ -18,7 +19,6 @@ import MediaQuery from "react-responsive";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id: productID } = useParams<{ id: string }>();
   const [products, setProducts] = useState([]);
   const [curProduct, setCurProduct] = useState([]);
@@ -27,6 +27,7 @@ const ProductDesc = () => {
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
   const [showSizeTable, setShowSizeTable] = useState(false);
+  const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
 
   const buyNow = "Buy Now";
@@ -49,6 +50,14 @@ const ProductDesc = () => {
     }
   };
 
+  const handleInStock = () => {
+    if (stock <= 0) {
+      setInStock(false);
+    } else {
+      setInStock(true);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCurrentProduct();
@@ -65,18 +74,15 @@ const ProductDesc = () => {
     setSize(event.target.value);
   };
 
-  const handleAddToCart = async (sellerID) => {
+  const handleAddToCart = async () => {
     const payload = {
       userID,
       productID,
-      sellerID,
     };
     try {
-      const response = await addToCart(payload);
-      if (response.statusCode === 200) {
-        dispatch(addItemToCart());
-        navigate("/checkout");
-      }
+      const result = await addToCart(payload);
+      console.log(result.data.items);
+      dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -103,6 +109,7 @@ const ProductDesc = () => {
               style={{ border: "none" }}
             >
               <ImageSliderProdDesc imageUrls={shoesColorData} />
+
             </div>
           </MediaQuery>
           <div className={style.action}>
@@ -118,6 +125,7 @@ const ProductDesc = () => {
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
               <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
+              
             </div>
 
             <div className={style.action_sz_add}>
@@ -140,7 +148,7 @@ const ProductDesc = () => {
                         position: "absolute",
                         transform: "translate(-50%, -50%)",
                         top: "87vh",
-                        left: "50vw",
+                        left: "50vw", 
                         padding: "10px 20px",
                         borderRadius: "50px",
                         textTransform: "uppercase",
@@ -191,8 +199,16 @@ const ProductDesc = () => {
                   ))}
                 </select>
               </div>
-
+              {/* <Button
+                className={style.addtocart}
+                style={{ backgroundColor: "#131313", color: "white" }}
+                onClick={handleAddToCart}
+                type="submit"
+              >
+                Add to Cart
+              </Button> */}
               <Button
+                className={style.BuyNowBtn}
                 style={{
                   backgroundColor: "black",
                   padding: "0.5rem 1rem",
@@ -206,36 +222,26 @@ const ProductDesc = () => {
                   fontSize: "1rem",
                   textTransform: "uppercase",
                   fontFamily: "Noir Pro",
+                  cursor: "pointer"
                 }}
-                onClick={handleAddToCart}
+                price={curProduct?.price?.toLocaleString("en-IN")}
+                productID={curProduct._id}
               >
-                <span
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "20%",
-                  }}
-                >
-                  <span style={{ fontSize: "10px", width: "100%" }}>
-                    Best Price
-                  </span>
+                <span style={{ display: "flex", flexDirection: "column", width: "20%" }}>
+                  <span style={{fontSize: "10px", width: "100%"}}>Best Price</span>
                   <span>₹{curProduct?.price?.toLocaleString("en-IN")}</span>
                 </span>
-                <span
-                  style={{
-                    display: "flex",
-                    width: "inherit",
-                    height: "inherit",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingRight: "13%",
-                    fontWeight: 600,
-                    letterSpacing: "1px",
-                  }}
-                >
-                  Buy Now
-                </span>
-              </Button>
+                <span style={{
+                  display: "flex",
+                  width: "inherit",
+                  height: "inherit",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingRight: "13%",
+                  fontWeight: 600,
+                  letterSpacing: "1px",
+                }}>Buy Now</span>
+                </Button>
             </div>
 
             <div className={style.sellers}>
@@ -249,10 +255,7 @@ const ProductDesc = () => {
                     />
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
-                  <Button
-                    className={style.priceButton}
-                    onClick={() => handleAddToCart(seller?._id)}
-                  >
+                  <Button className={style.priceButton}>
                     <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
                     <ShoppingCartIcon />
                   </Button>
@@ -261,7 +264,7 @@ const ProductDesc = () => {
             </div>
             <MediaQuery minWidth={431}>
               <div className={style.features}>
-                <AccordionComp isInStock={1} canReturn={true} />
+                <AccordionComp isInStock={inStock} canReturn={true} />
               </div>
             </MediaQuery>
           </div>

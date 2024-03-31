@@ -35,11 +35,17 @@
 .SaleBox {
     height: 335px;
     width: 23%;
-    background: url("../../assets/Footer.png");
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background: url("../../assets/Footer.png");
+    background-size: 2000px;
+    background-position: center;
+    transition: background-size .7s !important;
+}
+.SaleBox:hover {
+    background-size: 5000px;
 }
 
 .SaleBoxContent {
@@ -134,10 +140,11 @@
         height: 90%;
     }
     .CompanyItem {
-        animation: companyItemBox 1s ease both;
+        animation: companyItemBox .6s ease both;
     }
     .CompanyItemTitle {
         opacity: 0;
+        transition-duration: .3s;
     }
 }
 

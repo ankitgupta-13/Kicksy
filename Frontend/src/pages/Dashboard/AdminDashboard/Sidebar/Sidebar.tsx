@@ -14,8 +14,12 @@ import { Container } from "@mui/material";
 import { RootState } from "../../../../redux/store/store";
 import { Logo } from "../../../../components";
 import { useNavigate } from "react-router-dom";
+import SpeedIcon from '@mui/icons-material/Speed';
+import { useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({ss}) => {
+  const [actionOpen, setActionOpen] = useState(true)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { sectionsState } = useSelector(
@@ -57,6 +61,7 @@ const Sidebar = () => {
 
   const handleSectionClick = (sectionName) => {
     dispatch(toggleSection(sectionName));
+    setActionOpen(!actionOpen)
   };
 
   const handleActionClick = (sectionName, actionName) => {
@@ -70,7 +75,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={style.sidebarBody}>
+      <div className={style.sidebarBody} style={{...ss}}>
         {/* <div className={style.Logo}>
           <Logo />
         </div> */}
@@ -86,16 +91,18 @@ const Sidebar = () => {
             borderRight: "1px solid #e0e0e0",
           }}
         >
-          <div onClick={() => navigate("/")}>
-            <img className={style.Logo} src={logo} alt="" />
+          <div onClick={() => navigate("/")} >
+            <img className={style.Logo} src={logo} alt="" style={{ filter: "invert(1)"}}/>
           </div>
           <div>
             <h2 className={style.SideBarSectionsHeading}>Overview</h2>
             <button
               className={style.sectionButton}
               onClick={() => dispatch(closeSection())}
+              style={{ justifyContent: "flex-start"}}
             >
-              App
+              <span className={style.AppIcon}><SpeedIcon /></span>
+              <span className={style.AppText} > Dashboard</span>
             </button>
           </div>
           <div>

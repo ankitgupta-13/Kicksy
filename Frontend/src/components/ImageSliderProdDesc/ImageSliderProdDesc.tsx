@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+
 import { Style } from "@mui/icons-material";
 import style from "./ImageSliderProdDesc.module.css";
 
@@ -50,7 +53,7 @@ const ImageSliderProdDesc = ({ imageUrls }: ImageSliderProps) => {
             setImageIndex(imageIndex > 0 ? imageIndex - 1 : imageUrls.length - 1);
           }}
         >
-          <ArrowBackIosNewIcon className={style.arrows} style={{position: "absolute", left: "0"}} />
+          <IoIosArrowBack className={style.arrows} style={{position: "absolute", left: "0", paddingLeft: ".3rem"}} />
         </div>
         <div
           onClick={() => {
@@ -58,7 +61,7 @@ const ImageSliderProdDesc = ({ imageUrls }: ImageSliderProps) => {
           }}
         >
           {" "}
-          <ArrowForwardIosIcon className={style.arrows} style={{position: "absolute", right: "0", cursor: "pointer", fontSize: "3rem", color: "#aaa", padding: ".6rem", borderRadius: "5rem"}} />
+          <IoIosArrowForward className={style.arrows} style={{position: "absolute", right: "0", paddingRight: ".3rem" }} />
         </div>
       </div>
     </div>
