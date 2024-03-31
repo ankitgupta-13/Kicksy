@@ -18,7 +18,7 @@ const Profile = () => {
   };
 
   return (
-    <div id="mySidenav" className={`${style.sidenav} ${isProfileOpen && authStatus ? style.open : ''}`}>
+    <div id="mySidenav" className={`${style.sidenav} ${isProfileOpen && authStatus ? style.open : ''}`} style={{ opacity: isProfileOpen ? 1 : 0 }}>
       <div className={style.head}>
         <h2>Profile</h2>
         <a className={style.closebtn} onClick={handleToggleProfileVisibility}>&times;</a>

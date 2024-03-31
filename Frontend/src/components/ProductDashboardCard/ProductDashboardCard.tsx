@@ -37,7 +37,7 @@ const ProductDashboardCard = ({ data, type }) => {
         })
       );
   };
-
+  
   return (
     <div onClick={handleShowProduct}>
       {userRole === "admin" ? (

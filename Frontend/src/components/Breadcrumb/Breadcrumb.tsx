@@ -23,11 +23,6 @@ const Breadcrumb = ({ currentSection, currentAction }) => {
       <div className={style.container}>
         <div className={style.header}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            {/* {search ?
-            <CloseIcon onClick={() => setSearch(!search)} />
-            :
-            <SearchIcon onClick={() => setSearch(!search)} />
-          } */}
             <div>
               {search ?
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -50,19 +45,21 @@ const Breadcrumb = ({ currentSection, currentAction }) => {
 
           </div>
         </div>
-        <div className={style.currentSectionText} style={{ marginTop: "-10px" }}>Hello, Welcome Back👋</div>
-        {currentSection && (
-          <div className={style.step}>
-            <div className={style.circle}></div>
-            <div className={style.currentSectionText}> {currentSection}</div>
-          </div>
-        )}
-        {currentAction && (
-          <div className={style.step}>
-            <div className={style.circle}></div>
-            <div className={style.currentSectionText}>{currentAction}</div>
-          </div>
-        )}
+        <div style={{display:"flex", alignItems:"center"}}>
+          <div className={style.currentSectionText} style={{ marginTop: "-10px" }}>Hello, Welcome Back👋</div>
+          {currentSection && (
+            <div className={style.step}>
+              <div className={style.circle}></div>
+              <div className={style.currentSectionText}> {currentSection}</div>
+            </div>
+          )}
+          {currentAction && (
+            <div className={style.step}>
+              <div className={style.circle}></div>
+              <div className={style.currentSectionText}>{currentAction}</div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

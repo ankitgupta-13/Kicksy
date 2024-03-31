@@ -96,9 +96,8 @@ const addImagesToProductRequest = async (req, res) => {
 };
 
 const productAddRequest = async (req, res) => {
-
-  // for duplicate key error in productCode field , 
-  // use this command db.productrequests.dropIndex("productCode_1") to get rid of it. 
+  // for duplicate key error in productCode field ,
+  // use this command db.productrequests.dropIndex("productCode_1") to get rid of it.
 
   const { userID } = req.body;
   try {
@@ -146,14 +145,18 @@ const addOfferToProduct = async (req, res) => {
     );
     if (!product) return res.json(new ApiError(422, "Invalid productID"));
 
-    const sellerCheck = product.offers.findIndex((item)=>{
-
-      return item.sellerID.equals(sellerID)
-    })
+    const sellerCheck = product.offers.findIndex((item) => {
+      return item.sellerID.equals(sellerID);
+    });
 
     // console.log(sellerCheck);
 
-    if(sellerCheck !== -1) return res.json(new ApiResponse(400 ,"Offer on this product, already exists!" ))
+    // console.log(sellerCheck);
+
+    if (sellerCheck !== -1)
+      return res.json(
+        new ApiResponse(400, "Offer on this product, already exists!")
+      );
 
     const offer = new Offer({
       productID,

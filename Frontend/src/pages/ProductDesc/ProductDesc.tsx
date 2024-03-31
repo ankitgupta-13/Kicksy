@@ -7,7 +7,7 @@ import { Button, PaymentButton } from "../../components/index";
 import { useSelector } from "react-redux";
 import ColorCard from "../../components/colorCard/colorCard";
 import { useDispatch } from "react-redux";
-import { addItem } from "../../redux/reducers/cartSlice";
+import { addItemToCart } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 // import AccordionComp from "../../components/Accordion/AccordionComp";
@@ -82,7 +82,7 @@ const ProductDesc = () => {
     try {
       const result = await addToCart(payload);
       console.log(result.data.items);
-      dispatch(addItem(result.data.items));
+      dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -95,9 +95,11 @@ const ProductDesc = () => {
           <MediaQuery minWidth={431}>
             <div
               className={style.product_imagediv}
-            // style={{ background: `url(${activeColor})` }}
+              // style={{ background: `url(${activeColor})` }}
             >
-              <span className={style.product_path}><span style={{opacity: ".8"}}>{curProduct.category} | {curProduct.brand} |</span> <span style={{ fontWeight: "600" }}>{curProduct.title}</span></span>
+              <span className={style.product_path}>
+                {curProduct.category} | {curProduct.brand} | {curProduct.title}
+              </span>
               <ImageSliderProdDesc imageUrls={shoesColorData} />
             </div>
           </MediaQuery>
@@ -146,7 +148,7 @@ const ProductDesc = () => {
                         position: "absolute",
                         transform: "translate(-50%, -50%)",
                         top: "87vh",
-                        left: "50vw",
+                        left: "50vw", 
                         padding: "10px 20px",
                         borderRadius: "50px",
                         textTransform: "uppercase",

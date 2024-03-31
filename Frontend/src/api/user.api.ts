@@ -10,11 +10,9 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const findByEmail = async (payload:{
-  email:String
-}) => {
+export const findByEmail = async (payload: { email: String }) => {
   try {
-    const { data } = await api.post("/user/fetch-by-email" , payload);
+    const { data } = await api.post("/user/fetch-by-email", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
@@ -25,8 +23,10 @@ export const findByEmail = async (payload:{
 export const addToCart = async (payload: {
   userID: string;
   productID: string;
+  sellerID: string;
 }) => {
   try {
+    console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);
     return data;
   } catch (error: any) {
@@ -68,7 +68,7 @@ export const getAllBlogs = async () => {
 
 export const getUserCartItems = async (payload) => {
   try {
-    const { data } = await api.get("/user/get-user-cart", payload);
+    const { data } = await api.post("/user/get-user-cart", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

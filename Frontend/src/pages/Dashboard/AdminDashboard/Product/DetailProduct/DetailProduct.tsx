@@ -65,7 +65,11 @@ const DetailProduct = () => {
         productPrice: price,
         quantity,
       });
-      console.log(response);
+      if (response.statusCode === 200) {
+        alert("Offer Added Successfully");
+      } else if (response.statusCode === 400) {
+        alert("Offer Already Exist!");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -135,21 +139,19 @@ const DetailProduct = () => {
                 </Button>
               ) : (
                 <div>
-                  <form>
-                    <input
-                      label="Add Price"
-                      type="Number"
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                    <Input
-                      label="Quantity"
-                      type="Number"
-                      onChange={(e) => setQuantity(e.target.value)}
-                    />
-                    <Button type="submit" onClick={handleAddOffer}>
-                      Add
-                    </Button>
-                  </form>
+                  <Input
+                    label="Add Price"
+                    type="Number"
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                  <Input
+                    label="Quantity"
+                    type="Number"
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                  <Button type="submit" onClick={handleAddOffer}>
+                    Add
+                  </Button>
                 </div>
               )}
             </div>

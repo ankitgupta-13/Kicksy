@@ -1,13 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeItem,
   toggleCartVisibility,
-  setInitialCartItems,
 } from "../../redux/reducers/cartSlice";
 import style from "./Cart.module.css";
 import CartItem from "../CartItem/CartItem";
-import { Button, PaymentButton } from "..";
+import { Button, CartItemCard, PaymentButton } from "..";
 import { getUserCartItems } from "../../api/user.api";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store/store";
@@ -15,45 +14,44 @@ import { RootState } from "../../redux/store/store";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
   const isCartOpen = useSelector((state) => state.cart.isOpen);
-  const user = useSelector((state) => state.auth.userData);
+  const user = useSelector((state: RootState) => state.auth.userData);
+  const [cartItems, setCartItems] = useState([]);
   const userID = user?._id;
-  // console.log((cartItems)
+  console.log(userID);
   const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
   };
   const handleCart = async (userID) => {
     const response = await getUserCartItems({ userID });
+    setCartItems(response.data.items);
     console.log(response);
-    if (response.statusCode === 200)
-      dispatch(setInitialCartItems(response.data.items));
+    if (response.statusCode === 200) console.log(response.data.items);
   };
   useEffect(() => {
+    console.log(typeof cartItems);
     handleCart(userID);
   }, []);
 
   return (
-    // <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
-    //   <div className={style.head}>
-    //     <h2>Cart</h2>
-    //     <a className={style.closebtn} onClick={handleToggleCartVisibility}>
-    //       &times;
-    //     </a>
-    //   </div>
-    //   <div className={style.itemlist}>
-    //     {cartItems?.map((item) => (
-    //       <CartItem productID={item.product} quantity={item.qty} />
-    //     ))}
-    //   </div>
-    //   <div className={style.ButtonContainer}>
-    //     <Button className={style.button} onClick={() => navigate("/checkout")}>
-    //       Checkout
-    //       {/* <PaymentButton amount={100} /> */}
-    //     </Button>
-    //   </div>
-    // </div>
-    <div></div>
+    <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
+      <div className={style.head}>
+        <h2>Cart</h2>
+        <a className={style.closebtn} onClick={handleToggleCartVisibility}>
+          &times;
+        </a>
+      </div>
+      <div className={style.itemlist}>
+        {cartItems?.map((item) => (
+          <CartItemCard item={item} />
+        ))}
+      </div>
+      <div className={style.ButtonContainer}>
+        <Button className={style.button} onClick={() => navigate("/checkout")}>
+          Checkout
+        </Button>
+      </div>
+    </div>
   );
 };
 
