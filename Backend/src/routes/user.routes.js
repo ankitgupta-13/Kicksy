@@ -17,7 +17,7 @@ import {
   addListName,
   addToCart,
   addToList,
-  deleteFromCart,
+  // deleteFromCart,
   removeFromList,
   removeList,
   removeFromCart,
@@ -48,7 +48,7 @@ router.route("/fetch-by-email").post(findByEmail);
 router.route("/add-to-cart").post(addToCart);
 router.route("/remove-from-cart").post(removeFromCart);
 router.route("/get-user-cart").post(getCartByUser);
-router.route("/delete-from-cart").post(deleteFromCart);
+// router.route("/delete-from-cart").post(deleteFromCart);
 router.route("/add-list-name").post(addListName); 
 router.route("/add-to-list").post(addToList);
 router.route("/remove-list").post(removeList);

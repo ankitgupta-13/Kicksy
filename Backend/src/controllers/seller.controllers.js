@@ -166,20 +166,24 @@ const addOfferToProduct = async (req, res) => {
     });
 
     await offer.save();
-    console.log(offer._id);
+    // console.log(offer._id);
 
     await Product.findByIdAndUpdate(productID, {
       $push: { offers: offer._id },
     });
 
-    let price = [];
-    product.offers.forEach((offer) => {
-      price.push(offer.price);
-    });
+    // let price = [];
+    // product.offers.forEach((offer) => {
+    //   price.push(offer.price);
+    // });
 
-    price.sort((a, b) => a - b);
-    // console.log(price[0]);
-    product.price = price[0];
+    // price.sort((a, b) => a - b);
+
+    if(product.price>productPrice){
+      product.priceDetail.price = productPrice
+      product.priceDetail.sellerID = sellerID
+    }
+
     await product.save();
 
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });

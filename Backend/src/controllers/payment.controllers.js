@@ -9,6 +9,7 @@ import { Product } from "../models/product.models.js";
 import { Cart } from "../models/cart.models.js";
 import { Address } from "../models/address.model.js";
 import { User } from "../models/user.models.js";
+import { Seller } from "../models/seller.model.js";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -47,6 +48,14 @@ const verifyPayment = async (req, res) => {
     addressDetails,
     products, // [{productID,quantity,sellerID}]
   } = req.body;
+  
+
+
+  /*
+  
+    variable products will be an array of objects containing productID , sellerID
+
+  */ 
 
   /*
   
