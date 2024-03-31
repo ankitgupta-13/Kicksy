@@ -7,6 +7,7 @@ import { Avatar } from "@mui/material";
 import Profile from "../Profile/Profile";
 import { toggleProfileVisibility } from "../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
+import MediaQuery from "react-responsive";
 
 const Breadcrumb = ({ currentSection, currentAction }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Breadcrumb = ({ currentSection, currentAction }) => {
               }
             </div>
           </div>
-          <div>
+          <div style={{ position: "absolute", right: "2rem" }}>
             <Profile />
             <div>
               <Avatar onClick={handleToggleProfileVisibility} className={style.avatar} alt="Remy Sharp" />
@@ -45,17 +46,19 @@ const Breadcrumb = ({ currentSection, currentAction }) => {
 
           </div>
         </div>
-        <div style={{display:"flex", alignItems:"center"}}>
-          <div className={style.currentSectionText} style={{ marginTop: "-10px" }}>Hello, Welcome Back👋</div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <MediaQuery minWidth={430}>
+            <div className={style.currentSectionText} style={{ marginTop: "-10px" }}>Hi, Welcome Back👋</div>
+          </MediaQuery>
           {currentSection && (
             <div className={style.step}>
-              <div className={style.circle}></div>
+              <div className={style.circle}>&#8226;</div>
               <div className={style.currentSectionText}> {currentSection}</div>
             </div>
           )}
           {currentAction && (
             <div className={style.step}>
-              <div className={style.circle}></div>
+              <div className={style.circle}>&#8226;</div>
               <div className={style.currentSectionText}>{currentAction}</div>
             </div>
           )}

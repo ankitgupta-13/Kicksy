@@ -6,7 +6,7 @@ const BlogCard = ({ blog }) => {
   const createdDate = blog?.createdAt?.split("T")[0];
   return (
     <div className={style.card} onClick={() => navigate(`/blogpage?blog=${blog._id}`)}>
-      <img src={blog.imageurl} className={style.image} alt="Blog image" />
+      <div className={style.image} style={{backgroundImage: `url(${blog.imageurl})`}}></div>
       <div className={style.card__info}>
         <a>{blog.category}</a>
         <span className={style.card__info_entity}>&#9679;</span>

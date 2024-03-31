@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 
 import Chart from "../../../../components/Chart/Chart.tsx";
 import PiChart from "../../../../components/PiChart/PiChart.tsx";
-import { Bar, Line } from 'react-chartjs-2';
 import icon1 from "../../../../assets/salesDbI.png";
 import icon2 from "../../../../assets/teamworkDbI.png";
 import icon3 from "../../../../assets/trolleyDbI.png";

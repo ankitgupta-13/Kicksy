@@ -4,7 +4,7 @@ import { addBlog } from "../../../../../api/admin.api";
 import { Button, Input } from "../../../../../components";
 
 const AddBlog = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const handleAddBlog = async (data: any) => {
     const { content, blogTitle, image, category } = data;
@@ -15,6 +15,7 @@ const AddBlog = () => {
     formData.append("image", image[0]);
     try {
       const response = await addBlog(formData);
+      reset();
       return response;
     } catch (error) {
       console.error("Error calling addBlog API:", error);
@@ -26,14 +27,14 @@ const AddBlog = () => {
     <div>
       <h1 className={style.containerHeading}>Add a new blog</h1>
       <form onSubmit={handleSubmit(handleAddBlog)}>
-      <div className={style.section}>
+        <div className={style.section}>
           <div className={style.SectionContainer}>
             <h1 className={style.sectionContainerHeading}>Blog</h1>
           </div>
 
           <div className={style.sub}>
             <div className={style.inputBox}>
-                <Input
+              <Input
                 style={{
                   marginTop: "5px",
                   border: "none",
@@ -47,7 +48,7 @@ const AddBlog = () => {
               />
             </div>
             <div className={style.inputBox}>
-                <Input
+              <Input
                 style={{
                   marginTop: "5px",
                   border: "none",
@@ -60,22 +61,22 @@ const AddBlog = () => {
                 {...register("category", { required: "Blog category is required" })}
               />
             </div>
-              <div className={style.inputBox}>
+            <div className={style.inputBox}>
               <label className={style.label}>Content</label>
-                <textarea
-                  style={{
-                    marginTop: "5px",
-                    border: "none",
-                    borderBottom: "1px solid var(--Border-2, #CCC)",
-                    backgroundColor: "rgb(249, 249, 249)",
-                    height: "250px", width: "100%",
-                  }}
-                  className={style.input}
-                  placeholder="Blog Content"
-                  {...register("content", { required: "Content is required" })}
-                />
-              </div>
-              <div className={style.inputBox}>
+              <textarea
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                  height: "250px", width: "100%",
+                }}
+                className={style.input}
+                placeholder="Blog Content"
+                {...register("content", { required: "Content is required" })}
+              />
+            </div>
+            <div className={style.inputBox}>
               <div className={style.image}>
                 <Input
                   style={{

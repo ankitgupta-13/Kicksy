@@ -16,7 +16,7 @@
 .step {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
   margin-right: 2rem;
   margin-top: -10px;
 }
@@ -25,11 +25,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 15px;
-  width: 4px;
+  margin-left: 15px;
+  /* width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: rgb(145, 158, 171);
+  background-color: rgb(145, 158, 171); */
 }
 
 .currentSectionText{
@@ -40,7 +40,6 @@
   font-weight: 600;
 }
 .header{
-  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,5 +76,23 @@
   .avatar{
     cursor: pointer;
     color: #000;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .header{
+    justify-content: flex-start !important;
+    padding: 0;
+  }
+  .searchBar{
+    width: 70vw !important;
+  }
+  .step{
+    max-width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .currentSectionText{
+    font-size: 20px;
   }
 }

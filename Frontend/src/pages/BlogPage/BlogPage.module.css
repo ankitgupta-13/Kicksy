@@ -23,11 +23,8 @@
     word-spacing: 0.1rem;
 }
 
-.blogsection {
-    margin: 50px;
-}
 .BlogImgSection{
-width: 100%;
+width: 100vw;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -35,17 +32,16 @@ align-items: center;
 
 .blogimage {
     display: flex;
-    width: 100%;
-    height: 600px;
-    object-fit: contain;
-    aspect-ratio: 3/2;
+    width: 100vw;
+    margin-bottom: 2rem;
 }
 
 .blogcontent {
-    margin: 20px 120px 20px 120px;
+    padding: 20px 220px 100px 220px;
     display: flex;
     justify-self: center;
     align-items: center;
+    font-size: 1.4rem;
 }
 
 .recent_blogs {

@@ -81,6 +81,25 @@
   gap: 5px;
 }
 
+.loginbtn a {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  padding: 20px 0px;
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .3s;
+}
+.loginbtn a:hover {
+  text-decoration: underline;
+  font-size: 1.1rem;
+}
+
 @media (max-width: 430px) {
   .Body {
     display: flex;
@@ -127,13 +146,16 @@
   .logoalt {
     display: block;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 27px;
     margin-top: 15px;
+    width: 100%;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-family: 'Noir Pro';
+    font-family: 'Noir Pro' !important;
   }
+
   .content2 Link{
     text-align: center;
     width: 100%;

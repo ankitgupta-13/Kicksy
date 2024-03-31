@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, DefaultTooltipContent, Tooltip } from 'recharts';
 import style from "./PiChart.module.css"
 
 const data = [
@@ -29,7 +29,7 @@ export default class PiChart extends PureComponent {
     render() {
         return (
             <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={500} height={500} style={{ fontSize: "1rem", outline: "none"}}>
+                <PieChart className={style.chart} width={500} height={500} style={{ fontSize: "1rem", outline: "none"}}>
                     <Pie
                         className={style.cell}
                         data={data}
@@ -39,12 +39,14 @@ export default class PiChart extends PureComponent {
                         label={renderCustomizedLabel}
                         outerRadius={160}
                         fill="#8884d8"
-                        dataKey="value" 
+                        dataKey="value"
+                        
                     >
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} style={{ outline: "none" }} />
-                        ))}
+                            ))}
                     </Pie>
+                            <Tooltip content={<DefaultTooltipContent style={{ fontSize: "1rem" }} />}/>
                 </PieChart>
             </ResponsiveContainer>
         );

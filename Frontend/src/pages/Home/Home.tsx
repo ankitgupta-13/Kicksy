@@ -56,7 +56,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={style.Body}>
+    <div className={style.Body} style={{fontFamily: "Noir Pro"}}>
       <SliderCard />
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
@@ -187,7 +187,7 @@ const Home = () => {
           <div className={style.cards}>
             {products.map((product: Object, index: number) => {
               return (
-                <div className={style.BestSellerCard} key={index}>
+                <div className={style.BestSellerCard} key={index} style={{width: "18rem"}}>
                   <ProductCard product={product} />
                 </div>
               );

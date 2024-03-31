@@ -27,7 +27,7 @@ function HeroSection() {
                         <h1 className={style.CenterBoxTitle}>Designed to<br />
                             complement your<br />
                             everyday life</h1>
-                        <p className={style.CenterBoxContent}>
+                        <p className={style.CenterBoxContent}  style={{fontFamily: "Noir Pro", fontSize: ".9rem"}}>
                             Lorem ipsum dolor sit amet consectetur. Aliquet risus aliquam ac pretium viverra amet ornare. Integer elementum adipiscing vel ut ut natoque congue tortor id. Vulputate pellentesque tempor ultricies nibh eu. Imperdiet vitae fusce proin posuere faucibus ac dignissim eget.
                         </p>
                     </div>
