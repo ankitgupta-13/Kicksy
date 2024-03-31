@@ -83,6 +83,11 @@ const addProductViaRequest = async (req, res) => {
       seller,
       tags,
       images,
+      stock,
+      bestPrice: {
+        price,
+        sellerID: seller,
+      },
     });
     await product.save();
 
@@ -102,10 +107,6 @@ const addProductViaRequest = async (req, res) => {
     await Seller.findByIdAndUpdate(seller, {
       $push: { offers: offer._id },
     });
-
-    product.priceDetail.price = price;
-    product.priceDetail.price = seller;
-    await product.save();
 
     await ProductRequest.findByIdAndDelete(requestID);
 

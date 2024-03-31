@@ -20,8 +20,9 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    price: {
+    bestPrice: {
       type: priceSchema,
+      required: true,
     },
     offers: [
       {

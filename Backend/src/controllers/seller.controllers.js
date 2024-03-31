@@ -98,7 +98,6 @@ const addImagesToProductRequest = async (req, res) => {
 const productAddRequest = async (req, res) => {
   // for duplicate key error in productCode field ,
   // use this command db.productrequests.dropIndex("productCode_1") to get rid of it.
-  console.log(req.body);
   const { userID } = req.body;
   try {
     const { images } = req.body;
