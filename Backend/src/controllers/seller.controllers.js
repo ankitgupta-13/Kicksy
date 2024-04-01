@@ -98,7 +98,6 @@ const addImagesToProductRequest = async (req, res) => {
 const productAddRequest = async (req, res) => {
   // for duplicate key error in productCode field ,
   // use this command db.productrequests.dropIndex("productCode_1") to get rid of it.
-
   const { userID } = req.body;
   try {
     const { images } = req.body;
@@ -179,11 +178,13 @@ const addOfferToProduct = async (req, res) => {
 
     // price.sort((a, b) => a - b);
 
-    if(product.price>productPrice){
-      product.priceDetail.price = productPrice
-      product.priceDetail.sellerID = sellerID
+    if (product.bestPrice.price > productPrice) {
+      product.bestPrice.price = productPrice;
+      product.bestPrice.sellerID = sellerID;
+      product.bestPrice.offerID = offer._id;
+      await product.save();
     }
-
+    
     await product.save();
 
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });

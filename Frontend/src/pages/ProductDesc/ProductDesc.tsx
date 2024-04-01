@@ -16,6 +16,7 @@ import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
 import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
 import MediaQuery from "react-responsive";
+import { Alert } from "@mui/material";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const ProductDesc = () => {
   const [showSizeTable, setShowSizeTable] = useState(false);
   const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
+
+  const [success, setSuccess] = useState("");
 
   const buyNow = "Buy Now";
   const handleImageSrcChange = (src: string) => {
@@ -74,14 +77,19 @@ const ProductDesc = () => {
     setSize(event.target.value);
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (sellerID: any) => {
     const payload = {
       userID,
       productID,
+      sellerID,
     };
+
+    console.log(curProduct);
+  
     try {
       const result = await addToCart(payload);
-      console.log(result.data.items);
+      // console.log(result);
+      setSuccess(result.message);
       dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -109,7 +117,6 @@ const ProductDesc = () => {
               style={{ border: "none" }}
             >
               <ImageSliderProdDesc imageUrls={shoesColorData} />
-
             </div>
           </MediaQuery>
           <div className={style.action}>
@@ -124,8 +131,9 @@ const ProductDesc = () => {
               {curProduct.category === "bestseller" && (
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
-              <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
-              
+              <h1>
+                Rs. {curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
+              </h1>
             </div>
 
             <div className={style.action_sz_add}>
@@ -148,7 +156,7 @@ const ProductDesc = () => {
                         position: "absolute",
                         transform: "translate(-50%, -50%)",
                         top: "87vh",
-                        left: "50vw", 
+                        left: "50vw",
                         padding: "10px 20px",
                         borderRadius: "50px",
                         textTransform: "uppercase",
@@ -222,30 +230,50 @@ const ProductDesc = () => {
                   fontSize: "1rem",
                   textTransform: "uppercase",
                   fontFamily: "Noir Pro",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
-                price={curProduct?.price?.toLocaleString("en-IN")}
+                price={curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
                 productID={curProduct._id}
+                onClick={() => {
+                  console.log(curProduct);
+                  handleAddToCart(curProduct.bestPrice.sellerID);
+                }}
               >
-                <span style={{ display: "flex", flexDirection: "column", width: "20%" }}>
-                  <span style={{fontSize: "10px", width: "100%"}}>Best Price</span>
-                  <span>₹{curProduct?.price?.toLocaleString("en-IN")}</span>
+                <span
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "20%",
+                  }}
+                >
+                  <span style={{ fontSize: "10px", width: "100%" }}>
+                    Best Price
+                  </span>
+                  <span>
+                    ₹{curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
+                  </span>
                 </span>
-                <span style={{
-                  display: "flex",
-                  width: "inherit",
-                  height: "inherit",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingRight: "13%",
-                  fontWeight: 600,
-                  letterSpacing: "1px",
-                }}>Buy Now</span>
-                </Button>
+                <span
+                  style={{
+                    display: "flex",
+                    width: "inherit",
+                    height: "inherit",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingRight: "13%",
+                    fontWeight: 600,
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Buy Now
+                </span>
+              </Button>
             </div>
 
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
+                <div>
+
                 <div className={style.sellerCard}>
                   <div className={style.sLogoName}>
                     <img
@@ -255,13 +283,35 @@ const ProductDesc = () => {
                     />
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
-                  <Button className={style.priceButton}>
+                  <Button
+                    className={style.priceButton}
+                    onClick={() => {
+                      handleAddToCart(seller.sellerID._id);
+                    }}
+                  >
                     <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
                     <ShoppingCartIcon />
                   </Button>
+                  </div>
+                  
+
                 </div>
               ))}
+            {success ? (
+                    <Alert
+                      onClose={() => {
+                        setSuccess("");
+                      }}
+                      // style={{ margin: "20px 0 0 0" }}
+                      severity="success"
+                    >
+                      {success}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}  
             </div>
+          
             <MediaQuery minWidth={431}>
               <div className={style.features}>
                 <AccordionComp isInStock={inStock} canReturn={true} />

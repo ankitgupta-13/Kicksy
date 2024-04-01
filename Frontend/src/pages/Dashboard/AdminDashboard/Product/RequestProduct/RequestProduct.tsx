@@ -24,11 +24,21 @@ const RequestProduct = () => {
     <div className={style.container}>
       <div className={style.sectionTitle}>
         <div className={style.text}>Product</div>
-        <div className={style.text}>Create at</div>
+        <div className={style.text}>Create At</div>
         <div className={style.text}>Stock</div>
+        <div className={style.text}>Price</div>
       </div>
       {requestList.length === 0 ? (
-        <div>No Request Found</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+            padding:"20px"
+          }}
+        >
+          No Request Found
+        </div>
       ) : (
         requestList.map((request, index) => {
           return (

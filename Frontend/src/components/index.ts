@@ -6,6 +6,7 @@ import Container from "./Container/Container";
 import Button from "./Button/Button.tsx";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
+import MultipleSelect from "./Select/MultipleSelect.tsx";
 import PaymentButton from "./Button/PaymentButton.tsx";
 import BlogUploadButton from "./Button/uploadButton";
 import colorCard from "./colorCard/colorCard.tsx";
@@ -26,6 +27,7 @@ export {
   Button,
   Input,
   Select,
+  MultipleSelect,
   PaymentButton,
   BlogUploadButton,
   colorCard,

@@ -7,14 +7,16 @@ import {
 } from "../../../../../api/seller.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store/store";
-import { Chip } from "@mui/material";
-import MultipleSelectChip from "../../../../../components/Input/multipleSelect";
+import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 const CreateProduct = () => {
   const { register, handleSubmit, watch } = useForm();
   const userID = useSelector((state: RootState) => state.auth.userData._id);
+  const productID = uuid().slice(0, 8).toUpperCase();
 
   const handleCreateProduct = async (data: any) => {
+    // console.log(watch(data.gender[0]));
     const { images } = data;
     const imageUrls = [];
     for (const image of images) {
@@ -93,16 +95,11 @@ const CreateProduct = () => {
 
           <div className={style.sub}>
             <div className={style.inputBox}>
-              <Input
-                style={{
-                  marginTop: "5px",
-                  border: "none",
-                  borderBottom: "1px solid var(--Border-2, #CCC)",
-                  backgroundColor: "rgb(249, 249, 249)",
-                }}
-                label="Product Code"
+              <label>Product Code</label>
+              <input
                 type="text"
-                placeholder="Product Code"
+                // value={productID}
+                defaultValue={productID}
                 {...register("skuID", { required: true })}
               />
             </div>
@@ -129,28 +126,22 @@ const CreateProduct = () => {
               />
             </div>
             <div className={style.inputBox}>
-              <Select
-                style={{ marginTop: "5px" }}
-                label="Size"
-                options={["S", "M", "L", "XL", "XXL"]}
+              <Input
+                type="checkbox"
+                value={1}
+                label="1"
                 {...register("size", { required: true })}
               />
-
-              <MultipleSelectChip
-                label="Size"
-                names={[
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                ]}
+              <Input
+                type="checkbox"
+                value={2}
+                label="2"
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
+                value={3}
+                label="3"
                 {...register("size", { required: true })}
               />
             </div>
@@ -174,34 +165,31 @@ const CreateProduct = () => {
             <label className={style.GenderHeading}>Gender</label>
 
             <div className={style.RadioDiv}>
-              <label htmlFor="M">Men</label>
-              <input
+              <Input
                 className={style.InputRadio}
-                type="radio"
+                label="Men"
+                type="checkbox"
                 value="M"
-                id="M"
                 {...register("gender", { required: true })}
               />
             </div>
 
             <div className={style.RadioDiv}>
-              <label htmlFor="F">Women</label>
-              <input
+              <Input
+                label="Women"
                 className={style.InputRadio}
-                type="radio"
+                type="checkbox"
                 value="F"
-                id="F"
                 {...register("gender", { required: true })}
               />
             </div>
 
             <div className={style.RadioDiv}>
-              <label htmlFor="K">Kids</label>
-              <input
+              <Input
+                label="Kids"
                 className={style.InputRadio}
-                type="radio"
+                type="checkbox"
                 value="K"
-                id="K"
                 {...register("gender", { required: true })}
               />
             </div>
@@ -213,6 +201,18 @@ const CreateProduct = () => {
           </div>
 
           <div className={style.sub}>
+            {/* <div className={style.inputBox}>
+              <input
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
+                label="Product Tags"
+                // {...register("tags", { required: true })}
+              />
+            </div> */}
             <div className={style.inputBox}>
               <Input
                 style={{

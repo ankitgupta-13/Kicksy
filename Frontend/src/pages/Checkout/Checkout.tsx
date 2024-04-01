@@ -14,8 +14,8 @@ const Checkout = () => {
   useEffect(() => {
     (async () => {
       const response = await getUserCartItems({ userID });
-      setCartItems(response.data.items);
-      console.log(response.data.items);
+      console.log(response);
+      setCartItems(response.data?.items);
     })();
   }, []);
   const handleAddress = () => {};

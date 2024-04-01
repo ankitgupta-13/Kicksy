@@ -50,6 +50,7 @@ const ListProduct = () => {
           <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
             <div className={style.text}>Create at</div>
             <div className={style.text}>Stock</div>
+            <div className={style.text}>Price</div>
           </div>
         </div>
         :
