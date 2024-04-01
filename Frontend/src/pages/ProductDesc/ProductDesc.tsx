@@ -74,14 +74,19 @@ const ProductDesc = () => {
     setSize(event.target.value);
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (sellerID:any) => {
     const payload = {
       userID,
       productID,
+      sellerID,
+      
     };
+
+    console.log(curProduct)
+
     try {
       const result = await addToCart(payload);
-      console.log(result.data.items);
+      console.log(result.data);
       dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -124,7 +129,7 @@ const ProductDesc = () => {
               {curProduct.category === "bestseller" && (
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
-              <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
+              <h1>Rs. {curProduct?.bestPrice?.price?.toLocaleString("en-IN")}</h1>
               
             </div>
 
@@ -224,12 +229,16 @@ const ProductDesc = () => {
                   fontFamily: "Noir Pro",
                   cursor: "pointer"
                 }}
-                price={curProduct?.price?.toLocaleString("en-IN")}
+                price={curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
                 productID={curProduct._id}
+                onClick={()=>{
+                  console.log(curProduct)
+                  handleAddToCart(curProduct.bestPrice.sellerID)
+                }}
               >
                 <span style={{ display: "flex", flexDirection: "column", width: "20%" }}>
                   <span style={{fontSize: "10px", width: "100%"}}>Best Price</span>
-                  <span>₹{curProduct?.price?.toLocaleString("en-IN")}</span>
+                  <span>₹{curProduct?.bestPrice?.price?.toLocaleString("en-IN")}</span>
                 </span>
                 <span style={{
                   display: "flex",
@@ -255,7 +264,9 @@ const ProductDesc = () => {
                     />
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
-                  <Button className={style.priceButton}>
+                  <Button className={style.priceButton} onClick={()=>{
+                    handleAddToCart(seller.sellerID._id)
+                  }}>
                     <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
                     <ShoppingCartIcon />
                   </Button>

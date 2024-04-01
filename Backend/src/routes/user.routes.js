@@ -22,6 +22,7 @@ import {
   removeList,
   removeFromCart,
   getCartByUser,
+  addSubtractCartQuantity,
 } from "../controllers/cart.controllers.js";
 
 import {
@@ -47,6 +48,7 @@ router.route("/fetch-by-id").post(findByID);
 router.route("/fetch-by-email").post(findByEmail);
 router.route("/add-to-cart").post(addToCart);
 router.route("/remove-from-cart").post(removeFromCart);
+router.route("/add-subtract-cart-quantity").post(addSubtractCartQuantity);
 router.route("/get-user-cart").post(getCartByUser);
 // router.route("/delete-from-cart").post(deleteFromCart);
 router.route("/add-list-name").post(addListName); 

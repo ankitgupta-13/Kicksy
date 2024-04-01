@@ -16,8 +16,7 @@ const CreateProduct = () => {
   const productID = uuid().slice(0, 8).toUpperCase();
 
   const handleCreateProduct = async (data: any) => {
-    console.log(data);
-    console.log(watch(data.gender[0]));
+    // console.log(watch(data.gender[0]));
     const { images } = data;
     const imageUrls = [];
     for (const image of images) {
@@ -99,7 +98,8 @@ const CreateProduct = () => {
               <label>Product Code</label>
               <input
                 type="text"
-                value={productID}
+                // value={productID}
+                defaultValue={productID}
                 {...register("skuID", { required: true })}
               />
             </div>

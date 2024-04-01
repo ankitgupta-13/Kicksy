@@ -9,8 +9,11 @@ const priceSchema = new mongoose.Schema({
   sellerID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Seller",
-    required: true,
   },
+  offerID:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Offer",
+  }
 });
 
 const productSchema = new mongoose.Schema(
@@ -62,6 +65,7 @@ const productSchema = new mongoose.Schema(
     },
     gender: {
       type: [String],
+      enum: ["M", "F", "K"],
       required: true,
     },
     stock: {

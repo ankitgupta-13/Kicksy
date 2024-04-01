@@ -12,7 +12,7 @@ import style from "./ProductDashboardCard.module.css";
 import { RootState } from "../../redux/store/store";
 
 const ProductDashboardCard = ({ data, type }) => {
-  const { _id, title, createdAt, stock, images, price, brand, skuID } = data;
+  const { _id, title, createdAt, stock, images, price, brand, skuID , bestPrice} = data;
   const createdDate = createdAt.split("T")[0];
   const createdTime = createdAt.split("T")[1].split(".")[0];
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const ProductDashboardCard = ({ data, type }) => {
           </div>
           <div className={style.stock}>{stock}</div>
           <div className={style.priceDelete}>
-            <div>₹{price}</div>
+            <div>₹ {bestPrice.price}</div>
           </div>
         </div>
       ) : (
@@ -64,7 +64,7 @@ const ProductDashboardCard = ({ data, type }) => {
           <div className={style.skuid}>{skuID}</div>
           <div className={style.brand}>{brand}</div>
           <div className={style.priceDelete}>
-            <div>₹{price}</div>
+            <div>₹{bestPrice.price}</div>
           </div>
         </div>
       )}
