@@ -28,6 +28,7 @@ export const addToCart = async (payload: {
   try {
     console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);
+    console.log(data);
     return data;
   } catch (error: any) {
     console.log(error);

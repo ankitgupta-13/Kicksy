@@ -74,15 +74,16 @@ const ProductDesc = () => {
     setSize(event.target.value);
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (sellerID) => {
     const payload = {
       userID,
       productID,
+      sellerID,
     };
     try {
       const result = await addToCart(payload);
-      console.log(result.data.items);
-      dispatch(addItemToCart(result.data.items));
+      console.log(result);
+      // dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -109,7 +110,6 @@ const ProductDesc = () => {
               style={{ border: "none" }}
             >
               <ImageSliderProdDesc imageUrls={shoesColorData} />
-
             </div>
           </MediaQuery>
           <div className={style.action}>
@@ -125,7 +125,6 @@ const ProductDesc = () => {
                 <a className={style.bestseller}>BEST SELLER</a>
               )}
               <h1>Rs. {curProduct?.price?.toLocaleString("en-IN")}</h1>
-              
             </div>
 
             <div className={style.action_sz_add}>
@@ -148,7 +147,7 @@ const ProductDesc = () => {
                         position: "absolute",
                         transform: "translate(-50%, -50%)",
                         top: "87vh",
-                        left: "50vw", 
+                        left: "50vw",
                         padding: "10px 20px",
                         borderRadius: "50px",
                         textTransform: "uppercase",
@@ -222,26 +221,38 @@ const ProductDesc = () => {
                   fontSize: "1rem",
                   textTransform: "uppercase",
                   fontFamily: "Noir Pro",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 price={curProduct?.price?.toLocaleString("en-IN")}
                 productID={curProduct._id}
               >
-                <span style={{ display: "flex", flexDirection: "column", width: "20%" }}>
-                  <span style={{fontSize: "10px", width: "100%"}}>Best Price</span>
+                <span
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "20%",
+                  }}
+                >
+                  <span style={{ fontSize: "10px", width: "100%" }}>
+                    Best Price
+                  </span>
                   <span>₹{curProduct?.price?.toLocaleString("en-IN")}</span>
                 </span>
-                <span style={{
-                  display: "flex",
-                  width: "inherit",
-                  height: "inherit",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingRight: "13%",
-                  fontWeight: 600,
-                  letterSpacing: "1px",
-                }}>Buy Now</span>
-                </Button>
+                <span
+                  style={{
+                    display: "flex",
+                    width: "inherit",
+                    height: "inherit",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingRight: "13%",
+                    fontWeight: 600,
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Buy Now
+                </span>
+              </Button>
             </div>
 
             <div className={style.sellers}>
@@ -255,7 +266,10 @@ const ProductDesc = () => {
                     />
                     <p>{seller?.sellerID?.storeName}</p>
                   </div>
-                  <Button className={style.priceButton}>
+                  <Button
+                    className={style.priceButton}
+                    onClick={() => handleAddToCart(seller.sellerID._id)}
+                  >
                     <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
                     <ShoppingCartIcon />
                   </Button>
