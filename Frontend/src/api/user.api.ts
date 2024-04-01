@@ -37,6 +37,35 @@ export const addToCart = async (payload: {
   }
 };
 
+export const removeFromCart = async (payload: {
+  userID: String;
+  productID: String;
+  sellerID: String;
+}) => {
+  try {
+    const { data } = await api.post("/user/remove-from-cart", payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const updateCart = async (payload: {
+  userID: String;
+  productID: String;
+  sellerID: String;
+  operator: String;
+}) => {
+  try {
+    const { data } = await api.post("/user/update-cart", payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
 export const getRecentProducts = async () => {
   try {
     const { data } = await api.get("/user/get-recent-products");

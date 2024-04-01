@@ -1,15 +1,16 @@
+import { set } from "react-hook-form";
 import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
   const amount = props.amount * 100;
   const address = props.address;
-  // console.log(address);
   const checkOutHandler = async () => {
     const key = await getKey();
-    const order = await makePayment({ amount, userID });
+    const order = await makePayment({ amount, userID, address });
     const options = {
       key,
       amount: order.amount,
@@ -19,9 +20,9 @@ const PaymentButton = (props) => {
       image: "",
       order_id: order.id,
       prefill: {
-        name: "Ankit Gupta",
-        email: "guptankit0522@gmail.com",
-        contact: "1234567890",
+        name: user?.username,
+        email: user?.email,
+        contact: user?.mobile.number,
       },
       theme: {
         color: "#000000",
@@ -29,14 +30,13 @@ const PaymentButton = (props) => {
       handler: async function (response) {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
           response;
-        console.log(address);
         const payload = {
           razorpay_payment_id,
           razorpay_order_id,
           razorpay_signature,
           userID,
           orderDetails: order,
-          addressDetails: address,
+          addressDetails: order.addressDetails,
         };
         const data = await verifyPayment(payload);
         alert(data.message);
