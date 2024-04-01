@@ -3,6 +3,7 @@ import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
 import { getAllProducts } from "../../api/user.api";
 import style from "./Shop.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import ImageSliderPrev from "../../components/ImageSliderPrev/ImageSliderPrev";
 import { useLocation } from 'react-router-dom';
 import banner from "../../assets/menbanner.png";
 import { Button } from "@mui/material";
