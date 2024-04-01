@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { login, logout } from "./redux/reducers/authSlice.ts";
 import Blogs from "./pages/Blogs/Blogs.tsx";
 import { PaymentButton } from "./components/index.ts";
-// import { setInitialCartItems } from "./redux/reducers/cartSlice.ts";
+import { setInitialCartItems } from "./redux/reducers/cartSlice.ts";
 import BlogPage from "./pages/BlogPage/BlogPage.tsx";
 import Seller from "./pages/Seller/Seller.tsx";
 import Checkout from "./pages/Checkout/Checkout.tsx";
@@ -68,7 +68,7 @@ const App = () => {
         if (userData.statusCode === 200) {
           setLoading(false);
           dispatch(login({ userData: userData.data }));
-          // dispatch(setInitialCartItems(userData.data.cart));
+          dispatch(setInitialCartItems(userData.data.cart));
         } else {
           dispatch(logout());
         }

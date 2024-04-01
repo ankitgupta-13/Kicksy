@@ -5,10 +5,11 @@ const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
   const amount = props.amount * 100;
-  const productIDs = [props.productID];
+  const address = props.address;
+  // console.log(address);
   const checkOutHandler = async () => {
     const key = await getKey();
-    const order = await makePayment({ amount, userID, productIDs });
+    const order = await makePayment({ amount, userID });
     const options = {
       key,
       amount: order.amount,
@@ -22,22 +23,20 @@ const PaymentButton = (props) => {
         email: "guptankit0522@gmail.com",
         contact: "1234567890",
       },
-      notes: {
-        address: "abcdefghijkl",
-      },
       theme: {
         color: "#000000",
       },
       handler: async function (response) {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
           response;
+        console.log(address);
         const payload = {
           razorpay_payment_id,
           razorpay_order_id,
           razorpay_signature,
           userID,
           orderDetails: order,
-          // address: "abcdefghijkl",
+          addressDetails: address,
         };
         const data = await verifyPayment(payload);
         alert(data.message);

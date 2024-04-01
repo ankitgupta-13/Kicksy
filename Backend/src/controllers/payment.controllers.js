@@ -21,15 +21,15 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  let { amount, userID, productIDs } = req.body;
+  let { amount, userID } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
       currency: "INR",
     };
+
     const order = await rpayInstance.orders.create(options);
     order.userID = userID;
-    order.productIDs = productIDs;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -38,26 +38,23 @@ const makePayment = async (req, res) => {
 };
 
 const verifyPayment = async (req, res) => {
-  // console.log(req.body);
-  const {
-    razorpay_order_id,
-    razorpay_payment_id,
-    razorpay_signature,
-    orderDetails,
-    // Object of Address
-    addressDetails,
-    products, // [{productID,quantity,sellerID}]
-  } = req.body;
-  
+  try {
+    console.log(req.body.addressDetails);
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      orderDetails,
+      addressDetails,
+    } = req.body;
 
-
-  /*
+    /*
   
     variable products will be an array of objects containing productID , sellerID
 
-  */ 
+  */
 
-  /*
+    /*
   
     SAMPLE orderDetails
 
@@ -80,7 +77,6 @@ const verifyPayment = async (req, res) => {
 
   */
 
-  try {
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RPAY_KEY_SECRET)

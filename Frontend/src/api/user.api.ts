@@ -69,6 +69,7 @@ export const getAllBlogs = async () => {
 
 export const getUserCartItems = async (payload) => {
   try {
+    console.log(payload);
     const { data } = await api.post("/user/get-user-cart", payload);
     return data;
   } catch (error: any) {

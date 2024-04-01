@@ -16,6 +16,7 @@ import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
 import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
 import MediaQuery from "react-responsive";
+import { Alert } from "@mui/material";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const ProductDesc = () => {
   const [showSizeTable, setShowSizeTable] = useState(false);
   const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
+
+  const [success, setSuccess] = useState("");
 
   const buyNow = "Buy Now";
   const handleImageSrcChange = (src: string) => {
@@ -85,7 +88,8 @@ const ProductDesc = () => {
 
     try {
       const result = await addToCart(payload);
-      console.log(result.data);
+      // console.log(result);
+      setSuccess(result.message);
       dispatch(addItemToCart(result.data.items));
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -268,27 +272,43 @@ const ProductDesc = () => {
 
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
-                <div className={style.sellerCard}>
-                  <div className={style.sLogoName}>
-                    <img
-                      src={seller.sellerID.storeLogo}
-                      alt=""
-                      className={style.storeLogo}
-                    />
-                    <p>{seller?.sellerID?.storeName}</p>
+                <div>
+                  <div className={style.sellerCard}>
+                    <div className={style.sLogoName}>
+                      <img
+                        src={seller.sellerID.storeLogo}
+                        alt=""
+                        className={style.storeLogo}
+                      />
+                      <p>{seller?.sellerID?.storeName}</p>
+                    </div>
+                    <Button
+                      className={style.priceButton}
+                      onClick={() => {
+                        handleAddToCart(seller.sellerID._id);
+                      }}
+                    >
+                      <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
+                      <ShoppingCartIcon />
+                    </Button>
                   </div>
-                  <Button
-                    className={style.priceButton}
-                    onClick={() => {
-                      handleAddToCart(seller.sellerID._id);
-                    }}
-                  >
-                    <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
-                    <ShoppingCartIcon />
-                  </Button>
                 </div>
               ))}
+              {success ? (
+                <Alert
+                  onClose={() => {
+                    setSuccess("");
+                  }}
+                  // style={{ margin: "20px 0 0 0" }}
+                  severity="success"
+                >
+                  {success}
+                </Alert>
+              ) : (
+                ""
+              )}
             </div>
+
             <MediaQuery minWidth={431}>
               <div className={style.features}>
                 <AccordionComp isInStock={inStock} canReturn={true} />
