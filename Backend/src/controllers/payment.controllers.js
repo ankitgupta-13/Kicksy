@@ -38,6 +38,7 @@ const makePayment = async (req, res) => {
 };
 
 const verifyPayment = async (req, res) => {
+  try {
   // console.log(req.body);
   const {
     razorpay_order_id,
@@ -80,7 +81,6 @@ const verifyPayment = async (req, res) => {
 
   */
 
-  try {
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RPAY_KEY_SECRET)

@@ -177,7 +177,7 @@ const getCartByUser = async (req, res) => {
     if (!userID) {
       return res.json(new ApiResponse(400, "userID is required"));
     }
-    const cart = await Cart.findOne({ user: userID });
+    const cart = await Cart.findOne({ user: userID }).populate("items.product");
     if (!cart) {
       return res.json(new ApiResponse(404, "Cart not found"));
     }
