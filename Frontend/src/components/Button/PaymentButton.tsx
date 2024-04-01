@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
+  console.log(user)
   const amount = props.amount * 100;
   const productIDs = [props.productID];
   const checkOutHandler = async () => {
@@ -18,9 +19,9 @@ const PaymentButton = (props) => {
       image: "",
       order_id: order.id,
       prefill: {
-        name: "Ankit Gupta",
-        email: "guptankit0522@gmail.com",
-        contact: "1234567890",
+        name: user?.username,
+        email: user?.email,
+        contact: user?.mobile.number,
       },
       notes: {
         address: "abcdefghijkl",

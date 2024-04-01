@@ -10,6 +10,7 @@ import { Cart } from "../models/cart.models.js";
 import { Address } from "../models/address.model.js";
 import { User } from "../models/user.models.js";
 import { Seller } from "../models/seller.model.js";
+import { InsufficientFundTransfer } from "../models/insufficientFundTransfer.model.js";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -21,7 +22,7 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  let { amount, userID, productIDs } = req.body;
+  let { amount, userID, cartItems } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
@@ -29,7 +30,7 @@ const makePayment = async (req, res) => {
     };
     const order = await rpayInstance.orders.create(options);
     order.userID = userID;
-    order.productIDs = productIDs;
+    order.items = cartItems;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -76,7 +77,11 @@ const verifyPayment = async (req, res) => {
     notes: [],
     created_at: 1711611534,
     userID: '65f0a8a37d96f0cf606f109a',
-    productIDs: [ null ]
+    items: [ {
+      productID:"",
+      sellerID:"",
+      quantity:""
+    } ]
   }
 
   */
@@ -99,25 +104,43 @@ const verifyPayment = async (req, res) => {
 
       await address.save();
 
-      if (products) {
-        const user = await User.findById(orderDetails.userID);
-        const tags = [user.username, user.email];
+      const user = await User.findById(orderDetails.userID) 
+      if(!user) return res.json(new ApiResponse(404 , "user not found!"));
 
+      const cart = await Cart.findOne({user:orderDetails.userID});
+      if(!cart) return res.json(new ApiResponse(404 , "cart not found"));
+
+
+      // if (products) {
+      //   const user = await User.findById(orderDetails.userID);
+      //   const tags = [user.username, user.email];
+      if(orderDetails.amount === cart.cartTotal){
         const order = new Order({
           user: orderDetails.userID,
-          orderItems: products,
+          orderItems: cart.items,
           orderPrice: orderDetails.amount,
           paymentStatus: true,
           paymentMethod: "Razorpay",
           address: address._id,
         });
+      }
+      else{
+        const paymentHandler = new InsufficientFundTransfer({
+          user:orderDetails.userID,
+          amount:orderDetails.amount,
+          amountPaid:orderDetails.amount_paid,
+          amountDue:orderDetails.amount_due
+        })
+        return res.json(new ApiResponse(422 , paymentHandler ,"Incorrect fund amount , please try to contact the owner if full amount paid"))
+      }
+        
 
-        await order.save();
+      //   await order.save();
 
-        await User.findByIdAndUpdate(orderDetails.userID, {
-          $push: { address: address._id, orders: order._id },
-        });
-      } else {
+      //   await User.findByIdAndUpdate(orderDetails.userID, {
+      //     $push: { address: address._id, orders: order._id },
+      //   });
+      // } else {
         // const order = new Order({
         //   user: userID,
         //   orderItems: userCart.items,
@@ -126,8 +149,8 @@ const verifyPayment = async (req, res) => {
         //   paymentMethod: "Razorpay",
         // });
         // await order.save();
-        return res.json(new ApiResponse(404, "products not found"));
-      }
+      //   return res.json(new ApiResponse(404, "products not found"));
+      // }
 
       // user.orders.push(order._id);
     } else {
