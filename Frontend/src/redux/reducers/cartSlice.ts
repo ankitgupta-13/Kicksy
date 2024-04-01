@@ -18,6 +18,9 @@ const cartSlice = createSlice({
     toggleCartVisibility: (state) => {
       state.isOpen = !state.isOpen;
     },
+    setInitialCartItems:(state , action)=>{
+      state.items = action.payload
+    }
   },
 });
 
