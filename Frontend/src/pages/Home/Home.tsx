@@ -188,7 +188,7 @@ const Home = () => {
             {products.map((product: Object, index: number) => {
               return (
                 <div className={style.BestSellerCard} key={index} style={{width: "18rem"}}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} wid="18rem" />
                 </div>
               );
             })}
