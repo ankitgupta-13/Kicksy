@@ -58,7 +58,7 @@ export const updateCart = async (payload: {
   operator: String;
 }) => {
   try {
-    const { data } = await api.post("/user/update-cart", payload);
+    const { data } = await api.post("/user/add-subtract-cart-quantity", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
