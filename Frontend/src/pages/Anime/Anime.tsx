@@ -328,7 +328,7 @@ const Anime = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
         </div>
       </div>
-    </div>
+    </div> 
   );
       {/* <div className={style.Col4}>
       <div className={style.Col4row1}></div>

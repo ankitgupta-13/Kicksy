@@ -29,7 +29,6 @@ const Cart = () => {
     if (response.statusCode === 200) console.log(response.data.items);
   };
   useEffect(() => {
-    console.log(typeof cartItems);
     handleCart(userID);
   }, []);
 

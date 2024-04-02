@@ -28,10 +28,39 @@ export const addToCart = async (payload: {
   try {
     console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error: any) {
     console.log(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const removeFromCart = async (payload: {
+  userID: String;
+  productID: String;
+  sellerID: String;
+}) => {
+  try {
+    const { data } = await api.post("/user/remove-from-cart", payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+
+export const updateCart = async (payload: {
+  userID: String;
+  productID: String;
+  sellerID: String;
+  operator: String;
+}) => {
+  try {
+    const { data } = await api.post("/user/add-subtract-cart-quantity", payload);
+    return data;
+  } catch (error: any) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
@@ -69,6 +98,7 @@ export const getAllBlogs = async () => {
 
 export const getUserCartItems = async (payload) => {
   try {
+    console.log(payload);
     const { data } = await api.post("/user/get-user-cart", payload);
     return data;
   } catch (error: any) {

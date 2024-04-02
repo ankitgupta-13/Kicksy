@@ -62,6 +62,7 @@ const ProductDesc = () => {
   };
 
   useEffect(() => {
+    scrollTo(0, 0);
     getProducts();
     getCurrentProduct();
   }, []);
@@ -77,7 +78,7 @@ const ProductDesc = () => {
     setSize(event.target.value);
   };
 
-  const handleAddToCart = async (sellerID: any) => {
+  const handleAddToCart = async (sellerID: String) => {
     const payload = {
       userID,
       productID,
@@ -85,7 +86,7 @@ const ProductDesc = () => {
     };
 
     console.log(curProduct);
-  
+
     try {
       const result = await addToCart(payload);
       // console.log(result);
@@ -273,45 +274,42 @@ const ProductDesc = () => {
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
                 <div>
-
-                <div className={style.sellerCard}>
-                  <div className={style.sLogoName}>
-                    <img
-                      src={seller.sellerID.storeLogo}
-                      alt=""
-                      className={style.storeLogo}
-                    />
-                    <p>{seller?.sellerID?.storeName}</p>
+                  <div className={style.sellerCard}>
+                    <div className={style.sLogoName}>
+                      <img
+                        src={seller.sellerID.storeLogo}
+                        alt=""
+                        className={style.storeLogo}
+                      />
+                      <p>{seller?.sellerID?.storeName}</p>
+                    </div>
+                    <Button
+                      className={style.priceButton}
+                      onClick={() => {
+                        handleAddToCart(seller.sellerID._id);
+                      }}
+                    >
+                      <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
+                      <ShoppingCartIcon />
+                    </Button>
                   </div>
-                  <Button
-                    className={style.priceButton}
-                    onClick={() => {
-                      handleAddToCart(seller.sellerID._id);
-                    }}
-                  >
-                    <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
-                    <ShoppingCartIcon />
-                  </Button>
-                  </div>
-                  
-
                 </div>
               ))}
-            {success ? (
-                    <Alert
-                      onClose={() => {
-                        setSuccess("");
-                      }}
-                      // style={{ margin: "20px 0 0 0" }}
-                      severity="success"
-                    >
-                      {success}
-                    </Alert>
-                  ) : (
-                    ""
-                  )}  
+              {success ? (
+                <Alert
+                  onClose={() => {
+                    setSuccess("");
+                  }}
+                  // style={{ margin: "20px 0 0 0" }}
+                  severity="success"
+                >
+                  {success}
+                </Alert>
+              ) : (
+                ""
+              )}
             </div>
-          
+
             <MediaQuery minWidth={431}>
               <div className={style.features}>
                 <AccordionComp isInStock={inStock} canReturn={true} />

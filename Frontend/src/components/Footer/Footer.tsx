@@ -8,7 +8,6 @@ import verifiedIcon from "../../assets/verified-icon.png"
 import replacementIcon from "../../assets/replacement-icon.png"
 import ytIcon from "../../assets/yt-icon.png"
 import Footer2 from "../Footer2/Footer2";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 

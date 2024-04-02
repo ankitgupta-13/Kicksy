@@ -37,6 +37,7 @@ const Shop: React.FC = () => {
       setAllProducts(data.data.products);
     };
     fetchAllProducts();
+    scrollTo(0, 0);
   }, []);
 
   useEffect(() => {

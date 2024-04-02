@@ -20,6 +20,7 @@ const BlogPage = () => {
   }
 
   useEffect(() => {
+    scrollTo(0, 0);
     getCurrentBlog();
   }, []);
 

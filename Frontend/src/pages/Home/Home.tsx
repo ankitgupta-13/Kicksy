@@ -52,6 +52,7 @@ const Home = () => {
 
 
   useEffect(() => {
+    scrollTo(0, 0);
     getProducts();
   }, []);
 
