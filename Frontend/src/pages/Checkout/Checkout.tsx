@@ -20,6 +20,7 @@ const Checkout = () => {
       setCartItems(response.data?.items);
       setCartTotal(response.data?.cartTotal);
     })();
+    scrollTo(0, 0);
   }, []);
   const handleAddress = (data: Object) => {
     setAddress(data);

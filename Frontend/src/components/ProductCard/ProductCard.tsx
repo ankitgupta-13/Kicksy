@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
-
+  
   return (
     <div className={style.container} >
       <div className={style.container__header}>

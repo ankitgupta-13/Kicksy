@@ -14,6 +14,7 @@ const Blog = () => {
   };
 
   useEffect(() => {
+    scrollTo(0, 0);
     getBlogs();
   }, []);
 

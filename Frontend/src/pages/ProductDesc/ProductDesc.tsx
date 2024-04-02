@@ -62,6 +62,7 @@ const ProductDesc = () => {
   };
 
   useEffect(() => {
+    scrollTo(0, 0);
     getProducts();
     getCurrentProduct();
   }, []);
