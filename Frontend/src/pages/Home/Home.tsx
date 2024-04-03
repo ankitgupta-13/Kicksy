@@ -164,7 +164,7 @@ const Home = () => {
           <div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: Object, index: number) => {
               return (
-                <div key={index} className={style.container}>
+                <div key={index} className={style.container} style={{cursor: "pointer"}}>
                   <img
                     src={product.images[0]}
                     className={style.shoes__image}

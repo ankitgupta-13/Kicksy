@@ -1,44 +1,19 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import ProductDesc from "../ProductDesc/ProductDesc";
+import PostCard from "../../components/PostCard/PostCard";
 import { getAllProducts } from "../../api/user.api";
-// import heroImg from "../../assets/images/anime-hero-img.png";
+import heroImg from "../../assets/images/anime-herobg.png";
 import style from "./Anime.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import img from "../../assets/images/AnimePage/bakugoS.png";
-import img2 from "../../assets/images/AnimePage/spideyS.png";
 
-
-import aiz from "../../assets/images/AnimePage/aizawa.png"
-import panel from "../../assets/images/AnimePage/picture.png"
-
-/*images*/
-import d1 from "../../assets/images/AnimePage/panels/D1.jpg"
-import d2 from "../../assets/images/AnimePage/panels/D2.jpg"
-import d5 from "../../assets/images/AnimePage/panels/D5.jpg"
-import d7 from "../../assets/images/AnimePage/panels/D7.jpg"
-import m10 from "../../assets/images/AnimePage/panels/M10.jpg"
-import n2 from "../../assets/images/AnimePage/panels/N2.jpg"
-import n3 from "../../assets/images/AnimePage/panels/N3.jpg"
-import n4 from "../../assets/images/AnimePage/panels/N4.jpg"
-import n6 from "../../assets/images/AnimePage/panels/N6.jpg"
-import n8 from "../../assets/images/AnimePage/panels/N8.jpg"
-import n9 from "../../assets/images/AnimePage/panels/N9.jpg"
-import n12 from "../../assets/images/AnimePage/panels/N12.jpg"
-
-
-
-
-import yeah from "../../assets/images/AnimePage/backdrop/Yeah.png"
-import bang from "../../assets/images/AnimePage/backdrop/Bang.png"
-import bg from "../../assets/images/AnimePage/backdrop/bg.png"
-import blastic from "../../assets/images/AnimePage/backdrop/blastic.png"
-import Hallo from "../../assets/images/AnimePage/backdrop/Hallo.png"
-import Hi from "../../assets/images/AnimePage/backdrop/Hi.png"
-import lCorner from "../../assets/images/AnimePage/backdrop/lCorner.png"
-import rCorner from "../../assets/images/AnimePage/backdrop/rCorner.png"
 import { Button, PaymentButton, ProductCard } from "../../components";
-import ColorCard from "../../components/colorCard/colorCard";
 import { getProductById } from "../../api/product.api";
+import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
+import MediaQuery from "react-responsive";
+import { Alert } from "@mui/material";
+import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 
 
 
@@ -50,15 +25,18 @@ const Anime = () => {
   const [explore, setExplore] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [animeProducts, setAnimeProducts] = useState([]);
-  const [productID, setProductID] = useState([]);
   const [curProduct, setCurProduct] = useState([]);
+  const [productID, setProductID] = useState([] || animeProducts[0]._id);
   // console.log(curProduct);
   const [shoesColorData, setShoesColorData] = useState([]);
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
-
+  const userID = useSelector((state: any) => state.auth?.userData?._id);
+  const [success, setSuccess] = useState("");
+  const [showSizeTable, setShowSizeTable] = useState(false);
   const [animePg, setAnimePg] = useState(true);
+  const [inStock, setInStock] = useState(true);
 
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
@@ -74,7 +52,7 @@ const Anime = () => {
   };
   const getCurrentProduct = async () => {
     const payload = {
-      productID ,
+      productID,
     };
     const response = await getProductById(payload);
     if (response.statusCode === 200) {
@@ -89,51 +67,194 @@ const Anime = () => {
   };
 
   const getAnimeProducts = () => {
-      const animeProducts = allProducts.filter(product => product.category === 'anime');
-      setAnimeProducts(animeProducts);
+    const animeProducts = allProducts.filter(product => product.category === 'anime');
+    setAnimeProducts(animeProducts);
   };
 
   useEffect(() => {
     fetchAllProducts();
     getAnimeProducts();
     getCurrentProduct();
-    
+
   }, [allProducts]);
+
+  const handleAddToCart = async (sellerID: String) => {
+    const payload = {
+      userID,
+      productID,
+      sellerID,
+    };
+
+    console.log(curProduct);
+
+    try {
+      const result = await addToCart(payload);
+      // console.log(result);
+      setSuccess(result.message);
+      dispatch(addItemToCart(result.data.items));
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   return (
     <div className={style.mainBody}>
-      { animePg ?
-          <div>
-            <div className={style.animepage}>
-              <div className={style.ani1}></div>
-              <div className={style.cont1}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
-              </div>
-              <div className={style.ani2}></div>
-              <div className={style.ani3}></div>
-              <div className={style.cont2}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
-              </div>
+      {animePg ?
+        <div>
+          <div className={style.animepage}>
+            <div className={style.ani1}></div>
+            <div className={style.cont1}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
             </div>
-            <div className={style.explore_btn}>
-              <button className={style.exp_btn} onClick={() => setAnimePg(!animePg)}>Explore</button>
+            <div className={style.ani2}></div>
+            <div className={style.ani3}></div>
+            <div className={style.cont2}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
             </div>
-          </div> :
-          <div>
-              {curProduct && <div style={{ margin: "25px" }}>
-              <div className={style.product}>
-                <img
-                  src={activeColor}
-                  className={style.imagebox}
-                  alt="product-image"
-                />
-                <div className={style.action}>
-                  <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+          </div>
+          <div className={style.explore_btn}>
+            <button className={style.exp_btn} onClick={() => setAnimePg(!animePg)}>Explore</button>
+          </div>
+        </div> :
+        <div>
+          <div className={style.a_hero} style={{ background: `url(${heroImg})`, backgroundColor: "#e0b000", backgroundSize: "contain", backgroundRepeat: "no-repeat" }}>
+            <div className={style.a_hero_text}>
+              <p>Lorem ipsum dolor sit amet consectetur.</p>
+              <h1>Custom Anime Shoes</h1>
+            </div>
+          </div>
+          {curProduct && <div style={{ margin: "25px" }}>
+            <div className={style.product}>
+              {/* <img
+                src={activeColor}
+                className={style.imagebox}
+                alt="product-image"
+              /> */}
+              <MediaQuery minWidth={431}>
+                <div
+                  className={style.product_imagediv}
+                // style={{ background: `url(${activeColor})` }}
+                >
+                  <span className={style.product_path}>
+                    {curProduct.category} | {curProduct.brand} | {curProduct.title}
+                  </span>
+                  <ImageSliderProdDesc imageUrls={shoesColorData} />
+                </div>
+              </MediaQuery>
+              <MediaQuery maxWidth={431}>
+                <div
+                  className={style.product_imagediv_phone}
+                  style={{ border: "none" }}
+                >
+                  <ImageSliderProdDesc imageUrls={shoesColorData} />
+                </div>
+              </MediaQuery>
+              {/* <div className={style.action}>
+                <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+                <h2 className={style.SampleProduct}>{curProduct.title}</h2>
+                {curProduct.category === "bestseller" && (
+                  <a className={style.bestseller}>BEST SELLER</a>
+                )}
+                <h2>Rs. </h2>
+                <div>
+                  <select
+                    className={style.size}
+                    value={size}
+                    onChange={handleChange}
+                  >
+                    {sizes.map((size: any) => (
+                      <option value={size.value}>{size.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <Button
+                  className={style.addtocart}
+                  style={{ backgroundColor: "#131313", color: "white" }}
+
+                  type="submit"
+                >
+                  Add to Cart
+                </Button>
+                {/* <PaymentButton amount="10" />
+              </div> */}
+
+              <div className={style.action}>
+                <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
                   <h2 className={style.SampleProduct}>{curProduct.title}</h2>
                   {curProduct.category === "bestseller" && (
                     <a className={style.bestseller}>BEST SELLER</a>
                   )}
-                  <h2>Rs. </h2>  
+                  <h1>
+                    Rs. {curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
+                  </h1>
+                </div>
+
+                <div className={style.action_sz_add}>
+                  <div>
+                    <MediaQuery minWidth={431}>
+                      <div
+                        className={style.sizechart_bg}
+                        style={{
+                          display: showSizeTable ? "block" : "none",
+                          zIndex: 3,
+                        }}
+                      >
+                        <span
+                          className={style.sizechart_close}
+                          onClick={() => setShowSizeTable(false)}
+                          style={{
+                            cursor: "pointer",
+                            color: "#000",
+                            background: "white",
+                            position: "absolute",
+                            transform: "translate(-50%, -50%)",
+                            top: "87vh",
+                            left: "50vw",
+                            padding: "10px 20px",
+                            borderRadius: "50px",
+                            textTransform: "uppercase",
+                            letterSpacing: "1px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          CLOSE
+                        </span>
+                        <div className={style.sizechart_table}>
+                          <ShoeSizeTable />
+                        </div>
+                      </div>
+                      <div className={style.sizechart}>
+                        <span className={style.sizechart1}>
+                          Browse Sizes
+                          <span>* All basic sizes are shown</span>
+                        </span>
+                        <span
+                          className={style.sizechart2}
+                          onClick={() => setShowSizeTable(true)}
+                          style={{
+                            cursor: "pointer",
+                            display: "flex",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          <StraightenOutlinedIcon
+                            style={{
+                              transform: "rotate(127deg)",
+                              fontSize: "18px",
+                            }}
+                          />{" "}
+                          Size Chart
+                        </span>
+                      </div>
+                    </MediaQuery>
+                  </div>
                   <div>
                     <select
                       className={style.size}
@@ -145,45 +266,140 @@ const Anime = () => {
                       ))}
                     </select>
                   </div>
+                  {/* <Button
+                className={style.addtocart}
+                style={{ backgroundColor: "#131313", color: "white" }}
+                onClick={handleAddToCart}
+                type="submit"
+              >
+                Add to Cart
+              </Button> */}
                   <Button
-                    className={style.addtocart}
-                    style={{ backgroundColor: "#131313", color: "white" }}
-                    
-                    type="submit"
+                    className={style.BuyNowBtn}
+                    style={{
+                      backgroundColor: "black",
+                      padding: "0.5rem 1rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                      height: "3rem",
+                      color: "white",
+                      border: "none",
+                      fontSize: "1rem",
+                      textTransform: "uppercase",
+                      fontFamily: "Noir Pro",
+                      cursor: "pointer",
+                    }}
+                    price={curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
+                    productID={curProduct._id}
+                    onClick={() => {
+                      console.log(curProduct);
+                      handleAddToCart(curProduct.bestPrice.sellerID);
+                    }}
                   >
-                    Add to Cart
+                    <span
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "20%",
+                      }}
+                    >
+                      <span style={{ fontSize: "10px", width: "100%" }}>
+                        Best Price
+                      </span>
+                      <span>
+                        ₹{curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
+                      </span>
+                    </span>
+                    <span
+                      style={{
+                        display: "flex",
+                        width: "inherit",
+                        height: "inherit",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingRight: "13%",
+                        fontWeight: 600,
+                        letterSpacing: "1px",
+                      }}
+                    >
+                      Buy Now
+                    </span>
                   </Button>
-                  <PaymentButton amount="10" />
+                </div>
+
+                <div className={style.sellers}>
+                  {curProduct?.offers?.map((seller) => (
+                    <div>
+                      <div className={style.sellerCard}>
+                        <div className={style.sLogoName}>
+                          <img
+                            src={seller.sellerID.storeLogo}
+                            alt=""
+                            className={style.storeLogo}
+                          />
+                          <p>{seller?.sellerID?.storeName}</p>
+                        </div>
+                        <Button
+                          className={style.priceButton}
+                          onClick={() => {
+                            handleAddToCart(seller.sellerID._id);
+                          }}
+                        >
+                          <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
+                          <ShoppingCartIcon />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  {success ? (
+                    <Alert
+                      onClose={() => {
+                        setSuccess("");
+                      }}
+                      // style={{ margin: "20px 0 0 0" }}
+                      severity="success"
+                    >
+                      {success}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
-              <div className={style.cards}>
-                {shoesColorData.map((color, index) => (
-                  <ColorCard
-                    key={index}
-                    id={index}
-                    color={color}
-                    activeId={activeColorId || 0}
-                    setActiveId={(id) => setActiveColorId(id)}
-                    setImageSrc={handleImageSrcChange}
-                  />
-                ))}
-              </div>
-            </div>}
-            <div>
-            <h2>Our Collection</h2>
-            <p>
-              lorem ispum lorem ispum
-            </p>
-          </div>
-          <div className={style.productlist}>
-            {animeProducts.map((product: any, index: number) => (
-              <div className={style.listitem} key={index} style={{ width: "25vw"}}>
-              <div onClick={() => setProductID(product._id)}><ProductCard product={product} /></div>
-              </div>
-            ))}
             </div>
-    </div>
-}
+          </div>}
+          <div className={style.ourCollection}>
+            <div>
+              <h2 className={style.ourCollection_heading}>Our Collection</h2>
+              <p className={style.ourCollection_content}>
+                The Women’s adidas Samba OG “Beige/White/Gum” is a women’s-exclusive colorway of the retro indoor soccer shoe with neutral colors. The upper features a beige leather base that’s paired with white leather Three Stripes and “Samba” branding on the side. tonal suede overlay appears on the toe while a white leather heel tab breaks up the look on the back of the shoe. An old school “adidas” logo on the tongue ties into the Samba’s vintage look. A gum rubber sole completes the clean and versatile colorway.…
+              </p>
+            </div>
+            <div className={`${style.productlist} ${style.cards}`}>
+              {animeProducts.map((product: any, index: number) => (
+                <div className={style.listitem} key={index} style={{ width: "25vw" }}>
+                  <div onClick={() => setProductID(product._id)}><ProductCard product={product} /></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={style.recent_blogs}>
+            <div className={style.recent_blogs_title} style={{
+              fontSize: "1rem",
+
+            }}>Stay-up-to-date</div>
+            <h2 style={{
+              marginTop: "0.7rem",
+              fontSize: "2.5rem",
+            }}>RECENT POSTS</h2>
+            <div className={style.recent__blogs_container}>
+              <PostCard />
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 }

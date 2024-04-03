@@ -160,9 +160,11 @@
 
 
 .NewArrivals {
+    padding-left: 40px;
     display: flex;
     width: 100%;
-    padding-left: 40px;
+    margin-left: 10px;
+    margin-top: 6rem;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
@@ -181,7 +183,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 15rem;
+    /* height: 15rem; */
     width: 15rem;
     gap: .5rem;
 }
