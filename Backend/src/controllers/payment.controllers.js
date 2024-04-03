@@ -11,6 +11,8 @@ import { Address } from "../models/address.model.js";
 import { User } from "../models/user.models.js";
 import { Seller } from "../models/seller.model.js";
 import { InsufficientFundTransfer } from "../models/insufficientFundTransfer.model.js";
+import { Offer } from "../models/offer.model.js";
+import mongoose from "mongoose";
 
 const rpayInstance = new Razorpay({
   key_id: process.env.RPAY_KEY_ID,
@@ -22,17 +24,15 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  let { amount, userID, cartItems, address } = req.body;
+  let { amount, userID, cartItems } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
       currency: "INR",
     };
-
     const order = await rpayInstance.orders.create(options);
     order.userID = userID;
     order.items = cartItems;
-    order.addressDetails = address;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -42,46 +42,51 @@ const makePayment = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   try {
+    // console.log(req.body);
     const {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
       orderDetails,
+      // Object of Address
       addressDetails,
+      products, // [{productID,quantity,sellerID}]
     } = req.body;
 
-    /*
-  
-    variable products will be an array of objects containing productID , sellerID
 
-  */
 
     /*
+    
+      variable products will be an array of objects containing productID , sellerID
   
-    SAMPLE orderDetails
+    */
 
-    orderDetails: {
-    id: 'order_NrhC7ziJiU1h9w',
-    entity: 'order',
-    amount: 500000,
-    amount_paid: 0,
-    amount_due: 500000,
-    currency: 'INR',
-    receipt: null,
-    offer_id: null,
-    status: 'created',
-    attempts: 0,
-    notes: [],
-    created_at: 1711611534,
-    userID: '65f0a8a37d96f0cf606f109a',
-    items: [ {
-      productID:"",
-      sellerID:"",
-      quantity:""
-    } ]
-  }
-
-  */
+    /*
+    
+      SAMPLE orderDetails
+  
+      orderDetails: {
+      id: 'order_NrhC7ziJiU1h9w',
+      entity: 'order',
+      amount: 500000,
+      amount_paid: 0,
+      amount_due: 500000,
+      currency: 'INR',
+      receipt: null,
+      offer_id: null,
+      status: 'created',
+      attempts: 0,
+      notes: [],
+      created_at: 1711611534,
+      userID: '65f0a8a37d96f0cf606f109a',
+      items: [ {
+        productID:"",
+        sellerID:"",
+        quantity:""
+      } ]
+    }
+  
+    */
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
@@ -94,48 +99,83 @@ const verifyPayment = async (req, res) => {
 
       // console.log(orderDetails);
 
-      const address = new Address({
-        userId: orderDetails.userID,
-        ...addressDetails,
-      });
+      // console.log("101: "+addressDetails)
 
-      await address.save();
+      // const address = new Address({
+      //   userId: orderDetails.userID,
+      //   ...addressDetails,
+      // });
 
-      const user = await User.findById(orderDetails.userID);
+      // await address.save();
+
+      const user = await User.findById(orderDetails.userID)
       if (!user) return res.json(new ApiResponse(404, "user not found!"));
 
       const cart = await Cart.findOne({ user: orderDetails.userID });
       if (!cart) return res.json(new ApiResponse(404, "cart not found"));
 
-      // if (products) {
-      //   const user = await User.findById(orderDetails.userID);
-      //   const tags = [user.username, user.email];
-      // if (orderDetails.amount === cart.cartTotal) {
+
+      const tags = [user.username, user.email];
+      // if(orderDetails.amount === cart.cartTotal){
       const order = new Order({
         user: orderDetails.userID,
         orderItems: cart.items,
         orderPrice: orderDetails.amount,
         paymentStatus: true,
         paymentMethod: "Razorpay",
-        address: address._id,
+        searchTags: tags
+        // address: address._id,
       });
+
       await order.save();
+
+      const promises = order.orderItems.map(async (item) => {
+
+        await Offer.findOneAndUpdate(
+          { sellerID: item.sellerID, productID: item.product },
+          { $inc: { quantity: -item.quantity } }
+          );
+          
+          // await Seller.findByIdAndUpdate(item.sellerID, { $addToSet: { orders: { $each: this.orders } } });
+          
+          const seller = await Seller.findById(item.sellerID);
+        //   const index = seller.orders.findIndex((order)=>{
+        //     return order.equals(order._id)
+        //   })
+        //   console.log(index , seller.orders)
+        //   if(index===-1){
+          // }
+          const orderId = new mongoose.Types.ObjectId(order._id)
+          console.log(orderId , seller.orders , typeof(seller.orders[0]));
+          // console.log(!seller.orders.includes(orderId))
+          if(!seller.orders.includes(orderId)){
+            await Seller.findByIdAndUpdate(item.sellerID, { $push: { orders: order._id } })
+          }
+          
+
+        return
+
+      })
+
+      await Promise.all(promises);
+
+      cart.items = []
+      cart.cartTotal = 0;
+      await cart.save()
+
       // }
-      // else {
+      // else{
       //   const paymentHandler = new InsufficientFundTransfer({
-      //     user: orderDetails.userID,
-      //     amount: orderDetails.amount,
-      //     amountPaid: orderDetails.amount_paid,
-      //     amountDue: orderDetails.amount_due,
-      //   });
-      //   return res.json(
-      //     new ApiResponse(
-      //       422,
-      //       paymentHandler,
-      //       "Incorrect fund amount , please try to contact the owner if full amount paid"
-      //     )
-      //   );
+      //     user:orderDetails.userID,
+      //     amount:orderDetails.amount,
+      //     amountPaid:orderDetails.amount_paid,
+      //     amountDue:orderDetails.amount_due
+      //   })
+
+      //   await paymentHandler.save()
+      //   return res.json(new ApiResponse(422 , paymentHandler ,"Incorrect fund amount , please try to contact the owner if full amount paid"))
       // }
+
 
       //   await order.save();
 
