@@ -5,9 +5,10 @@
 }
 
 .analyticsOne_card{
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.4rem;
+    width: 100%;  
 }
 .card_container{
     background-color: #fff;
@@ -16,9 +17,8 @@
     /* justify-content: space-between; */
     gap: 1.2rem;
     flex-direction: row;
-    width: max-content;
     padding: 10px 25px;
-    width: 17vw;
+    width: auto;
     height: 22vh;
     border-radius: 15px;
     box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.1);
@@ -79,5 +79,30 @@
         display: grid;
         /* gap: 1.2rem; */
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .container{
+        padding: 1rem;
+        padding-left: 1.8rem;
+        /* margin: 1rem; */
+        width: 100vw;
+    }
+    .analyticsTwo{
+        flex-direction: column;
+        height: max-content;
+    }
+
+    .mixChart{
+        /* padding: 0 !important; */
+        height: 300px !important;
+    }
+    .mixChart, .analyticsTwo_recentOrders{
+        width: 100% !important;
+    }
+    .analyticsTwo_recentOrders{
+        height: 300px !important;
+        
     }
 }

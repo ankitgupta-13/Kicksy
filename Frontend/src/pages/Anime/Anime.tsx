@@ -1,7 +1,7 @@
 import { useState, useEffect, useDispatch } from "react";
 import ProductDesc from "../ProductDesc/ProductDesc";
 import { getAllProducts } from "../../api/user.api";
-
+// import heroImg from "../../assets/images/anime-hero-img.png";
 import style from "./Anime.module.css";
 import img from "../../assets/images/AnimePage/bakugoS.png";
 import img2 from "../../assets/images/AnimePage/spideyS.png";
@@ -79,15 +79,15 @@ const Anime = () => {
   //   } catch (error) {
   //     console.error("Error adding to cart:", error);
   //   }
-  useEffect(() => {
-    const getAnimeProducts = () => {
-      console.log(allProducts);
-      const animeProducts = allProducts.filter(product => product.category === 'anime');
-      setAnimeProducts(animeProducts);
-      console.log(animeProducts);
-    }
-    getAnimeProducts();
-  }, [allProducts]);
+  // useEffect(() => {
+  //   const getAnimeProducts = () => {
+  //     console.log(allProducts);
+  //     const animeProducts = allProducts.filter(product => product.category === 'anime');
+  //     setAnimeProducts(animeProducts);
+  //     console.log(animeProducts);
+  //   }
+  //   getAnimeProducts();
+  // }, [allProducts]);
 
 
 
@@ -95,6 +95,8 @@ const Anime = () => {
 
   return (
     <div className={style.mainBody}>
+
+
       {/* <div>
         <div className={explore ? style.exploresec : ""}>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -339,9 +341,10 @@ const Anime = () => {
             </div>
           </div> :
 
-
           <div>
-            
+            <div>
+              <img src={heroImg} alt="" />
+            </div>
           </div>
       }
     </div>
