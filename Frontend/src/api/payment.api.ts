@@ -15,11 +15,13 @@ export const getKey = async () => {
 export const makePayment = async (payload: {
   amount: number;
   userID: String;
+  adress: Object;
 }) => {
   try {
     const {
       data: { data },
     } = await api.post("/user/payments/make-payment", payload);
+    console.log(data);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

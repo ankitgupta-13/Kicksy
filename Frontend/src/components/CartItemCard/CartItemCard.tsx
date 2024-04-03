@@ -34,29 +34,44 @@ const CartItemCard = ({ item }) => {
   };
 
   return (
-    <div>
-      <div>
-        <img src={item.product.images[0]} alt="" />
+    <div className={style.main}>
+      <div className={style.item}>
+        <div className={style.item_img}>
+          <div
+            className={style.item_img_c}
+            style={{ backgroundImage: `url(${item.product.images[0]})` }}
+          ></div>
+        </div>
         <div>
-          <div>{item.product.title}</div>
-          <div>{item.product.price}</div>
-          <div>
-            <span>Quantity - </span>
-            {cartQty}
+          <div
+            style={{
+              fontWeight: "600",
+              fontSize: "1rem",
+              textTransform: "uppercase",
+            }}
+          >
+            {item.product.title}
+          </div>
+          <div style={{ fontSize: ".9rem" }}>{item.product.price}</div>
+          <div style={{ display: "flex" }}>
+            <span>Quantity :</span>
+            <div className={style.changeQuantity}>
+              <RemoveIcon
+                onClick={() =>
+                  updateCartQuantity(item.product._id, item.sellerID, "-")
+                }
+                style={{ cursor: "pointer", fontSize: "1.2rem" }}
+              />
+              <span>{cartQty}</span>
+              <AddIcon
+                onClick={() =>
+                  updateCartQuantity(item.product._id, item.sellerID, "+")
+                }
+                style={{ cursor: "pointer", fontSize: "1.2rem" }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className={style.changeQuantity}>
-        <RemoveIcon
-          onClick={() =>
-            updateCartQuantity(item.product._id, item.sellerID, "-")
-          }
-        />
-        <AddIcon
-          onClick={() =>
-            updateCartQuantity(item.product._id, item.sellerID, "+")
-          }
-        />
       </div>
       {successMessage ? (
         <Alert
@@ -70,7 +85,7 @@ const CartItemCard = ({ item }) => {
       ) : (
         ""
       )}
-      <div>
+      <div style={{ height: "4rem", display: "flex", fontSize: ".8rem" }}>
         <CloseIcon
           onClick={() =>
             removeFromCart({
@@ -79,6 +94,7 @@ const CartItemCard = ({ item }) => {
               sellerID: item.sellerID,
             })
           }
+          style={{ cursor: "pointer" }}
         />
       </div>
     </div>

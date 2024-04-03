@@ -10,9 +10,9 @@ import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/reducers/cartSlice";
 import { getProductById } from "../../api/product.api";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 // import AccordionComp from "../../components/Accordion/AccordionComp";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
-import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import AccordionComp from "../../components/Accordion/AccordionComp";
 import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
 import MediaQuery from "react-responsive";
@@ -104,7 +104,7 @@ const ProductDesc = () => {
           <MediaQuery minWidth={431}>
             <div
               className={style.product_imagediv}
-              // style={{ background: `url(${activeColor})` }}
+            // style={{ background: `url(${activeColor})` }}
             >
               <span className={style.product_path}>
                 {curProduct.category} | {curProduct.brand} | {curProduct.title}
@@ -358,7 +358,7 @@ const ProductDesc = () => {
             })}
           </div>
         </div>
-        <div className={style.NewArrivalsSlider}></div>
+        {/* <div className={style.NewArrivalsSlider}></div> */}
         <MediaQuery minWidth={440}>
           <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
         </MediaQuery>

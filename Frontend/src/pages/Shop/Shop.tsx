@@ -121,7 +121,7 @@ const Shop: React.FC = () => {
             </Button>
             <Button
               className={style.Button}
-              style={{ backgroundColor: sidebarOpen ? 'white' : '#f0f0f0', color: 'black', width: '80px', border: sidebarOpen ? 'none' : '1px solid black', right: sidebarOpen ? '-11px' : ''}}
+              style={{ backgroundColor: sidebarOpen ? 'white' : '#f0f0f0', color: 'black', width: '80px', border: sidebarOpen ? 'none' : '1px solid black', right: sidebarOpen ? '-11px' : '' }}
               onClick={() => handleFilterSidebar()}
             >
               {sidebarOpen ? <CloseOutlinedIcon /> : <TuneIcon />}
@@ -130,7 +130,7 @@ const Shop: React.FC = () => {
         </div>
         <div className={style.productlist}>
           {filteredProducts.map((product: any, index: number) => (
-            <div className={style.listitem} key={index} style={{ width: "25vw"}}>
+            <div className={style.listitem} key={index} style={{ width: "25vw" }}>
               <ProductCard product={product} />
             </div>
           ))}

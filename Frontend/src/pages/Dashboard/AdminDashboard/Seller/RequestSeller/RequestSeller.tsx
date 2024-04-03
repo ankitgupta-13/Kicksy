@@ -25,7 +25,7 @@ const RequestSeller = () => {
   return (
     <div>
       {requestList.length === 0 ? (
-        <div>No request found!</div>
+        <div style={{ textAlign: "center", fontFamily: "Noir Pro", fontSize: "3rem", height: "69vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#888" }}>No requests found!</div>
       ) : (
         requestList.map((request, index) => {
           return (

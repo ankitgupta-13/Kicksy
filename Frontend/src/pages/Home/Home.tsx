@@ -31,7 +31,6 @@ const Home = () => {
     if (response.statusCode === 200) setProducts(response.data);
   };
 
-
   function arrClick1(){
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
@@ -49,7 +48,6 @@ const Home = () => {
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.add(style.Active);
   }
-
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -166,9 +164,7 @@ const Home = () => {
           <div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: Object, index: number) => {
               return (
-                <div key={index} className={style.container}>
-                  
-                  <div className={style.shoes__addIcon}><AddOutlinedIcon /></div>
+                <div key={index} className={style.container} style={{cursor: "pointer"}}>
                   <img
                     src={product.images[0]}
                     className={style.shoes__image}

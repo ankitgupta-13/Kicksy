@@ -3,19 +3,24 @@ import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
+import upiIcons from "../../assets/upi-icons.svg";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
   const amount = props.amount * 100;
   const address = props.address;
+  console.log(address);
   const checkOutHandler = async () => {
     const key = await getKey();
     const order = await makePayment({ amount, userID, address });
+    console.log(order);
     const options = {
       key,
       amount: order.amount,
       currency: "INR",
-      name: "Ankit Gupta",
+      name: user.username,
       description: "Razorpay tutorial",
       image: "",
       order_id: order.id,
@@ -52,14 +57,18 @@ const PaymentButton = (props) => {
         backgroundColor: "black",
         display: "flex",
         alignItems: "center",
-        width: "180px",
-        height: "40px",
+        gap: "1rem",
+        fontSize: "1rem",
+        // width: "100%",
+        // height: "100%",
+        fontWeight: 600,
         color: "white",
         border: "none",
+        margin: "0 1rem",
       }}
       onClick={checkOutHandler}
     >
-      CHECKOUT
+      CHECKOUT <img src={upiIcons} alt="" /> <ArrowForwardIosIcon />
     </button>
   );
 };

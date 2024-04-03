@@ -102,9 +102,8 @@ const Seller = () => {
           </div>
 
 
-          <div className={style.inputBox}>
+          <div className={style.inputBox} style={{ alignItems: "center" }}>
             <Input
-              style={{ marginTop: "5px" }}
               placeholder="Store Logo"
               label="Store Logo"
               type="file"

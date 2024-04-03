@@ -1,5 +1,6 @@
 .main {
     margin: 25px;
+    padding-top: 30px;
 }
 
 .product {
@@ -152,16 +153,23 @@
     transition: background-size 1s, background-color 1s;
 }
 
+.priceButton {
+    background-color: #000;
+    background-size: 0% 100%;
+    transition: background-color .5s;
+}
+
+.priceButton:hover{
+    background-color: #1a1a1a;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .7) 100%);
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    transition: background-size .7s, background-color .7s;
+}
+
 .product_imagediv {
     width: 60%;
     height: 500px;
-    /* border: 1px solid #C6C8CA;
-    padding: 1rem;
-    border-radius: 1rem;
-
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: contain !important; */
 }
 
 .product_path {
@@ -249,6 +257,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     width: 100%;
+    gap: 20px;
 }
 
 .cards::-webkit-scrollbar {
@@ -305,7 +314,7 @@
     gap: 20px;
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 431px) {
     .main {
         margin: 0;
     }

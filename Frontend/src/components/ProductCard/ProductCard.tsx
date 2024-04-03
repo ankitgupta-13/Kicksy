@@ -2,7 +2,7 @@ import style from "./ProductCard.module.css";
 import ColorCard from "../colorCard/colorCard";
 import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, wid = "24.5vw" }) => {
@@ -15,6 +15,14 @@ const ProductCard = ({ product, wid = "24.5vw" }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
+  function handleImgHover() {
+    setTimeout(() => {
+      setActiveColorId(activeColorId + 1);
+    }, 2000);
+  }
+  useEffect(() => {
+    handleImgHover();
+  }, []);
 
   return (
     <div className={style.container} style={{ width: wid }}>
@@ -33,6 +41,7 @@ const ProductCard = ({ product, wid = "24.5vw" }) => {
         onClick={() => navigate(`/product/${product._id}`)}
         onMouseOver={() => handleImgHover()}
       />
+      {/* <ProdCardCarousel productC={shoesColorData} /> */}
       <div className={style.shoes__color}>
         {shoesColorData.map((color, index) => (
           <ColorCard

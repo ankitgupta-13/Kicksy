@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/Krisksy.svg";
 import SpeedIcon from '@mui/icons-material/Speed';
 
-const Sidebar = () => {
+const Sidebar = ({ss}) => {
   const navigate = useNavigate();
   const { sectionsState } = useSelector(
     (state: RootState) => state.sellerDashboard
@@ -54,11 +54,12 @@ const Sidebar = () => {
   ];
   return (
     <>
-      <div className={style.sidebarBody}>
+      <div className={style.sidebarBody} style={{...ss}}>
         <Container
           sx={{
             width: "100%",
             height: "100vh",
+            // position: "fixed",
             display: "flex",
             flexDirection: "column",
             padding: "10px 30px",
