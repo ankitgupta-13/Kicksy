@@ -129,39 +129,31 @@ const verifyPayment = async (req, res) => {
 
       await order.save();
 
-      const promises = order.orderItems.map(async (item) => {
+      const promises = [];
+      for (const item of order.orderItems) {
+        // Update quantity in Offer collection
+        promises.push(
+          Offer.findOneAndUpdate(
+            { sellerID: item.sellerID, productID: item.product },
+            { $inc: { quantity: -item.quantity } }
+          )
+        );
 
-        await Offer.findOneAndUpdate(
-          { sellerID: item.sellerID, productID: item.product },
-          { $inc: { quantity: -item.quantity } }
-          );
-          
-          // await Seller.findByIdAndUpdate(item.sellerID, { $addToSet: { orders: { $each: this.orders } } });
-          
-          const seller = await Seller.findById(item.sellerID);
-        //   const index = seller.orders.findIndex((order)=>{
-        //     return order.equals(order._id)
-        //   })
-        //   console.log(index , seller.orders)
-        //   if(index===-1){
-          // }
-          const orderId = new mongoose.Types.ObjectId(order._id)
-          console.log(orderId , seller.orders , typeof(seller.orders[0]));
-          // console.log(!seller.orders.includes(orderId))
-          if(!seller.orders.includes(orderId)){
-            await Seller.findByIdAndUpdate(item.sellerID, { $push: { orders: order._id } })
-          }
-          
+        // Update orders array in Seller collection
+        promises.push(
+          Seller.findOneAndUpdate(
+            { _id: item.sellerID, orders: { $ne: order._id } },
+            { $push: { orders: order._id } }
+          )
+        );
+      }
 
-        return
-
-      })
-
+      // Wait for all promises to complete
       await Promise.all(promises);
 
-      cart.items = []
-      cart.cartTotal = 0;
-      await cart.save()
+      // cart.items = []
+      // cart.cartTotal = 0;
+      // await cart.save()
 
       // }
       // else{
