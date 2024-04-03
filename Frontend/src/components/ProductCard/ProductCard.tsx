@@ -5,6 +5,7 @@ import Add from "../../assets/images/add.png";
 import ImageSliderPrev from "../ImageSliderPrev/ImageSliderPrev";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProdCardCarousel from "../ProdCardCarousel/ProdCardCarousel";
 
 const ProductCard = ({ product, wid="24.5vw" }) => {
   const navigate = useNavigate();
@@ -16,8 +17,6 @@ const ProductCard = ({ product, wid="24.5vw" }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
-<<<<<<< HEAD
-
   useEffect(() => {
     function handleImgHover() {
       setTimeout(() => {
@@ -26,9 +25,6 @@ const ProductCard = ({ product, wid="24.5vw" }) => {
     }
   }, []);
 
-=======
-  
->>>>>>> d2f282260a67b58c4aecacff692adcb89e3164c4
   return (
     <div className={style.container} style={{width: wid}}>
       <div className={style.container__header}>
@@ -46,6 +42,7 @@ const ProductCard = ({ product, wid="24.5vw" }) => {
         onClick={() => navigate(`/product/${product._id}`)}
         onMouseOver={() => handleImgHover()}
       />
+      {/* <ProdCardCarousel productC={shoesColorData} /> */}
       <div className={style.shoes__color}>
         {shoesColorData.map((color, index) => (
           <ColorCard

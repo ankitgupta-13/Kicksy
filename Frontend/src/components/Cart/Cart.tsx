@@ -34,21 +34,23 @@ const Cart = () => {
 
   return (
     <div className={`${style.sidenav} ${isCartOpen ? style.open : ""}`}>
-      <div className={style.head}>
-        <h2>Cart</h2>
-        <a className={style.closebtn} onClick={handleToggleCartVisibility}>
-          &times;
-        </a>
-      </div>
-      <div className={style.itemlist}>
-        {cartItems?.map((item) => (
-          <CartItemCard item={item} />
-        ))}
-      </div>
-      <div className={style.ButtonContainer}>
-        <Button className={style.button} onClick={() => navigate("/checkout")}>
-          Checkout
-        </Button>
+      <div className={style.cart}>
+        <div className={style.head}>
+          <h2>Cart</h2>
+          <a className={style.closebtn} onClick={handleToggleCartVisibility}>
+            &times;
+          </a>
+        </div>
+        <div className={style.itemlist}>
+          {cartItems?.map((item) => (
+            <CartItemCard item={item} />
+          ))}
+        </div>
+        <div className={style.ButtonContainer}>
+          <Button className={style.button} onClick={() => navigate("/checkout")}>
+            Checkout
+          </Button>
+        </div>
       </div>
     </div>
   );

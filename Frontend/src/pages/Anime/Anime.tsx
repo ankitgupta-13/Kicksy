@@ -47,11 +47,13 @@ const Anime = () => {
   // const [allProducts, setAllProducts] = useState([]);
   // const [animeProducts, setAnimeProducts] = useState([]);
   // const [curProduct, setCurProduct] = useState([]);
-  // console.log(curProduct);
+  // // console.log(curProduct);
   // const [shoesColorData, setShoesColorData] = useState([]);
   // const [activeColor, setActiveColor] = useState("");
   // const [activeColorId, setActiveColorId] = useState<number | null>(null);
   // const [size, setSize] = useState();
+
+  const [animePg, setAnimePg] = useState(false);
 
   // const handleImageSrcChange = (src: string) => {
   //   setActiveColor(src);
@@ -77,15 +79,15 @@ const Anime = () => {
   //   } catch (error) {
   //     console.error("Error adding to cart:", error);
   //   }
-  // useEffect(() => {
-  //   const getAnimeProducts = () => {
-  //     console.log(allProducts);
-  //     const animeProducts = allProducts.filter(product => product.category === 'anime');
-  //     setAnimeProducts(animeProducts);
-  //     console.log(animeProducts);
-  //   }
-  //   getAnimeProducts();
-  // }, [allProducts]);
+  useEffect(() => {
+    const getAnimeProducts = () => {
+      console.log(allProducts);
+      const animeProducts = allProducts.filter(product => product.category === 'anime');
+      setAnimeProducts(animeProducts);
+      console.log(animeProducts);
+    }
+    getAnimeProducts();
+  }, [allProducts]);
 
 
 
@@ -217,8 +219,9 @@ const Anime = () => {
 
               </div>
             </div>
-          </div>
-          {curProduct[0] && <div style={{ margin: "25px" }}>
+          </div> */}
+
+      {/* {curProduct[0] && <div style={{ margin: "25px" }}>
             <div className={style.product}>
               <img
                 src={activeColor}
@@ -231,7 +234,7 @@ const Anime = () => {
                 {curProduct.category === "bestseller" && (
                   <a className={style.bestseller}>BEST SELLER</a>
                 )}
-                {/* <h2>Rs. {curProduct.price.originalPrice}</h2> */} {/*
+                <h2>Rs. {curProduct.price.originalPrice}</h2>  
                 <div>
                   <select
                     className={style.size}
@@ -266,14 +269,14 @@ const Anime = () => {
                 />
               ))}
             </div>
-          </div>}
+          </div>} {/*
           <div>
             <h2>Our Collection</h2>
             <p>
               lorem ispum lorem ispum
             </p>
           </div> */}
-    {/* <div className={style.Body}>
+      {/* <div className={style.Body}>
       <div className={style.Col1}>
         <div className={style.Col1row1}><img src={d5} alt="" /></div>
         <div className={style.Col1row2}></div>
@@ -298,13 +301,13 @@ const Anime = () => {
       <div className={style.Col3row4}></div>
       <div className={style.Col3row5}></div>
       </div> */}
-          {/* <div style={{ marginTop: "5%" }}>
+      {/* <div style={{ marginTop: "5%" }}>
         {products.filter((product) => product.category === "anime").map((shoe) => (
           <ProductDesc key={shoe._id} product={shoe} />
         ))}
       </div> */}
 
-          {/*             
+      {/*             
             <div style={{display:"flex", flexDirection: "column"}}>
               <img className={style.characterImg} src={aiz}></img>
               <div className={style.Content}>
@@ -314,23 +317,36 @@ const Anime = () => {
               
             </div> */}
 
-        {/* </div>
+      {/* </div>
       </div> */}
 
-      <div className={style.animepage}>
-        <div className={style.ani1}></div>
-        <div className={style.cont1}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
-        </div>
-        <div className={style.ani2}></div>
-        <div className={style.ani3}></div>
-        <div className={style.cont2}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
-        </div>
-      </div>
-    </div> 
+      {
+        animePg ?
+          <div>
+            <div className={style.animepage}>
+              <div className={style.ani1}></div>
+              <div className={style.cont1}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
+              </div>
+              <div className={style.ani2}></div>
+              <div className={style.ani3}></div>
+              <div className={style.cont2}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
+              </div>
+            </div>
+            <div className={style.explore_btn}>
+              <button className={style.exp_btn} onClick={() => setAnimePg(!animePg)}>Explore</button>
+            </div>
+          </div> :
+
+
+          <div>
+            
+          </div>
+      }
+    </div>
   );
-      {/* <div className={style.Col4}>
+  {/* <div className={style.Col4}>
       <div className={style.Col4row1}></div>
       <div className={style.Col4row1}></div>
       <div className={style.Col4row1}></div>
@@ -339,5 +355,5 @@ const Anime = () => {
       <div className={style.Col4row1}></div>
       </div>
     </div> */}
-  };
+};
 export default Anime;

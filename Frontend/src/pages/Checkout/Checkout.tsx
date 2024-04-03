@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getUserCartItems } from "../../api/user.api";
 
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
@@ -27,10 +30,11 @@ const Checkout = () => {
   };
 
   return (
-    <div>
+    <div className={style.main}>
       <form onSubmit={handleSubmit(handleAddress)}>
-        <div>
-          <h1>Order Summary</h1>
+        <div className={style.checkOut}>
+          <h1><ShoppingCartOutlinedIcon /> Order Summary</h1>
+          <hr />
           <div className={style.orderSummary}>
             {cartItems?.map((item) => (
               <div className={style.cartItem}>
@@ -39,20 +43,22 @@ const Checkout = () => {
             ))}
           </div>
         </div>
-        <div className={style.address}>
-          <h1>Shipping Details</h1>
+        <div className={style.addressForm}>
+          <h1><LocalShippingOutlinedIcon/> Shipping Details</h1>
           <Input
-            placeholder="FULLNAME "
+            placeholder="FULLNAME"
             {...register("recipientName", { required: true })}
           />
-          <Input
-            placeholder="MOBILE NO. "
-            {...register("mobile", { required: true })}
-          />
-          <Input
-            placeholder="EMAIL ADDRESS"
-            {...register("email", { required: true })}
-          />
+          <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+            <Input width = {"30%"} 
+              placeholder="MOBILE NO. "
+              {...register("mobile", { required: true })}
+            />
+            <Input width = {"70%"} border="none"
+              placeholder="EMAIL ADDRESS"
+              {...register("email", { required: true })}
+            />
+          </div>
           <Input
             placeholder="ADDRESS"
             {...register("street", { required: true })}

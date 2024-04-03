@@ -22,11 +22,14 @@ const Wishlist = () => {
       id="mySidenav"
       className={`${style.sidenav} ${isWishlistOpen ? style.open : ""}`}
     >
-      <div className={style.head}>
-        <h2>Wishlist</h2>
-        <a className={style.closebtn} onClick={handleToggleWishlistVisibility}>
-          &times;
-        </a>
+      <div className={style.wishlist}>
+        <div className={style.head}>
+          <h2>Wishlist</h2>
+          <a className={style.closebtn} onClick={handleToggleWishlistVisibility}>
+            &times;
+          </a>
+        </div>
+        <div className={style.itemlist}></div>
       </div>
     </div>
   );

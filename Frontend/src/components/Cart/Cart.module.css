@@ -2,6 +2,7 @@
   height: auto;
   width: 0;
   position: fixed;
+  height: 100vh;
   z-index: 1;
   top: 0;
   right: 0;
@@ -9,6 +10,11 @@
   backdrop-filter: blur(10px);
   overflow-x: hidden;
   transition: 0.5s;
+  font-family: "Noir Pro";
+}
+
+.sidenav::-webkit-scrollbar{
+  display: none;
 }
 
 .itemlist {
@@ -49,6 +55,10 @@
 
 .sidenav .closebtn {
   font-size: 36px;
+}
+
+.closebtn{
+  cursor: pointer;
 }
 
 .paymentbutton {

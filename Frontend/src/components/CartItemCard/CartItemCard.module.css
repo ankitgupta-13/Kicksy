@@ -1,0 +1,40 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    font-family: "Noir Pro";
+    font-size: 16px;
+
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .item_name {
+            font-weight: 600;
+        }
+    }
+}
+
+.item_img {
+    height: 4rem;
+    width: 10rem;
+
+}
+
+.item_img_c {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.changeQuantity{
+    margin-left: 1rem;
+    display: flex;
+    gap: 1rem;
+
+}

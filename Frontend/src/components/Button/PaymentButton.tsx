@@ -3,6 +3,10 @@ import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
+import upiIcons from "../../assets/upi-icons.svg";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
   const userID = user?._id;
@@ -52,14 +56,18 @@ const PaymentButton = (props) => {
         backgroundColor: "black",
         display: "flex",
         alignItems: "center",
-        width: "180px",
-        height: "40px",
+        gap: "1rem",
+        fontSize: "1rem",
+        // width: "100%",
+        // height: "100%",
+        fontWeight: 600,
         color: "white",
         border: "none",
+        margin: "0 1rem",
       }}
       onClick={checkOutHandler}
     >
-      CHECKOUT
+      CHECKOUT <img src={upiIcons} alt="" /> <ArrowForwardIosIcon/>
     </button>
   );
 };
