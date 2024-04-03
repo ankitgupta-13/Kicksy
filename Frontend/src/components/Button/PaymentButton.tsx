@@ -19,7 +19,7 @@ const PaymentButton = (props) => {
       key,
       amount: order.amount,
       currency: "INR",
-      name: "Ankit Gupta",
+      name: user.username,
       description: "Razorpay tutorial",
       image: "",
       order_id: order.id,

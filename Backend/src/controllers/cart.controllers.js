@@ -11,7 +11,6 @@ const addToCart = async (req, res) => {
 
     const cart = await Cart.findOne({ user: userID });
     const offer = await Offer.findOne({ productID, sellerID });
-    console.log(offer);
 
 
     // If user does not have a cart, create a new cart and add the product to it
@@ -179,7 +178,7 @@ const addSubtractCartQuantity = async (req, res) => {
 
     }
 
-    return res.json(new ApiResponse(200, cart["items"][index] , "quantity updated successfully"));
+    return res.json(new ApiResponse(200, cart["items"][index  ] , "quantity updated successfully"));
 
   }
   catch (err) {

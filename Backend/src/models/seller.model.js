@@ -24,19 +24,26 @@ const sellerSchema = new mongoose.Schema({
   },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
-    unique:true,
+    unique: true,
     ref: "User",
     required: true,
   },
-  orders: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
+  orders: {
+    type: [mongoose.Schema.Types.ObjectId],
+    // unique: true,
+    validate: {
+      validator: function(arr) {
+        return new Set(arr).size === arr.length;
+      },
+      message: 'Orders must be unique'
     },
-  ],
-  offers:{
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Offer",
-    },
+    ref: "Order"
+  },
+  
+  offers: {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: "Offer",
+},
   website: String,
   instagram: String,
   notes: String,
