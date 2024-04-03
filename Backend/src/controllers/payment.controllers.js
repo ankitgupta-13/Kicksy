@@ -93,18 +93,18 @@ const verifyPayment = async (req, res) => {
       .digest("hex");
     if (expectedSign === razorpay_signature) {
       // add order to seller and user
-      // const userCart = await Cart.findOne({ user: orderDetails.userID });
+      const userCart = await Cart.findOne({ user: orderDetails.userID });
 
-      // console.log(orderDetails);
+      console.log(orderDetails);
 
-      // console.log("101: "+addressDetails)
+      console.log("101: " + addressDetails);
 
-      // const address = new Address({
-      //   userId: orderDetails.userID,
-      //   ...addressDetails,
-      // });
+      const address = new Address({
+        userId: orderDetails.userID,
+        ...addressDetails,
+      });
 
-      // await address.save();
+      await address.save();
 
       const user = await User.findById(orderDetails.userID);
       if (!user) return res.json(new ApiResponse(404, "user not found!"));
@@ -121,43 +121,36 @@ const verifyPayment = async (req, res) => {
         paymentStatus: true,
         paymentMethod: "Razorpay",
         searchTags: tags,
-        // address: address._id,
+        address: address._id,
       });
 
       await order.save();
 
-      const promises = order.orderItems.map(async (item) => {
-        await Offer.findOneAndUpdate(
-          { sellerID: item.sellerID, productID: item.product },
-          { $inc: { quantity: -item.quantity } }
+      const promises = [];
+      for (const item of order.orderItems) {
+        // Update quantity in Offer collection
+        promises.push(
+          Offer.findOneAndUpdate(
+            { sellerID: item.sellerID, productID: item.product },
+            { $inc: { quantity: -item.quantity } }
+          )
         );
 
-        // await Seller.findByIdAndUpdate(item.sellerID, { $addToSet: { orders: { $each: this.orders } } });
+        // Update orders array in Seller collection
+        promises.push(
+          Seller.findOneAndUpdate(
+            { _id: item.sellerID, orders: { $ne: order._id } },
+            { $push: { orders: order._id } }
+          )
+        );
+      }
 
-        const seller = await Seller.findById(item.sellerID);
-        //   const index = seller.orders.findIndex((order)=>{
-        //     return order.equals(order._id)
-        //   })
-        //   console.log(index , seller.orders)
-        //   if(index===-1){
-        // }
-        const orderId = new mongoose.Types.ObjectId(order._id);
-        console.log(orderId, seller.orders, typeof seller.orders[0]);
-        // console.log(!seller.orders.includes(orderId))
-        if (!seller.orders.includes(orderId)) {
-          await Seller.findByIdAndUpdate(item.sellerID, {
-            $push: { orders: order._id },
-          });
-        }
-
-        return;
-      });
-
+      // Wait for all promises to complete
       await Promise.all(promises);
 
-      cart.items = [];
-      cart.cartTotal = 0;
-      await cart.save();
+      // cart.items = []
+      // cart.cartTotal = 0;
+      // await cart.save()
 
       // }
       // else{

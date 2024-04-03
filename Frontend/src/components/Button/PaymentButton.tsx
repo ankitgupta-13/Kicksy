@@ -42,6 +42,7 @@ const PaymentButton = (props) => {
           addressDetails: order.addressDetails,
         };
         const data = await verifyPayment(payload);
+        console.log(data);
         alert(data.message);
       },
     };
