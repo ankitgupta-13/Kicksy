@@ -11,23 +11,27 @@ import { Alert } from "@mui/material";
 const CartItemCard = ({ item }) => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
   // console.log(item)
-  const [cartQty , setCartQty] = useState(item.quantity);
-  const [successMessage , setSuccessMessage] = useState("");
+  const [cartQty, setCartQty] = useState(item.quantity);
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const updateCartQuantity = async(productID:String , sellerID:String , operator:String)=>{
+  const updateCartQuantity = async (
+    productID: String,
+    sellerID: String,
+    operator: String
+  ) => {
     const data = await updateCart({
       userID,
       productID,
       sellerID,
-      operator
-    })
-    console.log(data)
-    if(data.statusCode === 200){
+      operator,
+    });
+    console.log(data);
+    if (data.statusCode === 200) {
       // alert("quantity updated")
-      setCartQty(data.data.quantity)
+      setCartQty(data.data.quantity);
       setSuccessMessage(data.message);
     }
-  }
+  };
 
   return (
     <div>
@@ -45,16 +49,27 @@ const CartItemCard = ({ item }) => {
       <div className={style.changeQuantity}>
         <RemoveIcon
           onClick={() =>
-            updateCartQuantity(item.product._id , item.sellerID , "-")
+            updateCartQuantity(item.product._id, item.sellerID, "-")
           }
         />
         <AddIcon
           onClick={() =>
-            updateCartQuantity(item.product._id , item.sellerID , "+")
+            updateCartQuantity(item.product._id, item.sellerID, "+")
           }
         />
       </div>
-      {successMessage?<Alert severity="success" onClose={()=>{setSuccessMessage("")}}>{successMessage}</Alert>:""}
+      {successMessage ? (
+        <Alert
+          severity="success"
+          onClose={() => {
+            setSuccessMessage("");
+          }}
+        >
+          {successMessage}
+        </Alert>
+      ) : (
+        ""
+      )}
       <div>
         <CloseIcon
           onClick={() =>
