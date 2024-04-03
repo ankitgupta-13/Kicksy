@@ -15,7 +15,7 @@ export const getKey = async () => {
 export const makePayment = async (payload: {
   amount: number;
   userID: String;
-  adress: Object;
+  address: Object;
 }) => {
   try {
     const {

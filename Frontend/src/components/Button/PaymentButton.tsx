@@ -11,11 +11,9 @@ const PaymentButton = (props) => {
   const userID = user?._id;
   const amount = props.amount * 100;
   const address = props.address;
-  console.log(address);
   const checkOutHandler = async () => {
     const key = await getKey();
     const order = await makePayment({ amount, userID, address });
-    console.log(order);
     const options = {
       key,
       amount: order.amount,

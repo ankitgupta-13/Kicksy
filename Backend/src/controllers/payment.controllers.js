@@ -33,8 +33,7 @@ const makePayment = async (req, res) => {
     const order = await rpayInstance.orders.create(options);
     order.userID = userID;
     order.items = cartItems;
-    order.address = address;
-    console.log(order);
+    order.addressDetails = address;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -44,7 +43,6 @@ const makePayment = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   try {
-    // console.log(req.body);
     const {
       razorpay_order_id,
       razorpay_payment_id,
