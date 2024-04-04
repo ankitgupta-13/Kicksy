@@ -15,44 +15,29 @@ const CartItemCard = ({ item }) => {
   const [cartQty, setCartQty] = useState(item.quantity);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const updateCartQuantity = async (
-    productID: String,
-    sellerID: String,
-    operator: String
-  ) => {
+  const updateCartQuantity = async (productID: String, sellerID: String, operator: String) => {
     const data = await updateCart({
       userID,
       productID,
       sellerID,
-      operator,
-    });
-    console.log(data);
+      operator
+    })
+    console.log(data)
     if (data.statusCode === 200) {
       // alert("quantity updated")
-      setCartQty(data.data.quantity);
+      setCartQty(data.data.quantity)
       setSuccessMessage(data.message);
     }
-  };
+  }
 
   return (
     <div className={style.main}>
       <div className={style.item}>
         <div className={style.item_img}>
-          <div
-            className={style.item_img_c}
-            style={{ backgroundImage: `url(${item.product.images[0]})` }}
-          ></div>
+          <div className={style.item_img_c} style={{ backgroundImage: `url(${item.product.images[0]})` }}></div>
         </div>
         <div>
-          <div
-            style={{
-              fontWeight: "600",
-              fontSize: "1rem",
-              textTransform: "uppercase",
-            }}
-          >
-            {item.product.title}
-          </div>
+          <div style={{ fontWeight: "600", fontSize: "1rem", textTransform: "uppercase" }}>{item.product.title}</div>
           <div style={{ fontSize: ".9rem" }}>{item.product.price}</div>
           <div style={{ display: "flex" }}>
             <span>Quantity :</span>
@@ -74,8 +59,10 @@ const CartItemCard = ({ item }) => {
           </div>
         </div>
       </div>
-      {successMessage ? <Alert severity="success" onClose={() => { setSuccessMessage("") }}>{successMessage}</Alert> : ""}
-      <div style={{ height: "4rem", display: "flex", fontSize: ".8rem"}}>
+      <MediaQuery minWidth={431}>
+        {successMessage ? <Alert severity="success" onClose={() => { setSuccessMessage("") }}>{successMessage}</Alert> : ""}
+      </MediaQuery>
+      <div style={{ height: "4rem", display: "flex", fontSize: ".8rem" }}>
         <CloseIcon
           onClick={() =>
             removeFromCart({
