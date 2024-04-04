@@ -170,7 +170,7 @@
     font-size: 1rem;
     font-family: 'Noir Pro', sans-serif;
     cursor: pointer;
-    position: fixed;
+    position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
