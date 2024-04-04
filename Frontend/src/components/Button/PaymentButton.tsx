@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 import upiIcons from "../../assets/upi-icons.svg";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const PaymentButton = (props) => {
   const user = useSelector((state) => state.auth.userData);
@@ -43,6 +42,7 @@ const PaymentButton = (props) => {
           addressDetails: order.addressDetails,
         };
         const data = await verifyPayment(payload);
+        console.log(data);
         alert(data.message);
       },
     };
@@ -67,7 +67,7 @@ const PaymentButton = (props) => {
       }}
       onClick={checkOutHandler}
     >
-      CHECKOUT <img src={upiIcons} alt="" /> <ArrowForwardIosIcon/>
+      CHECKOUT <img src={upiIcons} alt="" /> <ArrowForwardIosIcon />
     </button>
   );
 };

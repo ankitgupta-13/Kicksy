@@ -89,6 +89,32 @@ const addProductViaRequest = async (req, res) => {
         sellerID: seller,
       },
     });
+
+    product.tags.push(product.title.toLowerCase());
+    product.tags.push(product.brand.toLowerCase());
+    product.tags.push(product.gender.toLowerCase());
+    product.tags.push(product.skuID.toLowerCase());
+    
+    gender.forEach((g)=>{
+      product.tags.push(g)
+    })
+
+    color.forEach((c)=>{
+      product.tags.push(c);
+    })
+
+    category.forEach((c)=>{
+      product.tags.push(c)
+    })
+
+    size.forEach((s)=>{
+      product.tags.push(s)
+    })
+
+    
+    
+    
+    
     await product.save();
 
     const offer = new Offer({

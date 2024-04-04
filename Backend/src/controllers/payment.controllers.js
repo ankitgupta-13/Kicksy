@@ -24,7 +24,7 @@ const getKey = async (req, res) => {
 };
 
 const makePayment = async (req, res) => {
-  let { amount, userID, cartItems } = req.body;
+  let { amount, userID, cartItems, address } = req.body;
   try {
     const options = {
       amount, // amount in the smallest currency unit
@@ -33,6 +33,7 @@ const makePayment = async (req, res) => {
     const order = await rpayInstance.orders.create(options);
     order.userID = userID;
     order.items = cartItems;
+    order.addressDetails = address;
     return res.json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (err) {
     console.log(err);
@@ -42,7 +43,6 @@ const makePayment = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
   try {
-    // console.log(req.body);
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -52,8 +52,6 @@ const verifyPayment = async (req, res) => {
       addressDetails,
       products, // [{productID,quantity,sellerID}]
     } = req.body;
-
-
 
     /*
     
@@ -95,25 +93,24 @@ const verifyPayment = async (req, res) => {
       .digest("hex");
     if (expectedSign === razorpay_signature) {
       // add order to seller and user
-      // const userCart = await Cart.findOne({ user: orderDetails.userID });
+      const userCart = await Cart.findOne({ user: orderDetails.userID });
 
-      // console.log(orderDetails);
+      console.log(orderDetails);
 
-      // console.log("101: "+addressDetails)
+      console.log("101: " + addressDetails);
 
-      // const address = new Address({
-      //   userId: orderDetails.userID,
-      //   ...addressDetails,
-      // });
+      const address = new Address({
+        userId: orderDetails.userID,
+        ...addressDetails,
+      });
 
-      // await address.save();
+      await address.save();
 
-      const user = await User.findById(orderDetails.userID)
+      const user = await User.findById(orderDetails.userID);
       if (!user) return res.json(new ApiResponse(404, "user not found!"));
 
       const cart = await Cart.findOne({ user: orderDetails.userID });
       if (!cart) return res.json(new ApiResponse(404, "cart not found"));
-
 
       const tags = [user.username, user.email];
       // if(orderDetails.amount === cart.cartTotal){
@@ -123,45 +120,48 @@ const verifyPayment = async (req, res) => {
         orderPrice: orderDetails.amount,
         paymentStatus: true,
         paymentMethod: "Razorpay",
-        searchTags: tags
-        // address: address._id,
+        searchTags: tags,
+        address: address._id,
       });
 
       await order.save();
 
-      const promises = order.orderItems.map(async (item) => {
+      const promises = [];
+      for (const item of order.orderItems) {
+        // Update quantity in Offer collection
+        promises.push(
+          Offer.findOneAndUpdate(
+            { sellerID: item.sellerID, productID: item.product },
+            { $inc: { quantity: -item.quantity } }
+          )
+        );
 
-        await Offer.findOneAndUpdate(
-          { sellerID: item.sellerID, productID: item.product },
-          { $inc: { quantity: -item.quantity } }
-          );
-          
-          // await Seller.findByIdAndUpdate(item.sellerID, { $addToSet: { orders: { $each: this.orders } } });
-          
-          const seller = await Seller.findById(item.sellerID);
-        //   const index = seller.orders.findIndex((order)=>{
-        //     return order.equals(order._id)
-        //   })
-        //   console.log(index , seller.orders)
-        //   if(index===-1){
-          // }
-          const orderId = new mongoose.Types.ObjectId(order._id)
-          console.log(orderId , seller.orders , typeof(seller.orders[0]));
-          // console.log(!seller.orders.includes(orderId))
-          if(!seller.orders.includes(orderId)){
-            await Seller.findByIdAndUpdate(item.sellerID, { $push: { orders: order._id } })
-          }
-          
+        // Update orders array in Seller collection
+        promises.push(
+          Seller.findOneAndUpdate(
+            { _id: item.sellerID, orders: { $ne: order._id } },
+            { $push: { orders: order._id } }
+          )
+        );
 
-        return
+        const seller = await Seller.findById(item.sellerID)
+        promises.push(
+          Order.findOneAndUpdate({ _id: order._id, adminSearchTags: { $ne: seller.storeName } },
+            { $push: { adminSearchTags: seller.storeName } })
+        )
 
-      })
+      }
 
+      // Wait for all promises to complete
       await Promise.all(promises);
 
       cart.items = []
       cart.cartTotal = 0;
       await cart.save()
+
+      await User.findByIdAndUpdate(orderDetails.userID, {
+        $push: {/* address: address._id,*/ orders: order._id },
+      });
 
       // }
       // else{
@@ -176,12 +176,9 @@ const verifyPayment = async (req, res) => {
       //   return res.json(new ApiResponse(422 , paymentHandler ,"Incorrect fund amount , please try to contact the owner if full amount paid"))
       // }
 
-
       //   await order.save();
 
-      //   await User.findByIdAndUpdate(orderDetails.userID, {
-      //     $push: { address: address._id, orders: order._id },
-      //   });
+      //   
       // } else {
       // const order = new Order({
       //   user: userID,

@@ -2,12 +2,10 @@ import style from "./ProductCard.module.css";
 import ColorCard from "../colorCard/colorCard";
 import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
-import ImageSliderPrev from "../ImageSliderPrev/ImageSliderPrev";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProdCardCarousel from "../ProdCardCarousel/ProdCardCarousel";
 
-const ProductCard = ({ product, wid="24.5vw" }) => {
+const ProductCard = ({ product, wid = "24.5vw" }) => {
   const navigate = useNavigate();
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
@@ -17,16 +15,17 @@ const ProductCard = ({ product, wid="24.5vw" }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
+  function handleImgHover() {
+    setTimeout(() => {
+      setActiveColorId(activeColorId + 1);
+    }, 2000);
+  }
   useEffect(() => {
-    function handleImgHover() {
-      setTimeout(() => {
-        setActiveColorId(activeColorId + 1)
-      }, 2000)
-    }
+    handleImgHover();
   }, []);
 
   return (
-    <div className={style.container} style={{width: wid}}>
+    <div className={style.container} style={{ width: wid }}>
       <div className={style.container__header}>
         <div className={style.container__hotitem}>
           <img src={Fire} alt="error" />
