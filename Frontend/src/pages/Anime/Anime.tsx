@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductDesc from "../ProductDesc/ProductDesc";
+import ProductCardAnime from "../../components/ProductCardAnime/ProductCardAnime.tsx";
 import PostCard from "../../components/PostCard/PostCard";
 import { getAllProducts } from "../../api/user.api";
 import heroImg from "../../assets/images/anime-herobg.png";
@@ -380,7 +381,7 @@ const Anime = () => {
             <div className={`${style.productlist} ${style.cards}`}>
               {animeProducts.map((product: any, index: number) => (
                 <div className={style.listitem} key={index} style={{ width: "25vw" }}>
-                  <div onClick={() => setProductID(product._id)}><ProductCard product={product} /></div>
+                  <div onClick={() => setProductID(product._id)}><ProductCardAnime product={product} /></div>
                 </div>
               ))}
             </div>

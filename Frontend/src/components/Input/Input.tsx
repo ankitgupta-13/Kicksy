@@ -14,13 +14,14 @@ const Input = (
     className = "",
     defaultValue,
     onChange,
+    ss,
     ...props
   }: any,
   ref
 ) => {
   const id = useId();
   return (
-    <div className={style.inputDiv} style={{ width: `${width}` }}>
+    <div className={style.inputDiv} style={{ width: `${width}`, ...ss }}>
       {label && <label htmlFor={id}>{label}</label>}
       <div
         className={style.inputBox}

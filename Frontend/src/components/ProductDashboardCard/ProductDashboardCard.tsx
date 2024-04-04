@@ -43,7 +43,7 @@ const ProductDashboardCard = ({ data, type }) => {
       {userRole === "admin" ? (
         <div className={style.cardContainer}>
           <div className={style.nameImage}>
-            <img src={images[0]} alt="" className={style.image} />
+            <div className={style.image} style={{background: `url(${images[0]})`, backgroundSize: "contain", backgroundRepeat: "no-repeat"}}></div>
             <div className={style.title}>{title}</div>
           </div>
           <div className={style.createdAt}>
@@ -58,7 +58,7 @@ const ProductDashboardCard = ({ data, type }) => {
       ) : (
         <div className={style.cardContainer}>
           <div className={style.nameImage}>
-            <img src={images[0]} alt="" className={style.image} />
+            <div className={style.image} style={{background: `url(${images[0]})`, backgroundSize: "contain", backgroundRepeat: "no-repeat"}}></div>
             <div className={style.title}>{title}</div>
           </div>
           <div className={style.skuid}>{skuID}</div>

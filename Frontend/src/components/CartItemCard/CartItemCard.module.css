@@ -38,3 +38,9 @@
     gap: 1rem;
 
 }
+
+@media screen and (max-width: 430px) {
+    .item_img_c, .item_img{
+        width: 3rem;
+    }
+}

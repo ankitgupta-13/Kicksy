@@ -157,7 +157,31 @@
     font-weight: bold;
     padding-bottom: 10px;
 }
-
+.container__shopbtn {
+    align-self: center;
+    height: 3rem;
+    width: 9rem;
+    background-color: #000;
+    background-size: 0% 100%;
+    outline: none;
+    border: 1px solid #000000;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-family: 'Noir Pro', sans-serif;
+    cursor: pointer;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.container__shopbtn:hover {
+    background-color: #1a1a1a;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .7) 100%);
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    transition: background-size .6s, background-color .3s;
+}
 
 .NewArrivals {
     padding-left: 40px;
@@ -349,6 +373,7 @@
     .BestSellerSlider {
         background-color: #000;
         color: #fff;
+        padding-top: 1.4rem;
     }
 
     .BestSellerSliderHeading {
@@ -366,5 +391,15 @@
     .BestSellerCard .container {
         width: 1rem !important;
         padding-bottom: 30px;
+    }
+
+    .BestSellerCards{
+        height: 40vh;
+        display: flex !important;
+        align-items: center;
+    }
+
+    .container__shopbtn{
+        display: none;
     }
 }

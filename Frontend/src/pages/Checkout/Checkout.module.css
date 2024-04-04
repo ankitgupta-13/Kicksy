@@ -49,3 +49,14 @@
     justify-content: center;
     margin: 10px;
 }
+@media screen and (max-width: 430px) {
+    .main{
+        margin-top: 10vh;
+        height: 110vh;
+    }
+    .checkoutButton{
+        width: 90vw;
+        margin: auto;
+        margin-top: 1rem;
+    }
+}

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { useState } from "react";
 import { Alert } from "@mui/material";
+import MediaQuery from "react-responsive";
 
 const CartItemCard = ({ item }) => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
@@ -38,16 +39,16 @@ const CartItemCard = ({ item }) => {
         <div>
           <div style={{ fontWeight: "600", fontSize: "1rem", textTransform: "uppercase" }}>{item.product.title}</div>
           <div style={{ fontSize: ".9rem" }}>{item.product.price}</div>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <span>Quantity :</span>
             <div className={style.changeQuantity}>
               <RemoveIcon
                 onClick={() =>
                   updateCartQuantity(item.product._id, item.sellerID, "-")
                 }
-                style={{ cursor: "pointer", fontSize: "1.2rem"}}
-                />
-                <span>{cartQty}</span>
+                style={{ cursor: "pointer", fontSize: "1.2rem" }}
+              />
+              <span>{cartQty}</span>
               <AddIcon
                 onClick={() =>
                   updateCartQuantity(item.product._id, item.sellerID, "+")
@@ -58,8 +59,10 @@ const CartItemCard = ({ item }) => {
           </div>
         </div>
       </div>
-      {successMessage ? <Alert severity="success" onClose={() => { setSuccessMessage("") }}>{successMessage}</Alert> : ""}
-      <div style={{ height: "4rem", display: "flex", fontSize: ".8rem"}}>
+      <MediaQuery minWidth={431}>
+        {successMessage ? <Alert severity="success" onClose={() => { setSuccessMessage("") }}>{successMessage}</Alert> : ""}
+      </MediaQuery>
+      <div style={{ height: "4rem", display: "flex", fontSize: ".8rem" }}>
         <CloseIcon
           onClick={() =>
             removeFromCart({

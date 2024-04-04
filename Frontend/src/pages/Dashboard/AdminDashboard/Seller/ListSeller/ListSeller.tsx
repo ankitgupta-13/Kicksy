@@ -32,7 +32,6 @@ const ListSeller = () => {
           <div className={style.status}>Store Name</div>
           <div className={style.name}>Name</div>
           <div className={style.phone}>Phone Number</div>
-          <div className={style.role}>Email</div>
         </div>
         {sellerList.map((seller, index) => {
           return (

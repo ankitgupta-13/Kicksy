@@ -61,3 +61,16 @@
   margin-left: -2rem;
   margin-right: 2rem;
 }
+
+@media screen and (max-width: 430px) {
+  .name,
+  .phone,
+  .role,
+  .status {
+    font-size: 12px;
+  }
+  .status{
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

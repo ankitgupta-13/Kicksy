@@ -1,12 +1,12 @@
 .container {
-    width: 100%;
+    width: 75vw;
     display: flex;
     justify-content: space-between;
     padding: 20px;
 }
 .imagesection {
     width: 350px;
-    height: 350px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -65,8 +65,23 @@
     background-color: rgba(255, 86, 48, 0.16);
     border-width: 0px;
 }
+.activebutton {
+    width: 140px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items:center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: unset;
+    font-family: "Public Sans", sans-serif;
+    border-radius: 8px;
+    background-color: rgba(85, 255, 0, 0.393) !important;
+    border-width: 0px;
+}
 .detailsection {
-    width: 500px;
+    width: 700px;
     height: 450px;
     color: rgb(33, 43, 54);
     box-sizing: border-box;
@@ -75,7 +90,7 @@
     border-radius: 20px;
 }
 .orderhistory {
-    width: 100%;
+    width: 450px;
     height: 450px;
     color: rgb(33, 43, 54);
     box-sizing: border-box;
@@ -104,4 +119,33 @@
     font-size: 1.0625rem;
     font-family: "Public Sans", sans-serif;
     display: block;
+}
+
+@media screen and (max-width: 430px) {
+    .container {
+        width: 100vw;
+        height: 120vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 0px;
+    }
+    .banbutton, .activebutton{
+        width: 30vw;
+        /* height: 40vh; */
+    }
+    .imagesection{
+        width: 90vw;
+        height: 40vh;
+    }
+    .buttonsection{
+        width: 90vw;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .detailsection, .orderhistory{
+        width: 90vw;
+    }
 }

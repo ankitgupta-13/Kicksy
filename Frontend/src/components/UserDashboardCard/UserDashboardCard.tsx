@@ -6,6 +6,7 @@ import {
 } from "../../redux/reducers/adminDashboardSlice";
 import { RootState } from "../../redux/store/store";
 import avatar from "../../assets/avatar.jpg";
+import MediaQuery from "react-responsive";
 
 const UserDashboardCard = ({ data, type }) => {
   const { username, email, status, mobile, _id } = data;
@@ -35,8 +36,15 @@ const UserDashboardCard = ({ data, type }) => {
             <div className={style.store}>{username}</div>
           </div>
           <div className={style.text}>{mobile.number}</div>
-          <div className={style.text}>{email}</div>
-          <div className={style.text}>{status?.toUpperCase()}</div>
+
+          <MediaQuery minWidth={431}>
+            <div className={`${style.text} ${style.emailText}`}>{email}</div>
+          </MediaQuery>
+
+          <div className={style.text}>
+            <div className={style.text} style={{ width: "10px", height: "10px", backgroundColor: "green", borderRadius: "50%", marginRight: "5px" }}></div>
+            {status?.toUpperCase()}
+          </div>
         </div>
       ) : (
         <div className={style.cardContainer}>
@@ -46,7 +54,9 @@ const UserDashboardCard = ({ data, type }) => {
           </div>
           <div className={style.text}>{data.userID?.username}</div>
           <div className={style.text}>{data.whatsappNumber}</div>
-          <div className={style.text}>{data.userID?.email}</div>
+          <MediaQuery minWidth={431}>
+            <div className={`${style.text} ${style.emailText}`}>{data.userID?.email}</div>
+          </MediaQuery>
         </div>
       )}
     </div>

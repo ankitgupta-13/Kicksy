@@ -27,6 +27,7 @@ import { setInitialCartItems } from "./redux/reducers/cartSlice.ts";
 import BlogPage from "./pages/BlogPage/BlogPage.tsx";
 import Seller from "./pages/Seller/Seller.tsx";
 import Checkout from "./pages/Checkout/Checkout.tsx";
+import Order from "./pages/Order/Order.tsx";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/payments" element={<PaymentButton amount={5000} />} />
           <Route path="/seller" element={<Seller />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<Order />} />
         </Route>
         <Route
           element={

@@ -57,6 +57,7 @@ const Home = () => {
   return (
     <div className={style.Body} style={{fontFamily: "Noir Pro"}}>
       <SliderCard />
+      <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button>
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
@@ -170,7 +171,7 @@ const Home = () => {
                     className={style.shoes__image}
                     onClick={() => navigate(`/product/${product._id}`)}
                   />
-                  <div className={style.shoes__name}>{product.title}</div>
+                  <div className={style.shoes__name} style={{width: "8rem",  textWrap: "balance"}}>{product.title}</div>
                   <div className={style.shoes__price}>{product.price}</div>
                 </div>
               );
@@ -181,11 +182,11 @@ const Home = () => {
       <div className={style.BestSellerSlider}>
         <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
-          <div className={style.cards}>
+          <div className={`${style.cards} ${style.BestSellerCards}`}>
             {products.map((product: Object, index: number) => {
               return (
                 <div className={style.BestSellerCard} key={index} style={{width: "18rem"}}>
-                  <ProductCard product={product} wid="18rem" />
+                  <ProductCard product={product} wid="10rem" />
                 </div>
               );
             })}

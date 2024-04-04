@@ -3,6 +3,7 @@ import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
 import style from "./ListUser.module.css";
 import UserAdminDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
 import { Pagination } from "@mui/material";
+import MediaQuery from "react-responsive";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -36,7 +37,9 @@ const ListUser = () => {
       <div className={style.sectionTitle}>
         <div className={style.name}>Name</div>
         <div className={style.phone}>Phone Number</div>
-        <div className={style.role}>Email</div>
+        <MediaQuery minWidth={431}>
+          <div className={style.role}>Email</div>
+        </MediaQuery>
         <div className={style.status}>Status</div>
       </div>
       {users.map((user, index) => {

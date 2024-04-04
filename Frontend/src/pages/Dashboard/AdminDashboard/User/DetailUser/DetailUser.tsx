@@ -34,7 +34,7 @@ const DetailUser = () => {
     console.log(response);
   };
 
-  const handleBanSeller = async () => {};
+  const handleBanSeller = async () => { };
 
   const handleBanUser = async () => {
     let response;
@@ -50,8 +50,8 @@ const DetailUser = () => {
       currentSection === "User"
         ? (response = await getUserById({ userID }))
         : action === "List"
-        ? (response = await getSellerById({ sellerID: userID }))
-        : (response = await getSellerRequestById({ requestID: userID }));
+          ? (response = await getSellerById({ sellerID: userID }))
+          : (response = await getSellerRequestById({ requestID: userID }));
       if (response.statusCode === 200) {
         setUserData(response.data);
       }
@@ -60,25 +60,27 @@ const DetailUser = () => {
 
   return (
     <div>
-      <div className={style.container}>
+      <div className={style.content} style={{ height: "100vh" }}>
         {currentSection === "User" ? (
           <div className={style.container}>
             <div className={style.imagesection}>
               <div className={style.imagecircle}>
                 <img src={avatar} className={style.avatar} />
               </div>
-              <button
-                className={style.banbutton}
-                onClick={handleAcceptSellerRequest}
-              >
-                {userData?.status?.toUpperCase()}
-              </button>
-              <button className={style.banbutton} onClick={handleBanUser}>
-                {userData.status === "active" ? "Ban User" : "Activate User"}
-              </button>
+              <div className={style.buttonsection}>
+                <button
+                  className={style.activebutton}
+                  onClick={handleAcceptSellerRequest}
+                >
+                  {userData?.status?.toUpperCase()}
+                </button>
+                <button className={style.banbutton} onClick={handleBanUser}>
+                  {userData.status === "active" ? "Ban User" : "Activate User"}
+                </button>
+              </div>
             </div>
             <div className={style.detailsection}>
-              <span className={style.heading}>User Deatils</span>
+              <span className={style.heading}>User Details</span>
               <span className={style.subheading}>
                 Name : {userData?.username}
               </span>
@@ -96,20 +98,23 @@ const DetailUser = () => {
             </div>
           </div>
         ) : action === "List" ? (
-          <div>
+          <div className={style.container} style={{ height: "180vh" }}>
             <div className={style.imagesection}>
               <div className={style.imagecircle}>
                 <img src={userData.storeLogo} className={style.avatar} />
               </div>
-              <button
-                className={style.banbutton}
-                onClick={handleAcceptSellerRequest}
-              >
-                Active Seller
-              </button>
-              <button className={style.banbutton} onClick={handleBanSeller}>
-                BanSeller
-              </button>
+              <div className={style.buttonsection}>
+                <button
+                  className={style.activebutton}
+                  onClick={handleAcceptSellerRequest}
+                  style={{color: "green"}}
+                >
+                  Active Seller
+                </button>
+                <button className={style.banbutton} onClick={handleBanSeller}>
+                  BanSeller
+                </button>
+              </div>
             </div>
             <div className={style.detailsection}>
               <span className={style.heading}>Seller Deatils</span>
@@ -144,23 +149,27 @@ const DetailUser = () => {
             </div>
           </div>
         ) : (
-          <div>
+          <div className={style.container} style={{ height: "100vh" }}>
             <div className={style.imagesection}>
               <div className={style.imagecircle}>
                 <img src={userData.storeLogo} className={style.avatar} />
               </div>
-              <button
-                className={style.banbutton}
-                onClick={handleAcceptSellerRequest}
-              >
-                Accept
-              </button>
-              <button
-                className={style.banbutton}
-                onClick={handleDeclineSellerRequest}
-              >
-                Decline
-              </button>
+
+              <div className={style.buttonsection}>
+                <button
+                  className={style.activebutton}
+                  onClick={handleAcceptSellerRequest}
+                  style={{color: "green"}}
+                >
+                  Accept
+                </button>
+                <button className={style.banbutton} onClick={handleDeclineSellerRequest}>
+                  Decline
+                </button>
+              </div>
+
+
+              
             </div>
             <div className={style.detailsection}>
               <span className={style.heading}>Seller Deatils</span>

@@ -26,6 +26,7 @@
   font-size: 0.875rem;
   font-family: "Public Sans", sans-serif;
   font-weight: 400;
+
 }
 .nameEmail {
   flex-direction: column;
@@ -43,4 +44,10 @@
   object-fit: cover;
   color: transparent;
   text-indent: 10000px;
+}
+
+@media screen and (max-width: 431px) {
+  .emailText{
+    display: none;
+  }
 }
