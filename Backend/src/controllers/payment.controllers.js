@@ -143,14 +143,25 @@ const verifyPayment = async (req, res) => {
             { $push: { orders: order._id } }
           )
         );
+
+        const seller = await Seller.findById(item.sellerID)
+        promises.push(
+          Order.findOneAndUpdate({ _id: order._id, adminSearchTags: { $ne: seller.storeName } },
+            { $push: { adminSearchTags: seller.storeName } })
+        )
+
       }
 
       // Wait for all promises to complete
       await Promise.all(promises);
 
-      // cart.items = []
-      // cart.cartTotal = 0;
-      // await cart.save()
+      cart.items = []
+      cart.cartTotal = 0;
+      await cart.save()
+
+      await User.findByIdAndUpdate(orderDetails.userID, {
+        $push: {/* address: address._id,*/ orders: order._id },
+      });
 
       // }
       // else{
@@ -167,9 +178,7 @@ const verifyPayment = async (req, res) => {
 
       //   await order.save();
 
-      //   await User.findByIdAndUpdate(orderDetails.userID, {
-      //     $push: { address: address._id, orders: order._id },
-      //   });
+      //   
       // } else {
       // const order = new Order({
       //   user: userID,

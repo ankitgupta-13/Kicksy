@@ -54,6 +54,11 @@ const orderSchema = new mongoose.Schema(
       {
         type:String
       }
+    ],
+    adminSearchTags:[
+      {
+        type:String
+      }
     ]
   },
   {
