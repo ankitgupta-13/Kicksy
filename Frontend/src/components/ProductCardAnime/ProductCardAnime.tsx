@@ -4,10 +4,8 @@ import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
 import ImageSliderPrev from "../ImageSliderPrev/ImageSliderPrev";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const ProductCardAnime = ({ product, wid="24.5vw" }) => {
-  const navigate = useNavigate();
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
   const [activeColor, setActiveColor] = useState("");
@@ -38,7 +36,6 @@ const ProductCardAnime = ({ product, wid="24.5vw" }) => {
       <img
         src={activeColor}
         className={style.shoes__image}
-        onClick={() => navigate(`/product/${product._id}`)}
         onMouseOver={() => handleImgHover()}
       />
       {/* <ProdCardCarousel productC={shoesColorData} /> */}

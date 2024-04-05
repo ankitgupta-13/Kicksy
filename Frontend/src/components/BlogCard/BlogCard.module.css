@@ -51,7 +51,10 @@
 @media screen and (max-width: 430px) {
     .card {
         margin: 20px 10px;
-        /* width: 60vw; */
+        /* width: 10rem; */
+        .image{
+            width: 90vw;
+        }
     }
 
     .card__info {

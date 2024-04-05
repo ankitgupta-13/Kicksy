@@ -5,7 +5,7 @@ import Add from "../../assets/images/add.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, wid = "24.5vw" }) => {
+const ProductCard = ({ product, wid }) => {
   const navigate = useNavigate();
   const [shoesColorData, setShoesColorData] = useState(product.images);
 

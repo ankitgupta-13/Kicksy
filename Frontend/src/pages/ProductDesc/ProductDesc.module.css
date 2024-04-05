@@ -1,6 +1,6 @@
 .main {
     margin: 25px;
-    padding-top: 30px;
+    padding-top: 5px;
 }
 
 .product {
@@ -384,8 +384,11 @@
     }
 
     .alsoLikeCards {
-        margin: 20px;
-        gap: none;
+        width: 100vw;
+        padding-right: 30px;
+        gap: 0px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .AlsoLikeContainer {

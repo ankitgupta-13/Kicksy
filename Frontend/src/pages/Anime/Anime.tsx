@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import ProductDesc from "../ProductDesc/ProductDesc";
 import ProductCardAnime from "../../components/ProductCardAnime/ProductCardAnime.tsx";
 import PostCard from "../../components/PostCard/PostCard";
 import { getAllProducts } from "../../api/user.api";
-import heroImg from "../../assets/images/anime-herobg.png";
+import heroImg from "../../assets/anime-hero-img.png";
+import ani1Img from "../../assets/anime-one.png";
+import ani2Img from "../../assets/anime-two.jpg";
+import ani3Img from "../../assets/anime-three.jpg";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import style from "./Anime.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,7 +32,7 @@ const Anime = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [animeProducts, setAnimeProducts] = useState([]);
   const [curProduct, setCurProduct] = useState([]);
-  const [productID, setProductID] = useState([] || animeProducts[0]._id);
+  const [productID, setProductID] = useState([]);
   // console.log(curProduct);
   const [shoesColorData, setShoesColorData] = useState([]);
   const [activeColor, setActiveColor] = useState("");
@@ -39,9 +44,9 @@ const Anime = () => {
   const [animePg, setAnimePg] = useState(true);
   const [inStock, setInStock] = useState(true);
 
-  const handleImageSrcChange = (src: string) => {
-    setActiveColor(src);
-  };
+  // const handleImageSrcChange = (src: string) => {
+  //   setActiveColor(src);
+  // };
   const sizes = [
     { label: "Select Size" },
     { label: "11", value: "11" },
@@ -79,6 +84,13 @@ const Anime = () => {
 
   }, [allProducts]);
 
+
+  useEffect(() => {
+    if (animeProducts.length > 0) {
+      setProductID(animeProducts[0]._id);
+    }
+  }, [animeProducts]);
+
   const handleAddToCart = async (sellerID: String) => {
     const payload = {
       userID,
@@ -98,17 +110,18 @@ const Anime = () => {
     }
   };
 
+
   return (
     <div className={style.mainBody}>
       {animePg ?
         <div>
           <div className={style.animepage}>
-            <div className={style.ani1}></div>
+            <div className={style.ani1} style={{ backgroundImage: `url(${ani1Img})` }}></div>
             <div className={style.cont1}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
             </div>
-            <div className={style.ani2}></div>
-            <div className={style.ani3}></div>
+            <div className={style.ani2} style={{ backgroundImage: `url(${ani2Img})` }}></div>
+            <div className={style.ani3} style={{ backgroundImage: `url(${ani3Img})` }}></div>
             <div className={style.cont2}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
             </div>
@@ -118,11 +131,8 @@ const Anime = () => {
           </div>
         </div> :
         <div>
-          <div className={style.a_hero} style={{ background: `url(${heroImg})`, backgroundColor: "#e0b000", backgroundSize: "contain", backgroundRepeat: "no-repeat" }}>
-            <div className={style.a_hero_text}>
-              <p>Lorem ipsum dolor sit amet consectetur.</p>
-              <h1>Custom Anime Shoes</h1>
-            </div>
+          <div className={style.a_hero}>
+            <img style={{ width: "100%" }} src={heroImg} alt="" />
           </div>
           {curProduct && <div style={{ margin: "25px" }}>
             <div className={style.product}>
@@ -381,7 +391,14 @@ const Anime = () => {
             <div className={`${style.productlist} ${style.cards}`}>
               {animeProducts.map((product: any, index: number) => (
                 <div className={style.listitem} key={index} style={{ width: "25vw" }}>
-                  <div onClick={() => setProductID(product._id)}><ProductCardAnime product={product} /></div>
+                  <div onClick={() => setProductID(product._id)}>
+                    <MediaQuery minWidth={431}>
+                      <ProductCardAnime product={product} wid="18.5vw" />
+                    </MediaQuery>
+                    <MediaQuery maxWidth={431}>
+                      <ProductCardAnime product={product} wid="10rem" />
+                    </MediaQuery>
+                  </div>
                 </div>
               ))}
             </div>

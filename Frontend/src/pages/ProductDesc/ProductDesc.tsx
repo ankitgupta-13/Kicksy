@@ -98,8 +98,8 @@ const ProductDesc = () => {
   };
 
   return (
-    <div>
-      <div className={style.main}>
+    <div style={{overflowX: "hidden"}}>
+      <div className={style.main} style={{overflowX: "hidden"}}>
         <div className={style.product}>
           <MediaQuery minWidth={431}>
             <div
@@ -348,11 +348,16 @@ const ProductDesc = () => {
       <div className={style.AlsoLikeSlider}>
         <div className={style.AlsoLikeContainer}>
           <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
-          <div className={style.cards}>
+          <div className={`${style.cards} ${style.alsoLikeCards}`}>
             {products.map((product: any, index: number) => {
               return (
                 <div key={index}>
-                  <ProductCard product={product} />
+                  <MediaQuery minWidth={431}>
+                    <ProductCard product={product} wid="18.5vw" />
+                  </MediaQuery>
+                  <MediaQuery maxWidth={431}>
+                    <ProductCard product={product} wid="10rem" />
+                  </MediaQuery>
                 </div>
               );
             })}
@@ -368,8 +373,13 @@ const ProductDesc = () => {
         <div className={`${style.cards} ${style.alsoLikeCards}`}>
           {products.map((product: any, index: number) => {
             return (
-              <div key={index}>
-                <ProductCard product={product} />
+              <div key={index} style={{marginBottom: "30px"}}>
+                <MediaQuery minWidth={431}>
+                  <ProductCard product={product} wid="18.5vw" />
+                </MediaQuery>
+                <MediaQuery maxWidth={431}>
+                  <ProductCard product={product} wid="10rem" />
+                </MediaQuery>
               </div>
             );
           })}

@@ -50,6 +50,9 @@
 }
 
 @media screen and (max-width: 430px ) {
+    .container{
+        overflow-x: hidden;
+    }
     .bloglist {
         grid-template-columns: 1fr;
         padding: 5px;
