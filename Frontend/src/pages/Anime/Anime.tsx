@@ -115,6 +115,7 @@ const Anime = () => {
     <div className={style.mainBody}>
       {animePg ?
         <div>
+          <img src={'../../assets/post_banner.jpg'} alt="" />
           <div className={style.animepage}>
             <div className={style.ani1} style={{ backgroundImage: `url(${ani1Img})` }}></div>
             <div className={style.cont1}>
