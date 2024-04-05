@@ -22,6 +22,7 @@ const Cart = () => {
   const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
   };
+  const showCart = useSelector((state: RootState) => state.cart.isOpen);
   const handleCart = async (userID) => {
     const response = await getUserCartItems({ userID });
     setCartItems(response.data.items);
@@ -37,7 +38,10 @@ const Cart = () => {
       <div className={style.cart}>
         <div className={style.head}>
           <h2>Cart</h2>
-          <a className={style.closebtn} onClick={handleToggleCartVisibility}>
+          <a
+            className={style.closebtn}
+            onClick={() => showCart && handleToggleCartVisibility}
+          >
             &times;
           </a>
         </div>
@@ -47,7 +51,10 @@ const Cart = () => {
           ))}
         </div>
         <div className={style.ButtonContainer}>
-          <Button className={style.button} onClick={() => navigate("/checkout")}>
+          <Button
+            className={style.button}
+            onClick={() => navigate("/checkout")}
+          >
             Checkout
           </Button>
         </div>

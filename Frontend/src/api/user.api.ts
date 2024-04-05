@@ -58,7 +58,10 @@ export const updateCart = async (payload: {
   operator: String;
 }) => {
   try {
-    const { data } = await api.post("/user/add-subtract-cart-quantity", payload);
+    const { data } = await api.post(
+      "/user/add-subtract-cart-quantity",
+      payload
+    );
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
@@ -98,7 +101,6 @@ export const getAllBlogs = async () => {
 
 export const getUserCartItems = async (payload) => {
   try {
-    console.log(payload);
     const { data } = await api.post("/user/get-user-cart", payload);
     return data;
   } catch (error: any) {

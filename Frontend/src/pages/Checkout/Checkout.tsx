@@ -37,63 +37,70 @@ const Checkout = () => {
         <ArrowBackIosIcon />
         <span>Back</span>
       </Button>
-      <form onSubmit={handleSubmit(handleAddress)}>
-        <div className={style.checkOut}>
-          <h1>
-            <ShoppingCartOutlinedIcon /> Order Summary
-          </h1>
-          <hr />
-          <div className={style.orderSummary}>
-            {cartItems?.map((item) => (
-              <div className={style.cartItem}>
-                <CartItemCard item={item} />
-              </div>
-            ))}
+      {cartItems?.length == 0 ? (
+        (console.log(cartItems.length), (<div>Cart Is Empty</div>))
+      ) : (
+        <form onSubmit={handleSubmit(handleAddress)}>
+          <div className={style.checkOut}>
+            <h1>
+              <ShoppingCartOutlinedIcon /> Order Summary
+            </h1>
+            <hr />
+            <div className={style.orderSummary}>
+              {cartItems?.map((item) => (
+                <div className={style.cartItem}>
+                  <CartItemCard item={item} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className={style.addressForm}>
-          <h1>
-            <LocalShippingOutlinedIcon /> Shipping Details
-          </h1>
-          <Input
-            placeholder="FULLNAME"
-            {...register("recipientName", { required: true })}
-          />
-          <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+          <div className={style.addressForm}>
+            <h1>
+              <LocalShippingOutlinedIcon /> Shipping Details
+            </h1>
             <Input
-              width={"30%"}
-              placeholder="MOBILE NO. "
-              {...register("mobile", { required: true })}
+              placeholder="FULLNAME"
+              {...register("recipientName", { required: true })}
+            />
+            <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+              <Input
+                width={"30%"}
+                placeholder="MOBILE NO. "
+                {...register("mobile", { required: true })}
+              />
+              <Input
+                width={"70%"}
+                border="none"
+                placeholder="EMAIL ADDRESS"
+                {...register("email", { required: true })}
+              />
+            </div>
+            <Input
+              placeholder="ADDRESS"
+              {...register("street", { required: true })}
             />
             <Input
-              width={"70%"}
-              border="none"
-              placeholder="EMAIL ADDRESS"
-              {...register("email", { required: true })}
+              placeholder="COUNTRY"
+              {...register("country", { required: true })}
+            />
+            <Input
+              placeholder="STATE"
+              {...register("state", { required: true })}
+            />
+            <Input
+              placeholder="CITY"
+              {...register("city", { required: true })}
+            />
+            <Input
+              placeholder="PINCODE"
+              {...register("pincode", { required: true })}
             />
           </div>
-          <Input
-            placeholder="ADDRESS"
-            {...register("street", { required: true })}
-          />
-          <Input
-            placeholder="COUNTRY"
-            {...register("country", { required: true })}
-          />
-          <Input
-            placeholder="STATE"
-            {...register("state", { required: true })}
-          />
-          <Input placeholder="CITY" {...register("city", { required: true })} />
-          <Input
-            placeholder="PINCODE"
-            {...register("pincode", { required: true })}
-          />
-        </div>
-        <div className={style.checkoutButton}>
-          <PaymentButton amount={cartTotal} address={address} type="submit" />
-        </div>
-      </form>
+          <div className={style.checkoutButton}>
+            <PaymentButton amount={cartTotal} address={address} type="submit" />
+          </div>
+        </form>
+      )}
     </div>
   );
 };
