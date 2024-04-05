@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 import HeroShoes from '../../assets/images/hero-product.png'
+import MediaQuery from 'react-responsive';
 const SliderCard = (props: any) => {
   const navigate = useNavigate();
   const [data, setData] = useState([{
@@ -39,14 +40,25 @@ const SliderCard = (props: any) => {
     <Slider {...settings}>
       {data.map((item) => (
         <>
-          <div className={style.container}>
-            <div className={style.container__backgroudtext}>The New 2023</div>
-            <div className={style.container__shoesname}>{item.name}</div>
-            <div className={style.container__info}>
-              <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
-              <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button>
+          <MediaQuery minWidth={431}>
+            <div className={style.container}>
+              <div className={style.container__backgroudtext}>The New 2023</div>
+              <div className={style.container__shoesname}>{item.name}</div>
+              <div className={style.container__info}>
+                <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
+              </div>
             </div>
-          </div>
+          </MediaQuery>
+          <MediaQuery maxWidth={431}>
+            <div className={style.container} onClick={() => navigate("/shop")}>
+              <div className={style.container__backgroudtext}>The New 2023</div>
+              <div className={style.container__shoesname}>{item.name}</div>
+              <div className={style.container__info}>
+                <img className={style.container__shoesimage} src={HeroShoes} alt="shoes" />
+              </div>
+            </div>
+          </MediaQuery>
+          {/* <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button> */}
         </>
       ))}
     </Slider>

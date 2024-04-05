@@ -15,6 +15,7 @@
 
 .listitem{
   height: max-content;
+  width: 25vw;
 }
   
 .topbuttons{
@@ -45,9 +46,11 @@
     margin-top: 17vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
     .listitem{
+      width: 45vw !important;
       .container{
-        width: 10px;
+        width: 100% !important;
       }
     }
   }

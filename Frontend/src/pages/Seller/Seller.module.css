@@ -79,3 +79,13 @@
   border: 1px solid var(--Border-2, #CCC);
   margin-top: 5px;
 }
+
+@media screen and (max-width: 430px) {
+  .CenterBody {
+    width: 100%;
+    border: none;
+    padding: 20px;
+    padding-bottom: 30px;
+    margin-top: 8vh;
+  }
+}

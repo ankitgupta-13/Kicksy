@@ -59,7 +59,10 @@
     font-size: 1rem;
     font-family: 'Noir Pro', sans-serif;
     cursor: pointer;
-    
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .container__shopbtn:hover {
     background-color: #1a1a1a;
@@ -89,6 +92,7 @@
     }
     .container__shopbtn{
         display: none;
+        position: relative;
     }
     .container__shoesimage{
         max-height: 10rem;

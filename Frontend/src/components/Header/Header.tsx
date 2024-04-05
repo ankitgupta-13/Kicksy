@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
 import style from "./Header.module.css";
 import { toggleCartVisibility } from "../../redux/reducers/cartSlice";
+import Profile from "../Profile/Profile";
 
 //Icons
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -19,11 +20,12 @@ import Searchbar from "../Searchbar/Searchbar";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { RootState } from "../../redux/store/store";
+import TimelineIcon from "@mui/icons-material/Timeline";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -133,7 +135,7 @@ const Header = () => {
             <CloseOutlinedIcon />
           </a>
           <h1 style={{ marginBottom: "24px" }}>MENU</h1>
-          <a href="#">
+          <a href="/profile">
             <AccountCircleOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -144,7 +146,10 @@ const Header = () => {
             />{" "}
             My Profile
           </a>
-          <a href="#">
+          <div>
+            <Profile />
+          </div>
+          <a href="/profile">
             <ShoppingBagOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -154,6 +159,17 @@ const Header = () => {
               }}
             />{" "}
             Orders
+          </a>
+          <a href="/seller">
+            <SellOutlinedIcon
+              style={{
+                fontWeight: "light",
+                color: "#1c1b1f",
+                marginRight: "12px",
+                fontSize: "24px",
+              }}
+            />{" "}
+            Seller Request
           </a>
           <a href="#">
             <FavoriteBorderOutlinedIcon
@@ -166,8 +182,8 @@ const Header = () => {
             />{" "}
             My Wishlist
           </a>
-          <a href="#">
-            <PinDropOutlinedIcon
+          <a href="/admin">
+            <TimelineIcon
               style={{
                 fontWeight: "light",
                 color: "#1c1b1f",
@@ -175,7 +191,7 @@ const Header = () => {
                 fontSize: "24px",
               }}
             />{" "}
-            Delivery Address
+            Dashboard
           </a>
           <a href="/blogs">
             <LibraryBooksOutlinedIcon
@@ -200,10 +216,10 @@ const Header = () => {
         <a onClick={() => setIsSearchOpen(!isSearchOpen)}>
           <SearchIcon />
         </a>
-        <a href="#cart">
+        <a href="/checkout">
           <AddShoppingCartIcon />
         </a>
-        <a href="#profile">
+        <a href="/profile">
           <AccountCircleIcon />
         </a>
       </div>

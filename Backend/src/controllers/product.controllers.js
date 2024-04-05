@@ -231,7 +231,8 @@ const searchBarProducts = async (req, res) => {
       }
     });
     return res.json(new ApiResponse(200, products_array));
-  } catch (err) {
+  } 
+  catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };

@@ -18,6 +18,7 @@ import CustomNike from "../../assets/images/CustomNike.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import { useNavigate } from "react-router-dom";
+import MediaQuery from "react-responsive";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,19 +32,19 @@ const Home = () => {
     if (response.statusCode === 200) setProducts(response.data);
   };
 
-  function arrClick1(){
+  function arrClick1() {
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.remove(style.Active);
   }
 
-  function arrClick2(){
+  function arrClick2() {
     arrivaltab1.current.classList.remove(style.Active);
     arrivaltab2.current.classList.add(style.Active);
     arrivaltab3.current.classList.remove(style.Active);
   }
 
-  function arrClick3(){
+  function arrClick3() {
     arrivaltab1.current.classList.remove(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.add(style.Active);
@@ -55,8 +56,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={style.Body} style={{fontFamily: "Noir Pro"}}>
+    <div className={style.Body} style={{ fontFamily: "Noir Pro" }}>
       <SliderCard />
+      <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button>
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
@@ -152,7 +154,7 @@ const Home = () => {
           <img src={CustomNike} alt="" />
         </div>
       </div>
-      
+
       <div className={style.NewArrivals}>
         <div className={style.NewArrivalsTabs}>
           <h1 onClick={() => arrClick1()} ref={arrivaltab1} className={`${style.NewArrivalsSliderTitle} ${style.Active}`}>New Arrivals</h1>
@@ -164,13 +166,13 @@ const Home = () => {
           <div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: Object, index: number) => {
               return (
-                <div key={index} className={style.container} style={{cursor: "pointer"}}>
+                <div key={index} className={style.container} style={{ cursor: "pointer" }}>
                   <img
                     src={product.images[0]}
                     className={style.shoes__image}
                     onClick={() => navigate(`/product/${product._id}`)}
                   />
-                  <div className={style.shoes__name}>{product.title}</div>
+                  <div className={style.shoes__name} style={{ width: "8rem", textWrap: "balance" }}>{product.title}</div>
                   <div className={style.shoes__price}>{product.price}</div>
                 </div>
               );
@@ -181,11 +183,16 @@ const Home = () => {
       <div className={style.BestSellerSlider}>
         <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
-          <div className={style.cards}>
+          <div className={`${style.cards} ${style.BestSellerCards}`}>
             {products.map((product: Object, index: number) => {
               return (
-                <div className={style.BestSellerCard} key={index} style={{width: "18rem"}}>
-                  <ProductCard product={product} wid="18rem" />
+                <div className={style.BestSellerCard} key={index} style={{ width: "18rem" }}>
+                  <MediaQuery minWidth={431}>
+                    <ProductCard product={product} wid="18.5vw" />
+                  </MediaQuery>
+                  <MediaQuery maxWidth={431}>
+                    <ProductCard product={product} wid="10rem" />
+                  </MediaQuery>
                 </div>
               );
             })}

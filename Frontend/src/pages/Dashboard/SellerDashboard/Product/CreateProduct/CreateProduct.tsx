@@ -129,19 +129,36 @@ const CreateProduct = () => {
               <Input
                 type="checkbox"
                 value={1}
-                label="1"
+                label="S"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={2}
-                label="2"
+                label="M"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={3}
-                label="3"
+                label="L"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
+                value={4}
+                label="XL"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
+                value={5}
+                label="XXL"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
             </div>

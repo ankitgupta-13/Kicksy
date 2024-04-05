@@ -130,8 +130,14 @@ const Shop: React.FC = () => {
         </div>
         <div className={style.productlist}>
           {filteredProducts.map((product: any, index: number) => (
-            <div className={style.listitem} key={index} style={{ width: "25vw" }}>
-              <ProductCard product={product} />
+            <div className={style.listitem} key={index}>
+              <MediaQuery minWidth={430}>
+                <ProductCard product={product} />
+              </MediaQuery>
+
+              <MediaQuery maxWidth={430}>
+                <ProductCard product={product} wid="45vw" />
+              </MediaQuery>
             </div>
           ))}
         </div>

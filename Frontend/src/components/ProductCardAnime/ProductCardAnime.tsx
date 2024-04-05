@@ -1,12 +1,11 @@
-import style from "./ProductCard.module.css";
+import style from "./ProductCardAnime.module.css";
 import ColorCard from "../colorCard/colorCard";
 import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
+import ImageSliderPrev from "../ImageSliderPrev/ImageSliderPrev";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, wid }) => {
-  const navigate = useNavigate();
+const ProductCardAnime = ({ product, wid="24.5vw" }) => {
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
   const [activeColor, setActiveColor] = useState("");
@@ -15,17 +14,16 @@ const ProductCard = ({ product, wid }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
-  function handleImgHover() {
-    setTimeout(() => {
-      setActiveColorId(activeColorId + 1);
-    }, 2000);
-  }
   useEffect(() => {
-    handleImgHover();
+    function handleImgHover() {
+      setTimeout(() => {
+        setActiveColorId(activeColorId + 1)
+      }, 2000)
+    }
   }, []);
 
   return (
-    <div className={style.container} style={{ width: wid }}>
+    <div className={style.container} style={{width: wid}}>
       <div className={style.container__header}>
         <div className={style.container__hotitem}>
           <img src={Fire} alt="error" />
@@ -38,7 +36,6 @@ const ProductCard = ({ product, wid }) => {
       <img
         src={activeColor}
         className={style.shoes__image}
-        onClick={() => navigate(`/product/${product._id}`)}
         onMouseOver={() => handleImgHover()}
       />
       {/* <ProdCardCarousel productC={shoesColorData} /> */}
@@ -56,7 +53,6 @@ const ProductCard = ({ product, wid }) => {
       </div>
       <div
         className={style.shoes__info}
-        onClick={() => navigate(`/product/${product._id}`)}
       >
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
@@ -71,4 +67,4 @@ const ProductCard = ({ product, wid }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCardAnime;

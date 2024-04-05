@@ -5,6 +5,7 @@ import style from "./ListSeller.module.css";
 import { UserDashboardCard } from "../../../../../components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/store/store";
+import MediaQuery from "react-responsive";
 
 const ListSeller = () => {
   const [sellerList, setSellerList] = useState([]);
@@ -32,7 +33,10 @@ const ListSeller = () => {
           <div className={style.status}>Store Name</div>
           <div className={style.name}>Name</div>
           <div className={style.phone}>Phone Number</div>
-          <div className={style.role}>Email</div>
+          <MediaQuery minWidth={431}>
+
+            <div className={style.phone}>Email</div>
+          </MediaQuery>
         </div>
         {sellerList.map((seller, index) => {
           return (

@@ -9,6 +9,7 @@ import { RootState } from "../../redux/store/store";
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const profileStatus = useSelector((state: RootState) => state.auth.isOpen);
   const user = useSelector((state: RootState) => state.auth?.userData);
   const isProfileOpen = useSelector((state: RootState) => state.auth.isOpen);
   const authStatus = useSelector((state: RootState) => state.auth.status);
@@ -27,7 +28,10 @@ const Profile = () => {
     >
       <div className={style.head}>
         <h2>Profile</h2>
-        <a className={style.closebtn} onClick={handleToggleProfileVisibility}>
+        <a
+          className={style.closebtn}
+          onClick={() => profileStatus && handleToggleProfileVisibility}
+        >
           &times;
         </a>
       </div>

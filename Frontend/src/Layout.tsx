@@ -15,8 +15,8 @@ const Layout = ({ loading }) => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        // <div onClick={() => showProfile && dispatch(toggleProfileVisibility())}>
-        <div>
+        <div onClick={() => showProfile && dispatch(toggleProfileVisibility())}>
+          {/* <div> */}
           <Header />
           <Outlet />
           <Cart />
