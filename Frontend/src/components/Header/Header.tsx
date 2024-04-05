@@ -77,7 +77,7 @@ const Header = () => {
             <div>
               <Logo width="100px" />
             </div>
-            <ul className={style.navList}>
+            <ul className={style.navList} >
               {navItems.map((item) =>
                 item.isActive ? (
                   <li className={style.navListItem} key={item.name}>

@@ -382,6 +382,103 @@
 
 
 @media screen and (max-width: 431px) {
+    .animepage {
+        padding-top: 12vh;
+        /* padding: 2rem 10rem; */
+        height: 110vh;
+        display: flex;
+        width: 100vw;
+        justify-content: center;
+    }
+    .ani1 {
+        border: 2px solid #000;
+        width: 60vw;
+        height: 50vh;
+        position: absolute;
+        left: 10vw;
+        background-position: center;
+        background-size: cover;
+    }
+    
+    .cont1 {
+        width: 60vw;
+        height: 30vh;
+        border: 2px solid #000;
+        transform: translate(-50%, 0);
+        position: absolute;
+        top: 20vh;
+        left: 50%;
+        z-index: 1;
+        background-color: #fff;
+        
+        font-size: 10px;
+        font-family: "Noir Pro";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 2rem;
+    }
+    
+    .ani2 {
+        border: 2px solid #000;
+        width: 35vw;
+        height: 40vh;
+        position: absolute;
+        left: 55vw;
+        top: 30vh;
+    
+        background-position: center;
+        background-size: cover;
+    }
+    
+    .ani3 {
+        border: 2px solid #000;
+        width: 50vw;
+        height: 40vh;
+        position: absolute;
+        top: 65vh;
+        left: 10.5vw;
+
+        background-position: center;
+        background-size: cover;
+    }
+    
+    .cont2 {
+        border: 2px solid #000;
+        width: 30vw;
+        height: 34vh;
+        position: absolute;
+        top: 71vh;
+        left: 62vw;
+        background-color: #fff;
+
+        font-size: 10px;
+        font-family: "Noir Pro";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 1rem;
+    }
+    
+    .explore_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10vh;
+    
+        .exp_btn {
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-family: "Noir Pro";
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #D61B1B;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+    }
+
     .a_hero{
         height: auto;
         margin-top: 10vh;

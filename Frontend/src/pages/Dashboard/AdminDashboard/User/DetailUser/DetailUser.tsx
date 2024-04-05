@@ -103,11 +103,19 @@ const DetailUser = () => {
               <div className={style.imagecircle}>
                 <img src={userData.storeLogo} className={style.avatar} />
               </div>
-              <div className={style.buttonsection}>
+              <div className={style.buttonsection} style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "10px",
+                marginTop: "10px",
+                marginBottom: "10px"
+              }}
+              >
                 <button
                   className={style.activebutton}
                   onClick={handleAcceptSellerRequest}
-                  style={{color: "green"}}
+                  style={{ color: "green" }}
                 >
                   Active Seller
                 </button>
@@ -159,7 +167,7 @@ const DetailUser = () => {
                 <button
                   className={style.activebutton}
                   onClick={handleAcceptSellerRequest}
-                  style={{color: "green"}}
+                  style={{ color: "green" }}
                 >
                   Accept
                 </button>
@@ -169,7 +177,7 @@ const DetailUser = () => {
               </div>
 
 
-              
+
             </div>
             <div className={style.detailsection}>
               <span className={style.heading}>Seller Deatils</span>

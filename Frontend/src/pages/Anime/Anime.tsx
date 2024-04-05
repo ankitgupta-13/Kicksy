@@ -7,6 +7,7 @@ import heroImg from "../../assets/anime-hero-img.png";
 import ani1Img from "../../assets/anime-one.png";
 import ani2Img from "../../assets/anime-two.jpg";
 import ani3Img from "../../assets/anime-three.jpg";
+import banner from '../../assets/post_banner.jpg'
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import style from "./Anime.module.css";
@@ -115,16 +116,29 @@ const Anime = () => {
     <div className={style.mainBody}>
       {animePg ?
         <div>
-          <img src={'../../assets/post_banner.jpg'} alt="" />
+          <span style={{ position: "absolute", zIndex: -1, top: 0, width: "100%", height: "9.5vh", backgroundColor: "#fff" }}></span>
+          <img style={{ width: "100%", height: "100vh", position: "fixed", zIndex: -10, top: 0 }} src={banner} alt="" />
           <div className={style.animepage}>
             <div className={style.ani1} style={{ backgroundImage: `url(${ani1Img})` }}></div>
             <div className={style.cont1}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
+              <MediaQuery minWidth={431}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
+              </MediaQuery>
+              <MediaQuery maxWidth={431}>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse incidunt eius corporis totam odit dolorem voluptate? Excepturi, molestiae. Modi quos atque optio quas aliquid accusamus quod molestiae similique a consectetur.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore maxime aut quae natus. Aut quas hic cumque repellat. 
+              </MediaQuery>
             </div>
             <div className={style.ani2} style={{ backgroundImage: `url(${ani2Img})` }}></div>
             <div className={style.ani3} style={{ backgroundImage: `url(${ani3Img})` }}></div>
             <div className={style.cont2}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
+              <MediaQuery minWidth={431}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
+
+              </MediaQuery>
+              <MediaQuery maxWidth={431}>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse incidunt eius corporis totam odit dolorem voluptate? Excepturi, molestiae.
+              </MediaQuery>
             </div>
           </div>
           <div className={style.explore_btn}>
