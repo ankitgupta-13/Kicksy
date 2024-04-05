@@ -23,16 +23,14 @@ import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { RootState } from "../../redux/store/store";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
-  const authStatus = useSelector((state) => state.auth.status);
-  const isUser = useSelector((state) => state.auth.status);
-  const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
-  const isSeller =
-    useSelector((state) => state.auth.userData?.role) === "seller";
+  const authStatus = useSelector((state: RootState) => state.auth.status);
+  const isUser = useSelector((state: RootState) => state.auth.status);
   const location = window.location.pathname.split().pop();
 
   const navigate = useNavigate();
@@ -44,11 +42,6 @@ const Header = () => {
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
     { name: "Seller", slug: "/seller", isActive: isUser },
-    (isAdmin || isSeller) && {
-      name: "Dashboard",
-      slug: "/admin",
-      isActive: isAdmin || isSeller,
-    },
   ];
 
   const handleToggleCartVisibility = () => {

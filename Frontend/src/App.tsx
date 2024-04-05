@@ -49,14 +49,14 @@ const App = () => {
           <Route path="/blogpage" element={<BlogPage />} />
           <Route path="/payments" element={<PaymentButton amount={5000} />} />
           <Route path="/seller" element={<Seller />} />
-          <Route path="/checkout" element={<Checkout />} />
         </Route>
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route
           element={
             <ProtectedRoutes userRole={userData?.role} status={status} />
           }
         >
-          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </>
     )

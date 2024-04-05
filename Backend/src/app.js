@@ -5,8 +5,8 @@ import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import orderRouter from "./routes/order.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
-import sellerRouter from './routes/seller.routes.js';
-import productRouter from './routes/product.routes.js';
+import sellerRouter from "./routes/seller.routes.js";
+import productRouter from "./routes/product.routes.js";
 import dotenv from "dotenv";
 
 const app = express();
@@ -19,9 +19,13 @@ app.use(
     origin: ["http://localhost:5173"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    exposedHeaders: ["set-cookie"]
+    exposedHeaders: ["set-cookie"],
   })
 );
+
+app.get("/health", (req, res) => {
+  res.send("Health OK");
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));

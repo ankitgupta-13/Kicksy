@@ -1,16 +1,19 @@
 import { useSelector } from "react-redux";
-import { CartItemCard, Input, PaymentButton } from "../../components";
+import { Button, CartItemCard, Input, PaymentButton } from "../../components";
 import style from "./Checkout.module.css";
 import { RootState } from "../../redux/store/store";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getUserCartItems } from "../../api/user.api";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
@@ -19,7 +22,6 @@ const Checkout = () => {
   useEffect(() => {
     (async () => {
       const response = await getUserCartItems({ userID });
-      console.log(response);
       setCartItems(response.data?.items);
       setCartTotal(response.data?.cartTotal);
     })();
@@ -31,9 +33,15 @@ const Checkout = () => {
 
   return (
     <div className={style.main}>
+      <Button className={style.backButton} onClick={() => navigate("/")}>
+        <ArrowBackIosIcon />
+        <span>Back</span>
+      </Button>
       <form onSubmit={handleSubmit(handleAddress)}>
         <div className={style.checkOut}>
-          <h1><ShoppingCartOutlinedIcon /> Order Summary</h1>
+          <h1>
+            <ShoppingCartOutlinedIcon /> Order Summary
+          </h1>
           <hr />
           <div className={style.orderSummary}>
             {cartItems?.map((item) => (
@@ -44,17 +52,22 @@ const Checkout = () => {
           </div>
         </div>
         <div className={style.addressForm}>
-          <h1><LocalShippingOutlinedIcon/> Shipping Details</h1>
+          <h1>
+            <LocalShippingOutlinedIcon /> Shipping Details
+          </h1>
           <Input
             placeholder="FULLNAME"
             {...register("recipientName", { required: true })}
           />
           <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
-            <Input width = {"30%"} 
+            <Input
+              width={"30%"}
               placeholder="MOBILE NO. "
               {...register("mobile", { required: true })}
             />
-            <Input width = {"70%"} border="none"
+            <Input
+              width={"70%"}
+              border="none"
               placeholder="EMAIL ADDRESS"
               {...register("email", { required: true })}
             />
