@@ -111,10 +111,6 @@ const addProductViaRequest = async (req, res) => {
       product.tags.push(s)
     })
 
-    
-    
-    
-    
     await product.save();
 
     const offer = new Offer({

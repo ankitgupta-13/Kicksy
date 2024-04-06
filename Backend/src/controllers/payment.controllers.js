@@ -95,9 +95,9 @@ const verifyPayment = async (req, res) => {
       // add order to seller and user
       const userCart = await Cart.findOne({ user: orderDetails.userID });
 
-      console.log(orderDetails);
+      // console.log(orderDetails);
 
-      console.log("101: " + addressDetails);
+      console.log(addressDetails);
 
       const address = new Address({
         userId: orderDetails.userID,
@@ -163,6 +163,8 @@ const verifyPayment = async (req, res) => {
         $push: {/* address: address._id,*/ orders: order._id },
       });
 
+      return res.json(new ApiResponse(200 , order , "order placed successfully"))
+
       // }
       // else{
       //   const paymentHandler = new InsufficientFundTransfer({
@@ -192,7 +194,8 @@ const verifyPayment = async (req, res) => {
       // }
 
       // user.orders.push(order._id);
-    } else {
+    } 
+    else {
       return res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {

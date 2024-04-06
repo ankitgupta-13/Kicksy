@@ -15,6 +15,7 @@ const cartItemSchema = new mongoose.Schema({
     ref: "Seller",
     required: true,
   },
+  size:String
 });
 
 const cartSchema = new mongoose.Schema(
