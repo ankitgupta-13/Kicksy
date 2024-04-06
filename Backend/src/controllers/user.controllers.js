@@ -278,7 +278,11 @@ const findByEmail = async (req, res) => {
   }
 };
 
-
+const findUserOrders = async(req,res)=>{
+  const {userID} = req.body;
+  const user = await User.findById(userID).populate("orders").select("-searchTags -adminSearchTags");
+  return res.json(new ApiResponse(200 , user , 'u'));
+}
 
 export {
   registerUser,
@@ -291,4 +295,5 @@ export {
   verifyEmailOtp,
   sendMobileOtp,
   verifyMobileOtp,
+  findUserOrders
 };
