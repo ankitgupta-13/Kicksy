@@ -6,9 +6,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addToCart = async (req, res) => {
   try {
-    const { userID, productID, sellerID } = req.body;
-    if (!userID || !productID)
-      return res.json(new ApiResponse(401, "Fields are required"));
+    const { userID, productID, sellerID , size} = req.body;
+    if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
 
     const cart = await Cart.findOne({ user: userID });
     const offer = await Offer.findOne({ productID, sellerID });
@@ -17,9 +16,9 @@ const addToCart = async (req, res) => {
     if (!cart) {
       const newCart = new Cart({
         user: userID,
-        items: [{ product: productID, sellerID }],
+        items: [{ product: productID, sellerID , size}],
       });
-      console.log(offer.price);
+      // console.log(offer.price)
       newCart.cartTotal += offer.price;
 
       await newCart.save();
@@ -42,9 +41,13 @@ const addToCart = async (req, res) => {
       return item["sellerID"]["_id"].equals(sellerID);
     });
 
-    if (productIndex !== -1 && sellerIndex !== -1) {
-      cart.items[sellerIndex].quantity += 1;
-      cart.cartTotal += offer.price;
+    const index = cart.items.findIndex((item) => item.product._id.equals(productID) && item.sellerID._id.equals(sellerID));
+    
+
+    // if (productIndex !== -1 && sellerIndex !== -1) {
+    if (index!==-1) {
+      cart.items[index].quantity += 1;
+      cart.cartTotal += offer.price
       await cart.save();
 
       return res.json(
@@ -57,11 +60,12 @@ const addToCart = async (req, res) => {
     }
 
     // if product is not present in the cart, add the product to the cart
-    cart.items = cart.items.concat({ product: productID, sellerID });
+    cart.items = cart.items.concat({ product: productID, sellerID , size});
     cart.cartTotal += offer.price;
     await cart.save();
     return res.json(new ApiResponse(200, { cart }, "Product added to cart"));
-  } catch (err) {
+  } 
+  catch (err) {
     console.error(err);
     res.json(new ApiError(400, "Error adding to cart ", err));
   }

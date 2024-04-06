@@ -11,7 +11,8 @@ const orderItemSchema = new mongoose.Schema({
   sellerID:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"Seller"
-  }
+  },
+  size:String
 });
 const orderSchema = new mongoose.Schema(
   {
