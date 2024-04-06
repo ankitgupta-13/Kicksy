@@ -15,6 +15,7 @@ import BlogPage from "./pages/BlogPage/BlogPage.tsx";
 import Blogs from "./pages/Blogs/Blogs.tsx";
 import Checkout from "./pages/Checkout/Checkout.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import OrderList from "./pages/Dashboard/UserDashboard/OrderList/OrderList.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess.tsx";
@@ -52,6 +53,7 @@ const App = () => {
         </Route>
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orders" element={<OrderList />} />
         <Route
           element={
             <ProtectedRoutes userRole={userData?.role} status={status} />

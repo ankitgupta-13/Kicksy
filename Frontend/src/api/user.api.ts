@@ -131,7 +131,7 @@ export const searchProducts = async (payload: { search_string: string }) => {
 
 export const getOrderHistory = async (payload: { userID: string }) => {
   try {
-    const { data } = await api.post("/user/get-order-history", payload);
+    const { data } = await api.post("/user/fetch-orders", payload);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;

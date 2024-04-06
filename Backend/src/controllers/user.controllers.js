@@ -1,11 +1,11 @@
-import { User } from "../models/user.models.js";
+import bcrypt from "bcrypt";
+import { Admin } from "../models/admin.models.js";
 import { Otp } from "../models/otp.models.js";
+import { User } from "../models/user.models.js";
 import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { transporter } from "../utils/transporter.js";
-import bcrypt from "bcrypt";
 import { client, TWILIO_SERVICE_SID } from "../utils/twilio.js";
-import { Admin } from "../models/admin.models.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -278,22 +278,24 @@ const findByEmail = async (req, res) => {
   }
 };
 
-const findUserOrders = async(req,res)=>{
-  const {userID} = req.body;
-  const user = await User.findById(userID).populate("orders").select("-searchTags -adminSearchTags");
-  return res.json(new ApiResponse(200 , user , 'u'));
-}
+const findUserOrders = async (req, res) => {
+  const { userID } = req.body;
+  const user = await User.findById(userID)
+    .populate("orders")
+    .select("-searchTags -adminSearchTags");
+  return res.json(new ApiResponse(200, user, "u"));
+};
 
 export {
-  registerUser,
-  loginUser,
-  getCurrentUser,
-  logoutUser,
-  findByID,
   findByEmail,
+  findByID,
+  findUserOrders,
+  getCurrentUser,
+  loginUser,
+  logoutUser,
+  registerUser,
   sendEmailOtp,
-  verifyEmailOtp,
   sendMobileOtp,
+  verifyEmailOtp,
   verifyMobileOtp,
-  findUserOrders
 };

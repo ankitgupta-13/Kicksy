@@ -1,5 +1,5 @@
 const Button = ({
-  children = "SUBMIT",
+  children,
   type = "button",
   bgColor = "#000000",
   textColor = "#ffffff",
