@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProductRequests } from "../../../../../api/admin.api";
-import style from "./RequestProduct.module.css";
 import ProductDashboardCard from "../../../../../components/ProductDashboardCard/ProductDashboardCard";
-import Pagination from "../../../../../components/Pagination/Pagination";
+import style from "./RequestProduct.module.css";
 
 const RequestProduct = () => {
   const [requestList, setRequestList] = useState([]);
@@ -34,7 +33,7 @@ const RequestProduct = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",
-            padding:"20px"
+            padding: "20px",
           }}
         >
           No Request Found
