@@ -20,7 +20,7 @@ export interface UserDataType {
   cart: string;
 }
 
-export interface InitialStateType {
+export interface InitialStateAuthType {
   status: boolean;
   userData: UserDataType | null;
   isOpen: boolean;

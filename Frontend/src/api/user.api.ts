@@ -128,3 +128,13 @@ export const searchProducts = async (payload: { search_string: string }) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getOrderHistory = async (payload: { userID: string }) => {
+  try {
+    const { data } = await api.post("/user/get-order-history", payload);
+    return data;
+  } catch (error: any) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

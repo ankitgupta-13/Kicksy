@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { InitialStateType } from "../../types/Types";
+import { InitialStateAuthType, UserDataType } from "../../types/auth.types";
 
-const initialState: InitialStateType = {
+const initialState: InitialStateAuthType = {
   status: false,
-  userData: null,
+  userData: {} as UserDataType | null,
   isOpen: false,
 };
 

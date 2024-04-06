@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  removeItem,
-  toggleCartVisibility,
-} from "../../redux/reducers/cartSlice";
-import style from "./Cart.module.css";
-import CartItem from "../CartItem/CartItem";
-import { Button, CartItemCard, PaymentButton } from "..";
-import { getUserCartItems } from "../../api/user.api";
 import { useNavigate } from "react-router-dom";
+import { Button, CartItemCard } from "..";
+import { getUserCartItems } from "../../api/user.api";
+import { toggleCartVisibility } from "../../redux/reducers/cartSlice";
 import { RootState } from "../../redux/store/store";
+import { UserDataType } from "../../types/auth.types";
+import style from "./Cart.module.css";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isCartOpen = useSelector((state) => state.cart.isOpen);
-  const user = useSelector((state: RootState) => state.auth.userData);
+  const isCartOpen = useSelector((state: RootState) => state.cart.isOpen);
+  const userData: UserDataType = useSelector(
+    (state: RootState) => state.auth.userData
+  );
   const [cartItems, setCartItems] = useState([]);
-  const userID = user?._id;
-  console.log(userID);
+  const userID: string = userData?._id;
   const handleToggleCartVisibility = () => {
     dispatch(toggleCartVisibility());
   };
   const showCart = useSelector((state: RootState) => state.cart.isOpen);
-  const handleCart = async (userID) => {
+  const handleCart = async (userID: string) => {
     const response = await getUserCartItems({ userID });
-    setCartItems(response.data.items);
-    console.log(response);
-    if (response.statusCode === 200) console.log(response.data.items);
+    if (response.statusCode === 200) {
+      setCartItems(response.data.items);
+    }
   };
   useEffect(() => {
     handleCart(userID);

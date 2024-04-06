@@ -4,7 +4,7 @@ import { updateProduct } from "../../../../../api/admin.api";
 import { getProductById } from "../../../../../api/product.api";
 import { Button, Container, ImageSlider } from "../../../../../components";
 import { RootState } from "../../../../../redux/store/store";
-import { ProductType } from "../../../../../types/ProductType";
+import { ProductType } from "../../../../../types/product.types";
 import style from "./EditProduct.module.css";
 
 const EditProduct = () => {

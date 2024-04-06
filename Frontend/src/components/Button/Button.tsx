@@ -10,7 +10,11 @@ const Button = ({
     <button
       onClick={props.onClick}
       className={`button ${className}`}
-      style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }}
+      style={{
+        backgroundColor: `${bgColor}`,
+        color: `${textColor}`,
+        cursor: "pointer",
+      }}
       {...props}
     >
       {children}
