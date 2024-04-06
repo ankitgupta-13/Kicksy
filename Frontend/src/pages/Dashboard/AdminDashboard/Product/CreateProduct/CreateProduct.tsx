@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
-import style from "./CreateProduct.module.css";
-import { Button, Container, Input, Select } from "../../../../../components";
+import { useSelector } from "react-redux";
+import { addProduct, uploadImage } from "../../../../../api/admin.api";
 import {
   addProductRequest,
   uploadProductRequestImage,
 } from "../../../../../api/seller.api";
-import { useSelector } from "react-redux";
+import { Button, Container, Input, Select } from "../../../../../components";
 import { RootState } from "../../../../../redux/store/store";
-import { addProduct, uploadImage } from "../../../../../api/admin.api";
+import style from "./CreateProduct.module.css";
 
 const CreateProduct = () => {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit } = useForm();
   const user = useSelector((state: RootState) => state.auth.userData);
   const userID = user?._id;
   const isAdmin = user?.role === "admin";

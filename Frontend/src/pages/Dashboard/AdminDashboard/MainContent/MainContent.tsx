@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Container } from "../../../../components";
 import Analytics from "../Analytics/Analytics";
 import AddBlog from "../Blog/AddBlog/AddBlog";
@@ -8,7 +9,6 @@ import DetailProduct from "../Product/DetailProduct/DetailProduct";
 import EditProduct from "../Product/EditProduct/EditProduct";
 import ListProduct from "../Product/ListProduct/ListProduct";
 import RequestProduct from "../Product/RequestProduct/RequestProduct";
-import DetailSeller from "../Seller/DetailSeller/DetailSeller";
 import ListSeller from "../Seller/ListSeller/ListSeller";
 import RequestSeller from "../Seller/RequestSeller/RequestSeller";
 import DetailUser from "../User/DetailUser/DetailUser";
@@ -16,7 +16,12 @@ import EditUser from "../User/EditUser/EditUser";
 import ListUser from "../User/ListUser/ListUser";
 import style from "./MainContent.module.css";
 
-const MainContent = ({ currentSection, currentAction }) => {
+type Props = {
+  currentSection: string;
+  currentAction: string;
+};
+
+const MainContent: FC<Props> = ({ currentSection, currentAction }) => {
   let content = null;
   switch (currentSection) {
     case "Product":

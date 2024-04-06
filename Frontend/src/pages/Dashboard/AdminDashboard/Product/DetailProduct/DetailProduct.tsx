@@ -1,52 +1,46 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./DetailProduct.module.css";
-import { RootState } from "../../../../../redux/store/store";
-import { useEffect, useState } from "react";
+import {
+  acceptProductRequest,
+  declineProductRequest,
+} from "../../../../../api/admin.api";
 import {
   addProductOffer,
   getProductById,
   getProductRequestById,
 } from "../../../../../api/product.api";
-import {
-  acceptProductRequest,
-  declineProductRequest,
-  updateProduct,
-} from "../../../../../api/admin.api";
 import { Button, Input, ProductDescription } from "../../../../../components";
 import { selectAdminAction } from "../../../../../redux/reducers/adminDashboardSlice";
+import { RootState } from "../../../../../redux/store/store";
+import style from "./DetailProduct.module.css";
 
 const DetailProduct = () => {
-  const isAdmin = useSelector(
-    (state: RootState) => state.auth.userData.role === "admin"
-  );
-  let productID;
-  isAdmin
-    ? (productID = useSelector(
+  const userRole = useSelector((state: RootState) => state.auth.userData?.role);
+  const isAdmin = userRole === "admin";
+  const getProductId = (isAdmin: boolean) => {
+    if (isAdmin) {
+      return useSelector(
         (state: RootState) => state.adminDashboard.currentProduct
-      ))
-    : (productID = useSelector(
-        (state: RootState) => state.sellerDashboard.currentProduct
-      ));
+      );
+    }
+    return useSelector(
+      (state: RootState) => state.sellerDashboard.currentProduct
+    );
+  };
+
+  const productID = getProductId(isAdmin);
 
   const productRequestID = useSelector(
     (state: RootState) => state.adminDashboard.currentProductRequest
   );
 
-  const userID = useSelector((state: RootState) => state.auth.userData._id);
+  const userID = useSelector((state: RootState) => state.auth.userData?._id);
   const dispatch = useDispatch();
   const [product, setProduct] = useState({});
-  const [imageUrls, setImageUrls] = useState([]);
+  const [_, setImageUrls] = useState([]);
   const [showOffer, setShowOffer] = useState(false);
-  const [quantity, setQuantity] = useState();
-  const [price, setPrice] = useState();
-
-  const handleUpdateProduct = (updatedProduct) => {
-    try {
-      const response = updateProduct(updatedProduct);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [quantity, setQuantity] = useState<Number>();
+  const [price, setPrice] = useState<Number>();
 
   const handleShowEditProduct = () => {
     dispatch(
@@ -142,12 +136,16 @@ const DetailProduct = () => {
                   <Input
                     label="Add Price"
                     type="Number"
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setPrice(Number(e.target.value))
+                    }
                   />
                   <Input
                     label="Quantity"
                     type="Number"
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setQuantity(Number(e.target.value))
+                    }
                   />
                   <Button type="submit" onClick={handleAddOffer}>
                     Add

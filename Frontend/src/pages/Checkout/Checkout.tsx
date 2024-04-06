@@ -22,8 +22,10 @@ const Checkout = () => {
   useEffect(() => {
     (async () => {
       const response = await getUserCartItems({ userID });
-      setCartItems(response.data?.items);
-      setCartTotal(response.data?.cartTotal);
+      if (response.statusCode === 200) {
+        response.data?.items && setCartItems(response.data?.items);
+        setCartTotal(response.data?.cartTotal);
+      }
     })();
     scrollTo(0, 0);
   }, []);

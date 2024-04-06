@@ -7,11 +7,11 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const addToCart = async (req, res) => {
   try {
     const { userID, productID, sellerID } = req.body;
-    if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
+    if (!userID || !productID)
+      return res.json(new ApiResponse(401, "Fields are required"));
 
     const cart = await Cart.findOne({ user: userID });
     const offer = await Offer.findOne({ productID, sellerID });
-
 
     // If user does not have a cart, create a new cart and add the product to it
     if (!cart) {
@@ -19,17 +19,17 @@ const addToCart = async (req, res) => {
         user: userID,
         items: [{ product: productID, sellerID }],
       });
-      console.log(offer.price)
+      console.log(offer.price);
       newCart.cartTotal += offer.price;
 
       await newCart.save();
 
       const user = await User.findOne({ _id: userID });
 
-      if (!user) return res.json(new ApiResponse(404, 'user not found'));
+      if (!user) return res.json(new ApiResponse(404, "user not found"));
 
-      user.cart = newCart._id
-      await user.save()
+      user.cart = newCart._id;
+      await user.save();
 
       return res.json(new ApiResponse(200, newCart, "Product added to cart"));
     }
@@ -39,12 +39,12 @@ const addToCart = async (req, res) => {
     });
 
     const sellerIndex = cart.items.findIndex((item) => {
-      return item['sellerID']['_id'].equals(sellerID);
-    })
+      return item["sellerID"]["_id"].equals(sellerID);
+    });
 
     if (productIndex !== -1 && sellerIndex !== -1) {
       cart.items[sellerIndex].quantity += 1;
-      cart.cartTotal += offer.price
+      cart.cartTotal += offer.price;
       await cart.save();
 
       return res.json(
@@ -73,7 +73,10 @@ const removeFromCart = async (req, res) => {
 
     if (!userID || !productID || !sellerID) {
       return res.json(
-        new ApiResponse(400, "Fields 'userID' and 'productID' and 'sellerID' are required")
+        new ApiResponse(
+          400,
+          "Fields 'userID' and 'productID' and 'sellerID' are required"
+        )
       );
     }
 
@@ -109,31 +112,33 @@ const removeFromCart = async (req, res) => {
     //   new ApiResponse(200, "Product removed from cart", { cart, userCart })
     // );
 
-
-    const index = cart.items.findIndex((item) => item.product._id.equals(productID) && item.sellerID._id.equals(sellerID));
+    const index = cart.items.findIndex(
+      (item) =>
+        item.product._id.equals(productID) && item.sellerID._id.equals(sellerID)
+    );
     const offer = await Offer.findOne({
       productID,
       sellerID: cart.items[index]["sellerID"],
     });
 
     if (index !== -1) {
-      cart.items.splice(index, 1)
+      cart.items.splice(index, 1);
     }
-
-
-
-  }
-  catch (error) {
-    return handleErr(res, error)
+  } catch (error) {
+    return handleErr(res, error);
   }
 };
-
-
 
 const addSubtractCartQuantity = async (req, res) => {
   try {
     const { userID, productID, sellerID, operator } = req.body;
-    if (!userID || !productID || !operator) return res.json(new ApiResponse(422, "Insufficient IDs in the body sent to the backend "))
+    if (!userID || !productID || !operator)
+      return res.json(
+        new ApiResponse(
+          422,
+          "Insufficient IDs in the body sent to the backend "
+        )
+      );
 
     // if (operator !== "+" || operator !== "-") return res.json(new ApiResponse(422, "Invalid Operator!"));
 
@@ -151,40 +156,41 @@ const addSubtractCartQuantity = async (req, res) => {
     //   return item['sellerID']['_id'].equals(sellerID);
     // })
 
-    const index = cart.items.findIndex((item) => item.product._id.equals(productID) && item.sellerID._id.equals(sellerID));
+    const index = cart.items.findIndex(
+      (item) =>
+        item.product._id.equals(productID) && item.sellerID._id.equals(sellerID)
+    );
 
     if (index !== -1) {
-
       if (operator === "+") {
-        cart["items"][index]["quantity"] += 1
-        cart['cartTotal'] += offer.price
-      }
-      else if (operator === "-") {
+        cart["items"][index]["quantity"] += 1;
+        cart["cartTotal"] += offer.price;
+      } else if (operator === "-") {
         if (cart["items"][index]["quantity"] > 1) {
-          cart["items"][index]["quantity"] -= 1
-          cart['cartTotal'] -= offer.price
+          cart["items"][index]["quantity"] -= 1;
+          cart["cartTotal"] -= offer.price;
+        } else {
+          cart["items"].splice(index, 1);
+          cart["cartTotal"] -= offer.price;
         }
-        else {
-          cart['items'].splice(index, 1);
-          cart['cartTotal'] -= offer.price
-
-        }
-      }
-      else {
+      } else {
         return res.json(new ApiResponse(422, "Invalid Operator!"));
       }
 
       await cart.save();
-
     }
 
-    return res.json(new ApiResponse(200, cart["items"][index  ] , "quantity updated successfully"));
-
-  }
-  catch (err) {
+    return res.json(
+      new ApiResponse(
+        200,
+        cart["items"][index],
+        "quantity updated successfully"
+      )
+    );
+  } catch (err) {
     return handleErr(res, err);
   }
-}
+};
 
 const getCartByUser = async (req, res) => {
   try {
@@ -194,7 +200,7 @@ const getCartByUser = async (req, res) => {
     }
     const cart = await Cart.findOne({ user: userID }).populate("items.product");
     if (!cart) {
-      return res.json(new ApiResponse(404, "Cart not found"));
+      return res.json(new ApiResponse(200, cart, "Cart not found"));
     }
     return res.json(new ApiResponse(200, cart, "Cart found"));
   } catch (error) {

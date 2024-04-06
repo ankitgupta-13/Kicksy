@@ -1,27 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/store/store";
-import { getProductById } from "../../../../../api/product.api";
-import { useForm } from "react-hook-form";
-import style from "./EditProduct.module.css";
-import {
-  Button,
-  Container,
-  ImageSlider,
-  Input,
-  Select,
-} from "../../../../../components";
 import { updateProduct } from "../../../../../api/admin.api";
+import { getProductById } from "../../../../../api/product.api";
+import { Button, Container, ImageSlider } from "../../../../../components";
+import { RootState } from "../../../../../redux/store/store";
+import { ProductType } from "../../../../../types/ProductType";
+import style from "./EditProduct.module.css";
 
 const EditProduct = () => {
   const productID = useSelector(
     (state: RootState) => state.adminDashboard.currentProduct
   );
   const [product, setProduct] = useState({});
-  const [productPrice, setProductPrice] = useState();
-  const [imageUrls, setImageUrls] = useState();
 
-  const handleUpdateProduct = async (product) => {
+  const handleUpdateProduct = async (product: ProductType) => {
     try {
       product = { ...product };
       const response = await updateProduct(product);
@@ -36,8 +28,6 @@ const EditProduct = () => {
       try {
         const response = await getProductById({ productID });
         setProduct(response.data);
-        setImageUrls(response.data.images);
-        setProductPrice(response.data.price.originalPrice);
       } catch (error) {
         console.log(error);
       }

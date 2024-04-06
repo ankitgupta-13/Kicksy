@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { InitialStateType } from "../../types/Types";
 
-const initialState = {
+const initialState: InitialStateType = {
   status: false,
   userData: null,
   isOpen: false,
@@ -24,6 +25,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, toggleProfileVisibility  } = authSlice.actions;
+export const { login, logout, toggleProfileVisibility } = authSlice.actions;
 
 export default authSlice.reducer;
