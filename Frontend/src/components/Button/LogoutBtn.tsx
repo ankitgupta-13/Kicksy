@@ -11,7 +11,7 @@ const LogoutBtn = ({wid}) => {
     else console.log("Error in logout");
   };
 
-  return <button className="logoutBtn" style={{backgroundColor: 'black', width: `${wid}`, height:'40px', color: 'white', borderRadius: '10px', border: 'none'}} onClick={handleLogout}>Logout</button>;
+  return <button className="logoutBtn" style={{backgroundColor: 'black', width: `${wid}`, height:'40px', color: 'white', borderRadius: '10px', border: 'none', cursor: "pointer"}} onClick={handleLogout}>Logout</button>;
 };
 
 export default LogoutBtn;

@@ -51,8 +51,8 @@ const Profile = () => {
         </div>
       </div>
       <div className={style.logoutbutton}>
-        <Button onClick={() => navigate("/dashboard")}>
-          {user?.role === user ? "My Profile" : "Dashboard"}{" "}
+        <Button className={style.dashboardBtn} onClick={() => navigate("/dashboard")} style={{backgroundColor: '#666', width: `${"95%"}`, height:'40px', color: 'white', borderRadius: '10px', border: 'none', cursor: "pointer"}}>
+          {user?.role === "user" ? "My Profile" : "Dashboard"}{" "}
         </Button>
         <LogoutBtn wid={"95%"} />
       </div>

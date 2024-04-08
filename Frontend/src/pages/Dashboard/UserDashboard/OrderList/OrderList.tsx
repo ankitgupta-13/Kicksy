@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { getOrderHistory } from "../../../../api/user.api";
 import { RootState } from "../../../../redux/store/store";
 
+import OrderDashboardCard from "../../../../components/OrderDashboardCard/OrderDashboardCard.tsx";
+
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
@@ -20,22 +22,7 @@ const OrderList = () => {
       {orders?.map((order: any) => {
         return (
           <div key={order._id}>
-            <h3>Order ID: {order._id}</h3>
-            <h3>Order Status: {order.status}</h3>
-            <h3>Order Date: {order.createdAt}</h3>
-            <h3>Order Total: {order.total}</h3>
-            <h3>Order Items:</h3>
-            <ul>
-              {order.orderItems.map((item: any) => {
-                return (
-                  <li key={item._id}>
-                    <h3>{item.name}</h3>
-                    <h3>{item.price}</h3>
-                    <h3>{item.quantity}</h3>
-                  </li>
-                );
-              })}
-            </ul>
+            <OrderDashboardCard order={order}/>
           </div>
         );
       })}

@@ -7,6 +7,7 @@ import { getUserCartItems } from "../../api/user.api";
 import { Button, CartItemCard, Input, PaymentButton } from "../../components";
 import { RootState } from "../../redux/store/store";
 import style from "./Checkout.module.css";
+import mainLogo from "../../assets/Krisksy.svg"
 
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
@@ -31,14 +32,16 @@ const Checkout = () => {
 
   return (
     <div>
+      <div className={style.header}>
+        <Button className={style.backButton} style={{backgroundColor: "transparent"}} onClick={() => navigate("/")}>
+          <ArrowBackIos />
+        </Button>
+        <img src={mainLogo} alt="kriksky logo" style={{width: "150px"}} />
+      </div>
       <form onSubmit={handleSubmit(handleAddress)}>
-        <div>
+        <div className={style.checkOut}>
           <h1>Order Summary</h1>
           <div className={style.orderSummary}>
-            <Button className={style.backButton} onClick={() => navigate("/")}>
-              <ArrowBackIos />
-              <span>Back</span>
-            </Button>
             {cartItems?.map((item) => (
               <div className={style.cartItem}>
                 <CartItemCard item={item} />
@@ -46,7 +49,7 @@ const Checkout = () => {
             ))}
           </div>
         </div>
-        <div className={style.address}>
+        <div className={style.addressForm}>
           <h1>Shipping Details</h1>
           <Input
             placeholder="FULLNAME "

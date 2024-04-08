@@ -1,0 +1,22 @@
+.ordercard{
+    width: 100%;
+    background-color: #ddd;
+    font-family: "Noir Pro", Regular;
+    padding: 2rem;
+    border-radius: 15px;
+    /* margin-bottom: 1rem; */
+    margin: .7rem 0;
+}
+.ord{
+    /* display: flex; */
+    justify-content: space-around;
+}
+.order_dets, .order_dets_c{
+    border-bottom: 1px solid #fff;
+    padding: .4rem 1rem;
+    width: 50%;
+}
+
+.order_dets{
+    font-weight: 600;
+}
