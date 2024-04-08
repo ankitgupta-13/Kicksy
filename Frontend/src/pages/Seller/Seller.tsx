@@ -91,7 +91,6 @@ const Seller = () => {
             />
           </div>
 
-
           <div className={style.inputBox}>
             <Input
               style={{ marginTop: "5px" }}
@@ -107,6 +106,7 @@ const Seller = () => {
               placeholder="Store Logo"
               label="Store Logo"
               type="file"
+              classname="filepond"
               {...register("storeLogo", { required: true })}
             />
           </div>
