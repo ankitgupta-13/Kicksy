@@ -1,19 +1,20 @@
-import style from "./Button.module.css";
-
 const Button = ({
   children,
   type = "button",
   bgColor = "#000000",
   textColor = "#ffffff",
   className = "",
-  onClick,
   ...props
 }) => {
   return (
     <button
-      onClick={onClick}
+      onClick={props.onClick}
       className={`button ${className}`}
-      style={{ backgroundColor: `${bgColor}`, color: `${textColor}` }}
+      style={{
+        backgroundColor: `${bgColor}`,
+        color: `${textColor}`,
+        cursor: "pointer",
+      }}
       {...props}
     >
       {children}

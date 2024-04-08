@@ -20,21 +20,19 @@ import Searchbar from "../Searchbar/Searchbar";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import TimelineIcon from '@mui/icons-material/Timeline';
+import { RootState } from "../../redux/store/store";
+import TimelineIcon from "@mui/icons-material/Timeline";
 
 const Header = () => {
   const dispatch = useDispatch();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
-  const authStatus = useSelector((state) => state.auth.status);
-  const isUser = useSelector((state) => state.auth.status);
-  const isAdmin = useSelector((state) => state.auth.userData?.role) === "admin";
-  const isSeller =
-    useSelector((state) => state.auth.userData?.role) === "seller";
+  const authStatus = useSelector((state: RootState) => state.auth.status);
+  const isUser = useSelector((state: RootState) => state.auth.status);
   const location = window.location.pathname.split().pop();
 
   const navigate = useNavigate();
@@ -46,11 +44,6 @@ const Header = () => {
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
     { name: "Seller", slug: "/seller", isActive: isUser },
-    (isAdmin || isSeller) && {
-      name: "Dashboard",
-      slug: "/admin",
-      isActive: isAdmin || isSeller,
-    },
   ];
 
   const handleToggleCartVisibility = () => {
@@ -77,7 +70,7 @@ const Header = () => {
             <div>
               <Logo width="100px" />
             </div>
-            <ul className={style.navList} >
+            <ul className={style.navList}>
               {navItems.map((item) =>
                 item.isActive ? (
                   <li className={style.navListItem} key={item.name}>

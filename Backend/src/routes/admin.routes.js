@@ -2,12 +2,12 @@ import { Router } from "express";
 import {
   addProduct,
   addProductImage,
-  updateProduct,
   deleteProduct,
-  getProducts,
-  handleProductStock,
-  getProductsCount,
   deleteProductImage,
+  getProducts,
+  getProductsCount,
+  handleProductStock,
+  updateProduct,
 } from "../controllers/product.controllers.js";
 
 import { upload } from "../middlewares/multer.middlewares.js";
@@ -23,24 +23,19 @@ import {
 } from "../controllers/blog.controllers.js";
 
 import {
+  banUser,
   changeUserState,
   checkAdmin,
   createAdmin,
-  getActiveUsersCount,
-  getUsers,
   fetchAdmins,
-  getUsersCount,
+  getActiveUsersCount,
+  getOrders,
   getSellers,
-  banUser,
+  getUsers,
+  getUsersCount,
   removeBanUser,
 } from "../controllers/admin.controllers.js";
 
-import {
-  acceptSellerRequest,
-  declineSellerRequest,
-  getSellerRequestById,
-  getSellerRequests,
-} from "../controllers/admin-seller.controllers.js";
 import {
   addProductViaRequest,
   declineProductRequest,
@@ -48,6 +43,12 @@ import {
   getProductRequestById,
   getProductRequests,
 } from "../controllers/admin-product.controllers.js";
+import {
+  acceptSellerRequest,
+  declineSellerRequest,
+  getSellerRequestById,
+  getSellerRequests,
+} from "../controllers/admin-seller.controllers.js";
 import { getSellerById } from "../controllers/seller.controllers.js";
 
 const router = Router();
@@ -78,6 +79,7 @@ router.route("/total-products-count").get(getProductsCount);
 router.route("/total-users-count").get(getUsersCount);
 router.route("/ban-user").post(banUser);
 router.route("/remove-ban-user").post(removeBanUser);
+router.route("/get-all-orders").get(getOrders);
 
 // routes for handling seller requests
 router.route("/requests/seller/getAll").get(getSellerRequests);

@@ -237,6 +237,31 @@ const searchBarProducts = async (req, res) => {
   }
 };
 
+const filterProduct = async(req,res)=>{
+  try{
+    const {category_array} = req.body;
+
+    const product_array = []
+    
+    const products = await Product.findOne({})
+    
+    products.forEach((product)=>{
+      category_array.forEach((category)=>{
+        if(product.tags.includes(category)){
+          product_array.push(product);
+          return;
+        }
+      })
+    })
+
+    return res.json(new ApiResponse(200 , product_array , 'filter applied successfully'));
+
+  }
+  catch(err){
+    return handleErr(res,err);
+  }
+}
+
 export {
   addProduct,
   updateProduct,
@@ -249,4 +274,5 @@ export {
   getProducts,
   getProductsCount,
   searchBarProducts,
+  filterProduct
 };

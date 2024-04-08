@@ -1,13 +1,13 @@
 import { Order } from "../models/order.models.js";
 import { Product } from "../models/product.models.js";
 import { User } from "../models/user.models.js";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 
 
 const addOrder = async (req, res) => {
-    const { userID, qty, productID, paymentMethod ,addressID} = req.body;
+    const { userID, qty, productID, paymentMethod, addressID } = req.body;
     /*
     * in case of buying from cart :
     * no value will be given to variable 'qty' and instead
@@ -72,7 +72,7 @@ const addOrder = async (req, res) => {
 const orderTracking = async (req, res) => {
     const { email, orderID } = req.body;
     try {
-    
+
         const user = await User.findOne({ email: email });
 
         if (!user) return res.json(new ApiResponse(404, "No user exists with this email"))
@@ -80,7 +80,7 @@ const orderTracking = async (req, res) => {
 
         const order = await Order.findOne({ _id: orderID })
         return res.json(new ApiResponse(200, order, "order fetched successfully"));
-    
+
     }
     catch (err) {
         return res.json(new ApiError(400, err.message));
@@ -88,11 +88,29 @@ const orderTracking = async (req, res) => {
 
 }
 
+const getOrderByID = async (req, res) => {
+    try {
+        const {orderID} = req.body;
+        
+        if(!orderID) return res.json(new ApiResponse(422 , 'Cannot read value of orderID'))
 
+        const order = await Order.findById(orderID)
+
+        if(!order) return res.json(new ApiResponse(404 , 'order not found.'));
+
+        return res.json(new ApiResponse(200 , order , 'order fetched successfully!'))
+    
+    }
+    
+    catch (err) {
+        return handleErr(res, err);
+    }
+}
 
 
 
 export {
     addOrder,
-    orderTracking
+    orderTracking,
+    getOrderByID
 };

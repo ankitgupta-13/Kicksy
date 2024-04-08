@@ -300,3 +300,14 @@ export const removeBanUser = async (payload: Object) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const getAllOrders = async () => {
+  try {
+    const { data } = await api.get("/admin/get-all-orders");
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

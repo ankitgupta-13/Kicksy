@@ -1,29 +1,22 @@
 import { useEffect, useState } from "react";
-import { getAllOrders } from "../../../../../api/admin.api";
+import { useSelector } from "react-redux";
+import { getOrderHistory } from "../../../../api/user.api";
+import { RootState } from "../../../../redux/store/store";
 
-const ListOrder = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-
+const OrderList = () => {
+  const [orders, setOrders] = useState([]);
+  const userID = useSelector((state: RootState) => state.auth.userData?._id);
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await getAllOrders();
-      console.log(response);
+      const response = await getOrderHistory({ userID });
+      console.log(response.data.orders);
       setOrders(response.data.orders);
     };
     fetchOrders();
   }, []);
+
   return (
-    <div
-    // style={{
-    //   height: "71vh",
-    //   fontSize: "3rem",
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   alignItems: "center",
-    //   fontFamily: "Noir Pro",
-    //   color: "#888",
-    // }}
-    >
+    <div>
       {orders?.map((order: any) => {
         return (
           <div key={order._id}>
@@ -50,4 +43,4 @@ const ListOrder = () => {
   );
 };
 
-export default ListOrder;
+export default OrderList;

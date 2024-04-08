@@ -11,6 +11,7 @@ import {
   sendEmailOtp,
   findByID,
   findByEmail,
+  findUserOrders,
 } from "../controllers/user.controllers.js";
 
 import {
@@ -63,6 +64,7 @@ router.route("/get-products").get(getProducts);
 router.route("/search-products").post(searchBarProducts);
 router.route("/fetch-blogs").get(fetchAllBlog);
 router.route("/fetch-blog-by-id").post(fetchBlogById);
+router.route("/fetch-orders").post(findUserOrders)
 
 /* Seller creation requests */
 router

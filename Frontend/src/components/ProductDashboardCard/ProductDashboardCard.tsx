@@ -8,15 +8,28 @@ import {
   selectSellerAction,
   selectSellerProduct,
 } from "../../redux/reducers/sellerDashboardSlice";
-import style from "./ProductDashboardCard.module.css";
 import { RootState } from "../../redux/store/store";
+import style from "./ProductDashboardCard.module.css";
 
 const ProductDashboardCard = ({ data, type }) => {
-  const { _id, title, createdAt, stock, images, price, brand, skuID , bestPrice} = data;
+  const {
+    _id,
+    title,
+    createdAt,
+    stock,
+    images,
+    brand,
+    skuID,
+    bestPrice,
+    price,
+  } = data;
   const createdDate = createdAt.split("T")[0];
   const createdTime = createdAt.split("T")[1].split(".")[0];
   const dispatch = useDispatch();
-  const userRole = useSelector((state: RootState) => state.auth.userData.role);
+  const userRole = useSelector((state: RootState) => state.auth.userData?.role);
+  const currentAction = useSelector(
+    (state: RootState) => state.adminDashboard.currentAction
+  );
 
   const handleShowProduct = () => {
     userRole === "admin"
@@ -37,13 +50,20 @@ const ProductDashboardCard = ({ data, type }) => {
         })
       );
   };
-  
+
   return (
     <div onClick={handleShowProduct}>
       {userRole === "admin" ? (
         <div className={style.cardContainer}>
           <div className={style.nameImage}>
-            <div className={style.image} style={{background: `url(${images[0]})`, backgroundSize: "contain", backgroundRepeat: "no-repeat"}}></div>
+            <div
+              className={style.image}
+              style={{
+                background: `url(${images[0]})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
             <div className={style.title}>{title}</div>
           </div>
           <div className={style.createdAt}>
@@ -52,13 +72,24 @@ const ProductDashboardCard = ({ data, type }) => {
           </div>
           <div className={style.stock}>{stock}</div>
           <div className={style.priceDelete}>
-            <div>₹ {bestPrice.price}</div>
+            {currentAction === "Requests" ? (
+              <div>₹ {price}</div>
+            ) : (
+              <div>₹ {bestPrice.price}</div>
+            )}
           </div>
         </div>
       ) : (
         <div className={style.cardContainer}>
           <div className={style.nameImage}>
-            <div className={style.image} style={{background: `url(${images[0]})`, backgroundSize: "contain", backgroundRepeat: "no-repeat"}}></div>
+            <div
+              className={style.image}
+              style={{
+                background: `url(${images[0]})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
             <div className={style.title}>{title}</div>
           </div>
           <div className={style.skuid}>{skuID}</div>

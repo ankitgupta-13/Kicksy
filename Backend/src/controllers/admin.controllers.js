@@ -1,8 +1,9 @@
 import { Admin } from "../models/admin.models.js";
+import { Order } from "../models/order.models.js";
+import { Seller } from "../models/seller.model.js";
 import { User } from "../models/user.models.js";
 import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Seller } from "../models/seller.model.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -165,15 +166,39 @@ const removeBanUser = async (req, res) => {
   }
 };
 
+const getOrders = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  try {
+    const orders = await Order.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return res.json(
+      new ApiResponse(
+        200,
+        {
+          orders,
+          currentPage: page,
+        },
+        "Orders retrieved successfully!"
+      )
+    );
+  } catch (error) {
+    throw new ApiError(400, "Error getting orders ", error);
+  }
+};
+
 export {
-  createAdmin,
-  checkAdmin,
-  getUsers,
-  getSellers,
-  changeUserState,
-  getActiveUsersCount,
-  fetchAdmins,
-  getUsersCount,
   banUser,
+  changeUserState,
+  checkAdmin,
+  createAdmin,
+  fetchAdmins,
+  getActiveUsersCount,
+  getOrders,
+  getSellers,
+  getUsers,
+  getUsersCount,
   removeBanUser,
 };
