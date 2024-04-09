@@ -44,6 +44,7 @@ export const removeFromCart = async (payload: {
 }) => {
   try {
     const { data } = await api.post("/user/remove-from-cart", payload);
+    console.log(data);
     return data;
   } catch (error: any) {
     if (error.response) return error.response;
