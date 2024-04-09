@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
+import { ArrowBackIos } from "@mui/icons-material";
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useNavigate } from "react-router-dom";
 import { Button, LogoutBtn } from "../../../../components";
 import { RootState } from "../../../../redux/store/store";
@@ -8,6 +10,7 @@ import avatar from "../../../../assets/avatar.jpg";
 import { useEffect, useState } from "react";
 import { getOrderHistory } from "../../../../api/user.api";
 
+import profileCover from "../../../../assets/profile-cover.png";
 import OrderDashboardCard from "../../../../components/OrderDashboardCard/OrderDashboardCard.tsx";
 
 const UserProfile = () => {
@@ -39,21 +42,31 @@ const UserProfile = () => {
 
   return (
     <div className={style.container}>
+      <div className={style.cover} style={{ backgroundImage: `url(${profileCover})` }}>
+        <div className={style.cover_top}>
+          <Button className={style.backButton} style={{ backgroundColor: "transparent" }} onClick={() => navigate("/")}>
+            <ArrowBackIos />
+          </Button>
+          <button className={style.searchButton} style={{ backgroundColor: "transparent" }} >
+            <SearchOutlinedIcon/>
+          </button>
+        </div>
+      </div>
+
       <div>
         <div
           id=""
           className={`${style.sidenav} ${authStatus ? style.open : ""}`}
           style={{ opacity: isProfileOpen ? 1 : 1 }}
         >
-          <div className={style.head}>
+          {/* <div className={style.head}>
             <h2>Profile</h2>
 
-          </div>
+          </div> */}
           <div className={style.detailsection}>
             <div className={style.imagesection}>
-              <div className={style.imagecircle}>
+              <div className={style.imagecircle}></div>
                 <img src={avatar} className={style.avatar} />
-              </div>
               <div className={style.detail}>
                 <h4 className={style.status}>
                   {user?.status} {user?.role}
@@ -69,8 +82,11 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div style={{width: "100%"}} >
-        <div style={{width: "100%"}}>
+
+
+
+      <div style={{ width: "100%" }} >
+        <div style={{ width: "100%" }}>
           <div className={style.head}>
             <h2>Your Orders</h2>
           </div>

@@ -15,8 +15,11 @@
     border-bottom: 1px solid #fff;
     padding: .4rem 1rem;
     width: 50%;
+    text-wrap: balance;
+    font-size: clamp(9px, 2vw, 16px);
 }
 
 .order_dets{
     font-weight: 600;
 }
+
