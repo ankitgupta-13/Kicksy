@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const addToCart = async (req, res) => {
   try {
-    const { userID, productID, sellerID , size} = req.body;
+    const { userID, productID, sellerID, size } = req.body;
     if (!userID || !productID) return res.json(new ApiResponse(401, "Fields are required"));
 
     const cart = await Cart.findOne({ user: userID });
@@ -16,7 +16,7 @@ const addToCart = async (req, res) => {
     if (!cart) {
       const newCart = new Cart({
         user: userID,
-        items: [{ product: productID, sellerID , size}],
+        items: [{ product: productID, sellerID, size }],
       });
       // console.log(offer.price)
       newCart.cartTotal += offer.price;
@@ -42,10 +42,10 @@ const addToCart = async (req, res) => {
     });
 
     const index = cart.items.findIndex((item) => item.product._id.equals(productID) && item.sellerID._id.equals(sellerID));
-    
+
 
     // if (productIndex !== -1 && sellerIndex !== -1) {
-    if (index!==-1) {
+    if (index !== -1) {
       cart.items[index].quantity += 1;
       cart.cartTotal += offer.price
       await cart.save();
@@ -60,11 +60,11 @@ const addToCart = async (req, res) => {
     }
 
     // if product is not present in the cart, add the product to the cart
-    cart.items = cart.items.concat({ product: productID, sellerID , size});
+    cart.items = cart.items.concat({ product: productID, sellerID, size });
     cart.cartTotal += offer.price;
     await cart.save();
     return res.json(new ApiResponse(200, { cart }, "Product added to cart"));
-  } 
+  }
   catch (err) {
     console.error(err);
     res.json(new ApiError(400, "Error adding to cart ", err));
@@ -120,14 +120,22 @@ const removeFromCart = async (req, res) => {
       (item) =>
         item.product._id.equals(productID) && item.sellerID._id.equals(sellerID)
     );
+    console.log(index)
+
+    if (index === -1) return res.json(new ApiResponse(404, 'item not available in cart'));
+
     const offer = await Offer.findOne({
       productID,
       sellerID: cart.items[index]["sellerID"],
     });
+    
+    cart.items.splice(index, 1);
+    cart.cartTotal -= offer.price;
+    
 
-    if (index !== -1) {
-      cart.items.splice(index, 1);
-    }
+    await cart.save()
+
+    return res.json(new ApiResponse(200, 'cart updated successfully'))
   } catch (error) {
     return handleErr(res, error);
   }
