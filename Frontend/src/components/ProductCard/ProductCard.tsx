@@ -15,6 +15,14 @@ const ProductCard = ({ product, wid }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
+  function handleImgHover() {
+    setTimeout(() => {
+      setActiveColorId((shoesColorData.length - 1 >activeColorId) ? activeColorId + 1 : 0);
+    }, 1000);
+  }
+  useEffect(() => {
+    handleImgHover();
+  }, []);
 
   return (
     <div className={style.container} style={{ width: wid }}>
