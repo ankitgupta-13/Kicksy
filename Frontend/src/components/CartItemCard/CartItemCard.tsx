@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Alert } from "@mui/material";
 import MediaQuery from "react-responsive";
 
-const CartItemCard = ({ item }) => {
+const CartItemCard = ({ item, wid }) => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
   // console.log(item)
   const [cartQty, setCartQty] = useState(item.quantity);
@@ -33,7 +33,7 @@ const CartItemCard = ({ item }) => {
   return (
     <div className={style.main}>
       <div className={style.item}>
-        <div className={style.item_img}>
+        <div className={style.item_img} style={{ width: wid }}>
           <div className={style.item_img_c} style={{ backgroundImage: `url(${item.product.images[0]})` }}></div>
         </div>
         <div>
