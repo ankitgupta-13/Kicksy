@@ -238,6 +238,7 @@ const ProductDesc = () => {
                 onClick={() => {
                   console.log(curProduct);
                   handleAddToCart(curProduct.bestPrice.sellerID);
+                  window.location.href = "/checkout";
                 }}
               >
                 <span
