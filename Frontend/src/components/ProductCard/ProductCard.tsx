@@ -15,14 +15,9 @@ const ProductCard = ({ product, wid }) => {
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
-  function handleImgHover() {
-    setTimeout(() => {
-      setActiveColorId(activeColorId + 1);
-    }, 2000);
-  }
-  useEffect(() => {
-    handleImgHover();
-  }, []);
+  // useEffect(() => {
+  //   handleImgHover();
+  // }, []);
 
   return (
     <div className={style.container} style={{ width: wid }}>
