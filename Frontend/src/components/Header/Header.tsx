@@ -149,7 +149,7 @@ const Header = () => {
           <div>
             <Profile />
           </div>
-          <a href="/profile">
+          <a href="/dashboard">
             <ShoppingBagOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -219,7 +219,7 @@ const Header = () => {
         <a href="/checkout">
           <AddShoppingCartIcon />
         </a>
-        <a href="/profile">
+        <a href="/dashboard">
           <AccountCircleIcon />
         </a>
       </div>

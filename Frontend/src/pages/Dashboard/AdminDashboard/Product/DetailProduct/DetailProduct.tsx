@@ -126,10 +126,10 @@ const DetailProduct = () => {
               </Button>
             </div>
           ) : (
-            <div style={{ position: "absolute", top: "30%", right: " 10%" }}>
+            <div style={{ position: "absolute", top: "50%", right: " 5%" }}>
               {!showOffer ? (
-                <Button onClick={() => setShowOffer(!showOffer)}>
-                  <span className={style.edit}>Add Offer</span>
+                <Button onClick={() => setShowOffer(!showOffer)} style={{color: "white",border: "none"}}>
+                  <span className={style.edit} color="white">Add Offer</span>
                 </Button>
               ) : (
                 <div>
