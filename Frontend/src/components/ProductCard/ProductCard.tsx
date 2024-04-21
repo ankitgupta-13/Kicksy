@@ -5,25 +5,19 @@ import Add from "../../assets/images/add.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import SliderCardProdCard from "../SliderCardProdCard/SliderCard";
+
 const ProductCard = ({ product, wid }) => {
   const navigate = useNavigate();
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
+  // const [marLeftHover, setMarLeftHover] = useState(shoesColorData.length * 0);
 
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
-  function handleImgHover() {
-    setTimeout(() => {
-      setActiveColorId((shoesColorData.length - 1 >activeColorId) ? activeColorId + 1 : 0);
-    }, 1000);
-  }
-  useEffect(() => {
-    handleImgHover();
-  }, []);
-
   return (
     <div className={style.container} style={{ width: wid }}>
       <div className={style.container__header}>
@@ -35,12 +29,13 @@ const ProductCard = ({ product, wid }) => {
       <div className={style.shoes__bestseller}>
         <div className={style.shoes__bestseller_text}>BestSeller</div>
       </div>
-      <img
-        src={activeColor}
+      <div
+        style={{ backgroundImage: `url(${activeColor})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
         className={style.shoes__image}
         onClick={() => navigate(`/product/${product._id}`)}
-        onMouseOver={() => handleImgHover()}
-      />
+      >
+        {/* <SliderCardProdCard product={shoesColorData} /> */}
+      </div>
       {/* <ProdCardCarousel productC={shoesColorData} /> */}
       <div className={style.shoes__color}>
         {shoesColorData.map((color, index) => (

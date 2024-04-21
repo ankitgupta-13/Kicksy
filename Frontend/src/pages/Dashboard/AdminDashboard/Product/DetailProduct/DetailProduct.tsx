@@ -100,41 +100,43 @@ const DetailProduct = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
-                top: "30%",
-                right: " 10%",
+                top: "65%",
+                right: "40%",
               }}
             >
-              <Button
+              <button
                 className={style.accept}
                 onClick={() => acceptProductRequest({ requestID: product._id })}
               >
                 <span className={style.accept}>Accept</span>
-              </Button>
-              <Button
+              </button>
+              <button
                 className={style.decline}
                 onClick={() =>
                   declineProductRequest({ requestID: product._id })
                 }
               >
                 <span className={style.decline}>Decline</span>
-              </Button>
+              </button>
             </div>
           ) : isAdmin ? (
-            <div style={{ position: "absolute", top: "30%", right: " 10%" }}>
-              <Button onClick={handleShowEditProduct}>
+            <div style={{ position: "absolute", top: "75%", right: "38%" }}>
+              <button onClick={handleShowEditProduct} className={style.edit}>
                 <span className={style.edit}>Edit</span>
-              </Button>
+              </button>
             </div>
           ) : (
-            <div style={{ position: "absolute", top: "50%", right: " 5%" }}>
+            <div style={{ position: "absolute", top: "50%", right: " 2%" }}>
               {!showOffer ? (
-                <Button onClick={() => setShowOffer(!showOffer)} style={{color: "white",border: "none"}}>
+                <button className={style.edit} onClick={() => setShowOffer(!showOffer)} style={{color: "white",border: "none"}}>
                   <span className={style.edit} color="white">Add Offer</span>
-                </Button>
+                </button>
               ) : (
                 <div>
                   <Input
                     label="Add Price"
+                    style={{ borderRadius: "8px"}}
+                    placeholder="Enter Price"
                     type="Number"
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setPrice(Number(e.target.value))
@@ -142,14 +144,16 @@ const DetailProduct = () => {
                   />
                   <Input
                     label="Quantity"
+                    style={{ borderRadius: "8px"}}
+                    placeholder="Enter Quantity" 
                     type="Number"
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setQuantity(Number(e.target.value))
                     }
                   />
-                  <Button type="submit" onClick={handleAddOffer}>
+                  <button style={{borderRadius: "8px", border: "none", backgroundColor: "#c1c1c1", width: "100%", padding: ".7rem", marginTop: "10px", fontSize: "1.2rem", fontWeight: 600, cursor: "pointer"}} type="submit" onClick={handleAddOffer}>
                     Add
-                  </Button>
+                  </button>
                 </div>
               )}
             </div>

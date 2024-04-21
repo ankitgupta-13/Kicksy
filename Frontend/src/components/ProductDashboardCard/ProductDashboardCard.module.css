@@ -1,5 +1,5 @@
 .cardContainer {
-  width: 100vw;
+  width: 85vw;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
@@ -8,6 +8,7 @@
   height: 140px;
   cursor: pointer;
   text-transform: capitalize;
+  
 }
 
 .cardContainer:hover {

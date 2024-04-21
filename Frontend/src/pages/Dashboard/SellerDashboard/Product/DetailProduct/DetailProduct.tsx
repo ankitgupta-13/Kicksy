@@ -24,7 +24,7 @@ const DetailProduct = () => {
     <div>
       <ProductDescription data={productData} />
       <div>
-        <Button
+        <button
           onClick={() =>
             dispatch(
               selectSellerAction({
@@ -35,7 +35,7 @@ const DetailProduct = () => {
           }
         >
           Add Offer
-        </Button>
+        </button>
       </div>
     </div>
   );
