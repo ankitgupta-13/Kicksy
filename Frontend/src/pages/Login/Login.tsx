@@ -207,6 +207,7 @@ const Login = () => {
               className={style.button}
               style={{ backgroundColor: "#131313", color: "white" }}
               type="submit"
+              onClick={() => { navigate("/dashboard") }}
             >
               Login
             </Button>
