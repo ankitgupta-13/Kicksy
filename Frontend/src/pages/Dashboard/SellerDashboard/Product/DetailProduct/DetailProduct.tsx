@@ -4,6 +4,7 @@ import { RootState } from "../../../../../redux/store/store";
 import { selectSellerAction } from "../../../../../redux/reducers/sellerDashboardSlice";
 import { useEffect, useState } from "react";
 import { getProductById } from "../../../../../api/product.api";
+import style from "./DetailProduct.module.css";
 
 const DetailProduct = () => {
   const productID = useSelector(
@@ -22,18 +23,20 @@ const DetailProduct = () => {
   return (
     <div>
       <ProductDescription data={productData} />
-      <Button
-        onClick={() =>
-          dispatch(
-            selectSellerAction({
-              selectedSection: "Product",
-              selectedAction: "Edit",
-            })
-          )
-        }
-      >
-        Add Offer
-      </Button>
+      <div>
+        <button
+          onClick={() =>
+            dispatch(
+              selectSellerAction({
+                selectedSection: "Product",
+                selectedAction: "Edit",
+              })
+            )
+          }
+        >
+          Add Offer
+        </button>
+      </div>
     </div>
   );
 };

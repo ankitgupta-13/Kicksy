@@ -16,7 +16,7 @@ import MediaQuery from "react-responsive";
 const Shop: React.FC = () => {
   const [mActives, setmActives] = useState();
   const [wActives, setwActives] = useState();
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const location = useLocation();
   const cleanstring = location.search.substring(1);

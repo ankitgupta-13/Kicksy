@@ -114,13 +114,24 @@
   font-size: 0.875rem;
   text-transform: unset;
   font-family: "Public Sans", sans-serif;
-  color: rgb(64, 183, 24);
+  color: #fff;
+  background-color: rgba(34, 147, 0, 0.915);
   border-radius: 8px;
-  background-color: rgba(96, 255, 48, 0.16);
   border-width: 0px;
+  cursor: pointer;
+  transition-duration: .3s;
 }
+.accept:hover {
+  background-color: #ccc;
+  color: rgb(0, 155, 34);
+} 
+.decline:hover {
+  background-color: #aaa;
+  color: rgb(139, 0, 0);
+} 
 
 .decline {
+  cursor: pointer;
   width: 140px;
   height: 40px;
   display: inline-flex;
@@ -131,10 +142,11 @@
   font-size: 0.875rem;
   text-transform: unset;
   font-family: "Public Sans", sans-serif;
-  color: rgb(183, 29, 24);
+  color: #fff;
   border-radius: 8px;
-  background-color: rgba(255, 86, 48, 0.16);
+  background-color: rgba(186, 0, 0, 0.956);
   border-width: 0px;
+  transition-duration: .3s;
 }
 
 .edit {
@@ -148,8 +160,14 @@
   font-size: 0.875rem;
   text-transform: unset;
   font-family: "Public Sans", sans-serif;
-  color: rgb(24, 48, 183);
+  color: #fff;
+  background-color: rgb(48, 62, 255);
+  /* border-width: 0px; */
+  border: none;
   border-radius: 8px;
-  background-color: rgba(48, 62, 255, 0.16);
-  border-width: 0px;
+  transition-duration: .3s;
+}
+.edit:hover {
+  background-color: #ccc;
+  color: #000;
 }
