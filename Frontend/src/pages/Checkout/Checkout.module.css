@@ -1,3 +1,29 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 13vh;
+    padding: 0 2rem;
+    padding-right: 3rem;
+    
+    .backButton{
+        background-color: none !important;
+        border: none;
+        height: 3rem;
+        width: 3rem;
+        border-radius: 10rem;
+        cursor: pointer;
+        display: flex;
+        /* justify-content: flex-end; */
+        align-items: center;
+        padding: 0 1rem;
+        transition: all 0.2s ease-in-out;
+    }
+    .backButton:hover{
+        background-color: #C6C8CA !important;
+    }
+}
+
 .checkOut{
     border: 1px solid #C6C8CA;
     border-radius: 15px;
@@ -5,6 +31,7 @@
     margin: 10px;
     font-family: "Noir Pro";
     font-size: 16px;
+    
 }
 
 .checkOut h1{
@@ -47,7 +74,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: 2rem 10px;
+    margin-bottom: 10rem;
 }
 @media screen and (max-width: 430px) {
     .main{

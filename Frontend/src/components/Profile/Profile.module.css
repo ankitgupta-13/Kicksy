@@ -118,6 +118,8 @@
 
 .logoutbutton {
   display: flex;
+  flex-direction: column;
+  gap: .7rem;
   justify-content: center;
   align-items: center;
   margin: 15px 0px;

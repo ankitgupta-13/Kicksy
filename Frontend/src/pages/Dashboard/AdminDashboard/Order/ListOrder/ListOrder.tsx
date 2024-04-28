@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllOrders } from "../../../../../api/admin.api";
+import OrderDashboardCard from "../../../../../components/OrderDashboardCard/OrderDashboardCard";
 
 const ListOrder = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -27,22 +28,7 @@ const ListOrder = () => {
       {orders?.map((order: any) => {
         return (
           <div key={order._id}>
-            <h3>Order ID: {order._id}</h3>
-            <h3>Order Status: {order.status}</h3>
-            <h3>Order Date: {order.createdAt}</h3>
-            <h3>Order Total: {order.total}</h3>
-            <h3>Order Items:</h3>
-            <ul>
-              {order.orderItems.map((item: any) => {
-                return (
-                  <li key={item._id}>
-                    <h3>{item.name}</h3>
-                    <h3>{item.price}</h3>
-                    <h3>{item.quantity}</h3>
-                  </li>
-                );
-              })}
-            </ul>
+            <OrderDashboardCard order={order} />
           </div>
         );
       })}
