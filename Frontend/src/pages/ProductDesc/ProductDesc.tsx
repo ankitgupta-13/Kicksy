@@ -27,6 +27,7 @@ const ProductDesc = () => {
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   const [size, setSize] = useState();
+  const [sizes, setSizes] = useState([]);
   const [showSizeTable, setShowSizeTable] = useState(false);
   const [inStock, setInStock] = useState(true);
   const userID = useSelector((state: any) => state.auth?.userData?._id);
@@ -50,6 +51,8 @@ const ProductDesc = () => {
     if (response.statusCode === 200) {
       setCurProduct(response.data);
       setShoesColorData(response.data.images);
+      setSizes(response.data.size);
+      console.log(sizes);
     }
   };
 
@@ -66,13 +69,6 @@ const ProductDesc = () => {
     getProducts();
     getCurrentProduct();
   }, []);
-
-  const sizes = [
-    { label: "Select Size" },
-    { label: "11", value: "11" },
-    { label: "12", value: "12" },
-    { label: "13", value: "13" },
-  ];
 
   const handleChange = (event: any) => {
     setSize(event.target.value);
@@ -204,7 +200,7 @@ const ProductDesc = () => {
                   onChange={handleChange}
                 >
                   {sizes.map((size: any) => (
-                    <option value={size.value}>{size.label}</option>
+                    <option value={size}>{size}</option>
                   ))}
                 </select>
               </div>
@@ -238,6 +234,7 @@ const ProductDesc = () => {
                 onClick={() => {
                   console.log(curProduct);
                   handleAddToCart(curProduct.bestPrice.sellerID);
+                  window.location.href = userID ? "/checkout" : "/login";
                 }}
               >
                 <span

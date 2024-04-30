@@ -47,7 +47,7 @@ const ListProduct = () => {
       {userRole === "admin" ?
         <div className={style.sectionTitle}>
           <div className={style.text}>Product</div>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", width: "58vw", marginLeft: "-3vw" }}>
             <div className={style.text}>Create at</div>
             <div className={style.text}>Stock</div>
             <div className={style.text}>Price</div>

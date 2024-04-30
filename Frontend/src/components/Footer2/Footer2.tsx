@@ -8,7 +8,9 @@ import ae from "../../assets/american-express.png";
 import masterCard from "../../assets/MC.png";
 import paypal from "../../assets/paypal.png";
 import RightIcon from "../../assets/RightBox.png";
+import { useNavigate } from "react-router-dom";
 const Footer2 = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className={style.footer2}>
@@ -65,11 +67,11 @@ const Footer2 = () => {
 
           <div className={style.MiddleFooterSection2}>
             <ul>
-              <li className={style.firstLink}>SHOP</li>
-              <li className={style.Links}>Mens</li>
-              <li className={style.Links}>Womens</li>
-              <li className={style.Links}>Kids</li>
-              <li className={style.Links}>Latest</li>
+              <li className={style.firstLink} onClick={() => navigate(`/shop`)}>SHOP</li>
+              <li className={style.Links} onClick={() => navigate(`/shop?gender=M`)}>Mens</li>
+              <li className={style.Links} onClick={() => navigate(`/shop?gender=F`)}>Womens</li>
+              <li className={style.Links} onClick={() => navigate(`/shop?gender=K`)}>Kids</li>
+              <li className={style.Links} onClick={() => navigate(`/shop?category=sale`)}>Latest</li>
             </ul>
           </div>
 

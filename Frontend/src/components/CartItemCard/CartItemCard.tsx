@@ -9,7 +9,7 @@ import { removeFromCart, updateCart } from "../../api/user.api";
 import { RootState } from "../../redux/store/store";
 import style from "./CartItemCard.module.css";
 
-const CartItemCard = ({ item }) => {
+const CartItemCard = ({ item, wid }) => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id)!;
   // console.log(item)
   const [cartQty, setCartQty] = useState(item.quantity);
@@ -53,7 +53,7 @@ const CartItemCard = ({ item }) => {
   return (
     <div className={style.main}>
       <div className={style.item}>
-        <div className={style.item_img}>
+        <div className={style.item_img} style={{ width: wid }}>
           <div
             className={style.item_img_c}
             style={{ backgroundImage: `url(${item.product.images[0]})` }}

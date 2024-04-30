@@ -34,6 +34,7 @@ const Header = () => {
   const authStatus = useSelector((state: RootState) => state.auth.status);
   const isUser = useSelector((state: RootState) => state.auth.status);
   const location = window.location.pathname.split().pop();
+  const userRole = useSelector((state) => state.auth?.userData?.role);
 
   const navigate = useNavigate();
   const navItems = [
@@ -135,7 +136,7 @@ const Header = () => {
             <CloseOutlinedIcon />
           </a>
           <h1 style={{ marginBottom: "24px" }}>MENU</h1>
-          <a href="/profile">
+          <a href="/dashboard">
             <AccountCircleOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -149,7 +150,7 @@ const Header = () => {
           <div>
             <Profile />
           </div>
-          <a href="/profile">
+          <a href="/dashboard">
             <ShoppingBagOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -171,7 +172,7 @@ const Header = () => {
             />{" "}
             Seller Request
           </a>
-          <a href="#">
+          {/* <a href="#" onClick={handleToggleWishlistVisibility}>
             <FavoriteBorderOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -181,8 +182,9 @@ const Header = () => {
               }}
             />{" "}
             My Wishlist
-          </a>
-          <a href="/admin">
+          </a> */}
+          {userRole === "admin" || userRole === "seller" && (
+            <a href="/dashboard">
             <TimelineIcon
               style={{
                 fontWeight: "light",
@@ -193,6 +195,7 @@ const Header = () => {
             />{" "}
             Dashboard
           </a>
+          )}
           <a href="/blogs">
             <LibraryBooksOutlinedIcon
               style={{
@@ -219,7 +222,7 @@ const Header = () => {
         <a href="/checkout">
           <AddShoppingCartIcon />
         </a>
-        <a href="/profile">
+        <a href="/dashboard">
           <AccountCircleIcon />
         </a>
       </div>
