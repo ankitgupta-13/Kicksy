@@ -95,13 +95,14 @@ const DetailProduct = () => {
           <ProductDescription data={product} />
           {productRequestID ? (
             <div
+              className={style.accept_dec_div}
               style={{
                 position: "absolute",
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
                 top: "65%",
-                right: "40%",
+                right: "3%",
               }}
             >
               <button
@@ -120,7 +121,7 @@ const DetailProduct = () => {
               </button>
             </div>
           ) : isAdmin ? (
-            <div style={{ position: "absolute", top: "75%", right: "38%" }}>
+            <div className={style.editdiv} style={{ position: "absolute", top: "75%", right: "3%" }}>
               <button onClick={handleShowEditProduct} className={style.edit}>
                 <span className={style.edit}>Edit</span>
               </button>
