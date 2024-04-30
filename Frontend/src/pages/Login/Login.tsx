@@ -126,9 +126,6 @@ import { useDispatch } from "react-redux";
 import style from "./Login.module.css";
 import { Alert, Container } from "@mui/material";
 
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -207,7 +204,7 @@ const Login = () => {
               className={style.button}
               style={{ backgroundColor: "#131313", color: "white" }}
               type="submit"
-              onClick={() => { navigate("/dashboard") }}
+              onClick={handleLogin}
             >
               Login
             </Button>
