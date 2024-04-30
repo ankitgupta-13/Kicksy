@@ -11,9 +11,9 @@ const Dashboard = () => {
         <AdminDashboard />
       ) : userRole === "seller" ? (
         <SellerDashboard />
-      ) : (
+      ) : userRole === "user" ? (
         <UserProfile />
-      )}
+      ) : null}
     </>
   );
 };
