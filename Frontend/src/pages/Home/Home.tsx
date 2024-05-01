@@ -58,7 +58,7 @@ const Home = () => {
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      if (scrollY > 600 && scrollY < 1200) {
+      if (scrollY > 600) {
         setSc_companies(true);
       }
       else {
