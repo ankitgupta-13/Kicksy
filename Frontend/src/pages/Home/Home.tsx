@@ -19,6 +19,10 @@ import NikeLogo from "../../assets/images/NikeLogo.png";
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [sc_companies, setSc_companies] = useState(false);
+  const [sc_newArrivals, setSc_newArrivals] = useState(false);
+  const [sc_bestSeller, setSc_bestSeller] = useState(false);
+
   const arrivaltab1 = useRef("");
   const arrivaltab2 = useRef("");
   const arrivaltab3 = useRef("");
@@ -50,6 +54,39 @@ const Home = () => {
     scrollTo(0, 0);
     getProducts();
   }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY > 600 && scrollY < 1200) {
+        setSc_companies(true);
+      }
+      else {
+        setSc_companies(false);
+      }
+
+      if (scrollY > 1200) {
+        setSc_newArrivals(true);
+      }
+      else {
+        setSc_newArrivals(false);
+      }
+
+      if (scrollY > 1400) {
+        setSc_bestSeller(true);
+      }
+      else {
+        setSc_bestSeller(false);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
 
   return (
     <div className={style.Body} style={{ fontFamily: "Noir Pro" }}>
@@ -103,7 +140,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className={style.CompanyContainer}>
+      <div style={{ opacity: sc_companies ? 1 : 0, transitionDuration: ".5s" }} className={style.CompanyContainer}>
         <div
           className={style.CompanyItemBox}
           onClick={() => navigate(`/shop?brand=jordan`)}
@@ -156,7 +193,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className={style.NewArrivals}>
+      <div style={{ opacity: sc_newArrivals ? 1 : 0, transitionDuration: ".5s" }} className={style.NewArrivals}>
         <div className={style.NewArrivalsTabs}>
           <h1
             onClick={() => arrClick1()}
@@ -208,7 +245,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className={style.BestSellerSlider}>
+
+      <div style={{ opacity: sc_bestSeller ? 1 : 0, transitionDuration: ".5s" }} className={style.BestSellerSlider}>
         <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
           <div className={`${style.cards} ${style.BestSellerCards}`}>
@@ -231,6 +269,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       <HeroSection />
     </div>
   );
