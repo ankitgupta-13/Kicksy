@@ -243,7 +243,7 @@ const filterProduct = async(req,res)=>{
 
     const product_array = []
     
-    const products = await Product.findOne({})
+    const products = await Product.find({})
     
     products.forEach((product)=>{
       category_array.forEach((category)=>{
