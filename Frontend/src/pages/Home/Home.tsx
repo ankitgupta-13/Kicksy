@@ -15,35 +15,37 @@ import JordanLogo from "../../assets/images/JordanLogo.png";
 import KidPic1 from "../../assets/images/KidPic1.png";
 import MenPic1 from "../../assets/images/MenPic1.png";
 import NikeLogo from "../../assets/images/NikeLogo.png";
+import { ProductType } from "../../types/product.types";
 
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const arrivaltab1 = useRef("");
-  const arrivaltab2 = useRef("");
-  const arrivaltab3 = useRef("");
 
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);
   };
 
+  const arrivaltab1 = useRef<HTMLDivElement>(null);
+  const arrivaltab2 = useRef<HTMLDivElement>(null);
+  const arrivaltab3 = useRef<HTMLDivElement | null>(null);
+
   function arrClick1() {
-    arrivaltab1.current.classList.add(style.Active);
-    arrivaltab2.current.classList.remove(style.Active);
-    arrivaltab3.current.classList.remove(style.Active);
+    arrivaltab1.current?.classList.add(style.Active);
+    arrivaltab2.current?.classList.remove(style.Active);
+    arrivaltab3.current?.classList.remove(style.Active);
   }
 
   function arrClick2() {
-    arrivaltab1.current.classList.remove(style.Active);
-    arrivaltab2.current.classList.add(style.Active);
-    arrivaltab3.current.classList.remove(style.Active);
+    arrivaltab1.current?.classList.remove(style.Active);
+    arrivaltab2.current?.classList.add(style.Active);
+    arrivaltab3.current?.classList.remove(style.Active);
   }
 
   function arrClick3() {
-    arrivaltab1.current.classList.remove(style.Active);
-    arrivaltab2.current.classList.remove(style.Active);
-    arrivaltab3.current.classList.add(style.Active);
+    arrivaltab1.current?.classList.remove(style.Active);
+    arrivaltab2.current?.classList.remove(style.Active);
+    arrivaltab3.current?.classList.add(style.Active);
   }
 
   useEffect(() => {
@@ -183,7 +185,7 @@ const Home = () => {
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
           <div className={`${style.cards} ${style.popularCards}`}>
-            {products.map((product: Object, index: number) => {
+            {products.map((product: ProductType, index: number) => {
               return (
                 <div
                   key={index}

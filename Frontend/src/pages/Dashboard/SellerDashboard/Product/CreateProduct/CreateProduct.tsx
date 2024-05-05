@@ -1,22 +1,20 @@
 import { useForm } from "react-hook-form";
-import style from "./CreateProduct.module.css";
-import { Button, Container, Input, Select } from "../../../../../components";
+import { useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
 import {
   addProductRequest,
   uploadProductRequestImage,
 } from "../../../../../api/seller.api";
-import { useSelector } from "react-redux";
+import { Button, Container, Input, Select } from "../../../../../components";
 import { RootState } from "../../../../../redux/store/store";
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
+import style from "./CreateProduct.module.css";
 
 const CreateProduct = () => {
-  const { register, handleSubmit, watch } = useForm();
-  const userID = useSelector((state: RootState) => state.auth.userData._id);
+  const { register, handleSubmit } = useForm();
+  const userID = useSelector((state: RootState) => state.auth.userData?._id);
   const productID = uuid().slice(0, 8).toUpperCase();
 
   const handleCreateProduct = async (data: any) => {
-    // console.log(watch(data.gender[0]));
     const { images } = data;
     const imageUrls = [];
     for (const image of images) {
@@ -130,35 +128,60 @@ const CreateProduct = () => {
                 type="checkbox"
                 value={1}
                 label="S"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={2}
                 label="M"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={3}
                 label="L"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={4}
                 label="XL"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={5}
                 label="XXL"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
             </div>

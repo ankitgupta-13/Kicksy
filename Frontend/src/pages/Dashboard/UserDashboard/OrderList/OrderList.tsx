@@ -10,7 +10,7 @@ const OrderList = () => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await getOrderHistory({ userID });
+      const response = await getOrderHistory({ userID: String(userID) });
       console.log(response.data.orders);
       setOrders(response.data.orders);
     };
@@ -22,7 +22,7 @@ const OrderList = () => {
       {orders?.map((order: any) => {
         return (
           <div key={order._id}>
-            <OrderDashboardCard order={order}/>
+            <OrderDashboardCard order={order} />
           </div>
         );
       })}

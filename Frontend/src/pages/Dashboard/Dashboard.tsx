@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import SellerDashboard from "./SellerDashboard/SellerDashboard";
 import UserProfile from "./UserDashboard/UserProfile/UserProfile";
 
 const Dashboard = () => {
-  const userRole = useSelector((state) => state.auth?.userData?.role);
+  const userRole = useSelector(
+    (state: RootState) => state.auth?.userData?.role
+  );
   return (
     <>
       {userRole === "admin" ? (

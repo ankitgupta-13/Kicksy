@@ -1,4 +1,10 @@
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Alert } from "@mui/material";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import {
   authRegister,
   sendEmailOtp,
@@ -6,15 +12,9 @@ import {
   verifyEmailOtp,
   verifyMobileOtp,
 } from "../../api/auth.api";
-import { Input, Button, Select, Container } from "../../components/index.ts";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import style from "./Register.module.css";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import { Alert } from "@mui/material";
 import { findByEmail } from "../../api/user.api.ts";
+import { Button, Container, Input, Select } from "../../components/index.ts";
+import style from "./Register.module.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,10 +31,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
-
   const [messages, setMessage] = useState({
     email: "",
-    mobile: ""
+    mobile: "",
   });
 
   const onEmailAlertClose = () => {
@@ -42,23 +41,27 @@ const Register = () => {
       ...prevState,
       email: "",
     }));
-  }
+  };
   const onMobileAlertClose = () => {
     setMessage((prevState) => ({
       ...prevState,
       mobile: "",
     }));
-  }
+  };
 
   const showPasswordError = (mssg: String) => {
-    return <Alert
-      onClose={() => { setPasswordError("") }}
-      style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
-      severity="error"
-    >
-      {mssg}
-    </Alert>
-  }
+    return (
+      <Alert
+        onClose={() => {
+          setPasswordError("");
+        }}
+        style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
+        severity="error"
+      >
+        {mssg}
+      </Alert>
+    );
+  };
 
   const [EmailAlertType, setEmailAlertType] = useState("");
   const [mobileAlertType, setMobileAlertType] = useState("");
@@ -66,7 +69,9 @@ const Register = () => {
   const showEmailMessage = (mssg: String, type: any) => {
     return (
       <Alert
-        onClose={() => { onEmailAlertClose() }}
+        onClose={() => {
+          onEmailAlertClose();
+        }}
         style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
         severity={type}
       >
@@ -78,7 +83,9 @@ const Register = () => {
   const showMobileMessage = (mssg: String, type: any) => {
     return (
       <Alert
-        onClose={() => { onMobileAlertClose() }}
+        onClose={() => {
+          onMobileAlertClose();
+        }}
         style={{ margin: "15px 0", fontSize: "0.8rem", padding: "0px 20px" }}
         severity={type}
       >
@@ -87,29 +94,28 @@ const Register = () => {
     );
   };
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
-    const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+    const isValidEmail = email.match(/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/g);
 
-    if (!isEmailValid) { return setError("Enter a valid email address") }
-    else {
-      return isEmailValid
+    if (!isEmailValid) {
+      return setError("Enter a valid email address");
+    } else {
+      setIsEmailValid(!!isValidEmail);
+      return isEmailValid;
     }
-    setIsEmailValid(isValidEmail);
   };
 
-  const handleEmail = (e) => {
-    const email = e.email;
-    const isValidEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+  const handleEmail = ({ email: userEmail }: { email: string }) => {
+    const isValidEmail = userEmail.match(/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/g);
 
-    if (isValidEmail) return isValidEmail
-
+    if (isValidEmail) return isValidEmail;
   };
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const phone = e.target.value;
     const isValidPhone = phone.match(/^[0-9]{10}$/g);
-    setIsPhoneValid(isValidPhone);
+    setIsPhoneValid(!isValidPhone);
   };
 
   const handleSendEmailOtp = async (email: String) => {
@@ -118,34 +124,29 @@ const Register = () => {
         ...prevState,
         email: "cannot send otp to empty email",
       }));
-      setEmailAlertType("error")
+      setEmailAlertType("error");
       return;
     }
 
-    if (!handleEmail({ email })) {
+    if (!handleEmail({ email: String(email) })) {
       setMessage((prevState) => ({
         ...prevState,
         email: "enter a valid email",
       }));
-      setEmailAlertType("error")
-      return
+      setEmailAlertType("error");
+      return;
     }
 
     const user = await findByEmail({ email });
-
-    console.log(user)
-
-
 
     if (user.statusCode !== 404) {
       setMessage((prevState) => ({
         ...prevState,
         email: "user with this email already exists!",
       }));
-      setEmailAlertType("error")
+      setEmailAlertType("error");
       return;
     }
-
 
     const response = await sendEmailOtp({ email });
     if (response.statusCode === 200) {
@@ -155,13 +156,12 @@ const Register = () => {
         email: "OTP sent to your email",
       }));
       setEmailAlertType("info");
-    }
-    else setError(response.message);
+    } else setError(response.message);
   };
 
   const handleVerifyEmailOtp = async (email: String, otp: String) => {
     const response = await verifyEmailOtp({ email, otp });
-    console.log(response)
+    console.log(response);
 
     if (Math.floor(response.statusCode / 100) === 4) {
       setMessage((prevState) => ({
@@ -177,45 +177,44 @@ const Register = () => {
     } else setError(response.message);
   };
 
-  const handleSendPhoneOtp = async (mobile, countryCode) => {
-
-
+  const handleSendPhoneOtp = async (mobile: String, countryCode: Number) => {
     if (!mobile.match(/^[0-9]{10}$/g)) {
       setMessage((prevState) => ({
         ...prevState,
         mobile: "Enter a valid mobile number",
-      }))
-      setMobileAlertType("error")
-      return
+      }));
+      setMobileAlertType("error");
+      return;
     }
 
     const response = await sendMobileOtp({ mobile, countryCode });
-    console.log(response)
+    console.log(response);
 
     if (Math.floor(response.statusCode / 100) === 4) {
       setMessage((prevState) => ({
         ...prevState,
         mobile: response.data || response.message,
-      }))
-      setMobileAlertType("error")
+      }));
+      setMobileAlertType("error");
 
-      return
+      return;
     }
 
-
     if (response.statusCode === 200) {
-
       setPhoneOtpSent(true);
       setMessage((prevState) => ({
         ...prevState,
         mobile: "OTP sent to your mobile number",
-      }))
-      setMobileAlertType("info")
-
+      }));
+      setMobileAlertType("info");
     } else setError(response.message);
   };
 
-  const handleVerifyPhoneOtp = async (countryCode, mobile, otp) => {
+  const handleVerifyPhoneOtp = async (
+    countryCode: Number,
+    mobile: String,
+    otp: String
+  ) => {
     const response = await verifyMobileOtp({ countryCode, mobile, otp });
     if (response.statusCode === 200) {
       setPhoneOtpVerified(true);
@@ -232,14 +231,13 @@ const Register = () => {
         return;
       }
 
-
       const response = await authRegister(data);
       if (response.statusCode === 201) {
         navigate("/login");
       } else {
         setError(response.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
     }
   };
@@ -251,10 +249,18 @@ const Register = () => {
         alignItems: "center",
       }}
     >
-      <div className={style.CenterBody} style={{
-        fontFamily: 'Noir Pro'
-      }}>
-        <div className={style.logoalt} style={{ textAlign: "center", fontWeight: 900, fontSize: "30px" }}>CREATE ACCOUNT</div>
+      <div
+        className={style.CenterBody}
+        style={{
+          fontFamily: "Noir Pro",
+        }}
+      >
+        <div
+          className={style.logoalt}
+          style={{ textAlign: "center", fontWeight: 900, fontSize: "30px" }}
+        >
+          CREATE ACCOUNT
+        </div>
 
         <form onSubmit={handleSubmit(handleRegister)} className={style.form}>
           <div className={style.Input}>
@@ -277,7 +283,7 @@ const Register = () => {
                 required: true,
                 validate: (value) => {
                   const isValidEmail = value.match(
-                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+                    /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/g
                   );
                   setIsEmailValid(isValidEmail);
                   return true; // Always return true to avoid validation error
@@ -300,7 +306,9 @@ const Register = () => {
                     style={{ marginTop: "5px" }}
                     type="text"
                     placeholder="Enter OTP"
-                    onChange={(e) => setEmailOtp(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setEmailOtp(e.target.value)
+                    }
                   />
                   <button
                     className={style.OTPbutton}
@@ -313,12 +321,12 @@ const Register = () => {
                 </div>
               )
             ) : null}
-            {messages.email ? showEmailMessage(messages.email, EmailAlertType) : ""}
-
+            {messages.email
+              ? showEmailMessage(messages.email, EmailAlertType)
+              : ""}
           </div>
           <div className={style.mobile}>
             <Select
-
               border="1px solid var(--Border-2, #CCC)"
               height="100%"
               options={["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98"]}
@@ -357,7 +365,9 @@ const Register = () => {
                   style={{ marginTop: "5px" }}
                   type="text"
                   placeholder="Enter OTP"
-                  onChange={(e) => setPhoneOtp(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPhoneOtp(e.target.value)
+                  }
                 />
                 <button
                   className={style.OTPbutton}
@@ -374,7 +384,9 @@ const Register = () => {
               </div>
             )
           ) : null}
-          {messages.mobile ? showMobileMessage(messages.mobile, mobileAlertType) : ""}
+          {messages.mobile
+            ? showMobileMessage(messages.mobile, mobileAlertType)
+            : ""}
           <div className={style.Input}>
             <div style={{ position: "relative" }}>
               <Input

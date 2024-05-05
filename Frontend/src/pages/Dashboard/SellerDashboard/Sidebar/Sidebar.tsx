@@ -1,20 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import style from "./Sidebar.module.css";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import SpeedIcon from "@mui/icons-material/Speed";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../../assets/Krisksy.svg";
+import { Container } from "../../../../components";
 import {
   closeSection,
   selectSellerAction,
   toggleSection,
 } from "../../../../redux/reducers/sellerDashboardSlice";
-import { Container, Logo } from "../../../../components";
-import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import { useNavigate } from "react-router-dom";
-import logo from "../../../../assets/Krisksy.svg";
-import SpeedIcon from '@mui/icons-material/Speed';
+import { RootState } from "../../../../redux/store/store";
+import style from "./Sidebar.module.css";
 
-const Sidebar = ({ss}) => {
+const Sidebar = ({ ss }) => {
   const navigate = useNavigate();
   const { sectionsState } = useSelector(
     (state: RootState) => state.sellerDashboard
@@ -54,7 +54,7 @@ const Sidebar = ({ss}) => {
   ];
   return (
     <>
-      <div className={style.sidebarBody} style={{...ss}}>
+      <div className={style.sidebarBody} style={{ ...ss }}>
         <Container
           sx={{
             width: "100%",
@@ -76,11 +76,12 @@ const Sidebar = ({ss}) => {
             <button
               className={style.sectionButton}
               onClick={() => dispatch(closeSection())}
-              style={{ justifyContent: "flex-start"}}
+              style={{ justifyContent: "flex-start" }}
             >
-              <span className={style.AppIcon}><SpeedIcon /></span>
-              <span className={style.AppText} > Dashboard</span>
-
+              <span className={style.AppIcon}>
+                <SpeedIcon />
+              </span>
+              <span className={style.AppText}> Dashboard</span>
             </button>
           </div>
           <div className={style.SideBarSections}>
