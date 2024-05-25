@@ -40,6 +40,7 @@
 .footerBottom {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 123px;
   align-self: stretch;
   width: 100%;
@@ -52,6 +53,10 @@
 .section7 {
   width: 25%;
   color: var(--Primary-Text, #fff);
+}
+
+.section4{
+  width: 60%;
 }
 
 .content2 {
