@@ -7,9 +7,6 @@ import ytIcon from "../../assets/yt-icon.png"
 
 
 const Footer = () => {
-
-
-
   return (
     <>
       <div className={style.Footer}>
@@ -45,7 +42,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };
