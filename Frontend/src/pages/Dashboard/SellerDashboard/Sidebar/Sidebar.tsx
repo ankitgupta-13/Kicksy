@@ -11,7 +11,7 @@ import { Container, Logo } from "../../../../components";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../../assets/Krisksy.svg";
+import logo from "../../../../assets/Krisksy.png";
 import SpeedIcon from '@mui/icons-material/Speed';
 
 const Sidebar = ({ss}) => {

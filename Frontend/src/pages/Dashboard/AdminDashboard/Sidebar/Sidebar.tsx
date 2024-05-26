@@ -4,7 +4,7 @@ import {
   selectAdminAction,
   toggleSection,
 } from "../../../../redux/reducers/adminDashboardSlice";
-import logo from "../../../../assets/Krisksy.svg";
+import logo from "../../../../assets/Krisksy.png";
 import style from "./Sidebar.module.css";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";

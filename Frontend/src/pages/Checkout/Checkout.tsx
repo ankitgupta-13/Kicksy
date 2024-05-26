@@ -7,7 +7,7 @@ import { getUserCartItems } from "../../api/user.api";
 import { Button, CartItemCard, Input, PaymentButton } from "../../components";
 import { RootState } from "../../redux/store/store";
 import style from "./Checkout.module.css";
-import mainLogo from "../../assets/Krisksy.svg"
+import mainLogo from "../../assets/Krisksy.png"
 
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
