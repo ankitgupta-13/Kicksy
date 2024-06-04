@@ -21,6 +21,7 @@ import { Alert } from "@mui/material";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 
 
@@ -147,6 +148,7 @@ const Anime = () => {
         </div> :
         <div>
           <div className={style.a_hero}>
+            <button onClick={() => window.scrollTo({ top: 770, behavior: "smooth" })} className={style.a_hero_btn}>VIEW COLLECTIONS <FaArrowRightLong/></button>
             <img style={{ width: "100%" }} src={heroImg} alt="" />
           </div>
           {curProduct && <div style={{ margin: "25px" }}>

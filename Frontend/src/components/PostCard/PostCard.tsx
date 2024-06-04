@@ -1,47 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./PostCard.module.css";
 
 import Poster from "../../assets/post_heading.jpg";
 import BlockImage from "../../assets/block_image.jpg";
+import { getAllBlogs } from '../../api/user.api';
+import { useNavigate } from "react-router-dom";
+
 const PostCard = (props) => {
+  const [bloglist, setBloglist] = useState<any[]>([]); // Add type annotation for bloglist
+  const navigate = useNavigate();
+
+  const getBlogs = async () => {
+    const response = await getAllBlogs();
+    if (response.statusCode === 200) setBloglist(response.data);
+  };
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
+  function getMonthName(monthNumber) {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return monthNames[monthNumber];
+  }
+
+  const createdDate = bloglist[bloglist.length - 1]?.createdAt?.split("T")[0];
+  const createdYear = createdDate?.split("-")[0];
+  const createdMonth = createdDate?.split("-")[1];
+  const createdDay = createdDate?.split("-")[2];
+  
+
+  "2024-03-31T16:52:29.350Z"
+
+
   return (
     <div className={style.container}>
-      <div className={style.header}>
-        <img src={Poster} className={style.container__header_image} />
+      <div className={style.header} style={{cursor: "pointer"}} onClick={() => navigate(`/blogpage?blog=${bloglist[bloglist.length - 1]?._id}`)}>
+        <img src={bloglist[bloglist.length - 1]?.imageurl} className={style.container__header_image} />
         <div className={style.header__info}>
-          <div className={style.header__date}> <div>18</div> <div className={style.header__month}>Mar</div> </div>
+          <div className={style.header__date}> <div>{createdDay}</div> <div className={style.header__month}>{getMonthName(parseInt(createdMonth))}</div> </div>
           <div className={style.header__container}>
           <div className={style.header__content}>
-            Lorem ipsum dolor sit amet consectetur.
+            {bloglist[bloglist.length - 1]?.blogTitle}
           </div>
           <div className={style.header__paragraph}>
-            Proin faucibus nec mauris a sodales, sed elementum mi tincidunt. Sed
-            eget viverra egestas nisi in consequat. Fusce…
+            {bloglist[bloglist.length - 1]?.content}
           </div>
-          <div className={style.header__likes}>0 Likes . 0 Comments</div>
+          {/* <div className={style.header__likes}>0 Likes . 0 Comments</div> */}
           </div>
         </div>
       </div>
       <div className={style.container__block}>
-        <BlockCard />
-        <BlockCard />
-        <BlockCard />
+        {bloglist.slice(0,-1).slice(-3).map((blog) => (
+          <BlockCard blog={blog} />
+        ))}
       </div>
     </div>
   );
 };
 
-const BlockCard = (props) => {
+const BlockCard = ({blog}) => {
+  const createdDate = blog?.createdAt?.split("T")[0];
+  const navigate = useNavigate();
   return (
-    <div className={style.block}>
-      <img src={BlockImage} alt="error" className={style.block__image} />
+    <div className={style.block} style={{cursor: "pointer"}} onClick={() => navigate(`/blogpage?blog=${blog._id}`)}>
+      <img src={blog.imageurl} alt="error" className={style.block__image} />
       <div className={style.block__info}>
         <div className={style.block__info_heading}>
-          Adaptation <span className={style.block__info_circle}>&#9679;</span>{" "}
-          <span className={style.block__info_date}>Mar 18, 2020</span>
+          {blog.category} <span className={style.block__info_circle}>&#9679;</span>{" "}
+          <span className={style.block__info_date}>{createdDate}</span>
         </div>
         <div className={style.block__info_content}>
-          Lorem ipsum dolor sit amet consectetur.
+          {blog.blogTitle}
         </div>
       </div>
     </div>

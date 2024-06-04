@@ -119,6 +119,23 @@
             font-family: 'Comic Hero';
         }
     }
+
+    .a_hero_btn{
+        position: absolute;
+        margin-top: 10rem;
+        padding: 1.3rem 1.4rem;
+        border: none;
+        outline: none;
+        background-color: #D61B1B;
+        color: #fff;
+        font-size: 1.2rem;
+        font-family: 'Bebas Neue';
+        display: flex;
+        gap: 1rem;
+        /* letter-spacing: 2px; */
+        cursor: pointer;
+
+    }
 }
 
 .product {
