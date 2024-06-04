@@ -23,14 +23,11 @@ const addProduct = async (req, res) => {
     return res.status(409).send("Please add images");
   }
   try {
-    const product = await Product.findOne({ productCode });
-    if (product) {
-      return res.status(409).send("Product already exist!");
-    }
+    
     const newProduct = await Product.create(req.body);
     newProduct.tags.push(newProduct.title.toLowerCase());
     newProduct.tags.push(newProduct.brand.toLowerCase());
-    newProduct.tags.push(newProduct.gender.toLowerCase());
+    // newProduct.tags.push(newProduct.gender.toLowerCase());
     await newProduct.save();
     if (!newProduct) {
       return res
