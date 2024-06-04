@@ -120,6 +120,7 @@
     .container {
         display: flex;
         flex-direction: column;
+        padding-bottom: 3rem;
     }
 
     .container__header_image {

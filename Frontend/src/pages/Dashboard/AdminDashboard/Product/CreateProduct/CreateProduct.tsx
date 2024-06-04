@@ -8,12 +8,16 @@ import {
 import { Button, Container, Input, Select } from "../../../../../components";
 import { RootState } from "../../../../../redux/store/store";
 import style from "./CreateProduct.module.css";
+import { useState } from "react";
 
 const CreateProduct = () => {
   const { register, handleSubmit } = useForm();
   const user = useSelector((state: RootState) => state.auth.userData);
   const userID = user?._id;
   const isAdmin = user?.role === "admin";
+
+  const [sizes, setSizes] = useState([]);
+
 
   const handleCreateProduct = async (data: any) => {
     const { images } = data;
@@ -28,7 +32,7 @@ const CreateProduct = () => {
       if (response.statusCode !== 200) return console.log(response.message);
       imageUrls.push(response.data);
     }
-    data = { ...data, images: imageUrls, userID: userID };
+    data = { ...data, images: imageUrls, userID: userID, size: sizes };
 
     let response;
     isAdmin
@@ -135,13 +139,77 @@ const CreateProduct = () => {
                 {...register("category", { required: true })}
               />
             </div>
-            <div className={style.inputBox}>
-              <Select
-                style={{ marginTop: "5px" }}
-                label="Size"
-                options={["S", "M", "L", "XL", "XXL"]}
-                {...register("size", { required: true })}
-              />
+            <div className={`${style.inputBox} ${style.inputSize}`}>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="6"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                6
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="7"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                7
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="8"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                8
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="9"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                9
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="10"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                10
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="11"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                11
+              </div>
+              <div className={style.size_check}>
+                <input type="checkbox"
+                  value="12"
+                  onChange={(e) => {
+                    if (e.target.checked) setSizes([...sizes, e.target.value]);
+                    else setSizes(sizes.filter((size) => size !== e.target.value));
+                  }}
+                />
+                12
+              </div>
             </div>
             <div className={style.inputBox}>
               <Select

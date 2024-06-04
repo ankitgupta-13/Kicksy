@@ -607,4 +607,21 @@
     .topbar{
         margin-top: 3rem;
     }
+
+    .a_hero_btn{
+        position: absolute;
+        margin-top: 3rem !important;
+        padding: .5rem .7rem !important;
+        border: none;
+        outline: none;
+        background-color: #D61B1B;
+        color: #fff;
+        font-size: .9rem !important;
+        font-family: 'Bebas Neue';
+        display: flex;
+        gap: 1rem;
+        /* letter-spacing: 2px; */
+        cursor: pointer;
+
+    }
 }

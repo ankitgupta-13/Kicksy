@@ -162,6 +162,19 @@
   font-size: 16px;
   letter-spacing: 0.8px;
 }
+.inputSize{
+  display: flex;
+  gap: 20px;
+  font-family: 'Noir Pro';
+  div{
+    display: flex;
+    align-items: center;
+  }
+}
+
+.size_check{
+  width: 2rem;
+}
 
 @media screen and (max-width: 430px) {
 
@@ -173,5 +186,10 @@
   }
   .containerHeading{
     padding: 0 20px;
+  }
+
+  .inputSize{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }

@@ -25,13 +25,8 @@ const PostCard = (props) => {
   }
 
   const createdDate = bloglist[bloglist.length - 1]?.createdAt?.split("T")[0];
-  const createdYear = createdDate?.split("-")[0];
   const createdMonth = createdDate?.split("-")[1];
   const createdDay = createdDate?.split("-")[2];
-  
-
-  "2024-03-31T16:52:29.350Z"
-
 
   return (
     <div className={style.container}>
