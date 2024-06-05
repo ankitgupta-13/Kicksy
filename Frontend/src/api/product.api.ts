@@ -46,3 +46,15 @@ export const addProductOffer = async (payload) => {
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+
+export const filterProducts = async (payload) => {
+  try {
+    const { data } = await api.post("/products/filter-product", payload);
+    return data;
+  } catch (error) {
+    console.error(error);
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};

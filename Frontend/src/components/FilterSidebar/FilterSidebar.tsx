@@ -1,53 +1,46 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import style from './FilterSidebar.module.css';
 import { Button, Input } from '../index';
 
 const FilterSidebar = ({ filters, onFilterChange }) => {
   const [mActive, setMActive] = useState(false);
   const [wActive, setWActive] = useState(false);
-  const [currentFilters, setCurrentFilters] = useState([]);
 
   const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
   const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
-  const sizeOptions = ['6', '7', '8', '9', '10', '11', '12'];
+  const sizeOptions = ['S', 'M', 'L'];
   const colorOptions = ['Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
 
   const handleGenderButtonClick = (gender) => {
-    const genderFilterValue = gender === 'M' ? 'Men' : 'Women';
+    let newFilters;
     if (gender === 'M') {
       setMActive(!mActive);
-      setCurrentFilters(mActive ? currentFilters.filter(filter => filter !== 'Men') : [...currentFilters, 'Men']);
+      newFilters = mActive ? filters.filter(filter => filter !== 'Men') : [...filters, 'Men'];
     } else if (gender === 'F') {
       setWActive(!wActive);
-      setCurrentFilters(wActive ? currentFilters.filter(filter => filter !== 'Women') : [...currentFilters, 'Women']);
+      newFilters = wActive ? filters.filter(filter => filter !== 'Women') : [...filters, 'Women'];
     }
-    onFilterChange(mActive || wActive ? currentFilters : [...currentFilters, genderFilterValue]);
+    onFilterChange(newFilters);
   };
 
-  const handleCheckboxChange = (filterValue) => {
-    const currentFiltersCopy = [...currentFilters];
-    if (currentFiltersCopy.includes(filterValue)) {
-      const updatedFilters = currentFiltersCopy.filter((filter) => filter !== filterValue);
-      setCurrentFilters(updatedFilters);
-      onFilterChange(updatedFilters);
+  const handleCheckboxChange = (value) => {
+    const currentFiltersCopy = [...filters];
+    const filterIndex = currentFiltersCopy.indexOf(value);
+
+    if (filterIndex > -1) {
+      currentFiltersCopy.splice(filterIndex, 1);
     } else {
-      const updatedFilters = [...currentFiltersCopy, filterValue];
-      setCurrentFilters(updatedFilters);
-      onFilterChange(updatedFilters);
+      currentFiltersCopy.push(value);
     }
+    onFilterChange(currentFiltersCopy);
   };
 
   return (
     <div className={style.filtersidebar}>
       <div className={style.CurrentFiltersContainer}>
         <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
-        <div>{currentFilters.map((filter) =>
-          <p key={filter}>{filter}</p>
-        )}</div>
-        <p onClick={() => {
-          setCurrentFilters([]);
-          onFilterChange([]);
-        }} style={{ cursor: 'pointer', display: currentFilters.length === 0 ? 'none' : 'inline-block', width: "max-content" }}>Clear All</p>
+        <div>{filters.map((filter, index) => <p key={index}>{filter}</p>)}</div>
+        <p onClick={() => onFilterChange([])} style={{ cursor: 'pointer', display: filters.length === 0 ? 'none' : 'inline-block', width: "max-content" }}>Clear All</p>
       </div>
       <div className={style.BodyTypeContainer}>
         <label className={style.BodyType}>Body Type:</label>
@@ -73,10 +66,10 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
         { filterName: 'category', options: productTypeOptions },
         { filterName: 'brand', options: brandOptions },
         { filterName: 'size', options: sizeOptions },
-        { filterName: 'colors', options: colorOptions },
-      ].map(({ options }) => (
-        <div className={style.FilterNameContainer} key={options.join(',')}>
-          <label className={style.FilterName}>{options[0]}:</label>
+        { filterName: 'color', options: colorOptions },
+      ].map(({ filterName, options }) => (
+        <div className={style.FilterNameContainer} key={filterName}>
+          <label className={style.FilterName}>{filterName}:</label>
           <div>
             {options.map((option) => (
               <Input
@@ -87,7 +80,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
                 type={"checkbox"}
                 labelcheckbox={option}
                 onChange={() => handleCheckboxChange(option)}
-                checked={currentFilters.includes(option)}
+                checked={filters.includes(option)}
               />
             ))}
           </div>
