@@ -5,32 +5,37 @@ import { Button, Input } from '../index';
 const FilterSidebar = ({ filters, onFilterChange }) => {
   const [mActive, setMActive] = useState(false);
   const [wActive, setWActive] = useState(false);
+  const [kActive, setKActive] = useState(false);
 
   const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
   const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
-  const sizeOptions = ['S', 'M', 'L'];
+  const sizeOptions = ['6','7','8','9','10','11','12'];
   const colorOptions = ['Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
 
   const handleGenderButtonClick = (gender) => {
     let newFilters;
     if (gender === 'M') {
       setMActive(!mActive);
-      newFilters = mActive ? filters.filter(filter => filter !== 'Men') : [...filters, 'Men'];
+      newFilters = mActive ? filters.filter(filter => filter !== 'M') : [...filters, 'M'];
     } else if (gender === 'F') {
       setWActive(!wActive);
-      newFilters = wActive ? filters.filter(filter => filter !== 'Women') : [...filters, 'Women'];
+      newFilters = wActive ? filters.filter(filter => filter !== 'F') : [...filters, 'F'];
+    } else if (gender === 'K') {
+      setKActive(!kActive);
+      newFilters = kActive ? filters.filter(filter => filter !== 'K') : [...filters, 'K'];
     }
+    
     onFilterChange(newFilters);
   };
 
   const handleCheckboxChange = (value) => {
-    const currentFiltersCopy = [...filters];
+    let currentFiltersCopy = [...filters];
     const filterIndex = currentFiltersCopy.indexOf(value);
 
     if (filterIndex > -1) {
       currentFiltersCopy.splice(filterIndex, 1);
     } else {
-      currentFiltersCopy.push(value);
+      currentFiltersCopy = [...filters, value];
     }
     onFilterChange(currentFiltersCopy);
   };
@@ -58,6 +63,13 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
             onClick={() => handleGenderButtonClick('F')}
           >
             Women
+          </Button>
+          <Button
+            className={style.Button}
+            style={{ backgroundColor: kActive ? 'black' : 'white', color: kActive ? 'white' : 'black', width: '80px' }}
+            onClick={() => handleGenderButtonClick('K')}
+          >
+            Kids
           </Button>
         </div>
       </div>

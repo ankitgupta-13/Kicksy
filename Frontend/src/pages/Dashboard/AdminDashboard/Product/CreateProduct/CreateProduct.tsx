@@ -34,7 +34,7 @@ const CreateProduct = () => {
       if (response.statusCode !== 200) return console.log(response.message);
       imageUrls.push(response.data);
     }
-    data = { ...data, images: imageUrls, userID: userID, size: sizes };
+    data = { ...data, images: imageUrls, userID: userID };
 
     let response;
     isAdmin

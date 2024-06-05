@@ -25,7 +25,8 @@ const Shop: React.FC = () => {
       }
       const data = await filterProducts(filters);
       setFilteredProducts(data.data);
-      console.log(data.data);
+      // console.log(data.data);
+      // console.log(filteredProducts);
     };
     fetchFilteredProducts();
     scrollTo(0, 0);
@@ -43,16 +44,11 @@ const Shop: React.FC = () => {
     window.addEventListener('resize', handleResize);
   }, []);
 
-  const handleFilterChange = async (newFilters) => {
+  const handleFilterChange = async (newFilters: string[]) => {
     setFilters(newFilters);
-    // const fetchFilteredProducts = async () => {
-      // if (value) {
-        // setFilters((prevFilters) => [...prevFilters, value]);
-      // }
-      const data = await filterProducts(filters);
-      setFilteredProducts(data?.data);
-      console.log(filteredProducts);
-    // };
+    const data = await filterProducts(newFilters);
+    setFilteredProducts(data.data);
+    // console.log(filteredProducts);
   };
 
   const handleFilterSidebar = () => {

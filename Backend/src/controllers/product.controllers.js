@@ -282,7 +282,7 @@ const filterProduct = async (req, res) => {
     await Promise.all(promises);
 
     // const uniqueArray = [...new Set(products_array2)];
-    if (filters.length === 0) products_array2.push(products)
+    if (filters.length === 0) products_array2.push(...products)
 
     const uniqueArray = Array.from(new Set(products_array2.map(JSON.stringify))).map(JSON.parse);
     if (uniqueArray.length === 0 ) products_array2.push(products);
