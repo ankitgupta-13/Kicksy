@@ -25,7 +25,6 @@ const productSchema = new mongoose.Schema(
     },
     bestPrice: {
       type: priceSchema,
-      required: true,
     },
     offers: [
       {

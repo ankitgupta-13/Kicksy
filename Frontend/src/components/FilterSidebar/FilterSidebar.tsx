@@ -57,7 +57,6 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
       setCurrentFilters(updatedFilters);
     }
     console.log(currentFilters);
-    
   };
 
   return (

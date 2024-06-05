@@ -12,7 +12,7 @@ const PostCard = (props) => {
 
   const getBlogs = async () => {
     const response = await getAllBlogs();
-    if (response.statusCode === 200) setBloglist(response.data);
+    if (response.statusCode === 200) setBloglist(response.data.slice(-4));
   };
 
   useEffect(() => {

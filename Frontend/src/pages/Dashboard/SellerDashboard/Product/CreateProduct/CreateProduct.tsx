@@ -99,6 +99,7 @@ const CreateProduct = () => {
               <input
                 type="text"
                 // value={productID}
+                disabled
                 defaultValue={productID}
                 {...register("skuID", { required: true })}
               />
@@ -128,36 +129,50 @@ const CreateProduct = () => {
             <div className={style.inputBox}>
               <Input
                 type="checkbox"
-                value={1}
-                label="S"
+                value={6}
+                label="6"
                 ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
-                value={2}
-                label="M"
+                value={7}
+                label="7"
                 ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
-                value={3}
-                label="L"
+                value={8}
+                label="8"
                 ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
-                value={4}
-                label="XL"
+                value={9}
+                label="9"
                 ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
-                value={5}
-                label="XXL"
+                value={10}
+                label="10"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
+                value={11}
+                label="11"
+                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
+                value={12}
+                label="12"
                 ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
                 {...register("size", { required: true })}
               />

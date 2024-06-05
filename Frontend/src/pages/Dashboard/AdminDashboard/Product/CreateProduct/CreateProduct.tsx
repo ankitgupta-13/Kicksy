@@ -9,11 +9,13 @@ import { Button, Container, Input, Select } from "../../../../../components";
 import { RootState } from "../../../../../redux/store/store";
 import style from "./CreateProduct.module.css";
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 const CreateProduct = () => {
   const { register, handleSubmit } = useForm();
   const user = useSelector((state: RootState) => state.auth.userData);
   const userID = user?._id;
+  const productID = uuid().slice(0, 8).toUpperCase();
   const isAdmin = user?.role === "admin";
 
   const [sizes, setSizes] = useState([]);
@@ -104,7 +106,7 @@ const CreateProduct = () => {
 
           <div className={style.sub}>
             <div className={style.inputBox}>
-              <Input
+              {/* <Input
                 style={{
                   marginTop: "5px",
                   border: "none",
@@ -114,6 +116,14 @@ const CreateProduct = () => {
                 label="Product Code"
                 type="text"
                 placeholder="Product Code"
+                {...register("skuID", { required: true })}
+              /> */}
+              <label>Product Code</label>
+              <input
+                type="text"
+                // value={productID}
+                disabled
+                defaultValue={productID}
                 {...register("skuID", { required: true })}
               />
             </div>
@@ -135,10 +145,11 @@ const CreateProduct = () => {
             <div className={style.inputBox}>
               <Select
                 label="Category"
-                options={["boots", "sneakers"]}
+                options={["anime"]}
                 {...register("category", { required: true })}
               />
             </div>
+            <div style={{ fontSize: "1.2rem", fontFamily: "Noir Pro", fontWeight: "600" }}>Sizes</div>
             <div className={`${style.inputBox} ${style.inputSize}`}>
               <div className={style.size_check}>
                 <input type="checkbox"
