@@ -1,4 +1,4 @@
-import logoImg from "../../assets/Krisksy.svg";
+import logoImg from "../../assets/Krisksy.png";
 import style from "./Logo.module.css";
 
 const Logo = () => {
