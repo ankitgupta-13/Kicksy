@@ -238,20 +238,50 @@ const filterProduct = async(req,res)=>{
   try{
     const {category_array} = req.body;
 
+    // [boot, men, size]
+
+
+    const products_array2 = []
+
     const product_array = []
     
-    const products = await Product.find({})
+    // const products = await Product.find({})
     
-    products.forEach((product)=>{
-      category_array.forEach((category)=>{
-        if(product.tags.includes(category)){
-          product_array.push(product);
-          return;
-        }
+    // products.forEach((product)=>{
+    //   category_array.forEach((category)=>{
+    //     if(product.tags.includes(category)){
+    //       product_array.push(product);
+    //       return;
+    //     }
+    //   });
+    // })
+
+    const promises = category_array.map(async(category)=>{
+      const results = await Product.find({
+        "$or":[
+          {brand:{$regex:category}},
+          {size:{$regex:category}},
+          {category:{$regex:category}},
+          {gender:{$regex:category}},
+          {tags:{$regex:category}},
+          {skuID:{$regex:category}},
+          {title:{$regex:category}}
+        ]
       })
+
+      products_array2.push(...results);
+      
+
     })
 
-    return res.json(new ApiResponse(200 , product_array , 'filter applied successfully'));
+    await Promise.all(promises);
+
+    // const uniqueArray = [...new Set(products_array2)];
+    const uniqueArray = Array.from(new Set(products_array2.map(JSON.stringify))).map(JSON.parse);
+
+    
+
+    return res.json(new ApiResponse(200 , uniqueArray , 'filter applied successfully'));
 
   }
   catch(err){
