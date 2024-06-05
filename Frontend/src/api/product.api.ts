@@ -50,7 +50,9 @@ export const addProductOffer = async (payload) => {
 
 export const filterProducts = async (payload) => {
   try {
+    console.log(payload)
     const { data } = await api.post("/products/filter-product", payload);
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

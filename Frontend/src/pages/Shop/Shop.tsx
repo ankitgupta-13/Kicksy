@@ -23,7 +23,7 @@ const Shop: React.FC = () => {
       if (value) {
         setFilters((prevFilters) => [...prevFilters, value]);
       }
-      const data = await filterProducts({ category_array: filters });
+      const data = await filterProducts(filters);
       setFilteredProducts(data.products);
       console.log(data.products);
     };
@@ -49,7 +49,7 @@ const Shop: React.FC = () => {
       // if (value) {
         // setFilters((prevFilters) => [...prevFilters, value]);
       // }
-      const data = await filterProducts({ category_array: filters });
+      const data = await filterProducts(filters);
       setFilteredProducts(data.products);
       console.log(data.products);
     // };

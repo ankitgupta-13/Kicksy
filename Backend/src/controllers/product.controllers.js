@@ -236,13 +236,14 @@ const searchBarProducts = async (req, res) => {
 
 const filterProduct = async(req,res)=>{
   try{
-    const {category_array} = req.body;
-
+    const filters = req.body;
+    console.log(filters)
+    
     // [boot, men, size]
-
-
+    
+    
     const products_array2 = []
-
+    
     const product_array = []
     
     // const products = await Product.find({})
@@ -256,7 +257,7 @@ const filterProduct = async(req,res)=>{
     //   });
     // })
 
-    const promises = category_array.map(async(category)=>{
+    const promises = filters.map(async(category)=>{
       const results = await Product.find({
         "$or":[
           {brand:{$regex:category}},
