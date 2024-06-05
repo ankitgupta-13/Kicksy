@@ -24,8 +24,8 @@ const Shop: React.FC = () => {
         setFilters((prevFilters) => [...prevFilters, value]);
       }
       const data = await filterProducts(filters);
-      setFilteredProducts(data.products);
-      console.log(data.products);
+      setFilteredProducts(data.data);
+      console.log(data.data);
     };
     fetchFilteredProducts();
     scrollTo(0, 0);
@@ -50,8 +50,8 @@ const Shop: React.FC = () => {
         // setFilters((prevFilters) => [...prevFilters, value]);
       // }
       const data = await filterProducts(filters);
-      setFilteredProducts(data.products);
-      console.log(data.products);
+      setFilteredProducts(data.data);
+      console.log(data.data);
     // };
   };
 
