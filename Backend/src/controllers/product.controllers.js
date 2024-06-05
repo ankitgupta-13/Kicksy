@@ -23,7 +23,7 @@ const addProduct = async (req, res) => {
     return res.status(409).send("Please add images");
   }
   try {
-    
+
     const newProduct = await Product.create(req.body);
     newProduct.tags.push(newProduct.title.toLowerCase());
     newProduct.tags.push(newProduct.brand.toLowerCase());
@@ -228,15 +228,15 @@ const searchBarProducts = async (req, res) => {
       }
     });
     return res.json(new ApiResponse(200, products_array));
-  } 
+  }
   catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
 
-const filterProduct = async(req,res)=>{
-  try{
-    const {filters} = req.body;
+const filterProduct = async (req, res) => {
+  try {
+    const { filters } = req.body;
 
     // [boot, men, size]
 
@@ -244,9 +244,9 @@ const filterProduct = async(req,res)=>{
     const products_array2 = []
 
     const product_array = []
-    
+
     const products = await Product.find({})
-    
+
     // products.forEach((product)=>{
     //   category_array.forEach((category)=>{
     //     if(product.tags.includes(category)){
@@ -256,24 +256,24 @@ const filterProduct = async(req,res)=>{
     //   });
     // })
 
-    const promises = filters.map(async(category)=>{
+    const promises = filters.map(async (category) => {
 
       const word = category.toLowerCase()
 
       const results = await Product.find({
-        "$or":[
-          {brand:{$regex:word}},
-          {size:{$regex:word}},
-          {category:{$regex:word}},
-          {gender:{$regex:word}},
-          {tags:{$regex:word}},
-          {skuID:{$regex:word}},
-          {title:{$regex:word}}
+        "$or": [
+          { brand: { $regex: word } },
+          { size: { $regex: word } },
+          { category: { $regex: word } },
+          { gender: { $regex: word } },
+          { tags: { $regex: word } },
+          { skuID: { $regex: word } },
+          { title: { $regex: word } }
         ]
       })
 
       products_array2.push(...results);
-      
+
 
     })
 
@@ -282,16 +282,16 @@ const filterProduct = async(req,res)=>{
     await Promise.all(promises);
 
     // const uniqueArray = [...new Set(products_array2)];
-    if(uniqueArray.length===0) products_array2.push(products);
-    if(filters.length===0) products_array2.push(products)
+    if (filters.length === 0) products_array2.push(products)
+
     const uniqueArray = Array.from(new Set(products_array2.map(JSON.stringify))).map(JSON.parse);
+    if (uniqueArray.length === 0 ) products_array2.push(products);
 
-
-    return res.json(new ApiResponse(200 , uniqueArray , 'filter applied successfully'));
+    return res.json(new ApiResponse(200, uniqueArray, 'filter applied successfully'));
 
   }
-  catch(err){
-    return handleErr(res,err);
+  catch (err) {
+    return handleErr(res, err);
   }
 }
 
