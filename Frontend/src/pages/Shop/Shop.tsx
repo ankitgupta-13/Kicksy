@@ -50,8 +50,8 @@ const Shop: React.FC = () => {
         // setFilters((prevFilters) => [...prevFilters, value]);
       // }
       const data = await filterProducts(filters);
-      setFilteredProducts(data.data);
-      console.log(data.data);
+      setFilteredProducts(data?.data);
+      console.log(filteredProducts);
     // };
   };
 
