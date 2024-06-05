@@ -42,6 +42,7 @@ const CreateProduct = () => {
       : (response = await addProductRequest(data));
     if (response.statusCode === 200) {
       alert(response.message);
+      console.log(response.data || "0");
     } else alert(response.message);
   };
 
