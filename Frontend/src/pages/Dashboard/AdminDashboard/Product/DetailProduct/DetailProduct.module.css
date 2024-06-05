@@ -171,3 +171,15 @@
   background-color: #ccc;
   color: #000;
 }
+
+@media screen and (max-width: 430px) {
+  .editdiv{
+    top: 80% !important; 
+    right: 10% !important;
+  }
+
+  .accept_dec_div{
+    top: 80% !important;
+    right: 10% !important;
+  }
+}

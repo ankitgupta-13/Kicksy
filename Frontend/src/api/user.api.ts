@@ -10,7 +10,7 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const findByEmail = async (payload: { email: String }) => {
+export const findByEmail = async (payload: { email: string }) => {
   try {
     const { data } = await api.post("/user/fetch-by-email", payload);
     return data;

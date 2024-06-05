@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserCartItems } from "../../api/user.api";
+import mainLogo from "../../assets/Krisksy.svg";
 import { Button, CartItemCard, Input, PaymentButton } from "../../components";
 import { RootState } from "../../redux/store/store";
 import style from "./Checkout.module.css";
-import mainLogo from "../../assets/Krisksy.svg"
 
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
@@ -33,10 +33,14 @@ const Checkout = () => {
   return (
     <div>
       <div className={style.header}>
-        <Button className={style.backButton} style={{backgroundColor: "transparent"}} onClick={() => navigate("/")}>
+        <Button
+          className={style.backButton}
+          style={{ backgroundColor: "transparent" }}
+          onClick={() => navigate("/")}
+        >
           <ArrowBackIos />
         </Button>
-        <img src={mainLogo} alt="kriksky logo" style={{width: "150px"}} />
+        <img src={mainLogo} alt="kriksky logo" style={{ width: "150px" }} />
       </div>
       <form onSubmit={handleSubmit(handleAddress)}>
         <div className={style.checkOut}>
@@ -44,6 +48,7 @@ const Checkout = () => {
           <div className={style.orderSummary}>
             {cartItems?.map((item) => (
               <div className={style.cartItem}>
+                {/* @ts-ignore */}
                 <CartItemCard item={item} />
               </div>
             ))}

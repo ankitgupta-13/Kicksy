@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from "react";
-import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
-import { getAllProducts } from "../../api/user.api";
-import style from "./Shop.module.css";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import ImageSliderPrev from "../../components/ImageSliderPrev/ImageSliderPrev";
-import { useLocation } from 'react-router-dom';
-import banner from "../../assets/menbanner.png";
 import { Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { getAllProducts } from "../../api/user.api";
+import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import style from "./Shop.module.css";
 
-import TuneIcon from '@mui/icons-material/Tune';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import TuneIcon from "@mui/icons-material/Tune";
 import MediaQuery from "react-responsive";
-
 
 const Shop: React.FC = () => {
   const [mActives, setmActives] = useState();
   const [wActives, setwActives] = useState();
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const location = useLocation();
   const cleanstring = location.search.substring(1);
-  const [key, value] = cleanstring.split('=');
+  const [key, value] = cleanstring.split("=");
   const [filters, setFilters] = useState({});
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -28,10 +25,11 @@ const Shop: React.FC = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       {
-        value && setFilters((prevFilters) => ({
-          ...prevFilters,
-          [key]: [value],
-        }));
+        value &&
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            [key]: [value],
+          }));
       }
       const data = await getAllProducts();
       setAllProducts(data.data.products);
@@ -68,7 +66,7 @@ const Shop: React.FC = () => {
       }
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
   }, []);
 
   const handleFilterChange = (filterName: string, value: string) => {
@@ -79,11 +77,11 @@ const Shop: React.FC = () => {
   };
 
   const handleGenderButtonClick = (gender: string) => {
-    const genderFilterName = 'gender';
-    if (gender === 'M') {
+    const genderFilterName = "gender";
+    if (gender === "M") {
       setmActives(!mActives);
       onFilterChange(genderFilterName, mActives ? [] : [gender]);
-    } else if (gender === 'F') {
+    } else if (gender === "F") {
       setwActives(!wActives);
       onFilterChange(genderFilterName, wActives ? [] : [gender]);
     }
@@ -91,7 +89,7 @@ const Shop: React.FC = () => {
 
   const handleFilterSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-  }
+  };
 
   return (
     <>
@@ -100,28 +98,50 @@ const Shop: React.FC = () => {
     <img src={banner} alt="banner"/>
     </div>} */}
       <div className={style.shoppage}>
-        <div className={style.filtersidebar} style={{ display: sidebarOpen ? "block" : "none" }}>
-          <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
+        <div
+          className={style.filtersidebar}
+          style={{ display: sidebarOpen ? "block" : "none" }}
+        >
+          <FilterSidebar
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
         </div>
         <div className={style.filterbar}>
           <div className={style.topbuttons}>
             <Button
               className={style.Button}
-              style={{ opacity: sidebarOpen ? "0" : "1", backgroundColor: mActives ? 'black' : 'white', color: mActives ? 'white' : 'black', width: '80px' }}
-              onClick={() => handleGenderButtonClick('M')}
+              style={{
+                opacity: sidebarOpen ? "0" : "1",
+                backgroundColor: mActives ? "black" : "white",
+                color: mActives ? "white" : "black",
+                width: "80px",
+              }}
+              onClick={() => handleGenderButtonClick("M")}
             >
               Men
             </Button>
             <Button
               className={style.Button}
-              style={{ opacity: sidebarOpen ? "0" : "1", backgroundColor: wActives ? 'black' : 'white', color: wActives ? 'white' : 'black', width: '80px' }}
-              onClick={() => handleGenderButtonClick('F')}
+              style={{
+                opacity: sidebarOpen ? "0" : "1",
+                backgroundColor: wActives ? "black" : "white",
+                color: wActives ? "white" : "black",
+                width: "80px",
+              }}
+              onClick={() => handleGenderButtonClick("F")}
             >
               Women
             </Button>
             <Button
               className={style.Button}
-              style={{ backgroundColor: sidebarOpen ? 'white' : '#f0f0f0', color: 'black', width: '80px', border: sidebarOpen ? 'none' : '1px solid black', right: sidebarOpen ? '-11px' : '' }}
+              style={{
+                backgroundColor: sidebarOpen ? "white" : "#f0f0f0",
+                color: "black",
+                width: "80px",
+                border: sidebarOpen ? "none" : "1px solid black",
+                right: sidebarOpen ? "-11px" : "",
+              }}
               onClick={() => handleFilterSidebar()}
             >
               {sidebarOpen ? <CloseOutlinedIcon /> : <TuneIcon />}
