@@ -4,53 +4,54 @@ import CartItem from '../CartItem/CartItem';
 import style from './Searchbar.module.css';
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
+import ProductCard from '../ProductCard/ProductCard';
 
 
-const Searchbar = ({open, close}) => {
+const Searchbar = ({ open, close }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
 
   const search = async () => {
-    const payload = {
-      search_string : searchTerm,
-      }
-    const response = await searchProducts(payload);
+    // const payload = {
+    //   filters : searchTerm,
+    //   }
+    const response = await searchProducts(searchTerm);
     if (response.statusCode === 200) setProducts(response.data);
-    console.log(response.data);
+    console.log(response);
   };
   const clearInput = () => {
     setSearchTerm('');
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     search();
   }, [searchTerm]);
 
   return (
     <div className={`${style.sidenav} ${open ? style.open : ''}`}>
       <div className={style.head}>
-      <div className={style.searchContainer}>
-        <input
-          type="text"
-          className={style.search}
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        {/* <button className={style.clearButton} onClick={clearInput}>&times;</button> */}
-        <button className={style.searchButton} onClick={search}><SearchIcon/></button>
+        <div className={style.searchContainer}>
+          <input
+            type="text"
+            className={style.search}
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {/* <button className={style.clearButton} onClick={clearInput}>&times;</button> */}
+          <button className={style.searchButton} onClick={search}><SearchIcon /></button>
+        </div>
+        <a className={style.closebtn} onClick={close}>&times;</a>
       </div>
-      <a className={style.closebtn} onClick={close}>&times;</a>
-      </div>
-      <div style={{width:'100%', height: '100%'}}  onClick={close}>
-        <ul>
+      <div style={{ width: '100%', height: '100%' }} onClick={close}>
+        {searchTerm && <ul style={{ display: 'flex', gap: "1rem", padding: "1rem", flexWrap: "wrap" }}>
           {products.map((product) => (
-          <div style={{display: 'flex', justifyContent: 'center'}} onClick={() => {navigate(`/product/${product._id}`); close()}}>
-            <CartItem productID={product._id}/>
-          </div>
+            <div style={{backgroundColor: 'white'}} onClick={() => { navigate(`/product/${product._id}`); close() }}>
+              <ProductCard product={product} wid={'20rem'} />
+            </div>
           ))}
-        </ul>
+        </ul>}
       </div>
     </div>
   );
