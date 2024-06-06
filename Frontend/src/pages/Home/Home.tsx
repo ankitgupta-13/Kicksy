@@ -19,6 +19,7 @@ import NikeLogo from "../../assets/images/NikeLogo.png";
 const Home = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [productsRev, setProductsRev] = useState([]);
   const [sc_companies, setSc_companies] = useState(false);
   const [sc_newArrivals, setSc_newArrivals] = useState(false);
   const [sc_bestSeller, setSc_bestSeller] = useState(false);
@@ -31,9 +32,11 @@ const Home = () => {
 
   const getProducts = async () => {
     const response = await getRecentProducts();
-    if (response.statusCode === 200) setProducts(response.data);
+    if (response.statusCode === 200) {
+      setProducts(response.data)
+      setProductsRev([...response.data].slice(0, 5).reverse());
+    };
   };
-
   function arrClick1() {
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
@@ -192,7 +195,7 @@ const Home = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?Anime`)}
+          onClick={() => {navigate(`/anime`), window.scrollTo(0, 0)}}
         >
           <img src={CustomNike} alt="" />
         </div>
@@ -224,8 +227,8 @@ const Home = () => {
         </div>
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
-          {arrivaltab===1 &&<div className={`${style.cards} ${style.popularCards}`}>
-            {products.map((product: Object, index: number) => {
+          {arrivaltab === 1 && <div className={`${style.cards} ${style.popularCards}`}>
+            {productsRev.slice(0, 5).map((product: Object, index: number) => {
               return (
                 <div
                   key={index}
@@ -248,8 +251,8 @@ const Home = () => {
               );
             })}
           </div>}
-          {arrivaltab===2 &&<div className={`${style.cards} ${style.popularCards}`}>
-            {products.map((product: Object, index: number) => {
+          {arrivaltab === 2 && <div className={`${style.cards} ${style.popularCards}`}>
+            {products.slice(0, 5).map((product: Object, index: number) => {
               return (
                 <div
                   key={index}
@@ -272,8 +275,8 @@ const Home = () => {
               );
             })}
           </div>}
-          {arrivaltab===3 &&<div className={`${style.cards} ${style.popularCards}`}>
-            {products.map((product: Object, index: number) => {
+          {arrivaltab === 3 && <div className={`${style.cards} ${style.popularCards}`}>
+            {products.filter((product: Object) => product.category === "anime").slice(0, 5).map((product: Object, index: number) => {
               return (
                 <div
                   key={index}
