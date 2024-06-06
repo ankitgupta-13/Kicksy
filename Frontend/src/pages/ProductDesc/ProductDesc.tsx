@@ -324,21 +324,21 @@ const ProductDesc = () => {
         <div className={style.table}>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>MANUFACTURED SKU</h5>
-            <p></p>
+            <p>{curProduct._id}</p>
             <h5 style={{ color: "#656565" }}>COLORWAY</h5>
-            <p></p>
+            <p>{curProduct.color}</p>
           </div>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>BRAND</h5>
-            <p></p>
+            <p>{curProduct.brand}</p>
             <h5 style={{ color: "#656565" }}>GENDER</h5>
-            <p></p>
+            <p>{curProduct.gender}</p>
           </div>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>NICKNAME</h5>
-            <p></p>
+            <p>{curProduct.title}</p>
             <h5 style={{ color: "#656565" }}>RELEASE DATE</h5>
-            <p></p>
+            <p>{curProduct.releaseDate}</p>
           </div>
         </div>
       </div>

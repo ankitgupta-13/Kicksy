@@ -66,21 +66,21 @@ const Home = () => {
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      if (scrollY > 600) {
+      if (scrollY > 600 || window.innerWidth < 431) {
         setSc_companies(true);
       }
       else {
         setSc_companies(false);
       }
 
-      if (scrollY > 1200) {
+      if (scrollY > 1200 || window.innerWidth < 431) {
         setSc_newArrivals(true);
       }
       else {
         setSc_newArrivals(false);
       }
 
-      if (scrollY > 1400) {
+      if (scrollY > 1400 || window.innerWidth < 431) {
         setSc_bestSeller(true);
       }
       else {
@@ -88,6 +88,7 @@ const Home = () => {
       }
     };
 
+    // {window.innerWidth > 431 ? window.addEventListener('scroll', onScroll) : window.removeEventListener('scroll', onScroll)}
     window.addEventListener('scroll', onScroll);
 
     return () => {

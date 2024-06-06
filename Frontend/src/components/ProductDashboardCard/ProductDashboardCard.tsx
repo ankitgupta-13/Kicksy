@@ -30,6 +30,7 @@ const ProductDashboardCard = ({ data, type }) => {
   const currentAction = useSelector(
     (state: RootState) => state.adminDashboard.currentAction
   );
+  console.log(data)
 
   const handleShowProduct = () => {
     userRole === "admin"
@@ -75,7 +76,7 @@ const ProductDashboardCard = ({ data, type }) => {
             {currentAction === "Requests" ? (
               <div>₹ {price}</div>
             ) : (
-              <div>₹ {bestPrice.price}</div>
+              <div>₹ {bestPrice?.price}</div>
             )}
           </div>
         </div>
@@ -95,7 +96,7 @@ const ProductDashboardCard = ({ data, type }) => {
           <div className={style.skuid}>{skuID}</div>
           <div className={style.brand}>{brand}</div>
           <div className={style.priceDelete}>
-            <div>₹{bestPrice.price}</div>
+            <div>₹{bestPrice?.price}</div>
           </div>
         </div>
       )}

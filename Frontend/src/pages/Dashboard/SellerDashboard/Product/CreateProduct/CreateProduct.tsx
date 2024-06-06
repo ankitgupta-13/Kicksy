@@ -95,12 +95,25 @@ const CreateProduct = () => {
 
           <div className={style.sub}>
             <div className={style.inputBox}>
-              <label>Product Code</label>
+              {/* <label>Product Code</label>
               <input
                 type="text"
                 // value={productID}
                 disabled
                 defaultValue={productID}
+                {...register("skuID", { required: true })}
+              /> */}
+              <Input
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
+                label="Product Code(Do not change)"
+                type="text"
+                value={productID}
+                placeholder="Product Code"
                 {...register("skuID", { required: true })}
               />
             </div>
