@@ -14,15 +14,11 @@ const Shop: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const cleanstring = location.search.substring(1);
-  const [key, value] = cleanstring.split('=');
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(cleanstring ? [cleanstring] : []);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  
   useEffect(() => {
     const fetchFilteredProducts = async () => {
-      if (value) {
-        setFilters((prevFilters) => [...prevFilters, value]);
-      }
       const data = await filterProducts(filters);
       setFilteredProducts(data.data);
       // console.log(data.data);
@@ -59,7 +55,7 @@ const Shop: React.FC = () => {
     <>
       <div className={style.shoppage}>
         <div className={style.filtersidebar} style={{ display: sidebarOpen ? "block" : "none" }}>
-          <FilterSidebar filters={filters} onFilterChange={handleFilterChange} />
+          <FilterSidebar filters={filters} onFilterChange={handleFilterChange}  />
         </div>
         <div className={style.filterbar}>
           <div className={style.topbuttons}>

@@ -27,6 +27,8 @@ const Home = () => {
   const arrivaltab2 = useRef("");
   const arrivaltab3 = useRef("");
 
+  const [arrivaltab, setArrivaltab] = useState(1);
+
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) setProducts(response.data);
@@ -36,18 +38,21 @@ const Home = () => {
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.remove(style.Active);
+    setArrivaltab(1);
   }
 
   function arrClick2() {
     arrivaltab1.current.classList.remove(style.Active);
     arrivaltab2.current.classList.add(style.Active);
     arrivaltab3.current.classList.remove(style.Active);
+    setArrivaltab(2);
   }
 
   function arrClick3() {
     arrivaltab1.current.classList.remove(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.add(style.Active);
+    setArrivaltab(3);
   }
 
   useEffect(() => {
@@ -103,7 +108,7 @@ const Home = () => {
             <img
               src={GirlPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=F`)}
+              onClick={() => navigate(`/shop?F`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Women</div>
@@ -113,7 +118,7 @@ const Home = () => {
             <img
               src={MenPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=M`)}
+              onClick={() => navigate(`/shop?M`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Men</div>
@@ -123,7 +128,7 @@ const Home = () => {
             <img
               src={KidPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=K`)}
+              onClick={() => navigate(`/shop?K`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Kids</div>
@@ -132,7 +137,7 @@ const Home = () => {
           <div className={style.Box}>
             <span
               className={style.SaleBoxContent}
-              onClick={() => navigate(`/shop?category=sale`)}
+              onClick={() => navigate(`/shop?sale`)}
             >
               Sale
             </span>
@@ -143,7 +148,7 @@ const Home = () => {
       <div style={{ opacity: sc_companies ? 1 : 0, transitionDuration: ".5s" }} className={style.CompanyContainer}>
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Jordan`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={JordanLogo} alt="" />
@@ -154,7 +159,7 @@ const Home = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Nike`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={NikeLogo} alt="" />
@@ -165,7 +170,7 @@ const Home = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Adidas`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={AdidasLogo} alt="" />
@@ -176,7 +181,7 @@ const Home = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=nike`)}
+          onClick={() => navigate(`/shop?Nike`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={NikeLogo} alt="" />
@@ -187,7 +192,7 @@ const Home = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?category=anime`)}
+          onClick={() => navigate(`/shop?Anime`)}
         >
           <img src={CustomNike} alt="" />
         </div>

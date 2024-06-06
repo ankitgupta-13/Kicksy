@@ -3,12 +3,12 @@ import style from './FilterSidebar.module.css';
 import { Button, Input } from '../index';
 
 const FilterSidebar = ({ filters, onFilterChange }) => {
-  const [mActive, setMActive] = useState(false);
-  const [wActive, setWActive] = useState(false);
-  const [kActive, setKActive] = useState(false);
+  const [mActive, setMActive] = useState(filters.includes('M'));
+  const [wActive, setWActive] = useState(filters.includes('W'));
+  const [kActive, setKActive] = useState(filters.includes('K'));
 
   const productTypeOptions = ['Boots', 'Shoes', 'Sandals'];
-  const brandOptions = ['Dr. Martens', 'Nike', 'Adidas', 'jordaar'];
+  const brandOptions = ['Anime','Dr. Martens', 'Nike', 'Adidas', 'Jordan'];
   const sizeOptions = ['6','7','8','9','10','11','12'];
   const colorOptions = ['Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
 
