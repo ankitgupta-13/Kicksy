@@ -44,7 +44,7 @@ const ProductCard = ({ product, wid }) => {
       </div>
       {/* <ProdCardCarousel productC={shoesColorData} /> */}
       <div className={style.shoes__color}>
-        {shoesColorData?.map((color, index) => (
+        {shoesColorData.slice(0, 4)?.map((color, index) => (
           <ColorCard
             key={index}
             id={index}
