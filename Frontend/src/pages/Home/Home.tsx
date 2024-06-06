@@ -224,7 +224,7 @@ const Home = () => {
         </div>
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
-          <div className={`${style.cards} ${style.popularCards}`}>
+          {arrivaltab===1 &&<div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: Object, index: number) => {
               return (
                 <div
@@ -247,7 +247,55 @@ const Home = () => {
                 </div>
               );
             })}
-          </div>
+          </div>}
+          {arrivaltab===2 &&<div className={`${style.cards} ${style.popularCards}`}>
+            {products.map((product: Object, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={style.container}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={product.images[0]}
+                    className={style.shoes__image}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  />
+                  <div
+                    className={style.shoes__name}
+                    style={{ width: "8rem", textWrap: "balance" }}
+                  >
+                    {product.title}
+                  </div>
+                  <div className={style.shoes__price}>{product.price}</div>
+                </div>
+              );
+            })}
+          </div>}
+          {arrivaltab===3 &&<div className={`${style.cards} ${style.popularCards}`}>
+            {products.map((product: Object, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={style.container}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={product.images[0]}
+                    className={style.shoes__image}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  />
+                  <div
+                    className={style.shoes__name}
+                    style={{ width: "8rem", textWrap: "balance" }}
+                  >
+                    {product.title}
+                  </div>
+                  <div className={style.shoes__price}>{product.price}</div>
+                </div>
+              );
+            })}
+          </div>}
         </div>
       </div>
 
