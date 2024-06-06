@@ -45,7 +45,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
       <div className={style.CurrentFiltersContainer}>
         <h4 className={style.CurrentFiltersContainerHeading}>Current Filters</h4>
         <div>{filters.map((filter, index) => <p key={index}>{filter}</p>)}</div>
-        <p onClick={() => onFilterChange([])} style={{ cursor: 'pointer', display: filters.length === 0 ? 'none' : 'inline-block', width: "max-content" }}>Clear All</p>
+        <p onClick={() => {onFilterChange([]); setMActive(false); setWActive(false); setKActive(false)}} style={{ cursor: 'pointer', display: filters.length === 0 ? 'none' : 'inline-block', width: "max-content" }}>Clear All</p>
       </div>
       <div className={style.BodyTypeContainer}>
         <label className={style.BodyType}>Body Type:</label>
