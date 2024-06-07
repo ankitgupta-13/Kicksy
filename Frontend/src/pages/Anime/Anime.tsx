@@ -413,7 +413,7 @@ const Anime = () => {
                       <ProductCardAnime product={product} wid="18.5vw" />
                     </MediaQuery>
                     <MediaQuery maxWidth={431}>
-                      <ProductCardAnime product={product} wid="10rem" />
+                      <ProductCardAnime product={product} wid="9rem" />
                     </MediaQuery>
                   </div>
                 </div>

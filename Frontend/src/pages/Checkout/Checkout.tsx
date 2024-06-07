@@ -34,6 +34,7 @@ const Checkout = () => {
       if (response.statusCode === 200) {
         response.data?.items && setCartItems(response.data?.items);
         setCartTotal(response.data?.cartTotal);
+        console.log(response.data);
       }
     })();
   }, [userID]);
@@ -53,7 +54,7 @@ const Checkout = () => {
       <form onSubmit={handleSubmit(handleAddress)}>
         <div className={style.checkOut}>
           <h1>Order Summary</h1>
-          {!cartItems ? <div className={style.orderSummary}>
+          {cartItems ? <div className={style.orderSummary}>
             {cartItems?.map((item, index) => (
               <div className={style.cartItem} key={index}>
                 <CartItemCard item={item} />

@@ -13,12 +13,8 @@ const Searchbar = ({ open, close }) => {
   const [products, setProducts] = useState([]);
 
   const search = async () => {
-    // const payload = {
-    //   filters : searchTerm,
-    //   }
     const response = await searchProducts(searchTerm);
     if (response.statusCode === 200) setProducts(response.data);
-    console.log(response);
   };
   const clearInput = () => {
     setSearchTerm('');

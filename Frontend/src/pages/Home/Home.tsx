@@ -90,6 +90,7 @@ const Home = () => {
 
     // {window.innerWidth > 431 ? window.addEventListener('scroll', onScroll) : window.removeEventListener('scroll', onScroll)}
     window.addEventListener('scroll', onScroll);
+    window.scrollTo(0, 1);
 
     return () => {
       window.removeEventListener('scroll', onScroll);

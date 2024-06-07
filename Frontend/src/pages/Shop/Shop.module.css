@@ -1,5 +1,6 @@
 .shoppage {
     display: flex;
+    border-top: 1px solid #e2e2e2;
   }
   
 .productlist {
@@ -47,6 +48,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    padding-bottom: 10vh;
     .listitem{
       width: 45vw !important;
       .container{

@@ -9,4 +9,13 @@
     align-items: center;
     justify-content: center;
     width: 76vw;
+    text-align: center;
+}
+
+@media screen and (max-width: 431px) {
+    .container{
+        width: 100vw;
+        font-size: 2rem;
+        padding-left: 1rem;
+    }
 }
