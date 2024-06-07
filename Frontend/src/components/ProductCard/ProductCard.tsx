@@ -62,7 +62,7 @@ const ProductCard = ({ product, wid }) => {
       >
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
-          <MediaQuery minWidth={631}><div className={style.shoes__price}>₹ {product?.bestPrice?.price.toLocaleString('en-IN')}</div></MediaQuery>
+          <MediaQuery minWidth={631}>{window.location.href === "/dashboard" && <div className={style.shoes__price}>₹ {product?.bestPrice?.price.toLocaleString('en-IN')}</div>}</MediaQuery>
         </div>
         <p className={style.shoes__tags}>{product.category}</p>
         <div className={style.mobile__shoes_price}>INR {product?.price || product?.bestPrice?.price}</div>

@@ -127,7 +127,7 @@ const DetailProduct = () => {
               </button>
             </div>
           ) : (
-            <div style={{ position: "absolute", top: "50%", right: " 2%" }}>
+            <div className={style.editDiv2} style={{ position: "absolute", top: "50%", right: " 2%" }}>
               {!showOffer ? (
                 <button className={style.edit} onClick={() => setShowOffer(!showOffer)} style={{color: "white",border: "none"}}>
                   <span className={style.edit} color="white">Add Offer</span>

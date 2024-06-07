@@ -247,15 +247,6 @@ const filterProduct = async (req, res) => {
 
     const products = await Product.find({})
 
-    // products.forEach((product)=>{
-    //   category_array.forEach((category)=>{
-    //     if(product.tags.includes(category)){
-    //       product_array.push(product);
-    //       return;
-    //     }
-    //   });
-    // })
-
     const promises = filters.map(async (category) => {
 
       const word = category.toLowerCase()
@@ -276,8 +267,6 @@ const filterProduct = async (req, res) => {
 
 
     })
-
-
 
     await Promise.all(promises);
 

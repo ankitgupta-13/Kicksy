@@ -56,8 +56,8 @@ const ListProduct = () => {
         :
         <div className={style.sectionTitle}>
           <div className={style.text}>Product</div>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-            <div className={style.text} style={{paddingLeft: "2%"}}>Product ID</div>
+          <div style={{ display: "flex", justifyContent: "space-between", width: "58vw", marginLeft: "-5vw" }}>
+            <div className={style.text}>Product ID</div>
             <div className={style.text}>Brand</div>
             <div className={style.text}>Price</div>
           </div>

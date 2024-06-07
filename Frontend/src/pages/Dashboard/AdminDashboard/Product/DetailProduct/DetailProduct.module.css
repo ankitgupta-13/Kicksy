@@ -182,4 +182,9 @@
     top: 80% !important;
     right: 10% !important;
   }
+
+  .editDiv2{
+    top: 95% !important;
+    right: -4rem !important;
+  }
 }

@@ -31,6 +31,10 @@ export default function OrderDashboardCard({ order }: { order: any }) {
         };
     });
 
+    const formattedOrderPrice = typeof order.orderPrice === 'number'
+        ? order.orderPrice.toString().slice(0, -2)
+        : order.orderPrice.slice(0, -2);
+
     const options = { month: "short", day: "2-digit", year: "numeric" };
     const date = new Date(order?.createdAt);
     const formattedDate = date?.toLocaleDateString("en-IN", options);
@@ -56,7 +60,7 @@ export default function OrderDashboardCard({ order }: { order: any }) {
             </div>
             <div className="ord" style={{ display: "flex" }}>
                 <div className={style.order_dets}>Order Total: </div>
-                <div className={style.order_dets_c}> {order.orderPrice}</div>
+                <div className={style.order_dets_c}> {formattedOrderPrice.toLocaleString('en-IN')}</div>
             </div>
             <div className={style.order_dets} style={{ border: "none", marginBottom: "1rem" }}>Order Items:</div>
             <table style={{ width: "100%" }}>
