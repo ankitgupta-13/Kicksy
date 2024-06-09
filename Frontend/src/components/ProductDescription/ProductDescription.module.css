@@ -87,6 +87,10 @@
     padding: 1rem;
   }
 
+  .right{
+    width: 90vw;
+  }
+
   .table {
     width: 90%;
     height: 500px;
