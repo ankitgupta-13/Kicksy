@@ -34,7 +34,6 @@ const Checkout = () => {
       if (response.statusCode === 200) {
         response.data?.items && setCartItems(response.data?.items);
         setCartTotal(response.data?.cartTotal);
-        console.log(response.data);
       }
     })();
   }, [userID]);

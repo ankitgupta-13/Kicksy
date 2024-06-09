@@ -123,32 +123,30 @@ const Anime = () => {
             <div className={style.ani1} style={{ backgroundImage: `url(${ani1Img})` }}></div>
             <div className={style.cont1}>
               <MediaQuery minWidth={431}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptates suscipit voluptas eius doloremque, accusantium quidem! Eum voluptatum architecto, rerum perspiciatis doloribus amet adipisci! Quidem, ea quia qui odio dolor esse laudantium nemo autem enim nam corrupti quas sequi doloribus vitae iure. Recusandae veniam veritatis dolorum id ab sunt excepturi similique suscipit dolor facilis? Iure voluptatum, quibusdam, laborum ratione debitis perspiciatis, voluptate quos reprehenderit ut modi veritatis dolorum id quis? Quod laudantium sequi sed impedit facilis illum voluptates repudiandae! Tempore dolorem accusantium pariatur ad quis porro ipsam quisquam, est commodi! Sunt non quo vitae! Dolor sapiente inventore qui velit corporis?
+                In the vibrant world of anime, footwear transcends mere function. Sneakers become imbued with character, reflecting the personalities and powers of the heroes who wear them. Naruto's bright orange kicks might channel his energetic ninja spirit, while the sleek, high-tech boots of a cyberpunk bounty hunter could conceal hidden gadgets. This fusion of fashion and function goes beyond aesthetics. Special shoes might grant superhuman speed, defy gravity with built-in anti-gravity tech, or even transform for combat. Anime sneakers become a visual language, hinting at a character's backstory, power set, and even their place within the narrative. They're not just footwear; they're an extension of the characters themselves.
               </MediaQuery>
               <MediaQuery maxWidth={431}>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse incidunt eius corporis totam odit dolorem voluptate? Excepturi, molestiae. Modi quos atque optio quas aliquid accusamus quod molestiae similique a consectetur.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore maxime aut quae natus. Aut quas hic cumque repellat. 
+                In the vibrant world of anime, footwear transcends mere function. Sneakers become imbued with character, reflecting the personalities and powers of the heroes who wear them. Naruto's bright orange kicks might channel his energetic ninja spirit, while the sleek, high-tech boots of a cyberpunk bounty hunter could conceal hidden gadgets.
               </MediaQuery>
             </div>
             <div className={style.ani2} style={{ backgroundImage: `url(${ani2Img})` }}></div>
             <div className={style.ani3} style={{ backgroundImage: `url(${ani3Img})` }}></div>
             <div className={style.cont2}>
               <MediaQuery minWidth={431}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos commodi aliquid omnis cupiditate officiis sint nemo, autem, expedita quis aspernatur dolore dolor sed alias nostrum labore eaque deserunt id maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam enim ullam delectus exercitationem? Et modi minus exercitationem.
-
+                This love for expressive footwear has spilled over into the real world. Fans can now snag sneakers featuring their favorite characters or designs inspired by iconic anime locations like the bustling streets of Neo Tokyo from Akira. Whether it's Ichigo's fiery boots or a pair of custom My Hero Academia kicks, anime and sneakers have formed a unique alliance, letting you walk the line between fantasy and reality with every step.
               </MediaQuery>
               <MediaQuery maxWidth={431}>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse incidunt eius corporis totam odit dolorem voluptate? Excepturi, molestiae.
+                This love for expressive footwear has spilled over into the real world. Fans can now snag sneakers featuring their favorite characters or designs inspired by iconic anime locations like the bustling streets of Neo Tokyo from Akira.
               </MediaQuery>
             </div>
           </div>
           <div className={style.explore_btn}>
-            <button className={style.exp_btn} onClick={() => {setAnimePg(!animePg); window.scroll(0,0)}}>Explore</button>
+            <button className={style.exp_btn} onClick={() => { setAnimePg(!animePg); window.scroll(0, 0) }}>Explore</button>
           </div>
         </div> :
         <div>
           <div className={style.a_hero}>
-            <button onClick={() => window.scrollTo({ top: 1300, behavior: "smooth" })} className={style.a_hero_btn}>VIEW COLLECTIONS <FaArrowRightLong/></button>
+            <button onClick={() => window.scrollTo({ top: 1300, behavior: "smooth" })} className={style.a_hero_btn}>VIEW COLLECTIONS <FaArrowRightLong /></button>
             <img style={{ width: "100%" }} src={heroImg} alt="" />
           </div>
           {curProduct && <div style={{ margin: "25px" }}>

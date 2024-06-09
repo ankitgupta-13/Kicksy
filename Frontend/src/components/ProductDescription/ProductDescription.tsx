@@ -34,7 +34,7 @@ const ProductDescription = ({ data }: ProductDescription) => {
                 />
                 <p>{seller?.sellerID?.storeName}</p>
                 <div className={style.priceButton}>
-                  <h1>{seller?.price}</h1>
+                  <h1>₹ {seller?.price.toLocaleString("en-IN")}</h1>
                   <ShoppingCartIcon />
                 </div>
               </div>

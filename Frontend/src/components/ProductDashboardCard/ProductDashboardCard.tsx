@@ -10,6 +10,9 @@ import {
 } from "../../redux/reducers/sellerDashboardSlice";
 import { RootState } from "../../redux/store/store";
 import style from "./ProductDashboardCard.module.css";
+import { deleteProduct } from "../../api/admin.api";
+import { MdDelete } from "react-icons/md";
+import Button from "../Button";
 
 const ProductDashboardCard = ({ data, type }) => {
   const {
@@ -35,8 +38,8 @@ const ProductDashboardCard = ({ data, type }) => {
   const handleShowProduct = () => {
     userRole === "admin"
       ? (type === "request"
-          ? dispatch(selectAdminProductRequest(_id))
-          : dispatch(selectAdminProduct(_id)),
+        ? dispatch(selectAdminProductRequest(_id))
+        : dispatch(selectAdminProduct(_id)),
         dispatch(
           selectAdminAction({
             selectedSection: "Product",
@@ -50,6 +53,15 @@ const ProductDashboardCard = ({ data, type }) => {
           selectedAction: "Details",
         })
       );
+  };
+
+  const handleDeleteProduct = async (_id: Number, images: []) => {
+    try {
+      await deleteProduct({ _id, images });
+      // getLimitedProducts(page);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -74,10 +86,11 @@ const ProductDashboardCard = ({ data, type }) => {
           <div className={style.stock}>{stock}</div>
           <div className={style.priceDelete}>
             {currentAction === "Requests" ? (
-              <div>₹ {price}</div>
+              <div>₹ {price.toLocaleString('en-IN')}</div>
             ) : (
-              <div>₹ {bestPrice?.price}</div>
+              <div>₹ {bestPrice?.price.toLocaleString('en-IN')}</div>
             )}
+            <Button><MdDelete onClick={() => handleDeleteProduct(_id, images)} size={30} /></Button>
           </div>
         </div>
       ) : (
@@ -96,7 +109,7 @@ const ProductDashboardCard = ({ data, type }) => {
           <div className={style.skuid}>{skuID}</div>
           <div className={style.brand}>{brand}</div>
           <div className={style.priceDelete}>
-            <div>₹{bestPrice?.price}</div>
+            <div>₹{bestPrice?.price.toLocaleString('en-IN')}</div>
           </div>
         </div>
       )}
