@@ -20,6 +20,7 @@ import { ProductType } from "../../types/product.types";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [productsRev, setProductsRev] = useState([]);
   const [sc_companies, setSc_companies] = useState(false);
   const [sc_newArrivals, setSc_newArrivals] = useState(false);
   const [sc_bestSeller, setSc_bestSeller] = useState(false);
@@ -28,10 +29,16 @@ const Home: React.FC = () => {
   // const arrivaltab2 = useRef("");
   // const arrivaltab3 = useRef("");
 
+  const [arrivaltab, setArrivaltab] = useState(1);
+
   const getProducts = async () => {
     const response = await getRecentProducts();
-    if (response.statusCode === 200) setProducts(response.data);
+    if (response.statusCode === 200) {
+      setProducts(response.data)
+      setProductsRev([...response.data].slice(0, 5).reverse());
+    };
   };
+<<<<<<< HEAD
 
   const arrivaltab1 = useRef<HTMLDivElement>(null);
   const arrivaltab2 = useRef<HTMLDivElement>(null);
@@ -53,6 +60,27 @@ const Home: React.FC = () => {
     arrivaltab1.current?.classList.remove(style.Active);
     arrivaltab2.current?.classList.remove(style.Active);
     arrivaltab3.current?.classList.add(style.Active);
+=======
+  function arrClick1() {
+    arrivaltab1.current.classList.add(style.Active);
+    arrivaltab2.current.classList.remove(style.Active);
+    arrivaltab3.current.classList.remove(style.Active);
+    setArrivaltab(1);
+  }
+
+  function arrClick2() {
+    arrivaltab1.current.classList.remove(style.Active);
+    arrivaltab2.current.classList.add(style.Active);
+    arrivaltab3.current.classList.remove(style.Active);
+    setArrivaltab(2);
+  }
+
+  function arrClick3() {
+    arrivaltab1.current.classList.remove(style.Active);
+    arrivaltab2.current.classList.remove(style.Active);
+    arrivaltab3.current.classList.add(style.Active);
+    setArrivaltab(3);
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
   }
 
   useEffect(() => {
@@ -104,7 +132,7 @@ const Home: React.FC = () => {
             <img
               src={GirlPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=F`)}
+              onClick={() => navigate(`/shop?F`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Women</div>
@@ -114,7 +142,7 @@ const Home: React.FC = () => {
             <img
               src={MenPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=M`)}
+              onClick={() => navigate(`/shop?M`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Men</div>
@@ -124,7 +152,7 @@ const Home: React.FC = () => {
             <img
               src={KidPic1}
               alt=""
-              onClick={() => navigate(`/shop?gender=K`)}
+              onClick={() => navigate(`/shop?K`)}
             />
           </div>
           <div className={style.GenderBoxTitle}>Kids</div>
@@ -133,7 +161,7 @@ const Home: React.FC = () => {
           <div className={style.Box}>
             <span
               className={style.SaleBoxContent}
-              onClick={() => navigate(`/shop?category=sale`)}
+              onClick={() => navigate(`/shop?sale`)}
             >
               Sale
             </span>
@@ -147,7 +175,7 @@ const Home: React.FC = () => {
       >
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Jordan`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={JordanLogo} alt="" />
@@ -158,7 +186,7 @@ const Home: React.FC = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Nike`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={NikeLogo} alt="" />
@@ -169,7 +197,7 @@ const Home: React.FC = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=jordan`)}
+          onClick={() => navigate(`/shop?Adidas`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={AdidasLogo} alt="" />
@@ -180,7 +208,7 @@ const Home: React.FC = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?brand=nike`)}
+          onClick={() => navigate(`/shop?Nike`)}
         >
           <div className={style.CompanyItem}>
             <img className={style.CompanyItemBoxImg} src={NikeLogo} alt="" />
@@ -191,7 +219,7 @@ const Home: React.FC = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => navigate(`/shop?category=anime`)}
+          onClick={() => {navigate(`/anime`), window.scrollTo(0, 0)}}
         >
           <img src={CustomNike} alt="" />
         </div>
@@ -226,8 +254,13 @@ const Home: React.FC = () => {
         </div>
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
+<<<<<<< HEAD
           <div className={`${style.cards} ${style.popularCards}`}>
             {products.map((product: ProductType, index: number) => {
+=======
+          {arrivaltab === 1 && <div className={`${style.cards} ${style.popularCards}`}>
+            {productsRev.slice(0, 5).map((product: Object, index: number) => {
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
               return (
                 <div
                   key={index}
@@ -249,7 +282,55 @@ const Home: React.FC = () => {
                 </div>
               );
             })}
-          </div>
+          </div>}
+          {arrivaltab === 2 && <div className={`${style.cards} ${style.popularCards}`}>
+            {products.slice(0, 5).map((product: Object, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={style.container}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={product.images[0]}
+                    className={style.shoes__image}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  />
+                  <div
+                    className={style.shoes__name}
+                    style={{ width: "8rem", textWrap: "balance" }}
+                  >
+                    {product.title}
+                  </div>
+                  <div className={style.shoes__price}>{product.price}</div>
+                </div>
+              );
+            })}
+          </div>}
+          {arrivaltab === 3 && <div className={`${style.cards} ${style.popularCards}`}>
+            {products.filter((product: Object) => product.category === "anime").slice(0, 5).map((product: Object, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={style.container}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={product.images[0]}
+                    className={style.shoes__image}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  />
+                  <div
+                    className={style.shoes__name}
+                    style={{ width: "8rem", textWrap: "balance" }}
+                  >
+                    {product.title}
+                  </div>
+                  <div className={style.shoes__price}>{product.price}</div>
+                </div>
+              );
+            })}
+          </div>}
         </div>
       </div>
 

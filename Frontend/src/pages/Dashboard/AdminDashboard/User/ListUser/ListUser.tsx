@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
-import style from "./ListUser.module.css";
-import UserAdminDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
 import { Pagination } from "@mui/material";
+import { useEffect, useState } from "react";
 import MediaQuery from "react-responsive";
+import { getUsers, totalUsersCount } from "../../../../../api/admin.api";
+import UserAdminDashboardCard from "../../../../../components/UserDashboardCard/UserDashboardCard";
+import style from "./ListUser.module.css";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);

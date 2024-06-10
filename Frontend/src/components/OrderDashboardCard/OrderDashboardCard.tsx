@@ -42,20 +42,6 @@ export default function OrderDashboardCard({ order }: { order: any }) {
                     </tr>
                 )}
             </table>
-
-            {/* {order.orderItems && Array.isArray(order.orderItems) && order.orderItems.length > 0 ? (
-                <ul className={style.item_dets}>
-                    {order.orderItems.map((item: any) => (
-                        <li key={item._id}>
-                            <h3>{item.name}</h3>
-                            <h3>{item.price}</h3>
-                            <h3>{item.quantity}</h3>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No order items found</p>
-            )} */}
         </div>
     );
 }

@@ -143,12 +143,12 @@ const Anime = () => {
             </div>
           </div>
           <div className={style.explore_btn}>
-            <button className={style.exp_btn} onClick={() => setAnimePg(!animePg)}>Explore</button>
+            <button className={style.exp_btn} onClick={() => {setAnimePg(!animePg); window.scroll(0,0)}}>Explore</button>
           </div>
         </div> :
         <div>
           <div className={style.a_hero}>
-            <button onClick={() => window.scrollTo({ top: 770, behavior: "smooth" })} className={style.a_hero_btn}>VIEW COLLECTIONS <FaArrowRightLong/></button>
+            <button onClick={() => window.scrollTo({ top: 1300, behavior: "smooth" })} className={style.a_hero_btn}>VIEW COLLECTIONS <FaArrowRightLong/></button>
             <img style={{ width: "100%" }} src={heroImg} alt="" />
           </div>
           {curProduct && <div style={{ margin: "25px" }}>

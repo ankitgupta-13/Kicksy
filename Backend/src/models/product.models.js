@@ -25,7 +25,6 @@ const productSchema = new mongoose.Schema(
     },
     bestPrice: {
       type: priceSchema,
-      required: true,
     },
     offers: [
       {
@@ -65,7 +64,7 @@ const productSchema = new mongoose.Schema(
     },
     gender: {
       type: [String],
-      enum: ["M", "F", "K"],
+      enum: ["M", "F", "K", "male", "female", "kids"],
       required: true,
     },
     stock: {

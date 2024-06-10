@@ -15,6 +15,12 @@ const ProductCard = ({ product, wid }) => {
   const [activeColorId, setActiveColorId] = useState<number | null>(null);
   // const [marLeftHover, setMarLeftHover] = useState(shoesColorData.length * 0);
 
+  useEffect(() => {
+    setShoesColorData(product.images);
+    setActiveColor(product.images[0]);
+    setActiveColorId(0);
+  }, [product.images]);
+
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
   };
@@ -38,7 +44,7 @@ const ProductCard = ({ product, wid }) => {
       </div>
       {/* <ProdCardCarousel productC={shoesColorData} /> */}
       <div className={style.shoes__color}>
-        {shoesColorData.map((color, index) => (
+        {shoesColorData?.map((color, index) => (
           <ColorCard
             key={index}
             id={index}

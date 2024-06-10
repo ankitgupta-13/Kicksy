@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -20,9 +21,29 @@ const Shop: React.FC = () => {
   const [key, value] = cleanstring.split("=");
   const [filters, setFilters] = useState({});
   const [allProducts, setAllProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+=======
+import React, { useState, useEffect } from "react";
+import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
+import { filterProducts } from "../../api/product.api"; // Adjust the path accordingly
+import style from "./Shop.module.css";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { useLocation } from 'react-router-dom';
+import banner from "../../assets/menbanner.png";
+import { Button } from "@mui/material";
+import TuneIcon from '@mui/icons-material/Tune';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import MediaQuery from "react-responsive";
 
+const Shop: React.FC = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const cleanstring = location.search.substring(1);
+  const [filters, setFilters] = useState(cleanstring ? [cleanstring] : []);
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  
   useEffect(() => {
+<<<<<<< HEAD
     const fetchAllProducts = async () => {
       {
         value &&
@@ -33,29 +54,17 @@ const Shop: React.FC = () => {
       }
       const data = await getAllProducts();
       setAllProducts(data.data.products);
+=======
+    const fetchFilteredProducts = async () => {
+      const data = await filterProducts(filters);
+      setFilteredProducts(data.data);
+      // console.log(data.data);
+      // console.log(filteredProducts);
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
     };
-    fetchAllProducts();
+    fetchFilteredProducts();
     scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const filterProducts = () => {
-      let filteredResult = [...allProducts];
-      Object.keys(filters).forEach((filterName) => {
-        const filterValues = filters[filterName];
-        if (filterValues && filterValues.length > 0) {
-          filteredResult = filteredResult.filter((product) => {
-            const productValues = product[filterName] || [];
-            return filterValues.every((filterValue) =>
-              productValues.includes(filterValue)
-            );
-          });
-        }
-      });
-      setFilteredProducts(filteredResult);
-    };
-    filterProducts();
-  }, [filters, allProducts]);
+  }, [filters]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,6 +78,7 @@ const Shop: React.FC = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
+<<<<<<< HEAD
   const handleFilterChange = (filterName: string, value: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -85,6 +95,13 @@ const Shop: React.FC = () => {
       setwActives(!wActives);
       onFilterChange(genderFilterName, wActives ? [] : [gender]);
     }
+=======
+  const handleFilterChange = async (newFilters: string[]) => {
+    setFilters(newFilters);
+    const data = await filterProducts(newFilters);
+    setFilteredProducts(data.data);
+    // console.log(filteredProducts);
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
   };
 
   const handleFilterSidebar = () => {
@@ -93,11 +110,8 @@ const Shop: React.FC = () => {
 
   return (
     <>
-      {/* {value && 
-    <div>
-    <img src={banner} alt="banner"/>
-    </div>} */}
       <div className={style.shoppage}>
+<<<<<<< HEAD
         <div
           className={style.filtersidebar}
           style={{ display: sidebarOpen ? "block" : "none" }}
@@ -106,11 +120,16 @@ const Shop: React.FC = () => {
             filters={filters}
             onFilterChange={handleFilterChange}
           />
+=======
+        <div className={style.filtersidebar} style={{ display: sidebarOpen ? "block" : "none" }}>
+          <FilterSidebar filters={filters} onFilterChange={handleFilterChange}  />
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
         </div>
         <div className={style.filterbar}>
           <div className={style.topbuttons}>
             <Button
               className={style.Button}
+<<<<<<< HEAD
               style={{
                 opacity: sidebarOpen ? "0" : "1",
                 backgroundColor: mActives ? "black" : "white",
@@ -142,6 +161,9 @@ const Shop: React.FC = () => {
                 border: sidebarOpen ? "none" : "1px solid black",
                 right: sidebarOpen ? "-11px" : "",
               }}
+=======
+              style={{ backgroundColor: sidebarOpen ? 'white' : '#f0f0f0', color: 'black', width: '80px', border: sidebarOpen ? 'none' : '1px solid black', right: sidebarOpen ? '-11px' : '' }}
+>>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
               onClick={() => handleFilterSidebar()}
             >
               {sidebarOpen ? <CloseOutlinedIcon /> : <TuneIcon />}
@@ -149,7 +171,7 @@ const Shop: React.FC = () => {
           </div>
         </div>
         <div className={style.productlist}>
-          {filteredProducts.map((product: any, index: number) => (
+          {filteredProducts?.map((product, index) => (
             <div className={style.listitem} key={index}>
               <MediaQuery minWidth={430}>
                 <ProductCard product={product} />

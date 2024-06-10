@@ -119,9 +119,9 @@ export const getBlogById = async (payload: { productID: string }) => {
   }
 };
 
-export const searchProducts = async (payload: { search_string: string }) => {
+export const searchProducts = async (payload) => {
   try {
-    const { data } = await api.post("/user/search-products", payload);
+    const { data } = await api.post("/products/filter-product", [payload]);
     return data;
   } catch (error: any) {
     console.log(error);
