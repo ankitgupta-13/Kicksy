@@ -13,12 +13,8 @@ const Searchbar = ({ open, close }) => {
   const [products, setProducts] = useState([]);
 
   const search = async () => {
-    // const payload = {
-    //   filters : searchTerm,
-    //   }
     const response = await searchProducts(searchTerm);
     if (response.statusCode === 200) setProducts(response.data);
-    console.log(response);
   };
   const clearInput = () => {
     setSearchTerm('');
@@ -44,7 +40,7 @@ const Searchbar = ({ open, close }) => {
         </div>
         <a className={style.closebtn} onClick={close}>&times;</a>
       </div>
-      <div style={{ width: '100%', height: '100%' }} onClick={close}>
+      <div className={style.searched} style={{ width: '100%', height: '100%' }} onClick={close}>
         {searchTerm && <ul style={{ display: 'flex', gap: "1rem", padding: "1rem", flexWrap: "wrap" }}>
           {products.map((product) => (
             <div style={{backgroundColor: 'white'}} onClick={() => { navigate(`/product/${product._id}`); close() }}>

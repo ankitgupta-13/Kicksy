@@ -23,8 +23,20 @@
   padding: 10px !important;
 }
 
-.shoes__bestseller {
+.shoes__name {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 60%;
+  display: block;
+}
 
+.shoes__price{
+  font-weight: 600;
+}
+
+.shoes__bestseller {
   position: relative;
   z-index: 1;
   top: 1%;
@@ -129,6 +141,8 @@
 
 .mobile__shoes_price {
   display: none;
+  font-family: "Noir Pro";
+  font-weight: 600;
 }
 
 .mobile__expected_price {

@@ -41,7 +41,7 @@
       object-fit: contain;
       aspect-ratio: 3/2;
       /* padding: 0px !important; */
-      margin: 0 2rem;  
+      margin: 0 2rem;
       background-color: #fff;
     }
   }
@@ -101,6 +101,11 @@
 
   .shoes__name {
     cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 60%;
+    display: block;
   }
 }
 
@@ -163,6 +168,10 @@
 
 .mobile__expected_price {
   display: none;
+}
+
+.shoes__price {
+  font-weight: 600;
 }
 
 @media screen and (max-width: 430px) {

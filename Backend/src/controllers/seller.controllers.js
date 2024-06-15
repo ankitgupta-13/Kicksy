@@ -178,13 +178,13 @@ const addOfferToProduct = async (req, res) => {
 
     // price.sort((a, b) => a - b);
 
-    if (product.bestPrice.price > productPrice) {
+    if (product.bestPrice?.price > productPrice) {
       product.bestPrice.price = productPrice;
       product.bestPrice.sellerID = sellerID;
       product.bestPrice.offerID = offer._id;
       await product.save();
     }
-    
+
     await product.save();
 
     await Seller.findByIdAndUpdate(sellerID, { $push: { offers: offer._id } });
@@ -239,16 +239,19 @@ const fetchRequestById = async (req, res) => {
 const fetchOffers = async (req, res) => {
   try {
     const { sellerID } = req.body;
-
-    const seller = await Seller.findOne({ _id: sellerID }).populate({
+    const user = await Seller.findOne({ userID: sellerID }).populate({
       path: "offers",
       populate: "productID",
     });
+    // const seller = await Seller.findOne({ _id: sellerID }).populate({
+    //   path: "offers",
+    //   populate: "productID",
+    // });
 
-    if (!seller) return res.json(new ApiResponse(404, "seller not found"));
+    // if (!seller) return res.json(new ApiResponse(404, "seller not found"));
 
     return res.json(
-      new ApiResponse(200, seller.offers, "offers fetched successfully")
+      new ApiResponse(200, user.offers, "offers fetched successfully")
     );
   } catch (err) {
     return handleErr(res, err);

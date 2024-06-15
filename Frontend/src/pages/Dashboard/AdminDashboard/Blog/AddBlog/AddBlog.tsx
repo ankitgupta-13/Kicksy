@@ -15,6 +15,7 @@ const AddBlog = () => {
     formData.append("image", image[0]);
     try {
       const response = await addBlog(formData);
+      alert(response.message);
       reset();
       return response;
     } catch (error) {

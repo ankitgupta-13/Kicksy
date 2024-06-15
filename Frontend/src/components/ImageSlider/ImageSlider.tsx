@@ -12,10 +12,8 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
     <div
       style={{
         position: "relative",
-        width: "400px",
+        width: "600px",
         height: "400px",
-        borderColor: "#DADADA",
-        borderStyle: "solid",
         borderRadius: "25px",
       }}
     >
@@ -26,8 +24,9 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "contain",
+            objectFit: "cover",
             verticalAlign: "bottom",
+            borderRadius: "25px",
           }}
           alt=""
         />
@@ -36,15 +35,19 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
       <div
         style={{
           display: "flex",
+          justifyContent: "space-between",
+          width: "115%",
           position: "absolute",
-          bottom: "10px",
-          right: "10px",
+          transform: "translate(-50%, -50%)",
+          top: "50%",
+          left: "50%",
         }}
       >
         <div
           onClick={() => {
             setImageIndex(imageIndex > 0 ? imageIndex - 1 : imageUrls.length - 1);
           }}
+          style={{ cursor: "pointer", backgroundColor: "#ccc", width: "2rem", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%" }}
         >
           <ArrowBackIosNewIcon />
         </div>
@@ -52,6 +55,7 @@ const ImageSlider = ({ imageUrls }: ImageSliderProps) => {
           onClick={() => {
             setImageIndex(imageIndex < imageUrls.length - 1 ? imageIndex + 1 : 0);
           }}
+          style={{ cursor: "pointer", backgroundColor: "#ccc", width: "2rem", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%" }}
         >
           {" "}
           <ArrowForwardIosIcon />

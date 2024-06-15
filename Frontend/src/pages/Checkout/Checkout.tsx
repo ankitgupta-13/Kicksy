@@ -4,10 +4,21 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserCartItems } from "../../api/user.api";
-import mainLogo from "../../assets/Krisksy.svg";
+import mainLogo from "../../assets/Krisksy.png";
 import { Button, CartItemCard, Input, PaymentButton } from "../../components";
 import { RootState } from "../../redux/store/store";
 import style from "./Checkout.module.css";
+
+interface Address {
+  recipientName: string;
+  mobile: string;
+  email: string;
+  street: string;
+  country: string;
+  state: string;
+  city: string;
+  pincode: string;
+}
 
 const Checkout = () => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +26,7 @@ const Checkout = () => {
   const userID = useSelector((state: RootState) => state.auth.userData?._id);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState<Address | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -25,8 +36,9 @@ const Checkout = () => {
         setCartTotal(response.data?.cartTotal);
       }
     })();
-  }, []);
-  const handleAddress = (data: Object) => {
+  }, [userID]);
+
+  const handleAddress = (data: Address) => {
     setAddress(data);
   };
 
@@ -42,26 +54,38 @@ const Checkout = () => {
         </Button>
         <img src={mainLogo} alt="kriksky logo" style={{ width: "150px" }} />
       </div>
-      <form onSubmit={handleSubmit(handleAddress)}>
-        <div className={style.checkOut}>
-          <h1>Order Summary</h1>
+      <div className={style.checkOut}>
+        <h1>Order Summary</h1>
+        {cartItems ? (
           <div className={style.orderSummary}>
-            {cartItems?.map((item) => (
-              <div className={style.cartItem}>
-                {/* @ts-ignore */}
+            {cartItems?.map((item, index) => (
+              <div className={style.cartItem} key={index}>
                 <CartItemCard item={item} />
               </div>
             ))}
           </div>
-        </div>
+        ) : (
+          <p
+            style={{
+              textAlign: "center",
+              padding: "2rem",
+              fontSize: "1.5rem",
+              fontWeight: 600,
+            }}
+          >
+            No items in cart
+          </p>
+        )}
+      </div>
+      <form onSubmit={handleSubmit(handleAddress)}>
         <div className={style.addressForm}>
           <h1>Shipping Details</h1>
           <Input
-            placeholder="FULLNAME "
+            placeholder="FULLNAME"
             {...register("recipientName", { required: true })}
           />
           <Input
-            placeholder="MOBILE NO. "
+            placeholder="MOBILE NO."
             {...register("mobile", { required: true })}
           />
           <Input
@@ -87,7 +111,24 @@ const Checkout = () => {
           />
         </div>
         <div className={style.checkoutButton}>
-          <PaymentButton amount={cartTotal} address={address} type="submit" />
+          {!address && (
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                outline: "none",
+                border: "none",
+                fontSize: "1.2rem",
+                fontFamily: "Noir Pro",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Set Address
+            </button>
+          )}
+          {address && <PaymentButton amount={cartTotal} address={address} />}
         </div>
       </form>
     </div>

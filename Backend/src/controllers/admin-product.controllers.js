@@ -90,26 +90,45 @@ const addProductViaRequest = async (req, res) => {
       },
     });
 
-    product.tags.push(product.title.toLowerCase());
-    product.tags.push(product.brand.toLowerCase());
-    product.tags.push(product.gender.toLowerCase());
-    product.tags.push(product.skuID.toLowerCase());
-    
-    gender.forEach((g)=>{
-      product.tags.push(g)
-    })
+    if (typeof product.title === 'string') {
+      product.tags.push(product.title.toLowerCase());
+    }
 
-    color.forEach((c)=>{
-      product.tags.push(c);
-    })
+    if (typeof product.brand === 'string') {
+      product.tags.push(product.brand.toLowerCase());
+    }
 
-    category.forEach((c)=>{
-      product.tags.push(c)
-    })
+    if (typeof product.gender === 'string') {
+      product.tags.push(product.gender.toLowerCase());
+    }
 
-    size.forEach((s)=>{
-      product.tags.push(s)
-    })
+    if (typeof product.skuID === 'string') {
+      product.tags.push(product.skuID.toLowerCase());
+    }
+
+    if (Array.isArray(gender)) {
+      gender.forEach((g) => {
+        product.tags.push(g.toLowerCase());
+      });
+    }
+
+    if (Array.isArray(color)) {
+      color.forEach((c) => {
+        product.tags.push(c.toLowerCase());
+      });
+    }
+
+    if (Array.isArray(category)) {
+      category.forEach((c) => {
+        product.tags.push(c.toLowerCase());
+      });
+    }
+
+    if (Array.isArray(size)) {
+      size.forEach((s) => {
+        product.tags.push(s.toLowerCase());
+      });
+    }
 
     await product.save();
 

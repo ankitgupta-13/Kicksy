@@ -33,7 +33,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{}}>
       <h1 className={style.containerHeading}>Create a new product</h1>
       <form onSubmit={handleSubmit(handleCreateProduct)} className={style.form}>
         <div className={style.section}>
@@ -93,12 +93,25 @@ const CreateProduct = () => {
 
           <div className={style.sub}>
             <div className={style.inputBox}>
-              <label>Product Code</label>
+              {/* <label>Product Code</label>
               <input
                 type="text"
                 // value={productID}
                 disabled
                 defaultValue={productID}
+                {...register("skuID", { required: true })}
+              /> */}
+              <Input
+                style={{
+                  marginTop: "5px",
+                  border: "none",
+                  borderBottom: "1px solid var(--Border-2, #CCC)",
+                  backgroundColor: "rgb(249, 249, 249)",
+                }}
+                label="Product Code(Do not change)"
+                type="text"
+                value={productID}
+                placeholder="Product Code"
                 {...register("skuID", { required: true })}
               />
             </div>
@@ -127,106 +140,86 @@ const CreateProduct = () => {
             <div className={style.inputBox}>
               <Input
                 type="checkbox"
-<<<<<<< HEAD
-                value={1}
-                label="S"
-                ss={{
-                  display: "flex",
-                  alignItems: "center",
-                  maxWidth: "25%",
-                  justifyContent: "space-around",
-                }}
-=======
                 value={6}
                 label="6"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
-                {...register("size", { required: true })}
-              />
-              <Input
-                type="checkbox"
-<<<<<<< HEAD
-                value={2}
-                label="M"
                 ss={{
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25%",
                   justifyContent: "space-around",
                 }}
-=======
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
                 value={7}
                 label="7"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
-                {...register("size", { required: true })}
-              />
-              <Input
-                type="checkbox"
-<<<<<<< HEAD
-                value={3}
-                label="L"
                 ss={{
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25%",
                   justifyContent: "space-around",
                 }}
-=======
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
                 value={8}
                 label="8"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
-                {...register("size", { required: true })}
-              />
-              <Input
-                type="checkbox"
-<<<<<<< HEAD
-                value={4}
-                label="XL"
                 ss={{
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25%",
                   justifyContent: "space-around",
                 }}
-=======
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
                 value={9}
                 label="9"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
-                {...register("size", { required: true })}
-              />
-              <Input
-                type="checkbox"
-<<<<<<< HEAD
-                value={5}
-                label="XXL"
                 ss={{
                   display: "flex",
                   alignItems: "center",
                   maxWidth: "25%",
                   justifyContent: "space-around",
                 }}
-=======
+                {...register("size", { required: true })}
+              />
+              <Input
+                type="checkbox"
                 value={10}
                 label="10"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={11}
                 label="11"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
               <Input
                 type="checkbox"
                 value={12}
                 label="12"
-                ss={{display: "flex", alignItems: "center", maxWidth: "25%", justifyContent: "space-around"}}
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
+                ss={{
+                  display: "flex",
+                  alignItems: "center",
+                  maxWidth: "25%",
+                  justifyContent: "space-around",
+                }}
                 {...register("size", { required: true })}
               />
             </div>

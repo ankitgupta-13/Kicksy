@@ -23,10 +23,22 @@ export const uploadProductRequestImage = async (payload: FormData) => {
 export const addProductRequest = async (payload) => {
   try {
     const { data } = await api.post("/seller/create-request/product", payload);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
 };
+
+export const fetchSellerOffers = async (payload) => {
+  try {
+    const { data } = await api.post("/seller/fetch-offers/all", payload);
+    // console.log(data);
+    return data;
+  } catch (error) {
+    if (error.response) return error.response;
+    else return JSON.parse(JSON.stringify(error));
+  }
+};
+

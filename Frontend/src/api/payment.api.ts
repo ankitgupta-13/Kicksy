@@ -18,6 +18,7 @@ export const makePayment = async (payload: {
   address: Object;
 }) => {
   try {
+    console.log(payload);
     const {
       data: { data },
     } = await api.post("/user/payments/make-payment", payload);

@@ -23,17 +23,6 @@ const ProductDescription = ({ data }: ProductDescription) => {
         </div>
         <div className={style.right}>
           <h1 style={{ color: "#656565" }}>{data.title}</h1>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontSize: "25px",
-              color: "#656565",
-            }}
-          >
-            <CurrencyRupeeIcon />
-            {data.price}
-          </div>
           <h3>Sellers</h3>
           <div className={style.sellers}>
             {sellers?.map((seller) => (
@@ -45,7 +34,7 @@ const ProductDescription = ({ data }: ProductDescription) => {
                 />
                 <p>{seller?.sellerID?.storeName}</p>
                 <div className={style.priceButton}>
-                  <h1>{seller?.price}</h1>
+                  <h1>₹ {seller?.price.toLocaleString("en-IN")}</h1>
                   <ShoppingCartIcon />
                 </div>
               </div>

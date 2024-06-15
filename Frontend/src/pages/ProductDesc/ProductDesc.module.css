@@ -1,6 +1,7 @@
 .main {
     margin: 25px;
     padding-top: 5px;
+    border-top: 1px solid #e2e2e2;
 }
 
 .product {

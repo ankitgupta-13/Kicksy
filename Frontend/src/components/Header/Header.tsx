@@ -44,7 +44,7 @@ const Header = () => {
     { name: "Blogs", slug: "/blogs", isActive: true },
     { name: "Login", slug: "/login", isActive: !authStatus },
     { name: "Signup", slug: "/register", isActive: !authStatus },
-    { name: "Seller", slug: "/seller", isActive: isUser },
+    { name: "Seller", slug: "/seller", isActive: isUser && userRole === "user" },
   ];
 
   const handleToggleCartVisibility = () => {
@@ -136,7 +136,7 @@ const Header = () => {
             <CloseOutlinedIcon />
           </a>
           <h1 style={{ marginBottom: "24px" }}>MENU</h1>
-          <a href="/dashboard">
+          <a href={!userRole ? "/login" : "/dashboard"}>
             <AccountCircleOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -150,7 +150,7 @@ const Header = () => {
           <div>
             <Profile />
           </div>
-          <a href="/dashboard">
+          <a href={authStatus ? "/login" : "/dashboard"}>
             <ShoppingBagOutlinedIcon
               style={{
                 fontWeight: "light",
@@ -222,7 +222,7 @@ const Header = () => {
         <a href="/checkout">
           <AddShoppingCartIcon />
         </a>
-        <a href="/dashboard">
+        <a href={authStatus ? "/dashboard" : "/login"}>
           <AccountCircleIcon />
         </a>
       </div>

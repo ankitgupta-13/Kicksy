@@ -15,7 +15,6 @@ import JordanLogo from "../../assets/images/JordanLogo.png";
 import KidPic1 from "../../assets/images/KidPic1.png";
 import MenPic1 from "../../assets/images/MenPic1.png";
 import NikeLogo from "../../assets/images/NikeLogo.png";
-import { ProductType } from "../../types/product.types";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -25,42 +24,19 @@ const Home: React.FC = () => {
   const [sc_newArrivals, setSc_newArrivals] = useState(false);
   const [sc_bestSeller, setSc_bestSeller] = useState(false);
 
-  // const arrivaltab1 = useRef("");
-  // const arrivaltab2 = useRef("");
-  // const arrivaltab3 = useRef("");
+  const arrivaltab1 = useRef("");
+  const arrivaltab2 = useRef("");
+  const arrivaltab3 = useRef("");
 
   const [arrivaltab, setArrivaltab] = useState(1);
 
   const getProducts = async () => {
     const response = await getRecentProducts();
     if (response.statusCode === 200) {
-      setProducts(response.data)
+      setProducts(response.data);
       setProductsRev([...response.data].slice(0, 5).reverse());
-    };
+    }
   };
-<<<<<<< HEAD
-
-  const arrivaltab1 = useRef<HTMLDivElement>(null);
-  const arrivaltab2 = useRef<HTMLDivElement>(null);
-  const arrivaltab3 = useRef<HTMLDivElement | null>(null);
-
-  function arrClick1() {
-    arrivaltab1.current?.classList.add(style.Active);
-    arrivaltab2.current?.classList.remove(style.Active);
-    arrivaltab3.current?.classList.remove(style.Active);
-  }
-
-  function arrClick2() {
-    arrivaltab1.current?.classList.remove(style.Active);
-    arrivaltab2.current?.classList.add(style.Active);
-    arrivaltab3.current?.classList.remove(style.Active);
-  }
-
-  function arrClick3() {
-    arrivaltab1.current?.classList.remove(style.Active);
-    arrivaltab2.current?.classList.remove(style.Active);
-    arrivaltab3.current?.classList.add(style.Active);
-=======
   function arrClick1() {
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
@@ -80,7 +56,6 @@ const Home: React.FC = () => {
     arrivaltab2.current.classList.remove(style.Active);
     arrivaltab3.current.classList.add(style.Active);
     setArrivaltab(3);
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
   }
 
   useEffect(() => {
@@ -90,27 +65,29 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 600) {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY > 600 || window.innerWidth < 431) {
         setSc_companies(true);
       } else {
         setSc_companies(false);
       }
 
-      if (scrollY > 1200) {
+      if (scrollY > 1200 || window.innerWidth < 431) {
         setSc_newArrivals(true);
       } else {
         setSc_newArrivals(false);
       }
 
-      if (scrollY > 1400) {
+      if (scrollY > 1400 || window.innerWidth < 431) {
         setSc_bestSeller(true);
       } else {
         setSc_bestSeller(false);
       }
     };
 
+    // {window.innerWidth > 431 ? window.addEventListener('scroll', onScroll) : window.removeEventListener('scroll', onScroll)}
     window.addEventListener("scroll", onScroll);
+    window.scrollTo(0, 1);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -129,31 +106,19 @@ const Home: React.FC = () => {
       <div className={style.Gender}>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img
-              src={GirlPic1}
-              alt=""
-              onClick={() => navigate(`/shop?F`)}
-            />
+            <img src={GirlPic1} alt="" onClick={() => navigate(`/shop?F`)} />
           </div>
           <div className={style.GenderBoxTitle}>Women</div>
         </div>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img
-              src={MenPic1}
-              alt=""
-              onClick={() => navigate(`/shop?M`)}
-            />
+            <img src={MenPic1} alt="" onClick={() => navigate(`/shop?M`)} />
           </div>
           <div className={style.GenderBoxTitle}>Men</div>
         </div>
         <div className={style.GenderContainer}>
           <div className={style.GenderBox}>
-            <img
-              src={KidPic1}
-              alt=""
-              onClick={() => navigate(`/shop?K`)}
-            />
+            <img src={KidPic1} alt="" onClick={() => navigate(`/shop?K`)} />
           </div>
           <div className={style.GenderBoxTitle}>Kids</div>
         </div>
@@ -219,7 +184,9 @@ const Home: React.FC = () => {
 
         <div
           className={style.CompanyItemBox}
-          onClick={() => {navigate(`/anime`), window.scrollTo(0, 0)}}
+          onClick={() => {
+            navigate(`/anime`), window.scrollTo(0, 0);
+          }}
         >
           <img src={CustomNike} alt="" />
         </div>
@@ -254,83 +221,87 @@ const Home: React.FC = () => {
         </div>
         <div className={style.PopularShoes}>Popular Shoes</div>
         <div className={style.Slider}>
-<<<<<<< HEAD
-          <div className={`${style.cards} ${style.popularCards}`}>
-            {products.map((product: ProductType, index: number) => {
-=======
-          {arrivaltab === 1 && <div className={`${style.cards} ${style.popularCards}`}>
-            {productsRev.slice(0, 5).map((product: Object, index: number) => {
->>>>>>> e5d070819315f9fe549df852200cffa85c020fe5
-              return (
-                <div
-                  key={index}
-                  className={style.container}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={product.images[0]}
-                    className={style.shoes__image}
-                    onClick={() => navigate(`/product/${product._id}`)}
-                  />
+          {arrivaltab === 1 && (
+            <div className={`${style.cards} ${style.popularCards}`}>
+              {productsRev.slice(0, 5).map((product: Object, index: number) => {
+                return (
                   <div
-                    className={style.shoes__name}
-                    style={{ width: "8rem", textWrap: "balance" }}
+                    key={index}
+                    className={style.container}
+                    style={{ cursor: "pointer" }}
                   >
-                    {product.title}
+                    <img
+                      src={product.images[0]}
+                      className={style.shoes__image}
+                      onClick={() => navigate(`/product/${product._id}`)}
+                    />
+                    <div
+                      className={style.shoes__name}
+                      style={{ width: "8rem", textWrap: "balance" }}
+                    >
+                      {product.title}
+                    </div>
+                    <div className={style.shoes__price}>{product.price}</div>
                   </div>
-                  <div className={style.shoes__price}>{product.price}</div>
-                </div>
-              );
-            })}
-          </div>}
-          {arrivaltab === 2 && <div className={`${style.cards} ${style.popularCards}`}>
-            {products.slice(0, 5).map((product: Object, index: number) => {
-              return (
-                <div
-                  key={index}
-                  className={style.container}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={product.images[0]}
-                    className={style.shoes__image}
-                    onClick={() => navigate(`/product/${product._id}`)}
-                  />
+                );
+              })}
+            </div>
+          )}
+          {arrivaltab === 2 && (
+            <div className={`${style.cards} ${style.popularCards}`}>
+              {products.slice(0, 5).map((product: Object, index: number) => {
+                return (
                   <div
-                    className={style.shoes__name}
-                    style={{ width: "8rem", textWrap: "balance" }}
+                    key={index}
+                    className={style.container}
+                    style={{ cursor: "pointer" }}
                   >
-                    {product.title}
+                    <img
+                      src={product.images[0]}
+                      className={style.shoes__image}
+                      onClick={() => navigate(`/product/${product._id}`)}
+                    />
+                    <div
+                      className={style.shoes__name}
+                      style={{ width: "8rem", textWrap: "balance" }}
+                    >
+                      {product.title}
+                    </div>
+                    <div className={style.shoes__price}>{product.price}</div>
                   </div>
-                  <div className={style.shoes__price}>{product.price}</div>
-                </div>
-              );
-            })}
-          </div>}
-          {arrivaltab === 3 && <div className={`${style.cards} ${style.popularCards}`}>
-            {products.filter((product: Object) => product.category === "anime").slice(0, 5).map((product: Object, index: number) => {
-              return (
-                <div
-                  key={index}
-                  className={style.container}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={product.images[0]}
-                    className={style.shoes__image}
-                    onClick={() => navigate(`/product/${product._id}`)}
-                  />
-                  <div
-                    className={style.shoes__name}
-                    style={{ width: "8rem", textWrap: "balance" }}
-                  >
-                    {product.title}
-                  </div>
-                  <div className={style.shoes__price}>{product.price}</div>
-                </div>
-              );
-            })}
-          </div>}
+                );
+              })}
+            </div>
+          )}
+          {arrivaltab === 3 && (
+            <div className={`${style.cards} ${style.popularCards}`}>
+              {products
+                .filter((product: Object) => product.category === "anime")
+                .slice(0, 5)
+                .map((product: Object, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className={style.container}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img
+                        src={product.images[0]}
+                        className={style.shoes__image}
+                        onClick={() => navigate(`/product/${product._id}`)}
+                      />
+                      <div
+                        className={style.shoes__name}
+                        style={{ width: "8rem", textWrap: "balance" }}
+                      >
+                        {product.title}
+                      </div>
+                      <div className={style.shoes__price}>{product.price}</div>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
         </div>
       </div>
 

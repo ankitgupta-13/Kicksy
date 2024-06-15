@@ -4,8 +4,9 @@ import Fire from "../../assets/images/fire.png";
 import Add from "../../assets/images/add.png";
 import ImageSliderPrev from "../ImageSliderPrev/ImageSliderPrev";
 import { useEffect, useState } from "react";
+import MediaQuery from "react-responsive";
 
-const ProductCardAnime = ({ product, wid="24.5vw" }) => {
+const ProductCardAnime = ({ product, wid = "24.5vw" }) => {
   const [shoesColorData, setShoesColorData] = useState(product.images);
 
   const [activeColor, setActiveColor] = useState("");
@@ -23,7 +24,7 @@ const ProductCardAnime = ({ product, wid="24.5vw" }) => {
   }, []);
 
   return (
-    <div className={style.container} style={{width: wid}}>
+    <div className={style.container} style={{ width: wid }}>
       <div className={style.container__header}>
         <div className={style.container__hotitem}>
           <img src={Fire} alt="error" />
@@ -56,10 +57,10 @@ const ProductCardAnime = ({ product, wid="24.5vw" }) => {
       >
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
-          <div className={style.shoes__price}>{product.price}</div>
+          <MediaQuery minWidth={631}><div className={style.shoes__price}>₹ {product?.bestPrice?.price.toLocaleString('en-IN')}</div></MediaQuery>
         </div>
         <p className={style.shoes__tags}>{product.category}</p>
-        <div className={style.mobile__shoes_price}>INR {product.price}</div>
+        <div className={style.mobile__shoes_price}>₹ {product?.bestPrice?.price.toLocaleString('en-IN')}</div>
         <div className={style.mobile__expected_price}>{product.price}</div>
         <p className={style.shoes__tagline}>{product.description}</p>
       </div>

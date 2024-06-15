@@ -34,6 +34,10 @@ const ProductDesc = () => {
 
   const [success, setSuccess] = useState("");
 
+  const options = { month: "short", day: "2-digit", year: "numeric" };
+  const date = new Date(curProduct?.createdAt);
+  const formattedDate = date?.toLocaleDateString("en-IN", options);
+
   const buyNow = "Buy Now";
   const handleImageSrcChange = (src: string) => {
     setActiveColor(src);
@@ -94,8 +98,8 @@ const ProductDesc = () => {
   };
 
   return (
-    <div style={{overflowX: "hidden"}}>
-      <div className={style.main} style={{overflowX: "hidden"}}>
+    <div style={{ overflowX: "hidden" }}>
+      <div className={style.main} style={{ overflowX: "hidden" }}>
         <div className={style.product}>
           <MediaQuery minWidth={431}>
             <div
@@ -283,7 +287,11 @@ const ProductDesc = () => {
                     <Button
                       className={style.priceButton}
                       onClick={() => {
-                        handleAddToCart(seller.sellerID._id);
+                        {
+                          userID ? handleAddToCart(seller.sellerID._id)
+                            :
+                          window.location.href = "/login";
+                        }
                       }}
                     >
                       <h1>₹{seller?.price?.toLocaleString("en-IN")}</h1>
@@ -324,21 +332,21 @@ const ProductDesc = () => {
         <div className={style.table}>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>MANUFACTURED SKU</h5>
-            <p></p>
+            <p>{curProduct._id}</p>
             <h5 style={{ color: "#656565" }}>COLORWAY</h5>
-            <p></p>
+            <p>{curProduct.color}</p>
           </div>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>BRAND</h5>
-            <p></p>
+            <p>{curProduct.brand}</p>
             <h5 style={{ color: "#656565" }}>GENDER</h5>
-            <p></p>
+            <p>{curProduct.gender}</p>
           </div>
           <div className={style.column}>
             <h5 style={{ color: "#656565" }}>NICKNAME</h5>
-            <p></p>
+            <p>{curProduct.title}</p>
             <h5 style={{ color: "#656565" }}>RELEASE DATE</h5>
-            <p></p>
+            <p>{formattedDate}</p>
           </div>
         </div>
       </div>
@@ -370,7 +378,7 @@ const ProductDesc = () => {
         <div className={`${style.cards} ${style.alsoLikeCards}`}>
           {products.map((product: any, index: number) => {
             return (
-              <div key={index} style={{marginBottom: "30px"}}>
+              <div key={index} style={{ marginBottom: "30px" }}>
                 <MediaQuery minWidth={431}>
                   <ProductCard product={product} wid="18.5vw" />
                 </MediaQuery>
