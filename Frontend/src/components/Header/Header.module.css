@@ -160,7 +160,7 @@
   }
 
   .loginbtn {
-    backgroundColor: black;
+    background-color: black;
     width: 180px;
     height: 40px;
     color: white;
@@ -191,7 +191,7 @@
 }
 
 @media (max-width: 430px) {
-  .sidenav{
+  .sidenav {
     width: 100vw;
     height: 100vh;
     padding: 30px;
@@ -202,13 +202,13 @@
     position: fixed;
     overflow: hidden;
   }
-  .sidenav h1{
+  .sidenav h1 {
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 1px;
   }
-  a{
-    border-bottom: 1px solid #E2E2E2;
+  a {
+    border-bottom: 1px solid #e2e2e2;
     padding: 20px 0 !important;
     display: flex;
     align-items: center;
@@ -225,7 +225,6 @@
   }
   .buttons LogoutBtn {
     width: 100% !important;
-    
   }
   .topbar {
     position: fixed;

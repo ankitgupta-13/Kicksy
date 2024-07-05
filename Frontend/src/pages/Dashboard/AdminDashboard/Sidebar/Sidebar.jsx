@@ -1,0 +1,162 @@
+import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
+import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import SpeedIcon from "@mui/icons-material/Speed";
+import { Container } from "@mui/material";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../../assets/Krisksy.png";
+import {
+  closeSection,
+  selectAdminAction,
+  toggleSection,
+} from "../../../../redux/reducers/adminDashboardSlice";
+import style from "./Sidebar.module.css";
+
+const Sidebar = ({ ss }) => {
+  const [actionOpen, setActionOpen] = useState(true);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { sectionsState } = useSelector((state) => state.adminDashboard);
+
+  const sections = [
+    {
+      User: {
+        actions: ["List"],
+        icon: <AccountBoxRoundedIcon />,
+      },
+    },
+    {
+      Seller: {
+        actions: ["List", "Requests"],
+        icon: <AccountBoxRoundedIcon />,
+      },
+    },
+    {
+      Product: {
+        actions: ["Create", "List", "Requests"],
+        icon: <AccountBoxRoundedIcon />,
+      },
+    },
+    {
+      Order: {
+        actions: ["List"],
+        icon: <ShoppingCartRoundedIcon />,
+      },
+    },
+    {
+      Blog: {
+        actions: ["Create", "List"],
+        icon: <NoteAltRoundedIcon />,
+      },
+    },
+  ];
+
+  const handleSectionClick = (sectionName) => {
+    dispatch(toggleSection(sectionName));
+    setActionOpen(!actionOpen);
+  };
+
+  const handleActionClick = (sectionName, actionName) => {
+    dispatch(
+      selectAdminAction({
+        selectedSection: sectionName,
+        selectedAction: actionName,
+      })
+    );
+  };
+
+  return (
+    <>
+      <div className={style.sidebarBody} style={{ ...ss }}>
+        {/* <div className={style.Logo}>
+          <Logo />
+        </div> */}
+        <Container
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            padding: "10px",
+            overflow: "auto",
+            borderRight: "1px solid #e0e0e0",
+          }}
+        >
+          <div onClick={() => navigate("/")}>
+            <img
+              className={style.Logo}
+              src={logo}
+              alt=""
+              style={{ filter: "invert(1)" }}
+            />
+          </div>
+          <div>
+            <h2 className={style.SideBarSectionsHeading}>Overview</h2>
+            <button
+              className={style.sectionButton}
+              onClick={() => dispatch(closeSection())}
+              style={{ justifyContent: "flex-start" }}
+            >
+              <span className={style.AppIcon}>
+                <SpeedIcon />
+              </span>
+              <span className={style.AppText}> Dashboard</span>
+            </button>
+          </div>
+          <div>
+            <h2 className={style.SideBarSectionsHeading}>Management</h2>
+            {sections.map((section, index) => {
+              const sectionName = Object.keys(section)[0];
+              const actions = section[sectionName].actions;
+              return (
+                <div key={index} className={style.section}>
+                  <div
+                    onClick={() => handleSectionClick(sectionName)}
+                    className={style.sectionButton}
+                  >
+                    <div className={style.sectionName}>
+                      {section[sectionName].icon}
+                      <p>{sectionName}</p>
+                    </div>
+                    <KeyboardArrowRightRoundedIcon
+                      style={{
+                        transform: sectionsState[sectionName]
+                          ? "rotate(90deg)"
+                          : "rotate(0deg)",
+                        transition: "transform 0.3s ease",
+                      }}
+                    />
+                  </div>
+                  {sectionsState[sectionName] && (
+                    <div className={style.actions}>
+                      {actions.map((action, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={() =>
+                              handleActionClick(sectionName, action)
+                            }
+                            className={style.actionButton}
+                          >
+                            <p>{action}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </div>
+    </>
+  );
+};
+
+export default Sidebar;
