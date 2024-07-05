@@ -1,22 +1,23 @@
-import Razorpay from "razorpay";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import { ApiError } from "../utils/ApiError.js";
 import crypto from "crypto";
-import { Payment } from "../models/payment.models.js";
+import dotenv from "dotenv";
 import fetch from "node-fetch";
-import { Order } from "../models/order.models.js";
-import { Product } from "../models/product.models.js";
-import { Cart } from "../models/cart.models.js";
+import Razorpay from "razorpay";
 import { Address } from "../models/address.model.js";
-import { User } from "../models/user.models.js";
-import { Seller } from "../models/seller.model.js";
-import { InsufficientFundTransfer } from "../models/insufficientFundTransfer.model.js";
+import { Cart } from "../models/cart.models.js";
 import { Offer } from "../models/offer.model.js";
-import mongoose from "mongoose";
+import { Order } from "../models/order.models.js";
+import { Seller } from "../models/seller.model.js";
+import { User } from "../models/user.models.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
+dotenv.config();
+
+const RPAY_KEY_ID = `${process.env.RPAY_KEY_ID}`;
+const RPAY_KEY_SECRET = `${process.env.RPAY_KEY_SECRET}`;
 const rpayInstance = new Razorpay({
-  key_id: process.env.RPAY_KEY_ID,
-  key_secret: process.env.RPAY_KEY_SECRET,
+  key_id: RPAY_KEY_ID,
+  key_secret: RPAY_KEY_SECRET,
 });
 
 const getKey = async (req, res) => {
@@ -144,26 +145,27 @@ const verifyPayment = async (req, res) => {
           )
         );
 
-        const seller = await Seller.findById(item.sellerID)
+        const seller = await Seller.findById(item.sellerID);
         promises.push(
-          Order.findOneAndUpdate({ _id: order._id, adminSearchTags: { $ne: seller.storeName } },
-            { $push: { adminSearchTags: seller.storeName } })
-        )
-
+          Order.findOneAndUpdate(
+            { _id: order._id, adminSearchTags: { $ne: seller.storeName } },
+            { $push: { adminSearchTags: seller.storeName } }
+          )
+        );
       }
 
       // Wait for all promises to complete
       await Promise.all(promises);
 
-      cart.items = []
+      cart.items = [];
       cart.cartTotal = 0;
-      await cart.save()
+      await cart.save();
 
       await User.findByIdAndUpdate(orderDetails.userID, {
-        $push: {/* address: address._id,*/ orders: order._id },
+        $push: { /* address: address._id,*/ orders: order._id },
       });
 
-      return res.json(new ApiResponse(200 , order , "order placed successfully"))
+      return res.json(new ApiResponse(200, order, "order placed successfully"));
 
       // }
       // else{
@@ -180,7 +182,7 @@ const verifyPayment = async (req, res) => {
 
       //   await order.save();
 
-      //   
+      //
       // } else {
       // const order = new Order({
       //   user: userID,
@@ -194,8 +196,7 @@ const verifyPayment = async (req, res) => {
       // }
 
       // user.orders.push(order._id);
-    } 
-    else {
+    } else {
       return res.json(new ApiResponse(400, "Payment failed!"));
     }
   } catch (err) {
@@ -263,4 +264,4 @@ const fetchPaymentByTime = async (req, res) => {
   }
 };
 
-export { getKey, makePayment, verifyPayment, fetchall, fetchPayment };
+export { fetchall, fetchPayment, getKey, makePayment, verifyPayment };
