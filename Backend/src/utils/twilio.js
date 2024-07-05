@@ -1,4 +1,7 @@
+import dotenv from "dotenv";
 import twilio from "twilio";
+
+dotenv.config();
 
 const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } = process.env;
 
@@ -16,4 +19,4 @@ client.verify.v2.services
   .catch((error) => {
     console.error("Error creating service:", error);
   });
-export { client, TWILIO_SERVICE_SID };
+export { TWILIO_SERVICE_SID, client };
