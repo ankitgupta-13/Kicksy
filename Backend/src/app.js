@@ -12,6 +12,10 @@ import userRouter from "./routes/user.routes.js";
 const app = express();
 dotenv.config();
 
+app.get("/health", (req, res) => {
+  res.send("Health OK");
+});
+
 // middlewares
 
 app.use((req, res, next) => {
@@ -29,10 +33,6 @@ app.use(
     exposedHeaders: ["set-cookie"],
   })
 );
-
-app.get("/health", (req, res) => {
-  res.send("Health OK");
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
