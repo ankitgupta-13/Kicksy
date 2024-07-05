@@ -1,13 +1,13 @@
-import express from "express";
-import cors from "cors";
 import cookieParser from "cookie-parser";
-import userRouter from "./routes/user.routes.js";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
 import adminRouter from "./routes/admin.routes.js";
 import orderRouter from "./routes/order.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
-import sellerRouter from "./routes/seller.routes.js";
 import productRouter from "./routes/product.routes.js";
-import dotenv from "dotenv";
+import sellerRouter from "./routes/seller.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 const app = express();
 dotenv.config();
@@ -16,7 +16,11 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://stepstyle.vercel.app/",
+      "https://kicksy.vercel.app/",
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     exposedHeaders: ["set-cookie"],
