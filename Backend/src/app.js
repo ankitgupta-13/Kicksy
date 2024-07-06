@@ -20,12 +20,11 @@ app.get("/health", (req, res) => {
 
 app.use(
   cors({
-    origin: "*",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    allowedMethods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://kicksy.vercel.app/",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
-    // methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    exposedHeaders: ["set-cookie"],
+    allowedHeaders: "Authorization, Content-Type, Accept",
+    // exposedHeaders: ["set-cookie"],
   })
 );
 
