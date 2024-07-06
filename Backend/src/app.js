@@ -18,18 +18,13 @@ app.get("/health", (req, res) => {
 
 // middlewares
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://kicksy.vercel.app/");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://kicksy.vercel.app/"],
+    origin: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedMethods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    // methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     exposedHeaders: ["set-cookie"],
   })
 );
