@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getAllBlogs } from "../../api/user.api.js";
 import BlogCard from "../../components/BlogCard/BlogCard";
-import PostCard from "../../components/PostCard/PostCard";
 import style from "./Blogs.module.css";
 
-const Blog = () => {
-  const [bloglist, setBloglist] = useState([]);
-
-  const getBlogs = async () => {
-    const response = await getAllBlogs();
-    if (response.statusCode === 200) setBloglist(response.data);
-  };
-
-  useEffect(() => {
-    scrollTo(0, 0);
-    getAllBlogs();
-  }, []);
+const Blogs = () => {
+  const { data: blogs } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      const response = await getAllBlogs();
+      if (response.statusCode === 200) {
+        return response.data;
+      }
+    },
+    staleTime: Infinity,
+  });
 
   return (
     <div className={style.container}>
@@ -26,8 +24,8 @@ const Blog = () => {
         </span>
       </div>
       <div className={style.bloglist}>
-        {bloglist.map((blog) => (
-          <BlogCard blog={blog} />
+        {blogs?.map((blog) => (
+          <BlogCard blog={blog} key={blog._id} />
         ))}
       </div>
 
@@ -51,12 +49,16 @@ const Blog = () => {
           </h2>
         </div>
 
-        <div className={style.recent__blogs_container}>
+        {/* <div className={style.recent__blogs_container}>
+
+                // This should be a separate component named Recent Blogs
+
           <PostCard />
-        </div>
+          
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default Blog;
+export default Blogs;

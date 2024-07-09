@@ -4,7 +4,7 @@ export const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 export const api = axios.create({
   baseURL: baseURL,
-  timeout: 1000 * 10,
+  // timeout: 1000 * 10,
   withCredentials: true,
   headers: {
     authorization: `Bearer ${document.cookie.split(";")}`,

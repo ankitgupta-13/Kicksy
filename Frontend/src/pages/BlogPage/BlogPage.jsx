@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getBlogById } from "../../api/user.api";
-import PostCard from "../../components/PostCard/PostCard";
 import style from "./BlogPage.module.css";
 
 const BlogPage = () => {
@@ -22,22 +21,8 @@ const BlogPage = () => {
   };
 
   useEffect(() => {
-    scrollTo(0, 0);
     getCurrentBlog();
   }, []);
-
-  // const renderStyledContent = () => {
-  //   const words = blog?.content?.split(' ');
-  //   const firstWord = words[0];
-
-  //   const restOfContent = words.join(' ');
-
-  //   return (
-  //     <div>
-  //       <span style={{ fontSize: '4rem', fontWeight: 900 }}>{firstWord}</span> {restOfContent}
-  //     </div>
-  //   );
-  // };
 
   const renderStyledContent = () => {
     // Using regular expression to match the first word
@@ -97,9 +82,12 @@ const BlogPage = () => {
         >
           RECENT POSTS
         </h2>
-        <div className={style.recent__blogs_container}>
+        {/* <div className={style.recent__blogs_container}>
+
+        // This should be a separate component named Recent Blogs
+
           <PostCard />
-        </div>
+        </div> */}
       </div>
     </div>
   );

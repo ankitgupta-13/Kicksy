@@ -1,34 +1,29 @@
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import TuneIcon from "@mui/icons-material/Tune";
 import { Button } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import MediaQuery from "react-responsive";
-import { useLocation } from "react-router-dom";
-import { filterProducts } from "../../api/product.api";
+import { getAllProducts, getFilteredProducts } from "../../api/product.api";
+import { ProductCard } from "../../components";
 import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
-import ProductCard from "../../components/ProductCard/ProductCard";
 import style from "./Shop.module.css";
 
 const Shop = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
-  const cleanstring = location.search.substring(1);
   const [filters, setFilters] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  useEffect(() => {
-    if (filters) {
-      const fetchFilteredProducts = async () => {
-        const data = await filterProducts(filters);
-        console.log(data);
-        setFilteredProducts(data.data);
-        // console.log(data.data);
-        // console.log(filteredProducts);
-      };
-      fetchFilteredProducts();
-      scrollTo(0, 0);
-    }
-  }, [filters]);
+  const { data, isLoading, isError, error } =
+    filters.length > 0
+      ? useQuery({
+          queryKey: ["products", filters],
+          queryFn: ({ queryKey }) => getFilteredProducts(queryKey[1]),
+        })
+      : useQuery({
+          queryKey: ["products"],
+          queryFn: getAllProducts,
+          staleTime: Infinity,
+        });
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,13 +36,6 @@ const Shop = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
   }, []);
-
-  const handleFilterChange = async (newFilters) => {
-    setFilters(newFilters);
-    const data = await filterProducts(newFilters);
-    setFilteredProducts(data.data);
-    // console.log(filteredProducts);
-  };
 
   const handleFilterSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -62,7 +50,7 @@ const Shop = () => {
         >
           <FilterSidebar
             filters={filters}
-            onFilterChange={handleFilterChange}
+            onFilterChange={(newFilters) => setFilters(newFilters)}
           />
         </div>
         <div className={style.filterbar}>
@@ -83,17 +71,23 @@ const Shop = () => {
           </div>
         </div>
         <div className={style.productlist}>
-          {filteredProducts?.map((product, index) => (
-            <div className={style.listitem} key={index}>
-              <MediaQuery minWidth={430}>
-                <ProductCard product={product} />
-              </MediaQuery>
+          {isLoading ? (
+            <p>Loading products...</p>
+          ) : !data.data || data?.data?.products?.length === 0 ? (
+            <p>No products found</p>
+          ) : (
+            data.data.products?.map((product, index) => (
+              <div className={style.listitem} key={index}>
+                <MediaQuery minWidth={430}>
+                  <ProductCard product={product} />
+                </MediaQuery>
 
-              <MediaQuery maxWidth={430}>
-                <ProductCard product={product} wid="45vw" />
-              </MediaQuery>
-            </div>
-          ))}
+                <MediaQuery maxWidth={430}>
+                  <ProductCard product={product} wid="45vw" />
+                </MediaQuery>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>

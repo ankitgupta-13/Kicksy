@@ -1,35 +1,29 @@
-import { useEffect, useState } from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
+import { Alert } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import MediaQuery from "react-responsive";
+import { getAllProducts, getProductById } from "../../api/product.api.js";
 import heroImg from "../../assets/anime-hero-img.png";
 import ani1Img from "../../assets/anime-one.png";
 import ani3Img from "../../assets/anime-three.jpg";
 import ani2Img from "../../assets/anime-two.jpg";
 import banner from "../../assets/post_banner.jpg";
-import PostCard from "../../components/PostCard/PostCard.jsx";
-import ProductCardAnime from "../../components/ProductCardAnime/ProductCardAnime.jsx";
-import style from "./Anime.module.css";
-
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
-import { Alert } from "@mui/material";
-import { FaArrowRightLong } from "react-icons/fa6";
-import MediaQuery from "react-responsive";
-import { getProductById } from "../../api/product.api.js";
-import { getAllProducts } from "../../api/user.api.js";
 import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc.jsx";
 import { Button } from "../../components/index.js";
+import PostCard from "../../components/PostCard/PostCard.jsx";
+import ProductCardAnime from "../../components/ProductCardAnime/ProductCardAnime.jsx";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable.jsx";
+import style from "./Anime.module.css";
 
 const Anime = () => {
   const dispatch = useDispatch();
-  const [explore, setExplore] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
-  const [animeProducts, setAnimeProducts] = useState([]);
   const [curProduct, setCurProduct] = useState([]);
   const [productID, setProductID] = useState([]);
   const [shoesColorData, setShoesColorData] = useState([]);
-  const [activeColor, setActiveColor] = useState("");
-  const [activeColorId, setActiveColorId] = useState(null);
   const [size, setSize] = useState();
   const userID = useSelector((state) => state.auth?.userData?._id);
   const [success, setSuccess] = useState("");
@@ -56,29 +50,19 @@ const Anime = () => {
     }
   };
 
-  const fetchAllProducts = async () => {
-    const data = await getAllProducts();
-    setAllProducts(data.data.products);
-  };
-
-  const getAnimeProducts = () => {
-    const animeProducts = allProducts?.filter(
-      (product) => product.category === "anime"
-    );
-    setAnimeProducts(animeProducts);
-  };
-
-  useEffect(() => {
-    fetchAllProducts();
-    getAnimeProducts();
-    getCurrentProduct();
-  }, [allProducts]);
-
-  useEffect(() => {
-    if (animeProducts?.length > 0) {
-      setProductID(animeProducts[0]._id);
-    }
-  }, [animeProducts]);
+  let { data: animeProducts } = useQuery({
+    queryKey: ["animeProducts"],
+    queryFn: async () => {
+      const response = await getAllProducts();
+      if (response.statusCode === 200) {
+        animeProducts = response.data.products.filter(
+          (product) => product.category === "anime"
+        );
+        return animeProducts;
+      }
+    },
+    staleTime: Infinity,
+  });
 
   const handleAddToCart = async (sellerID) => {
     const payload = {
@@ -86,12 +70,8 @@ const Anime = () => {
       productID,
       sellerID,
     };
-
-    console.log(curProduct);
-
     try {
       const result = await addToCart(payload);
-      // console.log(result);
       setSuccess(result.message);
       dispatch(addItemToCart(result.data.items));
     } catch (error) {
@@ -230,34 +210,6 @@ const Anime = () => {
                     <ImageSliderProdDesc imageUrls={shoesColorData} />
                   </div>
                 </MediaQuery>
-                {/* <div className={style.action}>
-                <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
-                <h2 className={style.SampleProduct}>{curProduct.title}</h2>
-                {curProduct.category === "bestseller" && (
-                  <a className={style.bestseller}>BEST SELLER</a>
-                )}
-                <h2>Rs. </h2>
-                <div>
-                  <select
-                    className={style.size}
-                    value={size}
-                    onChange={handleChange}
-                  >
-                    {sizes.map((size: any) => (
-                      <option value={size.value}>{size.label}</option>
-                    ))}
-                  </select>
-                </div>
-                <Button
-                  className={style.addtocart}
-                  style={{ backgroundColor: "#131313", color: "white" }}
-
-                  type="submit"
-                >
-                  Add to Cart
-                </Button>
-                {/* <PaymentButton amount="10" />
-              </div> */}
 
                 <div className={style.action}>
                   <h4 className={style.SampleBrand}>{curProduct.brand}</h4>
@@ -348,14 +300,6 @@ const Anime = () => {
                         ))}
                       </select>
                     </div>
-                    {/* <Button
-                className={style.addtocart}
-                style={{ backgroundColor: "#131313", color: "white" }}
-                onClick={handleAddToCart}
-                type="submit"
-              >
-                Add to Cart
-              </Button> */}
                     <Button
                       className={style.BuyNowBtn}
                       style={{
@@ -378,7 +322,6 @@ const Anime = () => {
                       )}
                       productID={curProduct._id}
                       onClick={() => {
-                        console.log(curProduct);
                         handleAddToCart(curProduct.bestPrice.sellerID);
                       }}
                     >

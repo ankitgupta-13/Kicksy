@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { filterProducts } from "../../api/product.api";
+import { getFilteredProducts } from "../../api/product.api";
 import style from "./OrderDashboardCard.module.css";
 
 export default function OrderDashboardCard({ order }) {
@@ -9,7 +9,7 @@ export default function OrderDashboardCard({ order }) {
 
   useEffect(() => {
     const fetchFilteredProducts = async () => {
-      const data = await filterProducts(filters);
+      const data = await getFilteredProducts(filters);
       setFilteredProducts(data.data);
 
       const matchedProducts = data.data.filter((product) =>

@@ -1,10 +1,11 @@
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StraightenOutlinedIcon from "@mui/icons-material/StraightenOutlined";
 import { Alert } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MediaQuery from "react-responsive";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../api/product.api";
 import { addToCart, getRecentProducts } from "../../api/user.api";
 import AccordionComp from "../../components/Accordion/AccordionComp";
@@ -12,15 +13,14 @@ import Button from "../../components/Button/Button";
 import ImageSliderProdDesc from "../../components/ImageSliderProdDesc/ImageSliderProdDesc";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import ShoeSizeTable from "../../components/ShoeSizeTable/ShoeSizeTable";
+import { addItemToCart } from "../../redux/reducers/cartSlice";
 import style from "./ProductDesc.module.css";
 
 const ProductDesc = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const [curProduct, setCurProduct] = useState([]);
   const [shoesColorData, setShoesColorData] = useState([]);
-  const [setActiveColor] = useState("");
   const [size, setSize] = useState();
   const [sizes, setSizes] = useState([]);
   const [showSizeTable, setShowSizeTable] = useState(false);
@@ -34,15 +34,6 @@ const ProductDesc = () => {
   const date = new Date(curProduct?.createdAt);
   const formattedDate = date?.toLocaleDateString("en-IN", options);
 
-  const buyNow = "Buy Now";
-  const handleImageSrcChange = (src) => {
-    setActiveColor(src);
-  };
-
-  const getProducts = async () => {
-    const response = await getRecentProducts();
-    if (response.statusCode === 200) setProducts(response.data);
-  };
   const getCurrentProduct = async () => {
     const payload = {
       productID,
@@ -52,21 +43,19 @@ const ProductDesc = () => {
       setCurProduct(response.data);
       setShoesColorData(response.data.images);
       setSizes(response.data.size);
-      console.log(sizes);
     }
   };
 
-  const handleInStock = () => {
-    if (stock <= 0) {
-      setInStock(false);
-    } else {
-      setInStock(true);
-    }
-  };
+  const { data: recentProducts } = useQuery({
+    queryKey: ["recentProducts"],
+    queryFn: async () => {
+      const data = await getRecentProducts();
+      return data.data;
+    },
+    staleTime: Infinity,
+  });
 
   useEffect(() => {
-    scrollTo(0, 0);
-    getProducts();
     getCurrentProduct();
   }, []);
 
@@ -80,12 +69,8 @@ const ProductDesc = () => {
       productID,
       sellerID,
     };
-
-    console.log(curProduct);
-
     try {
       const result = await addToCart(payload);
-      // console.log(result);
       setSuccess(result.message);
       dispatch(addItemToCart(result.data.items));
     } catch (error) {
@@ -98,10 +83,7 @@ const ProductDesc = () => {
       <div className={style.main} style={{ overflowX: "hidden" }}>
         <div className={style.product}>
           <MediaQuery minWidth={431}>
-            <div
-              className={style.product_imagediv}
-              // style={{ background: `url(${activeColor})` }}
-            >
+            <div className={style.product_imagediv}>
               <span className={style.product_path}>
                 {curProduct.category} | {curProduct.brand} | {curProduct.title}
               </span>
@@ -199,19 +181,14 @@ const ProductDesc = () => {
                   value={size}
                   onChange={handleChange}
                 >
-                  {sizes.map((size) => (
-                    <option value={size}>{size}</option>
+                  {sizes.map((size, index) => (
+                    <option value={size} key={index}>
+                      {size}
+                    </option>
                   ))}
                 </select>
               </div>
-              {/* <Button
-                className={style.addtocart}
-                style={{ backgroundColor: "#131313", color: "white" }}
-                onClick={handleAddToCart}
-                type="submit"
-              >
-                Add to Cart
-              </Button> */}
+
               <Button
                 className={style.BuyNowBtn}
                 style={{
@@ -230,11 +207,10 @@ const ProductDesc = () => {
                   cursor: "pointer",
                 }}
                 price={curProduct?.bestPrice?.price?.toLocaleString("en-IN")}
-                productID={curProduct._id}
+                // productID={curProduct._id}
                 onClick={() => {
-                  console.log(curProduct);
                   handleAddToCart(curProduct.bestPrice.sellerID);
-                  window.location.href = userID ? "/checkout" : "/login";
+                  navigate(`${userID ? "/checkout" : "/login"}`);
                 }}
               >
                 <span
@@ -270,7 +246,7 @@ const ProductDesc = () => {
 
             <div className={style.sellers}>
               {curProduct?.offers?.map((seller) => (
-                <div>
+                <div key={seller.sellerID._id}>
                   <div className={style.sellerCard}>
                     <div className={style.sLogoName}>
                       <img
@@ -286,7 +262,7 @@ const ProductDesc = () => {
                         {
                           userID
                             ? handleAddToCart(seller.sellerID._id)
-                            : (window.location.href = "/login");
+                            : navigate("/login");
                         }
                       }}
                     >
@@ -350,7 +326,7 @@ const ProductDesc = () => {
         <div className={style.AlsoLikeContainer}>
           <h1 className={style.AlsoLikeSliderTitle}>You may also like</h1>
           <div className={`${style.cards} ${style.alsoLikeCards}`}>
-            {products.map((product, index) => {
+            {recentProducts?.map((product, index) => {
               return (
                 <div key={index}>
                   <MediaQuery minWidth={431}>
@@ -364,7 +340,6 @@ const ProductDesc = () => {
             })}
           </div>
         </div>
-        {/* <div className={style.NewArrivalsSlider}></div> */}
         <MediaQuery minWidth={440}>
           <h1 className={style.NewArrivalsSliderTitle}>New Arrivals</h1>
         </MediaQuery>
@@ -372,7 +347,7 @@ const ProductDesc = () => {
           <h1 className={style.NewArrivalsSliderTitle}>You Might Also Like</h1>
         </MediaQuery>
         <div className={`${style.cards} ${style.alsoLikeCards}`}>
-          {products.map((product, index) => {
+          {recentProducts?.map((product, index) => {
             return (
               <div key={index} style={{ marginBottom: "30px" }}>
                 <MediaQuery minWidth={431}>

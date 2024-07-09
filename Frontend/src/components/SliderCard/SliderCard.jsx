@@ -41,7 +41,7 @@ const SliderCard = (props) => {
   return (
     <Slider {...settings}>
       {data.map((item) => (
-        <>
+        <div key={item.id}>
           <MediaQuery minWidth={431}>
             <div className={style.container}>
               <div className={style.container__backgroudtext}>The New 2023</div>
@@ -69,7 +69,7 @@ const SliderCard = (props) => {
             </div>
           </MediaQuery>
           {/* <button className={style.container__shopbtn} onClick={() => navigate("/shop")}>Go to Shop</button> */}
-        </>
+        </div>
       ))}
     </Slider>
   );

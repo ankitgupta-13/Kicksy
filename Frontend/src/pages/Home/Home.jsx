@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import MediaQuery from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +17,6 @@ import style from "./Home.module.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-  const [productsRev, setProductsRev] = useState([]);
   const [sc_companies, setSc_companies] = useState(false);
   const [sc_newArrivals, setSc_newArrivals] = useState(false);
   const [sc_bestSeller, setSc_bestSeller] = useState(false);
@@ -28,13 +27,6 @@ const Home = () => {
 
   const [arrivaltab, setArrivaltab] = useState(1);
 
-  const getProducts = async () => {
-    const response = await getRecentProducts();
-    if (response.statusCode === 200) {
-      setProducts(response.data);
-      setProductsRev([...response.data].slice(0, 5).reverse());
-    }
-  };
   function arrClick1() {
     arrivaltab1.current.classList.add(style.Active);
     arrivaltab2.current.classList.remove(style.Active);
@@ -55,11 +47,19 @@ const Home = () => {
     arrivaltab3.current.classList.add(style.Active);
     setArrivaltab(3);
   }
+  const { data: recentProducts } = useQuery({
+    queryKey: ["recentProducts"],
+    queryFn: async () => {
+      const data = await getRecentProducts();
+      return data.data;
+    },
+    staleTime: Infinity,
+  });
 
-  useEffect(() => {
-    scrollTo(0, 0);
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   scrollTo(0, 0);
+  //   getProducts();
+  // }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -221,7 +221,7 @@ const Home = () => {
         <div className={style.Slider}>
           {arrivaltab === 1 && (
             <div className={`${style.cards} ${style.popularCards}`}>
-              {productsRev.slice(0, 5).map((product, index) => {
+              {recentProducts?.map((product, index) => {
                 return (
                   <div
                     key={index}
@@ -247,8 +247,7 @@ const Home = () => {
           )}
           {arrivaltab === 2 && (
             <div className={`${style.cards} ${style.popularCards}`}>
-              {products.slice(0, 5).map((product, index) => {
-                console.log(product.images[0]);
+              {recentProducts?.map((product, index) => {
                 return (
                   <div
                     key={index}
@@ -275,8 +274,8 @@ const Home = () => {
           )}
           {arrivaltab === 3 && (
             <div className={`${style.cards} ${style.popularCards}`}>
-              {products
-                .filter((product) => product.category === "anime")
+              {recentProducts
+                ?.filter((product) => product.category === "anime")
                 .slice(0, 5)
                 .map((product, index) => {
                   return (
@@ -312,7 +311,7 @@ const Home = () => {
         <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
           <div className={`${style.cards} ${style.BestSellerCards}`}>
-            {products.map((product, index) => {
+            {recentProducts?.map((product, index) => {
               return (
                 <div
                   className={style.BestSellerCard}

@@ -7,30 +7,24 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import { toggleProfileVisibility } from "./redux/reducers/authSlice";
 import { toggleCartVisibility } from "./redux/reducers/cartSlice";
 
-const Layout = ({ loading }) => {
+const Layout = () => {
   const dispatch = useDispatch();
   const showProfile = useSelector((state) => state.auth.isOpen);
   const showCart = useSelector((state) => state.cart.isOpen);
   return (
-    <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div
-          onClick={() => {
-            showProfile && dispatch(toggleProfileVisibility());
-            showCart && dispatch(toggleCartVisibility());
-          }}
-        >
-          <Header />
-          <Outlet />
-          <Cart />
-          <Wishlist />
-          <Profile />
-          <Footer />
-        </div>
-      )}
-    </>
+    <div
+      onClick={() => {
+        showProfile && dispatch(toggleProfileVisibility());
+        showCart && dispatch(toggleCartVisibility());
+      }}
+    >
+      <Header />
+      <Outlet />
+      <Cart />
+      <Wishlist />
+      <Profile />
+      <Footer />
+    </div>
   );
 };
 

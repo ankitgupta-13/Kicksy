@@ -12,7 +12,6 @@ const ProductCard = ({ product, wid }) => {
 
   const [activeColor, setActiveColor] = useState("");
   const [activeColorId, setActiveColorId] = useState(null);
-  // const [marLeftHover, setMarLeftHover] = useState(shoesColorData.length * 0);
 
   useEffect(() => {
     setShoesColorData(product.images);
@@ -27,7 +26,7 @@ const ProductCard = ({ product, wid }) => {
     <div
       className={style.container}
       style={{ width: wid }}
-      onClick={() => (window.location.href = `/product/${product._id}`)}
+      onClick={() => navigate(`/product/${product._id}`)}
     >
       <div className={style.container__header}>
         <div className={style.container__hotitem}>
@@ -70,11 +69,15 @@ const ProductCard = ({ product, wid }) => {
         <div className={style.shoes__data}>
           <div className={style.shoes__name}>{product.title}</div>
           <MediaQuery minWidth={631}>
-            {window.location.href === "/dashboard" && (
-              <div className={style.shoes__price}>
-                ₹ {product?.bestPrice?.price.toLocaleString("en-IN")}
-              </div>
-            )}
+            {
+              () => (
+                // navigate("/dashboard") && (
+                <div className={style.shoes__price}>
+                  ₹ {product?.bestPrice?.price.toLocaleString("en-IN")}
+                </div>
+              )
+              // )
+            }
           </MediaQuery>
         </div>
         <p className={style.shoes__tags}>{product.category}</p>

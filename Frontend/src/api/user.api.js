@@ -24,7 +24,6 @@ export const addToCart = async (payload) => {
   try {
     console.log(payload);
     const { data } = await api.post("/user/add-to-cart", payload);
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -36,7 +35,6 @@ export const addToCart = async (payload) => {
 export const removeFromCart = async (payload) => {
   try {
     const { data } = await api.post("/user/remove-from-cart", payload);
-    console.log(data);
     return data;
   } catch (error) {
     if (error.response) return error.response;
@@ -60,16 +58,6 @@ export const updateCart = async (payload) => {
 export const getRecentProducts = async () => {
   try {
     const { data } = await api.get("/user/get-recent-products");
-    return data;
-  } catch (error) {
-    if (error.response) return error.response;
-    else return JSON.parse(JSON.stringify(error));
-  }
-};
-
-export const getAllProducts = async () => {
-  try {
-    const { data } = await api.get("/user/get-products");
     return data;
   } catch (error) {
     if (error.response) return error.response;

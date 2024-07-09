@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Route,
@@ -36,7 +38,7 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<Layout loading={loading} />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -62,23 +64,39 @@ const App = () => {
     )
   );
 
-  useEffect(() => {
-    getCurrentUser()
-      .then((userData) => {
-        if (userData.statusCode === 200) {
-          setLoading(false);
-          dispatch(login({ userData: userData.data }));
-          dispatch(setInitialCartItems(userData.data.cart));
-        } else {
-          dispatch(logout());
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [loading, dispatch]);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await getCurrentUser();
+      if (response && response.statusCode === 200) {
+        dispatch(login({ userData: response.data }));
+        dispatch(setInitialCartItems(response.data.cart));
+        return response.data;
+      } else {
+        dispatch(logout());
+      }
+    },
+    staleTime: Infinity,
+  });
 
-  return <RouterProvider router={router} />;
+  return (
+    <div>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <RouterProvider router={router} />
+      )}
+    </div>
+  );
 };
 
 export default App;

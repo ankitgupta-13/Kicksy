@@ -1,11 +1,9 @@
+import fs from "fs";
+import pluralize from "pluralize";
 import { Product } from "../models/product.models.js";
 import { ApiError, handleErr } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { deleteFromAws, uploadOnAws } from "../utils/aws.js";
-import pluralize from "pluralize";
-import fs from "fs";
-import { Offer } from "../models/offer.model.js";
-import { Seller } from "../models/seller.model.js";
 
 const addProductImage = async (req, res) => {
   console.log(req.body);
@@ -23,7 +21,6 @@ const addProduct = async (req, res) => {
     return res.status(409).send("Please add images");
   }
   try {
-
     const newProduct = await Product.create(req.body);
     newProduct.tags.push(newProduct.title.toLowerCase());
     newProduct.tags.push(newProduct.brand.toLowerCase());
@@ -228,73 +225,75 @@ const searchBarProducts = async (req, res) => {
       }
     });
     return res.json(new ApiResponse(200, products_array));
-  }
-  catch (err) {
+  } catch (err) {
     return res.json(new ApiError(400, err.message));
   }
 };
 
 const filterProduct = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
   try {
     const filters = req.body;
 
-    // [boot, men, size]
-    
-    
-    const products_array2 = []
-    
-    const product_array = []
+    const products_array2 = [];
 
-    const products = await Product.find({})
+    const product_array = [];
+
+    const products = await Product.find({});
 
     const promises = filters.map(async (category) => {
-
-      const word = category.toLowerCase()
+      const word = category.toLowerCase();
 
       const results = await Product.find({
-        "$or": [
+        $or: [
           { brand: { $regex: word } },
           { size: { $regex: word } },
           { category: { $regex: word } },
           { gender: { $regex: word } },
           { tags: { $regex: word } },
           { skuID: { $regex: word } },
-          { title: { $regex: word } }
-        ]
-      })
+          { title: { $regex: word } },
+        ],
+      });
 
       products_array2.push(...results);
-
-
-    })
+    });
 
     await Promise.all(promises);
 
     // const uniqueArray = [...new Set(products_array2)];
-    if (filters.length === 0) products_array2.push(...products)
+    if (filters.length === 0) products_array2.push(...products);
+    // Apply pagination in the array
+    const uniqueArray = Array.from(new Set(products_array2.map(JSON.stringify)))
+      .map(JSON.parse)
+      .slice((page - 1) * limit, page * limit);
 
-    const uniqueArray = Array.from(new Set(products_array2.map(JSON.stringify))).map(JSON.parse);
-    if (uniqueArray.length === 0 ) products_array2.push(products);
+    if (uniqueArray.length === 0) products_array2.push(products);
 
-    return res.json(new ApiResponse(200, uniqueArray, 'filter applied successfully'));
-
-  }
-  catch (err) {
+    return res.json(
+      new ApiResponse(
+        200,
+        { products: uniqueArray, page },
+        "filter applied successfully"
+      )
+    );
+  } catch (err) {
     return handleErr(res, err);
   }
-}
+};
 
 export {
   addProduct,
-  updateProduct,
+  addProductImage,
   deleteProduct,
   deleteProductImage,
-  handleProductStock,
-  addProductImage,
-  getRecentProducts,
+  filterProduct,
   getProductById,
   getProducts,
   getProductsCount,
+  getRecentProducts,
+  handleProductStock,
   searchBarProducts,
-  filterProduct
+  updateProduct,
 };

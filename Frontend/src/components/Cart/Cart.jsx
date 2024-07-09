@@ -41,7 +41,7 @@ const Cart = () => {
         </div>
         <div className={style.itemlist}>
           {cartItems?.map((item) => (
-            <CartItemCard item={item} wid={"4rem"} />
+            <CartItemCard item={item} wid={"4rem"} key={item._id} />
           ))}
         </div>
         <div className={style.ButtonContainer}>
