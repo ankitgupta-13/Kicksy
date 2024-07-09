@@ -240,7 +240,7 @@ const logoutUser = async (req, res) => {
       sameSite: "None",
       path: "/",
     };
-    console.log("Cookies before clear:", req.cookies);
+
     return res
       .status(200)
       .clearCookie("accessToken", options)

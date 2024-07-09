@@ -29,6 +29,7 @@ export const authLogin = async (payload) => {
     const { data } = await api.post("/user/login", payload);
     return data;
   } catch (error) {
+    console.log(error);
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));
   }
