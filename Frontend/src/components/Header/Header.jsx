@@ -188,17 +188,6 @@ const Header = () => {
             />{" "}
             Seller Request
           </a>
-          {/* <a href="#" onClick={handleToggleWishlistVisibility}>
-            <FavoriteBorderOutlinedIcon
-              style={{
-                fontWeight: "light",
-                color: "#1c1b1f",
-                marginRight: "12px",
-                fontSize: "24px",
-              }}
-            />{" "}
-            My Wishlist
-          </a> */}
           {userRole === "admin" ||
             (userRole === "seller" && (
               <a

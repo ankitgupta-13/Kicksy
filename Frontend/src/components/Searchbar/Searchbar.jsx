@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react';
-import { searchProducts } from '../../api/user.api';
-import CartItem from '../CartItem/CartItem';
-import style from './Searchbar.module.css';
 import SearchIcon from "@mui/icons-material/Search";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductCard from '../ProductCard/ProductCard';
-
+import { searchProducts } from "../../api/user.api";
+import style from "./Searchbar.module.css";
 
 const Searchbar = ({ open, close }) => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
 
   const search = async () => {
@@ -17,7 +14,7 @@ const Searchbar = ({ open, close }) => {
     if (response.statusCode === 200) setProducts(response.data);
   };
   const clearInput = () => {
-    setSearchTerm('');
+    setSearchTerm("");
   };
 
   useEffect(() => {
@@ -25,7 +22,7 @@ const Searchbar = ({ open, close }) => {
   }, [searchTerm]);
 
   return (
-    <div className={`${style.sidenav} ${open ? style.open : ''}`}>
+    <div className={`${style.sidenav} ${open ? style.open : ""}`}>
       <div className={style.head}>
         <div className={style.searchContainer}>
           <input
@@ -36,18 +33,41 @@ const Searchbar = ({ open, close }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {/* <button className={style.clearButton} onClick={clearInput}>&times;</button> */}
-          <button className={style.searchButton} onClick={search}><SearchIcon /></button>
+          <button className={style.searchButton} onClick={search}>
+            <SearchIcon />
+          </button>
         </div>
-        <a className={style.closebtn} onClick={close}>&times;</a>
+        <a className={style.closebtn} onClick={close}>
+          &times;
+        </a>
       </div>
-      <div className={style.searched} style={{ width: '100%', height: '100%' }} onClick={close}>
-        {searchTerm && <ul style={{ display: 'flex', gap: "1rem", padding: "1rem", flexWrap: "wrap" }}>
-          {products.map((product) => (
-            <div style={{backgroundColor: 'white'}} onClick={() => { navigate(`/product/${product._id}`); close() }}>
-              <ProductCard product={product} wid={'20rem'} />
-            </div>
-          ))}
-        </ul>}
+      <div
+        className={style.searched}
+        style={{ width: "100%", height: "100%" }}
+        onClick={close}
+      >
+        {searchTerm && (
+          <ul
+            style={{
+              display: "flex",
+              gap: "1rem",
+              padding: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            {/* {products.map((product) => (
+              <div
+                style={{ backgroundColor: "white" }}
+                onClick={() => {
+                  navigate(`/product/${product._id}`);
+                  close();
+                }}
+              >
+                <ProductCard product={product} wid={"20rem"} />
+              </div>
+            ))} */}
+          </ul>
+        )}
       </div>
     </div>
   );

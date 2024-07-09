@@ -1,5 +1,6 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getKey, makePayment, verifyPayment } from "../../api/payment.api";
 import upiIcons from "../../assets/upi-icons.svg";
 
@@ -8,6 +9,7 @@ const PaymentButton = (props) => {
   const userID = user?._id;
   const amount = props.amount * 100;
   const address = props.address;
+  const navigate = useNavigate();
 
   const checkOutHandler = async () => {
     try {
@@ -44,7 +46,7 @@ const PaymentButton = (props) => {
           const data = await verifyPayment(payload);
           console.log(data);
           alert(data.message);
-          window.location.href = "/";
+          navigate("/");
         },
       };
 

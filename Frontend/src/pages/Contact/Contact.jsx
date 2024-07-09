@@ -21,14 +21,14 @@ const Contact = () => {
               <span>
                 <MailOutlineIcon />
               </span>
-              <a href="">info@Krisksy.com</a>
+              <a>info@Krisksy.com</a>
             </li>
             <li>+91-83482 28342</li>
             <li>
-              <a href="">@krisksy</a>
+              <a>@krisksy</a>
             </li>
             <li>
-              <a href="">@krisksy</a>
+              <a>@krisksy</a>
             </li>
           </ul>
         </div>
