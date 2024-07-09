@@ -74,6 +74,7 @@ const App = () => {
         return response.data;
       } else {
         dispatch(logout());
+        return null;
       }
     },
     staleTime: Infinity,

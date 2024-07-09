@@ -9,7 +9,7 @@ const LogoutBtn = ({ wid }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     const data = await authLogout();
-    if (data.status === 200) dispatch(logout());
+    if (data.statusCode === 200) dispatch(logout());
     else console.log("Error in logout");
     navigate("/");
   };

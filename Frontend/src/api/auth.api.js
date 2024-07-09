@@ -47,8 +47,8 @@ export const authRegister = async (payload) => {
 
 export const authLogout = async () => {
   try {
-    const response = await api.post("/user/logout");
-    return response;
+    const { data } = await api.post("/user/logout");
+    return data;
   } catch (error) {
     if (error.response) return error.response;
     else return JSON.parse(JSON.stringify(error));

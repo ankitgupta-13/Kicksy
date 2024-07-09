@@ -237,7 +237,10 @@ const logoutUser = async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: "None",
+      path: "/",
     };
+    console.log("Cookies before clear:", req.cookies);
     return res
       .status(200)
       .clearCookie("accessToken", options)
