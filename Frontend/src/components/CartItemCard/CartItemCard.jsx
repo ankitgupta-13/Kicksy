@@ -45,7 +45,7 @@ const CartItemCard = ({ item, wid }) => {
         <div className={style.item_img} style={{ width: wid }}>
           <div
             className={style.item_img_c}
-            style={{ backgroundImage: `url(${item.product.images[0]})` }}
+            style={{ backgroundImage: `url(${item?.product?.images[0]})` }}
           ></div>
         </div>
         <div>
@@ -56,22 +56,22 @@ const CartItemCard = ({ item, wid }) => {
               textTransform: "uppercase",
             }}
           >
-            {item.product.title}
+            {item.product?.title}
           </div>
-          <div style={{ fontSize: ".9rem" }}>{item.product.price}</div>
+          <div style={{ fontSize: ".9rem" }}>{item?.product?.price}</div>
           <div style={{ display: "flex" }}>
             <span>Quantity :</span>
             <div className={style.changeQuantity}>
               <RemoveIcon
                 onClick={() =>
-                  updateCartQuantity(item.product._id, item.sellerID, "-")
+                  updateCartQuantity(item?.product?._id, item.sellerID, "-")
                 }
                 style={{ cursor: "pointer", fontSize: "1.2rem" }}
               />
               <span>{cartQty}</span>
               <AddIcon
                 onClick={() =>
-                  updateCartQuantity(item.product._id, item.sellerID, "+")
+                  updateCartQuantity(item?.product?._id, item.sellerID, "+")
                 }
                 style={{ cursor: "pointer", fontSize: "1.2rem" }}
               />
@@ -95,7 +95,9 @@ const CartItemCard = ({ item, wid }) => {
       </MediaQuery>
       <div style={{ height: "4rem", display: "flex", fontSize: ".8rem" }}>
         <CloseIcon
-          onClick={() => handleRemoveFromCart(item.product._id, item.sellerID)}
+          onClick={() =>
+            handleRemoveFromCart(item?.product?._id, item.sellerID)
+          }
           style={{ cursor: "pointer" }}
         />
       </div>

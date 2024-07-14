@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserCartItems } from "../../api/user.api";
 import mainLogo from "../../assets/Krisksy.png";
-import { Button, CartItemCard, Input, PaymentButton } from "../../components";
+import { Button, CartItemCard, Input } from "../../components";
 import style from "./Checkout.module.css";
 
 const Checkout = () => {
@@ -44,13 +44,72 @@ const Checkout = () => {
       </div>
       <div className={style.checkOut}>
         <h1>Order Summary</h1>
-        {cartItems ? (
+        {cartItems.length !== 0 ? (
           <div className={style.orderSummary}>
             {cartItems?.map((item, index) => (
               <div className={style.cartItem} key={index}>
                 <CartItemCard item={item} />
               </div>
             ))}
+            <form onSubmit={handleSubmit(handleAddress)}>
+              <div className={style.addressForm}>
+                <h1>Shipping Details</h1>
+                <Input
+                  placeholder="FULLNAME"
+                  {...register("recipientName", { required: true })}
+                />
+                <Input
+                  placeholder="MOBILE NO."
+                  {...register("mobile", { required: true })}
+                />
+                <Input
+                  placeholder="EMAIL ADDRESS"
+                  {...register("email", { required: true })}
+                />
+                <Input
+                  placeholder="ADDRESS"
+                  {...register("street", { required: true })}
+                />
+                <Input
+                  placeholder="COUNTRY"
+                  {...register("country", { required: true })}
+                />
+                <Input
+                  placeholder="STATE"
+                  {...register("state", { required: true })}
+                />
+                <Input
+                  placeholder="CITY"
+                  {...register("city", { required: true })}
+                />
+                <Input
+                  placeholder="PINCODE"
+                  {...register("pincode", { required: true })}
+                />
+              </div>
+              <div className={style.checkoutButton}>
+                {!address && (
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      outline: "none",
+                      border: "none",
+                      fontSize: "1.2rem",
+                      fontFamily: "Noir Pro",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Set Address
+                  </button>
+                )}
+                {address && (
+                  <PaymentButton amount={cartTotal} address={address} />
+                )}
+              </div>
+            </form>
           </div>
         ) : (
           <p
@@ -65,60 +124,6 @@ const Checkout = () => {
           </p>
         )}
       </div>
-      <form onSubmit={handleSubmit(handleAddress)}>
-        <div className={style.addressForm}>
-          <h1>Shipping Details</h1>
-          <Input
-            placeholder="FULLNAME"
-            {...register("recipientName", { required: true })}
-          />
-          <Input
-            placeholder="MOBILE NO."
-            {...register("mobile", { required: true })}
-          />
-          <Input
-            placeholder="EMAIL ADDRESS"
-            {...register("email", { required: true })}
-          />
-          <Input
-            placeholder="ADDRESS"
-            {...register("street", { required: true })}
-          />
-          <Input
-            placeholder="COUNTRY"
-            {...register("country", { required: true })}
-          />
-          <Input
-            placeholder="STATE"
-            {...register("state", { required: true })}
-          />
-          <Input placeholder="CITY" {...register("city", { required: true })} />
-          <Input
-            placeholder="PINCODE"
-            {...register("pincode", { required: true })}
-          />
-        </div>
-        <div className={style.checkoutButton}>
-          {!address && (
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                outline: "none",
-                border: "none",
-                fontSize: "1.2rem",
-                fontFamily: "Noir Pro",
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
-            >
-              Set Address
-            </button>
-          )}
-          {address && <PaymentButton amount={cartTotal} address={address} />}
-        </div>
-      </form>
     </div>
   );
 };

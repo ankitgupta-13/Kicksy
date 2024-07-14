@@ -1,405 +1,410 @@
 .Body {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 
 .Gender {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 100px 20px;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 100px 20px;
 }
 
 .GenderContainer {
-    height: 312px;
-    width: 23%;
-    cursor: pointer;
+  height: 312px;
+  width: 23%;
+  cursor: pointer;
 }
 
 .GenderBox {
-    width: 100%;
-    height: 100%;
-    background: lightgrey;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: lightgrey;
+  display: flex;
+  justify-content: center;
 }
 
-
 .GenderBoxTitle {
-    padding: 5px 0px;
-    color: #000;
-    font-family: "Noir Pro";
-    font-size: 18px;
-    font-weight: Bold;
+  padding: 5px 0px;
+  color: #000;
+  font-family: "Noir Pro";
+  font-size: 18px;
+  font-weight: Bold;
 }
 
 .SaleBox {
-    height: 335px;
-    width: 23%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background: url("../../assets/Footer.png");
-    background-size: 2000px;
-    background-position: center;
-    transition: background-size .7s !important;
+  height: 335px;
+  width: 23%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: url("../../assets/Footer.png");
+  background-size: 2000px;
+  background-position: center;
+  transition: background-size 0.7s !important;
 }
 .SaleBox:hover {
-    background-size: 5000px;
+  background-size: 5000px;
 }
 
 .SaleBoxContent {
-    color: var(--Primary-Text, #FFF);
-    font-family: "Dela Gothic One";
-    font-size: 48px;
-    font-weight: 600;
+  color: var(--Primary-Text, #fff);
+  font-family: "Dela Gothic One";
+  font-size: 48px;
+  font-weight: 600;
 }
-
 
 .GenderBox:hover,
 .SaleBox:hover {
-    box-shadow: 0 0px 8px rgba(137, 137, 137, 0.801);
-    transition: box-shadow 0.3s ease;
+  box-shadow: 0 0px 8px rgba(137, 137, 137, 0.801);
+  transition: box-shadow 0.3s ease;
 }
 
-
 .CompanyContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    margin: 50px;
-    gap: 40px;
-
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  margin: 50px;
+  gap: 40px;
 }
 
 .CompanyItemBox:last-child {
-    grid-column: span 2;
-    cursor: pointer;
+  grid-column: span 2;
+  cursor: pointer;
 }
-
 
 .CompanyItem {
-    border: 1px solid var(--Hover-Border-1, #D9D9D9);
-    display: flex;
-    height: 200px;
-    padding: 12px 24px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+  border: 1px solid var(--Hover-Border-1, #d9d9d9);
+  display: flex;
+  height: 200px;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 
-    img {
-        height: 100px;
-    }
+  img {
+    height: 100px;
+  }
 }
-
 
 .CompanyItemTitle {
-    text-align: center;
-    padding: 5px 0;
-    color: #000;
-    text-align: center;
-    font-family: "Noir Pro";
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 0.48px;
+  text-align: center;
+  padding: 5px 0;
+  color: #000;
+  text-align: center;
+  font-family: "Noir Pro";
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.48px;
 }
 
-
-
 .CompanyItemBoxTitle {
-    position: absolute;
-    font-size: 4rem;
-    text-transform: uppercase;
-    font-family: "Noir Pro";
-    font-weight: 900;
-    opacity: 0;
+  position: absolute;
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-family: "Noir Pro";
+  font-weight: 900;
+  opacity: 0;
 }
 
 .CompanyItemBox:hover .CompanyItemBoxTitle {
-    opacity: 1;
-    transition: opacity 0.5s ease;
-    letter-spacing: 3px;
-    color: #fff;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  letter-spacing: 3px;
+  color: #fff;
 }
 
 .CompanyItem {
-    transition-duration: .3s;
+  transition-duration: 0.3s;
 }
 
 .CompanyItem {
-    background: linear-gradient( transparent, transparent, transparent, transparent, transparent, transparent, #000, #000, #000, #000, #000) repeat-y;
-    background-size: 100% 200%;
-    animation: slide 3s linear infinite;
+  background: linear-gradient(
+      transparent,
+      transparent,
+      transparent,
+      transparent,
+      transparent,
+      transparent,
+      #000,
+      #000,
+      #000,
+      #000,
+      #000
+    )
+    repeat-y;
+  background-size: 100% 200%;
+  animation: slide 3s linear infinite;
 }
 
 .CompanyItemBox:hover {
-    .CompanyItemBoxImg{
-        filter: invert(1);
-        opacity: .3;
-        height: 90%;
-    }
-    .CompanyItem {
-        animation: companyItemBox .6s ease both;
-    }
-    .CompanyItemTitle {
-        opacity: 0;
-        transition-duration: .3s;
-    }
+  .CompanyItemBoxImg {
+    filter: invert(1);
+    opacity: 0.3;
+    height: 90%;
+  }
+  .CompanyItem {
+    animation: companyItemBox 0.6s ease both;
+  }
+  .CompanyItemTitle {
+    opacity: 0;
+    transition-duration: 0.3s;
+  }
 }
 
-
 .NewArrivalsSliderTitle {
+  cursor: pointer;
+  color: #000;
+  font-family: "Noir Pro";
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.container__shopbtn {
+  align-self: center;
+  height: 3rem;
+  width: 9rem;
+  background-color: #000;
+  background-size: 0% 100%;
+  outline: none;
+  border: 1px solid #000000;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-family: "Noir Pro", sans-serif;
+  cursor: pointer;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.container__shopbtn:hover {
+  background-color: #1a1a1a;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  transition: background-size 0.6s, background-color 0.3s;
+}
+
+.NewArrivals {
+  padding-left: 40px;
+  display: flex;
+  width: 100%;
+  margin-left: 10px;
+  margin-top: 6rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.Slider {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shoes__image {
+  position: relative;
+  display: flex;
+  object-fit: contain;
+  border-bottom: 1px solid #dfe0e1;
+  aspect-ratio: 3/2;
+  padding: 40px;
+}
+
+.Slider::-webkit-scrollbar {
+  display: none;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+}
+
+.cards::-webkit-scrollbar {
+  height: 8px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 8px;
+}
+
+.cards::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.BestSellerSlider {
+  margin: 50px 0px;
+  padding-left: 40px;
+}
+
+.BestSellerSliderHeading {
+  color: #131313;
+  font-family: ProximaNova Bold;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+}
+
+.NewArrivalsTabs {
+  display: flex;
+  gap: 40px;
+  /* padding: 10px 20px; */
+  width: 100%;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.PopularShoes {
+  display: none;
+}
+
+.Active {
+  border-bottom: 2px solid #000;
+}
+
+@keyframes companyItemBox {
+  from {
+    background-position: 190% 0;
+  }
+  65% {
+    background-color: #fff;
+  }
+  to {
+    background-position: 0 100%;
+    background-color: #000;
+  }
+}
+
+@media (max-width: 430px) {
+  .sidebar {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .Body .Gender {
+    display: none;
+  }
+
+  .CompanyContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .CompanyItem {
+    height: 60px;
+  }
+
+  .CompanyItem img {
+    height: 100%;
+  }
+
+  .NewArrivalsTabs {
+    display: none;
+  }
+
+  .PopularShoes {
+    display: block;
     cursor: pointer;
     color: #000;
+    border-bottom: 1px solid #000;
+    width: 90%;
     font-family: "Noir Pro";
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-}
-.container__shopbtn {
-    align-self: center;
-    height: 3rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .popularCards {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+    gap: "15px";
+    padding-left: 0;
+    padding-right: "30px";
+  }
+
+  .cards .container {
+    height: 10rem;
     width: 9rem;
-    background-color: #000;
-    background-size: 0% 100%;
-    outline: none;
-    border: 1px solid #000000;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-family: 'Noir Pro', sans-serif;
-    cursor: pointer;
+    font-family: "Noir Pro";
+    border: 1px solid #dfe0e1;
+    padding: 5px 10px;
+  }
+
+  .cards .container .shoes__addIcon {
     position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.container__shopbtn:hover {
-    background-color: #1a1a1a;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .7) 100%);
-    background-repeat: no-repeat;
-    background-size: 200% 100%;
-    transition: background-size .6s, background-color .3s;
-}
+    width: inherit;
+    text-align: right;
+    padding-right: 15px;
+  }
 
-.NewArrivals {
-    padding-left: 40px;
-    display: flex;
-    width: 100%;
-    margin-left: 10px;
-    margin-top: 6rem;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 8px;
-}
+  .cards .container .shoes__image {
+    height: 100%;
+    padding: 10px !important;
+    border: none;
+  }
 
-.Slider {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 20px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    width: 100%;
-}
+  .cards .container .title {
+    font-size: 12px;
+    font-weight: 600;
+  }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    /* height: 15rem; */
-    width: 15rem;
-    gap: .5rem;
-}
+  .Slider,
+  .BestSellerSlider {
+    z-index: -1;
+  }
 
-.shoes__image {
-    position: relative;
-    display: flex;
-    object-fit: contain;
-    border-bottom: 1px solid #dfe0e1;
-    aspect-ratio: 3/2;
-    padding: 40px;
-}
+  .BestSellerSlider {
+    background-color: #000;
+    color: #fff;
+    padding-top: 1.4rem;
+  }
 
-.Slider::-webkit-scrollbar {
+  .BestSellerSliderHeading {
+    font-size: 20px;
+    font-weight: 900;
+    padding: 10px 0px;
+    color: #fff;
+  }
+
+  .Slider .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .BestSellerCard .container {
+    width: 1rem !important;
+    padding-bottom: 30px;
+  }
+
+  .BestSellerCards {
+    height: 40vh;
+    display: flex !important;
+    align-items: center;
+  }
+
+  .container__shopbtn {
     display: none;
-}
-
-.cards {
-    display: flex;
-    gap: 20px;
-    padding: 10px;
-}
-
-.cards::-webkit-scrollbar {
-    height: 8px;
-}
-
-.cards::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 8px;
-}
-
-.cards::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-.BestSellerSlider {
-    margin: 50px 0px;
-    padding-left: 40px;
-}
-
-.BestSellerSliderHeading {
-    color: #131313;
-    font-family: ProximaNova Bold;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 800;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    padding: 10px 20px;
-}
-
-.NewArrivalsTabs {
-    display: flex;
-    gap: 40px;
-    /* padding: 10px 20px; */
-    width: 100%;
-    border-bottom: 1px solid #D9D9D9;
-}
-
-.PopularShoes {
-    display: none;
-}
-
-.Active {
-    border-bottom: 2px solid #000;
-}
-
-
-@keyframes companyItemBox {
-    from {
-        background-position: 190% 0;
-        
-    }
-    65%{
-        background-color: #fff;
-    }
-    to {
-        background-position: 0 100%;
-        background-color: #000;
-    }
-}
-
-@media (max-width: 430px) {
-    .sidebar {
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-    }
-
-    .Body .Gender {
-        display: none;
-    }
-
-    .CompanyContainer {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .CompanyItem {
-        height: 60px;
-    }
-
-    .CompanyItem img {
-        height: 100%;
-    }
-
-    .NewArrivalsTabs {
-        display: none;
-    }
-
-    .PopularShoes {
-        display: block;
-        cursor: pointer;
-        color: #000;
-        border-bottom: 1px solid #000;
-        width: 90%;
-        font-family: "Noir Pro";
-        font-size: 18px;
-        font-weight: bold;
-        padding-bottom: 10px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .popularCards {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
-        gap: "15px";
-        padding-left: 0;
-        padding-right: "30px"
-    }
-
-    .cards .container {
-        height: 10rem;
-        width: 9rem;
-        font-family: "Noir Pro";
-        border: 1px solid #dfe0e1;
-        padding: 5px 10px;
-    }
-
-    .cards .container .shoes__addIcon {
-        position: absolute;
-        width: inherit;
-        text-align: right;
-        padding-right: 15px;
-    }
-
-    .cards .container .shoes__image {
-        height: 100%;
-        padding: 10px !important;
-        border: none;
-    }
-
-    .cards .container .title {
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .Slider,
-    .BestSellerSlider {
-        z-index: -1;
-    }
-
-    .BestSellerSlider {
-        background-color: #000;
-        color: #fff;
-        padding-top: 1.4rem;
-    }
-
-    .BestSellerSliderHeading {
-        font-size: 20px;
-        font-weight: 900;
-        padding: 10px 0px;
-        color: #fff;
-    }
-
-    .Slider .cards {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .BestSellerCard .container {
-        width: 1rem !important;
-        padding-bottom: 30px;
-    }
-
-    .BestSellerCards{
-        height: 40vh;
-        display: flex !important;
-        align-items: center;
-    }
-
-    .container__shopbtn{
-        display: none;
-    }
+  }
 }

@@ -11,6 +11,7 @@ import KidPic1 from "../../assets/images/KidPic1.png";
 import MenPic1 from "../../assets/images/MenPic1.png";
 import NikeLogo from "../../assets/images/NikeLogo.png";
 import HeroSection from "../../components/HeroSection/HeroSection";
+import LoadingCard from "../../components/LoadingCard/LoadingCard";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SliderCard from "../../components/SliderCard/SliderCard";
 import style from "./Home.module.css";
@@ -47,7 +48,7 @@ const Home = () => {
     arrivaltab3.current.classList.add(style.Active);
     setArrivaltab(3);
   }
-  const { data: recentProducts } = useQuery({
+  const { data: recentProducts, isLoading } = useQuery({
     queryKey: ["recentProducts"],
     queryFn: async () => {
       const data = await getRecentProducts();
@@ -55,11 +56,6 @@ const Home = () => {
     },
     staleTime: Infinity,
   });
-
-  // useEffect(() => {
-  //   scrollTo(0, 0);
-  //   getProducts();
-  // }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -311,22 +307,28 @@ const Home = () => {
         <h1 className={style.BestSellerSliderHeading}>Best Sellers</h1>
         <div className={style.Slider}>
           <div className={`${style.cards} ${style.BestSellerCards}`}>
-            {recentProducts?.map((product, index) => {
-              return (
-                <div
-                  className={style.BestSellerCard}
-                  key={index}
-                  style={{ width: "18rem" }}
-                >
-                  <MediaQuery minWidth={431}>
-                    <ProductCard product={product} wid="18.5vw" />
-                  </MediaQuery>
-                  <MediaQuery maxWidth={431}>
-                    <ProductCard product={product} wid="10rem" />
-                  </MediaQuery>
-                </div>
-              );
-            })}
+            {isLoading ? (
+              <div className={`${style.cards} ${style.BestSellerCards}`}>
+                <LoadingCard />
+                <LoadingCard />
+                <LoadingCard />
+                <LoadingCard />
+                <LoadingCard />
+              </div>
+            ) : (
+              recentProducts?.map((product, index) => {
+                return (
+                  <div className={style.BestSellerCard} key={index}>
+                    <MediaQuery minWidth={431}>
+                      <ProductCard product={product} wid="18.5vw" />
+                    </MediaQuery>
+                    <MediaQuery maxWidth={431}>
+                      <ProductCard product={product} wid="10rem" />
+                    </MediaQuery>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       </div>

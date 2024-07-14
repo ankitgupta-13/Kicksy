@@ -7,6 +7,7 @@ import MediaQuery from "react-responsive";
 import { getAllProducts, getFilteredProducts } from "../../api/product.api";
 import { ProductCard } from "../../components";
 import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
+import LoadingCard from "../../components/LoadingCard/LoadingCard";
 import style from "./Shop.module.css";
 
 const Shop = () => {
@@ -24,6 +25,7 @@ const Shop = () => {
           queryFn: getAllProducts,
           staleTime: Infinity,
         });
+  console.log(data, isLoading, isError, error);
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,11 +74,20 @@ const Shop = () => {
         </div>
         <div className={style.productlist}>
           {isLoading ? (
-            <p>Loading products...</p>
-          ) : !data.data || data?.data?.products?.length === 0 ? (
-            <p>No products found</p>
+            <div className={style.loader}>
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+            </div>
+          ) : isError ? (
+            <div className={style.noProducts}>Error fetching products</div>
+          ) : data?.data?.products?.length === 0 ? (
+            <div className={style.noProducts}>No products found</div>
           ) : (
-            data.data.products?.map((product, index) => (
+            data?.data?.products?.map((product, index) => (
               <div className={style.listitem} key={index}>
                 <MediaQuery minWidth={430}>
                   <ProductCard product={product} />

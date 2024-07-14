@@ -1,40 +1,69 @@
 .shoppage {
-    display: flex;
-    border-top: 1px solid #e2e2e2;
-  }
-  
+  display: flex;
+  border-top: 1px solid #e2e2e2;
+}
+
 .productlist {
-  width: 80%;
+  width: 100%;
   margin: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 30px;
   padding-right: 1rem;
-  /* gap: 10px 10px; */
 }
 
-.listitem{
+.listitem {
   height: max-content;
   width: 25vw;
 }
-  
-.topbuttons{
+
+.topbuttons {
   display: none;
 }
 
-@media screen and (max-width: 430px){
-  .filtersidebar{
+.loader {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 80vw;
+  height: 90vh;
+  gap: 1rem;
+}
+
+.noProducts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 80vw;
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 430px) {
+  .filtersidebar {
     display: none;
   }
-  .topbuttons .Button{
+  .noProducts {
+    font-size: 1.5rem;
+    height: 60vh;
+    width: 100vw;
+  }
+  .loader {
+    display: flex;
+    gap: 1rem;
+    width: 90vw;
+    height: 75vh;
+  }
+  .topbuttons .Button {
     border-radius: 0;
     border: 1px solid black;
     font-family: "Noir Pro";
     text-transform: none !important;
   }
-  
-  .topbuttons{
+
+  .topbuttons {
     display: flex;
     gap: 20px;
     position: absolute;
@@ -43,15 +72,15 @@
     top: 13vh;
     z-index: 1;
   }
-  .productlist{
+  .productlist {
     margin-top: 17vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     padding-bottom: 10vh;
-    .listitem{
+    .listitem {
       width: 45vw !important;
-      .container{
+      .container {
         width: 100% !important;
       }
     }

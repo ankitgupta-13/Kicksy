@@ -1,4 +1,4 @@
-import CircularProgress from "@mui/material/CircularProgress";
+import { CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,9 +31,9 @@ import { login, logout } from "./redux/reducers/authSlice.js";
 import { setInitialCartItems } from "./redux/reducers/cartSlice.js";
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { status, userData } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(true);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -64,6 +64,10 @@ const App = () => {
     )
   );
 
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -82,7 +86,7 @@ const App = () => {
 
   return (
     <div>
-      {isLoading ? (
+      {loading ? (
         <div
           style={{
             display: "flex",
