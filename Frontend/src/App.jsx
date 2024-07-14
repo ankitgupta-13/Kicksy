@@ -1,4 +1,3 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import {
 import { getCurrentUser } from "./api/user.api.js";
 import "./App.css";
 import { PaymentButton } from "./components/index.js";
+import Loader from "./components/Loader/Loader.jsx";
 import Layout from "./Layout";
 import Anime from "./pages/Anime/Anime.jsx";
 import BlogPage from "./pages/BlogPage/BlogPage.jsx";
@@ -91,7 +91,7 @@ const App = () => {
             height: "100vh",
           }}
         >
-          <CircularProgress />
+          <Loader />
         </div>
       ) : (
         <RouterProvider router={router} />
