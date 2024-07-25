@@ -53,6 +53,31 @@ const Login = () => {
           <Link to="/register">Sign up</Link>
         </p>
         <form className={style.form} onSubmit={handleSubmit(handleLogin)}>
+          <div
+            className={style.buttondiv}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
+            <Button
+              style={{
+                backgroundColor: "#131313",
+                color: "white",
+                padding: "1rem",
+                cursor: "pointer",
+                onClick: () => {
+                  handleLogin({
+                    email: "guptankit0522@gmail.com",
+                    password: "123",
+                  });
+                },
+              }}
+            >
+              Login as Test User
+            </Button>
+          </div>
           <div className={style.Input}>
             <Input
               style={{ marginTop: "5px" }}
