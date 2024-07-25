@@ -85,7 +85,6 @@ const Login = () => {
               type="email"
               placeholder="Enter your email"
               {...register("email", {
-                required: true,
                 validate: {
                   matchPattern: (value) =>
                     /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/.test(value) ||
